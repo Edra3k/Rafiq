@@ -402,7 +402,7 @@ struct PrayerSettingsSection: View {
 
     private var automaticCityLabel: String {
         let found = PrayerCities.matching(timeZoneId: TimeZone.current.identifier)?.name
-            ?? String(localized: "prayer.city.none", defaultValue: "none")
+            ?? String(localized: "prayer.city.none", defaultValue: "no city found")
         return String(format: String(localized: "prayer.city.automatic %@", defaultValue: "Automatic · %@"), found)
     }
 
@@ -426,7 +426,7 @@ struct PrayerSettingsSection: View {
             Slider(value: minutes, in: Double(bounds.lowerBound)...Double(bounds.upperBound), step: 5)
                 .accessibilityLabel(Text(label))
                 .accessibilityValue(Text(verbatim: "\(shown) \(unit)"))
-            Text(shown == 0 ? String(localized: "prayer.reminder.off", defaultValue: "Off") : "\(shown) \(unit)")
+            Text(shown == 0 ? String(localized: "prayer.reminder.off", defaultValue: "No reminder") : "\(shown) \(unit)")
                 .monospacedDigit()
                 .foregroundColor(.secondary)
                 .frame(minWidth: 44, alignment: .trailing)

@@ -106009,97 +106009,97 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "لا شيء"
+            "value" : "لم يُعثر على مدينة"
           }
         },
         "bn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "নেই"
+            "value" : "কোনো শহর পাওয়া যায়নি"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "keine"
+            "value" : "keine Stadt gefunden"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "none"
+            "value" : "no city found"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ninguna"
+            "value" : "ninguna ciudad encontrada"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "aucune"
+            "value" : "aucune ville trouvée"
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "कोई नहीं"
+            "value" : "कोई शहर नहीं मिला"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "tidak ada"
+            "value" : "kota tidak ditemukan"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "なし"
+            "value" : "都市が見つかりません"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "없음"
+            "value" : "도시를 찾지 못함"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "nenhuma"
+            "value" : "nenhuma cidade encontrada"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "нет"
+            "value" : "город не найден"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ไม่มี"
+            "value" : "ไม่พบเมือง"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "yok"
+            "value" : "şehir bulunamadı"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "无"
+            "value" : "未找到城市"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "無"
+            "value" : "未找到城市"
           }
         }
       }
@@ -107509,97 +107509,97 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "إيقاف"
+            "value" : "بلا تذكير"
           }
         },
         "bn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "বন্ধ"
+            "value" : "কোনো রিমাইন্ডার নেই"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Aus"
+            "value" : "Keine Erinnerung"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Off"
+            "value" : "No reminder"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Desactivado"
+            "value" : "Sin aviso"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Désactivé"
+            "value" : "Aucun rappel"
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "बंद"
+            "value" : "कोई रिमाइंडर नहीं"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mati"
+            "value" : "Tanpa pengingat"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "オフ"
+            "value" : "通知なし"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "끔"
+            "value" : "알림 없음"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Desligado"
+            "value" : "Sem lembrete"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Выкл."
+            "value" : "Без напоминания"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ปิด"
+            "value" : "ไม่เตือน"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kapalı"
+            "value" : "Hatırlatma yok"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "关"
+            "value" : "不提醒"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "關"
+            "value" : "不提醒"
           }
         }
       }

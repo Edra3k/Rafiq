@@ -122,6 +122,21 @@
    "ko": "7일",
    "ja": "7 日"
   },
+  "< 1 min": {
+   "zh-Hans": "不到 1 分钟",
+   "hi": "< 1 मिनट",
+   "es": "< 1 min",
+   "ar": "< 1 د",
+   "fr": "< 1 min",
+   "bn": "< 1 মিনিট",
+   "pt-BR": "< 1 min",
+   "ru": "< 1 мин",
+   "id": "< 1 mnt",
+   "de": "< 1 Min.",
+   "tr": "< 1 dk",
+   "ko": "1분 미만",
+   "ja": "1分未満"
+  },
   "A message whose sender, subject or text holds one of these words or addresses goes straight to Junk. Whole words only: “sale” does not catch “Salesforce”.": {
    "zh-Hans": "发件人、主题或正文包含这些词或地址的邮件会直接移到垃圾邮件。只匹配完整单词：“sale”不会匹配“Salesforce”。",
    "hi": "जिस मेल के प्रेषक, विषय या टेक्स्ट में इनमें से कोई शब्द या पता हो, वह सीधे जंक में जाता है। सिर्फ़ पूरे शब्द: “sale” से “Salesforce” नहीं पकड़ा जाता।",
@@ -452,6 +467,21 @@
    "ko": "이 키로 계속 입력할 수 있도록 ⌃, ⌥, ⌘ 또는 fn을 추가하세요.",
    "ja": "このキーで文字を入力できるよう、⌃・⌥・⌘・fn のいずれかを加えてください。"
   },
+  "Adjust times to your mosque": {
+   "zh-Hans": "按你的清真寺调整时间",
+   "hi": "समय अपनी मस्जिद के अनुसार बदलो",
+   "es": "Ajustar los horarios a tu mezquita",
+   "ar": "ضبط الأوقات حسب مسجدك",
+   "fr": "Ajuster les heures à ta mosquée",
+   "bn": "তোমার মসজিদ অনুযায়ী সময় ঠিক করো",
+   "pt-BR": "Ajustar os horários à sua mesquita",
+   "ru": "Подогнать время под твою мечеть",
+   "id": "Sesuaikan waktu dengan masjidmu",
+   "de": "Zeiten an deine Moschee anpassen",
+   "tr": "Vakitleri camine göre ayarla",
+   "ko": "모스크에 맞게 시간 조정",
+   "ja": "モスクに合わせて時刻を調整"
+  },
   "Advertisement": {
    "zh-Hans": "广告",
    "hi": "विज्ञापन",
@@ -752,6 +782,21 @@
    "ko": "Android 휴대폰",
    "ja": "Android スマートフォン"
   },
+  "Angle based": {
+   "zh-Hans": "按角度",
+   "hi": "कोण आधारित",
+   "es": "Según el ángulo",
+   "ar": "حسب الزاوية",
+   "fr": "Selon l’angle",
+   "bn": "কোণভিত্তিক",
+   "pt-BR": "Pelo ângulo",
+   "ru": "По углу",
+   "id": "Berdasarkan sudut",
+   "de": "Winkelbasiert",
+   "tr": "Açıya göre",
+   "ko": "각도 기준",
+   "ja": "角度ベース"
+  },
   "Annotate": {
    "zh-Hans": "标注",
    "hi": "एनोटेट",
@@ -766,6 +811,21 @@
    "tr": "İşaretle",
    "ko": "주석",
    "ja": "注釈"
+  },
+  "Another place…": {
+   "zh-Hans": "其他地点…",
+   "hi": "दूसरी जगह…",
+   "es": "Otro lugar…",
+   "ar": "مكان آخر…",
+   "fr": "Autre lieu…",
+   "bn": "অন্য জায়গা…",
+   "pt-BR": "Outro lugar…",
+   "ru": "Другое место…",
+   "id": "Tempat lain…",
+   "de": "Anderer Ort…",
+   "tr": "Başka bir yer…",
+   "ko": "다른 장소…",
+   "ja": "その他の場所…"
   },
   "Answer questions and permissions from terminal sessions in the notch": {
    "zh-Hans": "在刘海中回答终端会话的提问和权限请求",
@@ -1052,6 +1112,21 @@
    "ko": "뭐든 물어보세요…",
    "ja": "なんでも聞いてください…"
   },
+  "Asr": {
+   "zh-Hans": "晡礼",
+   "hi": "अस्र",
+   "es": "Asr",
+   "ar": "العصر",
+   "fr": "Asr",
+   "bn": "আসর",
+   "pt-BR": "Asr",
+   "ru": "Аср",
+   "id": "Ashar",
+   "de": "Asr",
+   "tr": "İkindi",
+   "ko": "아스르",
+   "ja": "アスル"
+  },
   "Attach front window": {
    "zh-Hans": "附加前端窗口",
    "hi": "फ्रंट विंडो अटैच करें",
@@ -1156,6 +1231,21 @@
    "tr": "Otomatik düzenleme kapalı: açılana kadar bu ayarlar bir şey yapmaz.",
    "ko": "자동 정리가 꺼져 있습니다. 켜기 전까지는 이 설정이 작동하지 않습니다.",
    "ja": "自動整理はオフです。オンにするまでこれらの設定は働きません。"
+  },
+  "Automatic · {0}": {
+   "zh-Hans": "自动 · {0}",
+   "hi": "स्वचालित · {0}",
+   "es": "Automático · {0}",
+   "ar": "تلقائي · {0}",
+   "fr": "Automatique · {0}",
+   "bn": "স্বয়ংক্রিয় · {0}",
+   "pt-BR": "Automático · {0}",
+   "ru": "Автоматически · {0}",
+   "id": "Otomatis · {0}",
+   "de": "Automatisch · {0}",
+   "tr": "Otomatik · {0}",
+   "ko": "자동 · {0}",
+   "ja": "自動 · {0}"
   },
   "Automation not allowed": {
    "zh-Hans": "不允许自动化",
@@ -1411,6 +1501,36 @@
    "tr": "KOMUTLAR",
    "ko": "명령",
    "ja": "コマンド"
+  },
+  "Calculated on your Mac, nothing is sent. Turn the Prayer pill on to see the next prayer, with a reminder before each one.": {
+   "zh-Hans": "在你的 Mac 上计算，不发送任何数据。打开礼拜胶囊即可查看下一次礼拜，并在每次礼拜前提醒。",
+   "hi": "तुम्हारे Mac पर गणना होती है, कुछ भी भेजा नहीं जाता। अगली नमाज़ देखने के लिए नमाज़ गोली चालू करो, हर नमाज़ से पहले याद दिलाया जाएगा।",
+   "es": "Calculado en tu Mac, no se envía nada. Activa la píldora Oración para ver la próxima oración, con un aviso antes de cada una.",
+   "ar": "تُحسب على جهاز Mac ولا يُرسل شيء. فعّل حبة الصلاة لترى الصلاة التالية، مع تذكير قبل كل صلاة.",
+   "fr": "Calculé sur ton Mac, rien n’est envoyé. Active la pilule Prière pour voir la prochaine prière, avec un rappel avant chacune.",
+   "bn": "তোমার Mac-এ হিসাব হয়, কিছুই পাঠানো হয় না। পরের নামাজ দেখতে নামাজ পিল চালু করো, প্রতিটির আগে মনে করিয়ে দেওয়া হবে।",
+   "pt-BR": "Calculado no seu Mac, nada é enviado. Ative a pílula Oração para ver a próxima oração, com um lembrete antes de cada uma.",
+   "ru": "Считается на твоём Mac, ничего не отправляется. Включи пилюлю Намаз, чтобы видеть следующий намаз и получать напоминание перед каждым.",
+   "id": "Dihitung di Mac-mu, tidak ada yang dikirim. Nyalakan pil Salat untuk melihat salat berikutnya, dengan pengingat sebelum setiap salat.",
+   "de": "Auf deinem Mac berechnet, nichts wird gesendet. Schalte die Gebet-Pille ein, um das nächste Gebet zu sehen, mit einer Erinnerung vor jedem.",
+   "tr": "Mac’inde hesaplanır, hiçbir şey gönderilmez. Sonraki namazı görmek için Namaz kapsülünü aç, her vakitten önce hatırlatılır.",
+   "ko": "Mac에서 계산하고 아무것도 보내지 않아요. 기도 모찌를 켜면 다음 기도와 각 기도 전 알림을 볼 수 있어요.",
+   "ja": "Mac 上で計算され、何も送信されません。礼拝のピルをオンにすると次の礼拝が表示され、それぞれの前に通知します。"
+  },
+  "Calculation method": {
+   "zh-Hans": "计算方法",
+   "hi": "गणना विधि",
+   "es": "Método de cálculo",
+   "ar": "طريقة الحساب",
+   "fr": "Méthode de calcul",
+   "bn": "গণনা পদ্ধতি",
+   "pt-BR": "Método de cálculo",
+   "ru": "Метод расчёта",
+   "id": "Metode perhitungan",
+   "de": "Berechnungsmethode",
+   "tr": "Hesaplama yöntemi",
+   "ko": "계산 방법",
+   "ja": "計算方法"
   },
   "Call · {0}": {
    "zh-Hans": "通话 · {0}",
@@ -2056,6 +2176,21 @@
    "tr": "Hook'ları kur'a bir kez daha tıkla, ardından Antigravity'yi yeniden başlat: eski bir Coucou'nun hook'ları yanıtını beklemesine izin vermez.",
    "ko": "후크 설치를 한 번 더 누른 뒤 Antigravity를 다시 시작하세요. 이전 Coucou의 후크로는 답을 기다릴 수 없습니다.",
    "ja": "もう一度「フックをインストール」をクリックしてから Antigravity を再起動してください。古い Coucou のフックでは返答を待てません。"
+  },
+  "Click once you have prayed.": {
+   "zh-Hans": "礼拜后点按。",
+   "hi": "नमाज़ पढ़ने के बाद क्लिक करो।",
+   "es": "Haz clic cuando hayas rezado.",
+   "ar": "انقر بعد أن تصلي.",
+   "fr": "Clique une fois que tu as prié.",
+   "bn": "নামাজ পড়ার পর ক্লিক করো।",
+   "pt-BR": "Clique depois de rezar.",
+   "ru": "Нажми, когда помолишься.",
+   "id": "Klik setelah kamu salat.",
+   "de": "Klicke, sobald du gebetet hast.",
+   "tr": "Kıldıktan sonra tıkla.",
+   "ko": "기도를 마치면 클릭해요.",
+   "ja": "礼拝を終えたらクリックします。"
   },
   "Click to record": {
    "zh-Hans": "点按以录制",
@@ -2897,6 +3032,21 @@
    "ko": "사용자 지정…",
    "ja": "カスタム…"
   },
+  "Decimal degrees: north and east are positive (Paris: 48.8566, 2.3522). Times use your Mac's time zone.": {
+   "zh-Hans": "十进制度数：北纬和东经为正（巴黎：48.8566, 2.3522）。时间按 Mac 的时区显示。",
+   "hi": "दशमलव डिग्री: उत्तर और पूर्व धनात्मक हैं (पेरिस: 48.8566, 2.3522)। समय तुम्हारे Mac के टाइम ज़ोन में दिखते हैं।",
+   "es": "Grados decimales: norte y este son positivos (París: 48,8566, 2,3522). Las horas usan la zona horaria de tu Mac.",
+   "ar": "درجات عشرية: الشمال والشرق موجبان (باريس: 48.8566، 2.3522). تتبع الأوقات المنطقة الزمنية لجهاز Mac.",
+   "fr": "Degrés décimaux : le nord et l’est sont positifs (Paris : 48,8566, 2,3522). Les heures suivent le fuseau horaire de ton Mac.",
+   "bn": "দশমিক ডিগ্রি: উত্তর ও পূর্ব ধনাত্মক (প্যারিস: 48.8566, 2.3522)। সময় তোমার Mac-এর টাইম জোন অনুযায়ী।",
+   "pt-BR": "Graus decimais: norte e leste são positivos (Paris: 48,8566, 2,3522). Os horários usam o fuso horário do seu Mac.",
+   "ru": "Десятичные градусы: север и восток положительные (Париж: 48,8566, 2,3522). Время — по часовому поясу твоего Mac.",
+   "id": "Derajat desimal: utara dan timur bernilai positif (Paris: 48,8566, 2,3522). Waktu mengikuti zona waktu Mac-mu.",
+   "de": "Dezimalgrad: Norden und Osten sind positiv (Paris: 48,8566, 2,3522). Die Zeiten folgen der Zeitzone deines Mac.",
+   "tr": "Ondalık derece: kuzey ve doğu pozitiftir (Paris: 48,8566, 2,3522). Saatler Mac’inin saat dilimine göredir.",
+   "ko": "십진수 도: 북쪽과 동쪽이 양수예요(파리: 48.8566, 2.3522). 시간은 Mac의 시간대를 따라요.",
+   "ja": "10進数の度数：北と東が正の値です（パリ：48.8566, 2.3522）。時刻は Mac のタイムゾーンで表示されます。"
+  },
   "DeepSeek key saved.": {
    "zh-Hans": "DeepSeek 密钥已保存。",
    "hi": "DeepSeek कुंजी सहेजी गई।",
@@ -3046,6 +3196,21 @@
    "tr": "Dağıtımlar",
    "ko": "배포",
    "ja": "デプロイ"
+  },
+  "Dhuhr": {
+   "zh-Hans": "晌礼",
+   "hi": "ज़ुहर",
+   "es": "Dhuhr",
+   "ar": "الظهر",
+   "fr": "Dhohr",
+   "bn": "যোহর",
+   "pt-BR": "Dhuhr",
+   "ru": "Зухр",
+   "id": "Dzuhur",
+   "de": "Dhuhr",
+   "tr": "Öğle",
+   "ko": "주흐르",
+   "ja": "ズフル"
   },
   "Dictate (right-click to choose the language)": {
    "zh-Hans": "听写（右键点按选择语言）",
@@ -3662,6 +3827,21 @@
    "ko": "실패",
    "ja": "失敗"
   },
+  "Fajr": {
+   "zh-Hans": "晨礼",
+   "hi": "फ़ज्र",
+   "es": "Fajr",
+   "ar": "الفجر",
+   "fr": "Fajr",
+   "bn": "ফজর",
+   "pt-BR": "Fajr",
+   "ru": "Фаджр",
+   "id": "Subuh",
+   "de": "Fadschr",
+   "tr": "İmsak",
+   "ko": "파즈르",
+   "ja": "ファジュル"
+  },
   "Favorite": {
    "zh-Hans": "收藏",
    "hi": "पसंदीदा में जोड़ें",
@@ -4037,6 +4217,21 @@
    "ko": "허용됨",
    "ja": "許可済み"
   },
+  "Hanafi": {
+   "zh-Hans": "哈乃斐",
+   "hi": "हनफ़ी",
+   "es": "Hanafí",
+   "ar": "الحنفي",
+   "fr": "Hanafite",
+   "bn": "হানাফি",
+   "pt-BR": "Hanafi",
+   "ru": "Ханафитский",
+   "id": "Hanafi",
+   "de": "Hanafitisch",
+   "tr": "Hanefi",
+   "ko": "하나피",
+   "ja": "ハナフィー"
+  },
   "Hands-free": {
    "zh-Hans": "免手持",
    "hi": "हैंड्स-फ़्री",
@@ -4201,6 +4396,21 @@
    "tr": "Paylaşılan görsellerde proje adlarını gizle",
    "ko": "공유 이미지에서 프로젝트 이름 숨기기",
    "ja": "共有画像でプロジェクト名を隠す"
+  },
+  "High latitudes": {
+   "zh-Hans": "高纬度",
+   "hi": "उच्च अक्षांश",
+   "es": "Latitudes altas",
+   "ar": "خطوط العرض العليا",
+   "fr": "Hautes latitudes",
+   "bn": "উচ্চ অক্ষাংশ",
+   "pt-BR": "Latitudes altas",
+   "ru": "Высокие широты",
+   "id": "Lintang tinggi",
+   "de": "Hohe Breitengrade",
+   "tr": "Yüksek enlemler",
+   "ko": "고위도",
+   "ja": "高緯度"
   },
   "History": {
    "zh-Hans": "历史记录",
@@ -4772,6 +4982,36 @@
    "ko": "연동",
    "ja": "連携"
   },
+  "Isha": {
+   "zh-Hans": "宵礼",
+   "hi": "ईशा",
+   "es": "Isha",
+   "ar": "العشاء",
+   "fr": "Icha",
+   "bn": "এশা",
+   "pt-BR": "Isha",
+   "ru": "Иша",
+   "id": "Isya",
+   "de": "Ischa",
+   "tr": "Yatsı",
+   "ko": "이샤",
+   "ja": "イシャー"
+  },
+  "It's time for {0}": {
+   "zh-Hans": "{0}时间到了",
+   "hi": "{0} का समय हो गया",
+   "es": "Es la hora de {0}",
+   "ar": "حان وقت {0}",
+   "fr": "Heure de prière : {0}",
+   "bn": "{0}-এর সময় হয়েছে",
+   "pt-BR": "Hora de {0}",
+   "ru": "Время намаза: {0}",
+   "id": "Waktunya {0}",
+   "de": "Zeit für {0}",
+   "tr": "{0} vakti",
+   "ko": "{0} 시간이에요",
+   "ja": "{0}の時間です"
+  },
   "Journal": {
    "zh-Hans": "记录",
    "hi": "लॉग",
@@ -4996,6 +5236,21 @@
    "tr": "Sonra",
    "ko": "나중에",
    "ja": "あとで"
+  },
+  "Latitude": {
+   "zh-Hans": "纬度",
+   "hi": "अक्षांश",
+   "es": "Latitud",
+   "ar": "خط العرض",
+   "fr": "Latitude",
+   "bn": "অক্ষাংশ",
+   "pt-BR": "Latitude",
+   "ru": "Широта",
+   "id": "Lintang",
+   "de": "Breitengrad",
+   "tr": "Enlem",
+   "ko": "위도",
+   "ja": "緯度"
   },
   "Launch at Mac startup": {
    "zh-Hans": "在 Mac 启动时自动启动",
@@ -5312,6 +5567,21 @@
    "ko": "최장 세션",
    "ja": "最長のセッション"
   },
+  "Longitude": {
+   "zh-Hans": "经度",
+   "hi": "देशांतर",
+   "es": "Longitud",
+   "ar": "خط الطول",
+   "fr": "Longitude",
+   "bn": "দ্রাঘিমাংশ",
+   "pt-BR": "Longitude",
+   "ru": "Долгота",
+   "id": "Bujur",
+   "de": "Längengrad",
+   "tr": "Boylam",
+   "ko": "경도",
+   "ja": "経度"
+  },
   "Mac voice": {
    "zh-Hans": "Mac 语音",
    "hi": "Mac की आवाज़",
@@ -5326,6 +5596,21 @@
    "tr": "Mac sesi",
    "ko": "Mac 음성",
    "ja": "Mac の声"
+  },
+  "Maghrib": {
+   "zh-Hans": "昏礼",
+   "hi": "मग़रिब",
+   "es": "Magrib",
+   "ar": "المغرب",
+   "fr": "Maghrib",
+   "bn": "মাগরিব",
+   "pt-BR": "Maghrib",
+   "ru": "Магриб",
+   "id": "Maghrib",
+   "de": "Maghrib",
+   "tr": "Akşam",
+   "ko": "마그립",
+   "ja": "マグリブ"
   },
   "Mail": {
    "zh-Hans": "邮件",
@@ -5656,6 +5941,21 @@
    "tr": "Mikrofon:",
    "ko": "마이크:",
    "ja": "マイク："
+  },
+  "Middle of the night": {
+   "zh-Hans": "半夜",
+   "hi": "आधी रात",
+   "es": "Mitad de la noche",
+   "ar": "منتصف الليل",
+   "fr": "Milieu de la nuit",
+   "bn": "মধ্যরাত",
+   "pt-BR": "Meio da noite",
+   "ru": "Середина ночи",
+   "id": "Tengah malam",
+   "de": "Mitte der Nacht",
+   "tr": "Gecenin yarısı",
+   "ko": "밤의 절반",
+   "ja": "夜の半分"
   },
   "Missing recipient.": {
    "zh-Hans": "收件人缺失。",
@@ -6001,6 +6301,21 @@
    "tr": "Ad",
    "ko": "이름",
    "ja": "名前"
+  },
+  "Name of the place": {
+   "zh-Hans": "地点名称",
+   "hi": "जगह का नाम",
+   "es": "Nombre del lugar",
+   "ar": "اسم المكان",
+   "fr": "Nom du lieu",
+   "bn": "জায়গার নাম",
+   "pt-BR": "Nome do lugar",
+   "ru": "Название места",
+   "id": "Nama tempat",
+   "de": "Name des Ortes",
+   "tr": "Yerin adı",
+   "ko": "장소 이름",
+   "ja": "場所の名前"
   },
   "Names and words Coucou must always spell right.": {
    "zh-Hans": "Coucou 必须始终写对的名字和词语。",
@@ -6421,6 +6736,21 @@
    "tr": "Başka açık uygulama yok",
    "ko": "열려 있는 다른 앱이 없어요",
    "ja": "ほかに開いているアプリはありません"
+  },
+  "No reminder": {
+   "zh-Hans": "不提醒",
+   "hi": "कोई रिमाइंडर नहीं",
+   "es": "Sin aviso",
+   "ar": "بلا تذكير",
+   "fr": "Aucun rappel",
+   "bn": "কোনো রিমাইন্ডার নেই",
+   "pt-BR": "Sem lembrete",
+   "ru": "Без напоминания",
+   "id": "Tanpa pengingat",
+   "de": "Keine Erinnerung",
+   "tr": "Hatırlatma yok",
+   "ko": "알림 없음",
+   "ja": "通知なし"
   },
   "No rules yet. Example: if the sender contains “newsletter”, move to Junk.": {
    "zh-Hans": "还没有规则。例如：发件人包含“newsletter”时，移到垃圾邮件。",
@@ -7817,6 +8147,21 @@
    "ko": "일시 정지",
    "ja": "一時停止"
   },
+  "Pause Music and Spotify at prayer time": {
+   "zh-Hans": "礼拜时间暂停音乐和 Spotify",
+   "hi": "नमाज़ के समय Music और Spotify रोको",
+   "es": "Pausar Música y Spotify a la hora de la oración",
+   "ar": "إيقاف الموسيقى وSpotify مؤقتًا عند وقت الصلاة",
+   "fr": "Mettre Musique et Spotify en pause à l’heure de la prière",
+   "bn": "নামাজের সময় Music ও Spotify থামাও",
+   "pt-BR": "Pausar Música e Spotify na hora da oração",
+   "ru": "Ставить Музыку и Spotify на паузу во время намаза",
+   "id": "Jeda Musik dan Spotify saat waktu salat",
+   "de": "Musik und Spotify zur Gebetszeit pausieren",
+   "tr": "Namaz vaktinde Müzik ve Spotify’ı duraklat",
+   "ko": "기도 시간에 음악과 Spotify 일시정지",
+   "ja": "礼拝の時間にミュージックと Spotify を一時停止"
+  },
   "Paused": {
    "zh-Hans": "已暂停",
    "hi": "रुका हुआ",
@@ -7922,6 +8267,21 @@
    "ko": "개인 액세스 토큰",
    "ja": "パーソナルアクセストークン"
   },
+  "Pick your city in Integrations → Prayer.": {
+   "zh-Hans": "在 集成 → 礼拜 中选择你的城市。",
+   "hi": "एकीकरण → नमाज़ में अपना शहर चुनो।",
+   "es": "Elige tu ciudad en Integraciones → Oración.",
+   "ar": "اختر مدينتك في التكاملات ← الصلاة.",
+   "fr": "Choisis ta ville dans Intégrations → Prière.",
+   "bn": "ইন্টিগ্রেশন → নামাজ-এ তোমার শহর বেছে নাও।",
+   "pt-BR": "Escolha sua cidade em Integrações → Oração.",
+   "ru": "Выбери город в разделе Интеграции → Намаз.",
+   "id": "Pilih kotamu di Integrasi → Salat.",
+   "de": "Wähle deine Stadt unter Integrationen → Gebet.",
+   "tr": "Şehrini Entegrasyonlar → Namaz bölümünden seç.",
+   "ko": "연동 → 기도에서 도시를 골라요.",
+   "ja": "連携 → 礼拝 で都市を選んでください。"
+  },
   "Pin / unpin notch": {
    "zh-Hans": "固定/取消固定岛",
    "hi": "आइलैंड पिन / अनपिन",
@@ -7981,6 +8341,21 @@
    "tr": "Oynat",
    "ko": "재생",
    "ja": "再生"
+  },
+  "Play my adhan at prayer time": {
+   "zh-Hans": "礼拜时间播放我的宣礼",
+   "hi": "नमाज़ के समय मेरी अज़ान चलाओ",
+   "es": "Reproducir mi adhan a la hora de la oración",
+   "ar": "تشغيل الأذان الخاص بي عند وقت الصلاة",
+   "fr": "Jouer mon adhan à l’heure de la prière",
+   "bn": "নামাজের সময় আমার আজান বাজাও",
+   "pt-BR": "Tocar meu adhan na hora da oração",
+   "ru": "Включать мой азан во время намаза",
+   "id": "Putar azanku saat waktu salat",
+   "de": "Meinen Adhan zur Gebetszeit abspielen",
+   "tr": "Namaz vaktinde ezanımı çal",
+   "ko": "기도 시간에 내 아잔 재생",
+   "ja": "礼拝の時間に自分のアザーンを再生"
   },
   "Playing": {
    "zh-Hans": "正在播放",
@@ -8086,6 +8461,36 @@
    "tr": "Konum",
    "ko": "위치",
    "ja": "位置"
+  },
+  "Prayed. Click to undo.": {
+   "zh-Hans": "已礼拜。点按可撤销。",
+   "hi": "नमाज़ हो गई। वापस लेने के लिए क्लिक करो।",
+   "es": "Rezada. Haz clic para deshacer.",
+   "ar": "تمت الصلاة. انقر للتراجع.",
+   "fr": "Prière faite. Clique pour annuler.",
+   "bn": "নামাজ পড়া হয়েছে। বাতিল করতে ক্লিক করো।",
+   "pt-BR": "Feita. Clique para desfazer.",
+   "ru": "Совершён. Нажми, чтобы отменить.",
+   "id": "Sudah salat. Klik untuk membatalkan.",
+   "de": "Gebetet. Klicke zum Rückgängigmachen.",
+   "tr": "Kılındı. Geri almak için tıkla.",
+   "ko": "기도 완료. 클릭하면 취소돼요.",
+   "ja": "礼拝済み。クリックで取り消します。"
+  },
+  "Prayer": {
+   "zh-Hans": "礼拜",
+   "hi": "नमाज़",
+   "es": "Oración",
+   "ar": "الصلاة",
+   "fr": "Prière",
+   "bn": "নামাজ",
+   "pt-BR": "Oração",
+   "ru": "Намаз",
+   "id": "Salat",
+   "de": "Gebet",
+   "tr": "Namaz",
+   "ko": "기도",
+   "ja": "礼拝"
   },
   "Preparing…": {
    "zh-Hans": "正在准备…",
@@ -8237,6 +8642,36 @@
    "ko": "호박",
    "ja": "かぼちゃ"
   },
+  "Put a file named adhan.mp3 (or .m4a, .wav) in the sounds folder. Until then Mochi greets you.": {
+   "zh-Hans": "在声音文件夹中放入名为 adhan.mp3（或 .m4a、.wav）的文件。在此之前由 Mochi 跟你打招呼。",
+   "hi": "साउंड फ़ोल्डर में adhan.mp3 (या .m4a, .wav) नाम की फ़ाइल रखो। तब तक Mochi तुम्हारा अभिवादन करेगा।",
+   "es": "Pon un archivo llamado adhan.mp3 (o .m4a, .wav) en la carpeta de sonidos. Mientras tanto, Mochi te saluda.",
+   "ar": "ضع ملفًا باسم adhan.mp3 (أو m4a. أو wav.) في مجلد الأصوات. حتى ذلك الحين يحيّيك Mochi.",
+   "fr": "Mets un fichier nommé adhan.mp3 (ou .m4a, .wav) dans le dossier des sons. En attendant, Mochi te salue.",
+   "bn": "সাউন্ড ফোল্ডারে adhan.mp3 (বা .m4a, .wav) নামের একটি ফাইল রাখো। ততক্ষণ Mochi তোমাকে সম্ভাষণ জানাবে।",
+   "pt-BR": "Coloque um arquivo chamado adhan.mp3 (ou .m4a, .wav) na pasta de sons. Até lá, o Mochi cumprimenta você.",
+   "ru": "Положи файл adhan.mp3 (или .m4a, .wav) в папку звуков. А пока тебя поприветствует Mochi.",
+   "id": "Taruh berkas bernama adhan.mp3 (atau .m4a, .wav) di folder suara. Sampai saat itu Mochi yang menyapamu.",
+   "de": "Lege eine Datei namens adhan.mp3 (oder .m4a, .wav) in den Klangordner. Bis dahin begrüßt dich Mochi.",
+   "tr": "Sesler klasörüne adhan.mp3 (veya .m4a, .wav) adlı bir dosya koy. O zamana kadar Mochi seni selamlar.",
+   "ko": "사운드 폴더에 adhan.mp3(또는 .m4a, .wav) 파일을 넣어요. 그 전까지는 Mochi가 인사해요.",
+   "ja": "サウンドフォルダに adhan.mp3（または .m4a、.wav）という名前のファイルを入れてください。それまでは Mochi があいさつします。"
+  },
+  "Qibla {0}": {
+   "zh-Hans": "朝向 {0}",
+   "hi": "क़िबला {0}",
+   "es": "Qibla {0}",
+   "ar": "القبلة {0}",
+   "fr": "Qibla {0}",
+   "bn": "কিবলা {0}",
+   "pt-BR": "Qibla {0}",
+   "ru": "Кибла {0}",
+   "id": "Kiblat {0}",
+   "de": "Qibla {0}",
+   "tr": "Kıble {0}",
+   "ko": "키블라 {0}",
+   "ja": "キブラ {0}"
+  },
   "Quit": {
    "zh-Hans": "退出",
    "hi": "छोड़ें",
@@ -8372,6 +8807,21 @@
    "ko": "인식",
    "ja": "認識"
   },
+  "Recommended · {0}": {
+   "zh-Hans": "推荐 · {0}",
+   "hi": "अनुशंसित · {0}",
+   "es": "Recomendado · {0}",
+   "ar": "موصى بها · {0}",
+   "fr": "Recommandée · {0}",
+   "bn": "প্রস্তাবিত · {0}",
+   "pt-BR": "Recomendado · {0}",
+   "ru": "Рекомендуемый · {0}",
+   "id": "Disarankan · {0}",
+   "de": "Empfohlen · {0}",
+   "tr": "Önerilen · {0}",
+   "ko": "추천 · {0}",
+   "ja": "おすすめ · {0}"
+  },
   "Record a call": {
    "zh-Hans": "录制通话",
    "hi": "कॉल रिकॉर्ड करें",
@@ -8461,6 +8911,21 @@
    "tr": "Sesleri yeniden yükle",
    "ko": "사운드 다시 불러오기",
    "ja": "サウンドを再読み込み"
+  },
+  "Reminder before": {
+   "zh-Hans": "提前提醒",
+   "hi": "पहले याद दिलाओ",
+   "es": "Aviso antes",
+   "ar": "تذكير قبل",
+   "fr": "Rappel avant",
+   "bn": "আগে মনে করাও",
+   "pt-BR": "Lembrete antes",
+   "ru": "Напомнить за",
+   "id": "Pengingat sebelum",
+   "de": "Erinnerung vorher",
+   "tr": "Önceden hatırlat",
+   "ko": "미리 알림",
+   "ja": "事前の通知"
   },
   "Remove": {
    "zh-Hans": "移除",
@@ -9512,6 +9977,21 @@
    "ko": "설정…",
    "ja": "設定…"
   },
+  "Seventh of the night": {
+   "zh-Hans": "夜晚的七分之一",
+   "hi": "रात का सातवाँ भाग",
+   "es": "Séptimo de la noche",
+   "ar": "سُبع الليل",
+   "fr": "Septième de la nuit",
+   "bn": "রাতের এক-সপ্তমাংশ",
+   "pt-BR": "Sétimo da noite",
+   "ru": "Седьмая часть ночи",
+   "id": "Sepertujuh malam",
+   "de": "Siebtel der Nacht",
+   "tr": "Gecenin yedide biri",
+   "ko": "밤의 7분의 1",
+   "ja": "夜の7分の1"
+  },
   "Share image": {
    "zh-Hans": "分享图片",
    "hi": "छवि शेयर करें",
@@ -9887,6 +10367,21 @@
    "ko": "Spotify가 설치돼 있지 않아요",
    "ja": "Spotify がインストールされていません"
   },
+  "Standard (Shafi'i, Maliki, Hanbali)": {
+   "zh-Hans": "标准（沙斐仪、马立克、罕百里）",
+   "hi": "मानक (शाफ़ई, मालिकी, हंबली)",
+   "es": "Estándar (shafií, malikí, hanbalí)",
+   "ar": "الجمهور (الشافعي، المالكي، الحنبلي)",
+   "fr": "Standard (chaféite, malékite, hanbalite)",
+   "bn": "সাধারণ (শাফেয়ি, মালিকি, হাম্বলি)",
+   "pt-BR": "Padrão (shafi'i, maliki, hanbali)",
+   "ru": "Стандартный (шафиитский, маликитский, ханбалитский)",
+   "id": "Standar (Syafi'i, Maliki, Hanbali)",
+   "de": "Standard (schafiitisch, malikitisch, hanbalitisch)",
+   "tr": "Standart (Şafii, Maliki, Hanbeli)",
+   "ko": "표준(샤피이, 말리키, 한발리)",
+   "ja": "標準（シャーフィイー、マーリク、ハンバル）"
+  },
   "Start": {
    "zh-Hans": "开始",
    "hi": "शुरू",
@@ -10006,6 +10501,21 @@
    "tr": "Dikteyi durdur",
    "ko": "받아쓰기 중지",
    "ja": "口述を停止"
+  },
+  "Stop the adhan": {
+   "zh-Hans": "停止宣礼",
+   "hi": "अज़ान रोको",
+   "es": "Detener el adhan",
+   "ar": "إيقاف الأذان",
+   "fr": "Arrêter l’adhan",
+   "bn": "আজান থামাও",
+   "pt-BR": "Parar o adhan",
+   "ru": "Остановить азан",
+   "id": "Hentikan azan",
+   "de": "Adhan stoppen",
+   "tr": "Ezanı durdur",
+   "ko": "아잔 멈추기",
+   "ja": "アザーンを停止"
   },
   "Stored locally on your Mac. Nothing leaves your Mac. Retained for 12 weeks.": {
    "zh-Hans": "储存在 Mac 本地，不会离开你的 Mac，保留 12 周。",
@@ -10156,6 +10666,21 @@
    "tr": "Güneş gözlüğü",
    "ko": "선글라스",
    "ja": "サングラス"
+  },
+  "Sunrise": {
+   "zh-Hans": "日出",
+   "hi": "सूर्योदय",
+   "es": "Salida del sol",
+   "ar": "الشروق",
+   "fr": "Lever du soleil",
+   "bn": "সূর্যোদয়",
+   "pt-BR": "Nascer do sol",
+   "ru": "Восход",
+   "id": "Terbit",
+   "de": "Sonnenaufgang",
+   "tr": "Güneş",
+   "ko": "일출",
+   "ja": "日の出"
   },
   "System": {
    "zh-Hans": "系统",
@@ -10426,6 +10951,21 @@
    "tr": "Düzenleme Claude'u kullanır: Claude Code üzerinden Claude planın ya da Claude anahtarın. Birini Ayarlar → Sohbet bölümünden ayarla.",
    "ko": "다듬기에는 Claude가 필요해요. Claude Code로 쓰는 Claude 요금제나 Claude 키 중 하나를 설정 → 채팅에서 설정해 주세요.",
    "ja": "整える機能は Claude を使います。Claude Code 経由の Claude プラン、または Claude のキーです。設定 → チャットでどちらかを設定してください。"
+  },
+  "The direction of the Kaaba, in degrees clockwise from true north.": {
+   "zh-Hans": "天房的方向，从正北顺时针计算的度数。",
+   "hi": "काबा की दिशा, भौगोलिक उत्तर से घड़ी की दिशा में डिग्री में।",
+   "es": "La dirección de la Kaaba, en grados en sentido horario desde el norte geográfico.",
+   "ar": "اتجاه الكعبة بالدرجات باتجاه عقارب الساعة من الشمال الجغرافي.",
+   "fr": "La direction de la Kaaba, en degrés dans le sens horaire depuis le nord géographique.",
+   "bn": "কাবার দিক, ভৌগোলিক উত্তর থেকে ঘড়ির কাঁটার দিকে ডিগ্রিতে।",
+   "pt-BR": "A direção da Caaba, em graus no sentido horário a partir do norte verdadeiro.",
+   "ru": "Направление на Каабу в градусах по часовой стрелке от истинного севера.",
+   "id": "Arah Ka’bah, dalam derajat searah jarum jam dari utara sejati.",
+   "de": "Die Richtung der Kaaba, in Grad im Uhrzeigersinn ab geografisch Nord.",
+   "tr": "Kâbe’nin yönü, coğrafi kuzeyden saat yönünde derece olarak.",
+   "ko": "카바의 방향, 진북에서 시계 방향 각도예요.",
+   "ja": "カアバの方向。真北から時計回りの角度です。"
   },
   "The download couldn’t be opened. Nothing was changed.": {
    "zh-Hans": "无法打开下载的文件。未做任何更改。",
@@ -12167,6 +12707,21 @@
    "ko": "Mac의 음성 인식",
    "ja": "Mac の音声認識"
   },
+  "Your adhan file is ready. Stop it from the card.": {
+   "zh-Hans": "你的宣礼文件已就绪，可在卡片上停止。",
+   "hi": "तुम्हारी अज़ान फ़ाइल तैयार है। इसे कार्ड से रोको।",
+   "es": "Tu archivo de adhan está listo. Detenlo desde la tarjeta.",
+   "ar": "ملف الأذان جاهز. أوقفه من البطاقة.",
+   "fr": "Ton fichier d’adhan est prêt. Arrête-le depuis la carte.",
+   "bn": "তোমার আজানের ফাইল তৈরি। কার্ড থেকে থামাও।",
+   "pt-BR": "Seu arquivo de adhan está pronto. Pare-o pelo cartão.",
+   "ru": "Файл азана готов. Остановить его можно на карточке.",
+   "id": "Berkas azanmu siap. Hentikan dari kartu.",
+   "de": "Deine Adhan-Datei ist bereit. Stoppe sie über die Karte.",
+   "tr": "Ezan dosyan hazır. Karttan durdurabilirsin.",
+   "ko": "아잔 파일이 준비됐어요. 카드에서 멈출 수 있어요.",
+   "ja": "アザーンのファイルの準備ができました。カードから停止できます。"
+  },
   "Your answer…": {
    "zh-Hans": "您的答案…",
    "hi": "आपका उत्तर…",
@@ -12467,6 +13022,21 @@
    "ko": "계획 짜 왔어요!",
    "ja": "のプランが準備できました"
   },
+  "in {0}": {
+   "zh-Hans": "{0}后",
+   "hi": "{0} में",
+   "es": "en {0}",
+   "ar": "بعد {0}",
+   "fr": "dans {0}",
+   "bn": "{0} পরে",
+   "pt-BR": "em {0}",
+   "ru": "через {0}",
+   "id": "dalam {0}",
+   "de": "in {0}",
+   "tr": "{0} sonra",
+   "ko": "{0} 후",
+   "ja": "あと{0}"
+  },
   "in {h} h {m}": {
    "zh-Hans": "{h} 小时 {m} 分后",
    "hi": "{h} घंटे {m} मिनट में",
@@ -12601,6 +13171,21 @@
    "tr": "bülten, @magaza.com, fatura…",
    "ko": "뉴스레터, @shop.kr, 청구서…",
    "ja": "ニュースレター、@shop.jp、請求書…"
+  },
+  "no city found": {
+   "zh-Hans": "未找到城市",
+   "hi": "कोई शहर नहीं मिला",
+   "es": "ninguna ciudad encontrada",
+   "ar": "لم يُعثر على مدينة",
+   "fr": "aucune ville trouvée",
+   "bn": "কোনো শহর পাওয়া যায়নি",
+   "pt-BR": "nenhuma cidade encontrada",
+   "ru": "город не найден",
+   "id": "kota tidak ditemukan",
+   "de": "keine Stadt gefunden",
+   "tr": "şehir bulunamadı",
+   "ko": "도시를 찾지 못함",
+   "ja": "都市が見つかりません"
   },
   "no page found": {
    "zh-Hans": "找不到页面",
@@ -13066,6 +13651,21 @@
    "tr": "{0} okunmamış",
    "ko": "읽지 않음 {0}개",
    "ja": "未読 {0}"
+  },
+  "{0} · now": {
+   "zh-Hans": "{0} · 现在",
+   "hi": "{0} · अभी",
+   "es": "{0} · ahora",
+   "ar": "{0} · الآن",
+   "fr": "{0} · maintenant",
+   "bn": "{0} · এখন",
+   "pt-BR": "{0} · agora",
+   "ru": "{0} · сейчас",
+   "id": "{0} · sekarang",
+   "de": "{0} · jetzt",
+   "tr": "{0} · şimdi",
+   "ko": "{0} · 지금",
+   "ja": "{0} · 今"
   },
   "{0} — open Spotify": {
    "zh-Hans": "{0} — 打开 Spotify",
