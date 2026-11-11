@@ -1,13 +1,13 @@
-# Coucou for agents on a remote machine (SSH)
+# Rafiq for agents on a remote machine (SSH)
 
 Claude Code and Codex sessions that run on a server (VS Code Remote - SSH, an SSH
-environment in the Claude app's Code tab, Codex on a dev box) can show up in Coucou on
+environment in the Claude app's Code tab, Codex on a dev box) can show up in Rafiq on
 your Mac like local ones, approvals and questions included, on the iPhone too. Their
 hooks talk to a socket on the server, and an SSH tunnel opened by the Mac forwards that
-socket to Coucou:
+socket to Rafiq:
 
 ```
-agent on the server → nb-hook → socket on the server ──ssh -R──▶ nb.sock on the Mac → Coucou
+agent on the server → nb-hook → socket on the server ──ssh -R──▶ nb.sock on the Mac → Rafiq
 ```
 
 The server needs `python3` and an SSH server. Nothing listens on a network port, and the
@@ -23,17 +23,17 @@ ssh myserver 'mkdir -p ~/.coucou && chmod 700 ~/.coucou'
 scp ~/Library/Application\ Support/NotchBuddy/nb-hook ~/Library/Application\ Support/NotchBuddy/nb-hook.py myserver:.coucou/
 ```
 
-Copy both files again after updating Coucou: the relay changes with the app.
+Copy both files again after updating Rafiq: the relay changes with the app.
 
 Off the Mac, `nb-hook` runs the `python3` in `PATH`. The relay looks for the socket where
-Coucou keeps it on a Mac (`~/Library/Application Support/NotchBuddy/nb.sock` for the
+Rafiq keeps it on a Mac (`~/Library/Application Support/NotchBuddy/nb.sock` for the
 GitHub relay, the container path for the App Store one), so the tunnel below forwards to
 that path. To use another path, set `COUCOU_SOCKET`; Claude Code runs hook commands in a
 shell, so it can go in the command: `COUCOU_SOCKET=/run/user/1000/coucou-mac.sock "$HOME/.coucou/nb-hook"`.
 
 ## 2. The hooks on the server
 
-**Claude Code** — the server's `~/.claude/settings.json` gets the hooks Coucou adds on the
+**Claude Code** — the server's `~/.claude/settings.json` gets the hooks Rafiq adds on the
 Mac, with the server's path. The simplest is to copy the entries whose command contains
 `NotchBuddy` from the Mac's `~/.claude/settings.json` and change the path. Every event runs
 `"$HOME/.coucou/nb-hook"` with a 10 s timeout (`SessionStart`, `SessionEnd`,
@@ -56,7 +56,7 @@ Mac, with the server's path. The simplest is to copy the entries whose command c
 }
 ```
 
-**Codex** — the server's `~/.codex/hooks.json` gets the entries Coucou adds on the Mac
+**Codex** — the server's `~/.codex/hooks.json` gets the entries Rafiq adds on the Mac
 (Settings → Codex → Install hooks), with `"$HOME/.coucou/nb-hook" --agent codex`. Codex
 approvals in the notch need the GitHub build. Recent Codex versions only run hooks they
 trust (`hooks.state` in `~/.codex/config.toml`): trust the new ones in Codex, and start a
@@ -78,7 +78,7 @@ ssh -N -o ExitOnForwardFailure=yes -o ServerAliveInterval=15 -o ServerAliveCount
   path` — unless the server's `sshd_config` says `StreamLocalBindUnlink yes`. The leftover
   file does no harm meanwhile: connecting to it fails at once, and the agent carries on.
 - Use the absolute path on the server; its folder must exist (the first command does both).
-- App Store build: `LOCAL` is `~/Library/Containers/fr.louisraille.Coucou/Data/nb.sock`.
+- App Store build: `LOCAL` is `~/Library/Containers/com.edra3k.rafiq.ios/Data/nb.sock`.
 - sshd creates the socket with mode `0600` (`StreamLocalBindMask`), so only your user on
   the server, and root, can reach it. Whoever can act as your user there can put cards in
   your notch and read your answers: keep that in mind on a shared machine.
@@ -124,7 +124,7 @@ before the agent asks in its own window. Two ways around it:
   `ClientAliveCountMax 3`. sshd drops a silent connection after about 45 s; from then on
   the hooks fail at once and the agent asks itself.
 - **A heartbeat**, when sshd is not yours. The tunnel's session sends a line every 10 s,
-  the server touches a file, and a wrapper (next section) skips Coucou once the file is
+  the server touches a file, and a wrapper (next section) skips Rafiq once the file is
   older than 30 s. On the Mac, instead of `ssh -N`:
 
 ```sh
@@ -137,7 +137,7 @@ while :; do echo; sleep 10; done | ssh -o ExitOnForwardFailure=yes -o ServerAliv
 
 Claude Code says where a session runs in `CLAUDE_CODE_ENTRYPOINT`, and the relay uses it:
 
-| `CLAUDE_CODE_ENTRYPOINT` | Session | In Coucou |
+| `CLAUDE_CODE_ENTRYPOINT` | Session | In Rafiq |
 |---|---|---|
 | `claude-desktop` | Code tab of the Claude app | Claude Desktop pill; approvals and questions stay in the app |
 | `claude-vscode` | VS Code's Claude Code extension | VS Code pill, with approvals and questions in the notch and on the iPhone |

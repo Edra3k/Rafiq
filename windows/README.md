@@ -1,10 +1,10 @@
 <div align="center">
 
-<img src="src-tauri/icons/128x128.png" width="96" alt="Coucou icon">
+<img src="src-tauri/icons/128x128.png" width="96" alt="Rafiq icon">
 
-# Coucou for Windows
+# Rafiq for Windows
 
-**Mochi doesn't get a notch on a PC — so it lives at the top of your screen instead.**
+**Rafiq doesn't get a notch on a PC — so it lives at the top of your screen instead.**
 
 Approve Claude Code permissions, watch your session work, drop a file, chat with Claude, keep an eye on your services — without leaving what you're doing.
 
@@ -15,14 +15,12 @@ Approve Claude Code permissions, watch your session work, drop a file, chat with
 
 </div>
 
-<img src="screenshots/greeting.png" width="640" alt="Mochi waving hello at launch">
-
 ---
 
 ## Install
 
-Download **[Coucou-Windows.msi](https://github.com/Louis-CFM/coucou/releases/download/windows-latest/Coucou-Windows.msi)**
-(Windows Installer) or **[Coucou-Windows-setup.exe](https://github.com/Louis-CFM/coucou/releases/download/windows-latest/Coucou-Windows-setup.exe)**,
+Download **[Rafiq-Windows.msi](https://github.com/Edra3k/Rafiq/releases/download/windows-latest/Rafiq-Windows.msi)**
+(Windows Installer) or **[Rafiq-Windows-setup.exe](https://github.com/Edra3k/Rafiq/releases/download/windows-latest/Rafiq-Windows-setup.exe)**,
 always the newest version, and run it. The .exe installs for the current user only, with no admin prompt; the .msi may ask for admin rights.
 
 **Windows will show a warning the first time — that's expected.** The installer isn't code-signed yet, so SmartScreen doesn't know the publisher:
@@ -31,7 +29,7 @@ always the newest version, and run it. The .exe installs for the current user on
 2. Click **More info** (*Informations complémentaires* in French). This reveals a **Run anyway** button.
 3. Click **Run anyway** (*Exécuter quand même*). The installer starts normally.
 
-This is only because the app isn't signed with a paid certificate yet. Coucou is open source, and Microsoft Defender scans the installer as clean.
+This is only because the app isn't signed with a paid certificate yet. Rafiq is open source, and Microsoft Defender scans the installer as clean.
 
 Microsoft Defender once flagged the installer by mistake (`Trojan:Win32/Wacatac.H!ml`,
 a machine-learning false positive); Microsoft reviewed it and removed the detection.
@@ -42,37 +40,31 @@ You can also [build it yourself](#build-it-yourself).
 
 ## Using it
 
-<img src="screenshots/compact.png" width="292" alt="The compact island, with the integration pills as mini Mochis">
-<img src="screenshots/overview.png" width="640" alt="The overview: the focused integration on the left, the other pills on the right">
-<img src="screenshots/approval.png" width="640" alt="A Claude Code permission request, with Deny and Allow">
-<img src="screenshots/chat.png" width="640" alt="Chatting with Claude from the island">
-<img src="screenshots/drop.png" width="640" alt="Mochi turned into a box, waiting for a file">
-
 | What you do | What happens |
 |---|---|
-| Look at the top-centre of the screen | The closed island: a small black island that stays there while Coucou runs, where a Mac has its notch. It shows Mochi, as on a Mac without a notch, or the time, the date and the time, your Claude usage or what's playing (**Settings → General → Closed island shows**). **Hide the island** keeps nothing there: move the pointer to the very top-centre of the screen instead |
-| Move the pointer onto the closed island | Mochi peeks out: the compact island |
+| Look at the top-centre of the screen | The closed island: a small black island that stays there while Rafiq runs, where a Mac has its notch. It shows Rafiq, as on a Mac without a notch, or the time, the date and the time, your Claude usage or what's playing (**Settings → General → Closed island shows**). **Hide the island** keeps nothing there: move the pointer to the very top-centre of the screen instead |
+| Move the pointer onto the closed island | Rafiq peeks out: the compact island |
 | Click the small island | It opens. With **Settings → General → Open on hover**, resting the pointer on it is enough, and it folds again shortly after the pointer leaves (click inside to keep it open) |
 | The **✕** at the top right of the open island | Folds it back to the compact island now, without waiting for the auto-close |
-| Click Mochi | It gets annoyed. Three times in a row and it goes dizzy |
-| Rest the pointer on Mochi for two seconds | Hearts |
-| Right-click Mochi | The wardrobe: rest the pointer on an outfit to try it on, click to keep it. **Auto** dresses him for the season (witch hat in October, Santa hat in December…) |
-| Drag Mochi out of the island | He moves onto your desktop and hangs out there, in his outfit, watching your cursor. Drop him back on the island to bring him home |
-| On the desktop: click / right-click / double-click Mochi | Poke him / the wardrobe / he flies home. Drag him to move him |
-| Drag a file onto the island | Mochi turns into a box, swallows it, then offers to answer questions about it |
+| Click Rafiq | It gets annoyed. Three times in a row and it goes dizzy |
+| Rest the pointer on Rafiq for two seconds | Hearts |
+| Right-click Rafiq | The wardrobe: rest the pointer on an outfit to try it on, click to keep it. **Auto** dresses him for the season (witch hat in October, Santa hat in December…) |
+| Drag Rafiq out of the island | He moves onto your desktop and hangs out there, in his outfit, watching your cursor. Drop him back on the island to bring him home |
+| On the desktop: click / right-click / double-click Rafiq | Poke him / the wardrobe / he flies home. Drag him to move him |
+| Drag a file onto the island | Rafiq turns into a box, swallows it, then offers to answer questions about it |
 | Drag a file onto the island and let go on one of the sessions listed on the right ("Or into a session") | That session's terminal or editor comes forward and the file's path is pasted into Claude Code's prompt, as a drag onto the terminal would write it. When its window can't be found, the path is copied instead |
 | The terminal tab in the island's header | **New Claude Code session**: pick a project (the folders your sessions ran in, or **Choose a folder…**), type what Claude should do, and your terminal opens there running `claude` with it |
 | Click a file in the session ticker | Its diff opens in the island; ↗ opens the file in VS Code, ‹ or `Esc` goes back |
 | `Esc` | Closes the island |
-| Put a file named like one of Mochi's sounds (`finish.wav`, `approval.mp3`, `greet.m4a`…) in the sounds folder | It replaces that sound after **Settings → General → Reload sounds**. **Open sounds folder** shows the folder: `~/.config/coucou/sounds` on Linux, `%APPDATA%\Coucou\sounds` on Windows |
-| Tray icon | Open, Weekly recap, Wardrobe…, Settings…, Pause, Quit — and **Update Coucou to X…** while a new version is out |
+| Put a file named like one of Rafiq's sounds (`finish.wav`, `approval.mp3`, `greet.m4a`…) in the sounds folder | It replaces that sound after **Settings → General → Reload sounds**. **Open sounds folder** shows the folder: `~/.config/coucou/sounds` on Linux, `%APPDATA%\Rafiq\sounds` on Windows |
+| Tray icon | Open, Weekly recap, Wardrobe…, Settings…, Pause, Quit — and **Update Rafiq to X…** while a new version is out |
 | `Ctrl+Alt+Space` | Opens the chat, from any app |
 | `Ctrl+Alt+A` | Jumps to the waiting permission or question |
 | `Ctrl+Alt+T` | Brings the session's window forward ("Open terminal") |
 | `Ctrl+Alt+→` / `Ctrl+Alt+←` | Next / previous pill |
-| `Ctrl+Alt+S` | Mutes or unmutes Mochi |
+| `Ctrl+Alt+S` | Mutes or unmutes Rafiq |
 | `Ctrl+Alt+G` | Opens the wardrobe |
-| `Ctrl+Alt+D` | Sends Mochi to the desktop, or brings him home |
+| `Ctrl+Alt+D` | Sends Rafiq to the desktop, or brings him home |
 | `Ctrl+Alt+N` | Opens and closes the island (off until you turn it on) |
 | In the open island: `Ctrl+→` `Ctrl+←`, `Ctrl+1`–`Ctrl+9` | Switch pills |
 | In the open island: `Ctrl+↓` `Ctrl+↑`, `Ctrl+O` | Walk the open GitHub list, open the highlighted row |
@@ -84,8 +76,8 @@ You can also [build it yourself](#build-it-yourself).
 
 Every global shortcut can be changed or turned off in **Settings… → Shortcuts**:
 click it and press the new keys. A combination another app already holds is
-flagged *In use*, and two Coucou shortcuts on the same keys are flagged *Used
-twice*. While you record a new one, Coucou lets go of its own so the keys reach
+flagged *In use*, and two Rafiq shortcuts on the same keys are flagged *Used
+twice*. While you record a new one, Rafiq lets go of its own so the keys reach
 the recorder.
 
 The defaults are not the Mac's `⌃⌥` letters. On Windows, `Ctrl+Alt` is `AltGr`,
@@ -93,7 +85,7 @@ so a global `Ctrl+Alt+E` would swallow every `€` typed on a French or German
 keyboard. The defaults were checked against the AltGr layer of the French,
 German, Spanish, Italian, Portuguese and Brazilian (ABNT2) layouts — that is why
 pill switching uses the arrows rather than `[` `]`, and mute is `S` rather than
-`M` (`AltGr+M` is `µ` in German). On top of that, Coucou asks Windows what each
+`M` (`AltGr+M` is `µ` in German). On top of that, Rafiq asks Windows what each
 `Ctrl+Alt` combination types on the layouts you have installed and leaves any
 that types a character unregistered, flagged *Types “ą”* in Settings: Polish,
 for one, puts `ą` on `AltGr+A` and `ś` on `AltGr+S`. The recorder refuses such
@@ -101,13 +93,13 @@ a combination too.
 
 Older Intel graphics drivers rotate the screen on `Ctrl+Alt+←` / `→`; if yours
 still does, those two show up as *In use*. On Linux, Xfce and MATE keep
-`Ctrl+Alt+D` to show the desktop, so there **Send Mochi to the desktop** shows
+`Ctrl+Alt+D` to show the desktop, so there **Send Rafiq to the desktop** shows
 up as *In use* until you give it other keys.
 
 Everything else happens on its own: a Claude Code permission request opens the
 island with **Deny / Allow**, a question from Claude Code shows its options to
 pick from, a finished session shows what it did, and
-your integrations sit in the coloured pills next to Mochi.
+your integrations sit in the coloured pills next to Rafiq.
 
 A permission card or a question stays until you answer it: the mouse leaving
 never folds it, it comes up even when the island is already open or another
@@ -117,7 +109,7 @@ island shrinks to its compact size and stays on screen, nothing is answered, and
 opening it again shows the card. **Open terminal** brings the window the session
 runs in to the front.
 
-When Mochi lives on the desktop, he flies back to the island with a permission
+When Rafiq lives on the desktop, he flies back to the island with a permission
 request or a question and returns to his spot once you have answered; he does a
 little jump when a task finishes, and dozes off when nothing has happened for
 two minutes and your cursor is elsewhere — asleep, he costs nothing: no cursor
@@ -131,26 +123,26 @@ session, and they are forgotten an hour after the last edit or when the session
 ends. When Claude finishes, the card keeps the first paragraph of its final
 answer on one line, still, until the next prompt.
 
-## Flow, the Notetaker and « OK Coucou »
+## Flow, the Notetaker and « OK Rafiq »
 
-Coucou has its own window (tray → Open, or launch Coucou again): **Flow** on the
+Rafiq has its own window (tray → Open, or launch Rafiq again): **Flow** on the
 left (Dictation, Notetaker, Statistics, Dictionary, Snippets, Styles, Settings),
 then **Notch**, the island's settings. Everything below runs on
 [Parakeet](https://huggingface.co/nvidia/parakeet-tdt-0.6b-v3) through
 [sherpa-onnx](https://github.com/k2-fsa/sherpa-onnx), on your CPU and offline;
 nothing is downloaded until you click **Download** (about 700 MB, once, checked
-against its SHA-256, kept in Coucou's data folder under `Models`).
+against its SHA-256, kept in Rafiq's data folder under `Models`).
 
 | What you do | What happens |
 |---|---|
 | Hold **right Ctrl** anywhere, speak, let go | Your words are pasted where you type. Pick another key in Flow → Settings: right Alt, right Shift, Ctrl + Win (Ctrl + Super on Linux) |
 | Tap the key twice (once with **Hands-free with one press** on, in Flow → Settings) | Hands-free: speak as long as you like, tap once to paste. `Esc` cancels |
-| Hover the pill at the bottom of the screen | Dictate, record a call, open Coucou. Put the pill on the left or right edge in Flow → Settings |
+| Hover the pill at the bottom of the screen | Dictate, record a call, open Rafiq. Put the pill on the left or right edge in Flow → Settings |
 | Click **Record a call** | Your microphone and what the computer plays, transcribed live, then written person by person with a summary and to-dos by Claude (your key). The audio is deleted once the transcript is written |
-| Say **« OK Coucou »**, then ask | Claude (your key) answers in the pill and out loud: pills, Spotify, your services' numbers, your agents, web search, open an app, an email prepared in your mail app. Turn it on in Notch → OK Coucou |
+| Say **« OK Rafiq »**, then ask | Claude (your key) answers in the pill and out loud: pills, Spotify, your services' numbers, your agents, web search, open an app, an email prepared in your mail app. Turn it on in Notch → OK Rafiq |
 
 Your voice never leaves the computer. With Claude's clean-up (Flow → Styles),
-a call's summary or « OK Coucou », the text — never the audio — goes to
+a call's summary or « OK Rafiq », the text — never the audio — goes to
 Anthropic with your key; an ElevenLabs voice for the answers sends them to
 ElevenLabs with yours.
 
@@ -168,18 +160,16 @@ declare still shows up, for as long as it runs.
 
 ## Claude Code
 
-<img src="screenshots/settings.png" width="562" alt="The settings window">
-
 Open **Settings… → Claude Code → Install hooks…**. You get the exact diff of what
 will change in `%USERPROFILE%\.claude\settings.json`, the path of the dated backup
 that will be taken, and nothing is written until you click. Your own hooks are
-never touched, and uninstalling removes only Coucou's entries.
+never touched, and uninstalling removes only Rafiq's entries.
 
 The relay is a tiny executable, `coucou-hook.exe`, copied to
-`%LOCALAPPDATA%\Coucou\bin\` at launch. It is given 300 ms to reach Coucou and
+`%LOCALAPPDATA%\Rafiq\bin\` at launch. It is given 300 ms to reach Rafiq and
 exits cleanly if the app is closed, slow or crashed — **a Claude Code session is
-never blocked or slowed down by Coucou.** If nobody answers a permission request
-in time, Coucou stays quiet and Claude Code asks in the terminal as usual.
+never blocked or slowed down by Rafiq.** If nobody answers a permission request
+in time, Rafiq stays quiet and Claude Code asks in the terminal as usual.
 
 It works from any terminal — Windows Terminal, PowerShell, VS Code, Git Bash.
 
@@ -195,7 +185,7 @@ reset times. Both are off by default; turn them on in **Settings… → Plan usa
   `%USERPROFILE%\.claude\settings.json`, takes a dated backup and writes only
   after your click, with the same writer as the hooks: the status line becomes `coucou-hook --statusline`, which
   passes only the limits on (300 ms at most) and runs the status line you had
-  before — kept in `statusline-previous.json` outside `bin` in Coucou's data folder — with the same
+  before — kept in `statusline-previous.json` outside `bin` in Rafiq's data folder — with the same
   input, printing what it prints. On Windows that one runs through Git Bash, as
   Claude Code runs it (`CLAUDE_CODE_GIT_BASH_PATH`, then the Git for Windows that
   `git.exe` on `PATH` belongs to, then the usual install folders); it gets 10 s
@@ -204,21 +194,21 @@ reset times. Both are off by default; turn them on in **Settings… → Plan usa
   command-line tool only: the Claude desktop app does not run the status line, so
   if you only use the desktop app the Claude gauge stays on "—".
 - **Codex**: nothing is installed. When the pill shows (or is clicked, at most
-  once a minute) Coucou starts `codex app-server` and asks it
+  once a minute) Rafiq starts `codex app-server` and asks it
   `account/rateLimits/read`, as Codex's `/status` does, then stops it (15 s at
   most, never while paused). Codex must be signed in with ChatGPT.
 
 ## Weekly recap
 
-On Monday from 8 am, the first time Coucou starts, an agent starts working or
+On Monday from 8 am, the first time Rafiq starts, an agent starts working or
 you wake the island, a card sums up the past week: time spent, sessions, files
 and lines changed, commands run, permissions and questions, your top agent,
 top project, busiest day and longest session. **Tray → Weekly recap** opens it
 any day.
 
-**Share image** turns it into a 1080 × 1920 picture with Mochi. **Save image**
+**Share image** turns it into a 1080 × 1920 picture with Rafiq. **Save image**
 writes it to your Pictures folder (Downloads if there is none) as
-`Coucou weekly recap YYYY-MM-DD.png`, never over an existing file; **Copy** puts
+`Rafiq weekly recap YYYY-MM-DD.png`, never over an existing file; **Copy** puts
 it on the clipboard. **Hide project names** leaves the project out of the image.
 
 The history is `recap.json` next to the log, a 12-week rolling window: counts,
@@ -228,7 +218,7 @@ Weekly recap** turns it off or clears it.
 
 ## Languages
 
-Coucou speaks twelve of the Mac app's languages: English, 简体中文, हिन्दी,
+Rafiq speaks twelve of the Mac app's languages: English, 简体中文, हिन्दी,
 Español, العربية, Français, বাংলা, Português (Brasil), Русский, Bahasa
 Indonesia, Deutsch and Türkçe (Traditional Chinese and Thai are on the Mac
 only for now). **Settings… → General → Language** picks one; **System** (the
@@ -236,7 +226,7 @@ default) follows your system's language when it is one of these, English
 otherwise. The island, the settings window and the tray menu switch at once —
 nothing restarts, and the island keeps its sessions, steps and chat.
 
-In Arabic the island's cards read right to left; Mochi, the pills and the
+In Arabic the island's cards read right to left; Rafiq, the pills and the
 header stay where they are, and commands, code and file paths stay left to
 right. Steps already in a session's ticker keep the language they were written
 in, as on the Mac.
@@ -259,14 +249,14 @@ provider's official terminal tool, signed in with your own account — Claude
 Code (Claude plan), Antigravity CLI or Gemini CLI (Google AI plan), Codex CLI
 (ChatGPT plan), Cursor CLI and GitHub Copilot CLI (`cli_relay.rs`). Each row
 says whether the tool is installed (on PATH or in the usual install folders),
-links to its install page and gives the command to sign in once. Coucou reads
+links to its install page and gives the command to sign in once. Rafiq reads
 no credential: the tool answers exactly as it does in a terminal. Each run is
 read-only (plan or ask modes, no shell, no edits), loads none of your hooks,
 MCP servers or extensions where the tool can turn them off, saves no session,
 and searches the web for the chat only; a dropped file is read with no web at
 all. Through npm's `.cmd` shims the prompt goes in on stdin. Flow's clean-up
 and the notes of a call use Claude Code when no Anthropic key is saved;
-« OK Coucou » still needs the key: its tools are Coucou's own.
+« OK Rafiq » still needs the key: its tools are Rafiq's own.
 
 The chat also talks to **Google AI (Gemini)**, **OpenAI** and **OpenRouter**:
 add their keys in **Settings… → Chat providers**, then click the model name
@@ -288,7 +278,7 @@ PC — nothing leaves it then — and warns before a key would travel over plain
 
 Answers from every provider are shown as **Markdown**: headings, lists, bold,
 inline code, quotes, and code blocks with a copy button. It is built from text
-nodes, never parsed as HTML, and only `http`/`https` links open. Mochi greets
+nodes, never parsed as HTML, and only `http`/`https` links open. Rafiq greets
 you by your first name when your account has one (the Windows display name or
 the Linux GECOS full name; a bare login name is not used).
 
@@ -296,10 +286,10 @@ To send the Claude chat through an Anthropic-compatible gateway, set
 `COUCOU_ANTHROPIC_BASE_URL` (for example `https://gateway.example.com`;
 `/v1/messages` is added). It must be `https://`, or `http://` to this PC only.
 Claude Code's own `ANTHROPIC_BASE_URL` is deliberately ignored: your key only
-goes where you told Coucou to send it. The gateway's host is written to the log
+goes where you told Rafiq to send it. The gateway's host is written to the log
 once; the key never is.
 
-No telemetry. The only network requests Coucou makes are to the services you
+No telemetry. The only network requests Rafiq makes are to the services you
 configure yourself, and — once you agree — to GitHub's releases API, to tell you
 about new versions (see [New versions](#new-versions)).
 
@@ -322,11 +312,11 @@ a badge and a sound when the CI of one of your pull requests turns red or green
 someone requests your review. Pull requests are checked every 5 minutes, every
 minute while a CI is running, and as soon as you open the card on data older
 than a minute; contributions every 30 minutes. Nothing is fetched while the pill
-is off or Coucou is paused.
+is off or Rafiq is paused.
 
 ## Mail (classic Outlook, Windows)
 
-Turn the **Mail** pill on in Notch → Active pills. Coucou reads the Outlook already open on
+Turn the **Mail** pill on in Notch → Active pills. Rafiq reads the Outlook already open on
 your PC — the classic Outlook of Microsoft 365, through its own COM objects — with no sign-in,
 no app to register at Microsoft and no admin consent. It never starts Outlook, and a closed
 Outlook costs nothing. The new Outlook for Windows has no COM objects, so it is not reached
@@ -335,12 +325,12 @@ this way. Linux has no Outlook: the pill is Windows only.
 | What you do | What happens |
 |---|---|
 | Open the Mail pill | Your newest messages, unread ones tinted, a ⚑ on the flagged ones. The magnifier searches every inbox: free words, `from:anne`, `subject:"May quote"`. Filters: All, Unread, Important, Today |
-| Click a message | Its sender, subject and the start of its text. **Open in Outlook**, **Reply** (Outlook's own window: nothing is sent from Coucou), **Mark as read**, **Important**, **Junk**, and in ⋯ **Always important (VIP)** or **Always ignore this sender** |
-| Coucou → Mail → Overview | **Sort new messages automatically** (off by default): only what arrives after you turn it on, each message once. VIPs are flagged, banned words send to Junk, then the first rule that matches acts. A journal of every action, each with **Undo** |
-| Coucou → Mail → Rules, Banned words, VIP | "If the sender / domain / subject / text / account contains … then Junk / important / read / move to a folder". Banned words are whole words: "sale" does not catch "Salesforce". A VIP is an address or a whole domain (`@client.com`) |
+| Click a message | Its sender, subject and the start of its text. **Open in Outlook**, **Reply** (Outlook's own window: nothing is sent from Rafiq), **Mark as read**, **Important**, **Junk**, and in ⋯ **Always important (VIP)** or **Always ignore this sender** |
+| Rafiq → Mail → Overview | **Sort new messages automatically** (off by default): only what arrives after you turn it on, each message once. VIPs are flagged, banned words send to Junk, then the first rule that matches acts. A journal of every action, each with **Undo** |
+| Rafiq → Mail → Rules, Banned words, VIP | "If the sender / domain / subject / text / account contains … then Junk / important / read / move to a folder". Banned words are whole words: "sale" does not catch "Salesforce". A VIP is an address or a whole domain (`@client.com`) |
 | Turn on **Mail** next to the model in the chat | The AI gets your 40 newest messages (text and attachments for the newest and for the ones you name) and may answer with a plan: sort, reply drafts, sends, a mail merge that gives each recipient their page of a PDF, saving attachments. The plan shows as a card: the mails to send, the ones that can't be sent in red, **Send me a test**, and **Run**, which waits 5 seconds (Cancel) before anything happens |
 
-Coucou never deletes a message, and never sends one without your click on Run. Your mail
+Rafiq never deletes a message, and never sends one without your click on Run. Your mail
 goes only to the chat's AI you picked (your key or your subscription), and only while the
 chat's Mail switch is on. On some company PCs, Outlook may ask whether to let a program use
 it: that is Outlook's own security prompt, set by your IT department.
@@ -358,9 +348,9 @@ account only, because WhatsApp may restrict accounts that abuse it.
   the open-source gateway, from its GitHub releases. It picks the zip for this
   system (Windows or Linux, amd64 or arm64) and checks it against the SHA-256
   GOWA publishes; nothing is installed if they differ.
-- Coucou then unpacks GOWA into `%LOCALAPPDATA%\Coucou\GOWA` (Windows) or
+- Rafiq then unpacks GOWA into `%LOCALAPPDATA%\Rafiq\GOWA` (Windows) or
   `~/.local/share/coucou/GOWA` (Linux) and starts it on `127.0.0.1` only, with
-  media downloads off. It stops GOWA when Coucou quits.
+  media downloads off. It stops GOWA when Rafiq quits.
 - Scan the QR code in Settings with your phone: **WhatsApp › Settings › Linked
   devices › Link a device**.
 - **Update** fetches the latest GOWA. Nothing goes to GitHub except on these
@@ -370,11 +360,11 @@ account only, because WhatsApp may restrict accounts that abuse it.
 
 - The island lists one row per conversation, with its initials, name, last
   message and unread count. Photos, voice messages and other media show as a
-  label; Coucou never downloads them.
+  label; Rafiq never downloads them.
 - Click a conversation for its last ten messages and a reply field. **Enter**
   sends, **Shift+Enter** starts a new line and **Escape** goes back. Nothing is
   ever sent without your Enter or click.
-- On a new message Mochi smiles, with the "pop" sound if sounds are on.
+- On a new message Rafiq smiles, with the "pop" sound if sounds are on.
 - Groups stay quiet unless you are mentioned. A right-click on a row ignores
   that chat.
 - Read receipts are sent only when you open a conversation, or only when you
@@ -384,15 +374,15 @@ account only, because WhatsApp may restrict accounts that abuse it.
 
 Under **Advanced** you can use your own GOWA or [OpenWA](https://github.com/rmyndharis/OpenWA)
 at a local address, with its credential (GOWA's `user:password` or OpenWA's
-API key), and change the port of Coucou's webhook (47823).
+API key), and change the port of Rafiq's webhook (47823).
 
 - The address and the credential are stored in the Credential Manager or the
   Secret Service, never on disk.
 - New messages arrive on a webhook bound to `127.0.0.1` and signed by the
-  gateway. When the webhook isn't working, Coucou checks for new messages
+  gateway. When the webhook isn't working, Rafiq checks for new messages
   every 20 s instead.
 - Messages stay in memory only: they are never logged or saved, and they are
-  forgotten when Coucou quits or WhatsApp is turned off.
+  forgotten when Rafiq quits or WhatsApp is turned off.
 - Nothing runs while the integration or its pill is off.
 
 **Different from the Mac**
@@ -407,32 +397,32 @@ API key), and change the port of Coucou's webhook (47823).
 
 ## New versions
 
-Coucou can tell you when a new version is out, and on Windows install it in one
+Rafiq can tell you when a new version is out, and on Windows install it in one
 click. Nothing goes to GitHub before you agree: about 30 seconds after launch the
 island asks once, **Get new versions from the island?** (asked again a day later
 at most if you leave the card unanswered, never over a permission or a question).
 **Settings → General → Updates** has the same switch, and **Check now**, which
 looks once even with the switch off.
 
-Once allowed, Coucou asks GitHub at launch and every 6 hours:
-`GET https://api.github.com/repos/Louis-CFM/coucou/releases?per_page=30`,
+Once allowed, Rafiq asks GitHub at launch and every 6 hours:
+`GET https://api.github.com/repos/Edra3k/Rafiq/releases?per_page=30`,
 unauthenticated, no cookies, nothing about you. It keeps the published
 `windows-vX.Y.Z` releases (`linux-vX.Y.Z` on Linux — never the rolling
 `windows-latest` / `linux-latest`, drafts or prereleases) and takes the highest.
 When it is newer than yours, the island opens on it once a day at most, with
-Mochi surprised: **Coucou X is out**, the first line of its *What's new*, and the
+Rafiq surprised: **Rafiq X is out**, the first line of its *What's new*, and the
 version you have; **Update now · What's new · Later**. The tray menu offers
-**Update Coucou to X…** for as long as it is out.
+**Update Rafiq to X…** for as long as it is out.
 
 **Update now** (Windows) uses the installer this copy came from:
 
-- the per-user `setup.exe` (Coucou in `%LOCALAPPDATA%\Coucou`, with its
-  `uninstall.exe`): `Coucou-Windows-X.Y.Z-setup.exe /P /UPDATE /R` — passive,
+- the per-user `setup.exe` (Rafiq in `%LOCALAPPDATA%\Rafiq`, with its
+  `uninstall.exe`): `Rafiq-Windows-X.Y.Z-setup.exe /P /UPDATE /R` — passive,
   no "reinstall or uninstall?" step, the old uninstaller never runs, your
-  shortcuts and settings stay, and the installer starts Coucou again;
-- the per-machine `.msi` (Coucou in `Program Files\Coucou`):
-  `msiexec /i Coucou-Windows-X.Y.Z.msi /passive AUTOLAUNCHAPP=True`, which asks
-  for admin rights as installing it by hand does, then starts Coucou again;
+  shortcuts and settings stay, and the installer starts Rafiq again;
+- the per-machine `.msi` (Rafiq in `Program Files\Rafiq`):
+  `msiexec /i Rafiq-Windows-X.Y.Z.msi /passive AUTOLAUNCHAPP=True`, which asks
+  for admin rights as installing it by hand does, then starts Rafiq again;
 - anything else — the portable exe, a build — gets **Get it on GitHub**, the
   release page, instead.
 
@@ -440,7 +430,7 @@ The installer is downloaded into a temporary folder, following redirects only to
 `github.com`, `api.github.com` and `*.githubusercontent.com`, and checked
 against the SHA-256 GitHub publishes for that file (the asset's `digest`). No
 checksum, or one that doesn't match, and nothing is installed. Then it runs and
-Coucou quits. The checksum proves the file is exactly the one on the release
+Rafiq quits. The checksum proves the file is exactly the one on the release
 page; like a download by hand, it doesn't prove who uploaded it (the installer
 isn't code-signed yet).
 
@@ -471,19 +461,19 @@ ships in the app.
 workflow publishes:
 
 ```
-Coucou-Windows-X.Y.Z-setup.exe    the versioned installer
-Coucou-Windows-setup.exe          the same file under the rolling name
+Rafiq-Windows-X.Y.Z-setup.exe    the versioned installer
+Rafiq-Windows-setup.exe          the same file under the rolling name
 ```
 
 Installing is optional — `target/release/coucou.exe` runs on its own. There is no
 window in the taskbar and no console: the island at the top of the screen and the
-Mochi in the notification area are the whole app, and Quit lives in its menu.
+Rafiq in the notification area are the whole app, and Quit lives in its menu.
 
 The 29 sounds are the macOS app's own files; they are never duplicated in this
 folder. The path is declared once, in `SOUNDS_DIR` at the top of
 `vite.config.ts` — when they move to `shared/sounds/`, change that one line.
 
-The app icon and the tray icon are drawn in code, like Mochi itself:
+The app icon and the tray icon are drawn in code, like Rafiq itself:
 
 ```powershell
 npm run icons          # regenerates src-tauri/icons from scripts/gen-icons.mjs
@@ -494,8 +484,8 @@ npm run icons          # regenerates src-tauri/icons from scripts/gen-icons.mjs
 ```
 windows/
   src/                 island front end (TypeScript, no framework)
-    mochi/             Mochi and the launch greeting, in Canvas 2D
-    desktop/           Mochi's own little window, when he lives on the desktop
+    mochi/             Rafiq and the launch greeting, in Canvas 2D
+    desktop/           Rafiq's own little window, when he lives on the desktop
     island/            state machine, hooks, integrations
     views/             every island view
     settings/          the settings window
@@ -506,7 +496,7 @@ windows/
 
 ### Log
 
-`%LOCALAPPDATA%\Coucou\coucou.log` — hook events, permission decisions, poller
+`%LOCALAPPDATA%\Rafiq\coucou.log` — hook events, permission decisions, poller
 problems. It stays on your machine. The weekly recap's history sits beside it in
 `recap.json`.
 
@@ -514,7 +504,7 @@ problems. It stays on your machine. The weekly recap's history sits beside it in
 
 Every agent below is installed from **Settings → Agents** with the same steps as
 Claude Code: the exact diff, the path of the dated backup, nothing written until
-you click, and uninstalling removes only Coucou's entries. A config Coucou cannot
+you click, and uninstalling removes only Rafiq's entries. A config Rafiq cannot
 read, or where it finds something it does not expect, is left alone and the
 reason is shown. Each agent gets its own pill (`agent_<name>`, the Mac's ids and
 colours). The files are the Mac's, under `%USERPROFILE%` on Windows and `~` on
@@ -540,7 +530,7 @@ CLI's `BeforeTool`, Copilot's `preToolUse`, Cursor's `beforeSubmitPrompt`…), a
 answers each agent the way it expects. It never lets anything through on its
 own: with no click it prints no decision at all (`{}` for the agents that need
 JSON, `"ask"` for Copilot, which is fail-closed), so the agent asks in its own
-terminal exactly as without Coucou — including when Coucou is closed.
+terminal exactly as without Rafiq — including when Rafiq is closed.
 
 **Antigravity** has no permission request: it runs its `PreToolUse` hook before
 its own permission check and waits for the hook's decision. The relay answers
@@ -549,15 +539,15 @@ its own permission check and waits for the hook's decision. The relay answers
 by default, shown once the hooks are installed). Then a `run_command` that none
 of Antigravity's `command(...)` rules covers waits on the island's card, as on
 the Mac: **Allow** prints `{"decision":"allow"}`, **Deny**
-`{"decision":"deny","reason":"Denied from Coucou"}`, and **Reply in terminal**,
-no click within 110 s, a full card or Coucou closed print `{"decision":"ask"}`.
-Coucou reads those rules from the files the Mac reads, under `.gemini`. The
+`{"decision":"deny","reason":"Denied from Rafiq"}`, and **Reply in terminal**,
+no click within 110 s, a full card or Rafiq closed print `{"decision":"ask"}`.
+Rafiq reads those rules from the files the Mac reads, under `.gemini`. The
 `PreToolUse` hook is installed with a 120 s timeout: hooks written by an older
-Coucou (10 s) must be installed again, and Settings says so.
+Rafiq (10 s) must be installed again, and Settings says so.
 
 The plugins start the relay directly, with no shell in between, and never wait
 for it. Amp's steps appear as each tool finishes: its "before" hook must return
-a verdict, and Coucou never gives one.
+a verdict, and Rafiq never gives one.
 
 **How each agent runs the relay on Windows.** Hook commands are written for the
 shell that runs them: Git Bash for Claude Code (quoted, forward slashes),
@@ -567,10 +557,10 @@ path is written bare when it has no space or special character — which works i
 cmd, PowerShell and when started directly — and in double quotes otherwise.
 These three are untested on Windows.
 
-A pill is **connected** when Coucou finds its own entries in the files above —
+A pill is **connected** when Rafiq finds its own entries in the files above —
 the same check as Settings → Agents (for Claude Code: a SessionStart hook
-running Coucou's relay; the Cursor pill also counts Claude Code's hooks).
-Coucou only reads these files, each time the island opens. Permission requests
+running Rafiq's relay; the Cursor pill also counts Claude Code's hooks).
+Rafiq only reads these files, each time the island opens. Permission requests
 get the island's card for Claude Code (in any terminal, and in Cursor's),
 Codex, Copilot CLI and Muse Code, and Antigravity's commands when that is turned
 on; other agents and Claude Desktop ask in their own window.
@@ -593,7 +583,7 @@ on; other agents and Claude Desktop ask in their own window.
   [pyannote](https://github.com/pyannote/pyannote-audio)'s segmentation and
   3D-Speaker's voice prints, also on the CPU. Summaries are Claude's only:
   there is no Apple Intelligence here.
-- **« OK Coucou »** listens with a small energy detector and Parakeet instead of
+- **« OK Rafiq »** listens with a small energy detector and Parakeet instead of
   the Mac's speech recognizer, so it understands Parakeet's 25 languages.
   Emails open in your default mail app through a `mailto:` link, with no
   contact lookup and no attachment; « play » something on Spotify opens its
@@ -617,7 +607,7 @@ on; other agents and Claude Desktop ask in their own window.
   `WSL_DISTRO_NAME`. In WSL, a Windows program only sees the variables that
   `WSLENV` names, so the hook command in the distro's
   `~/.claude/settings.json` passes them on:
-  `WSLENV=$WSLENV:HERDR_PANE_ID:HERDR_BIN_PATH:WSL_DISTRO_NAME /mnt/c/Users/<you>/AppData/Local/Coucou/bin/coucou-hook.exe`.
+  `WSLENV=$WSLENV:HERDR_PANE_ID:HERDR_BIN_PATH:WSL_DISTRO_NAME /mnt/c/Users/<you>/AppData/Local/Rafiq/bin/coucou-hook.exe`.
 - Global keyboard shortcuts are hot keys on Windows, key grabs on Linux under
   X11, and go through the desktop's GlobalShortcuts portal under Wayland (see
   [Linux](#linux)). A waiting card is also folded with its **⌃** or `Esc` in
@@ -644,25 +634,25 @@ on; other agents and Claude Desktop ask in their own window.
 - **Spotify** (Settings → Integrations) is read from the system media
   controls, the session Spotify publishes for the media keys: the same pill
   and card as on Linux (cover, progress bar, play/pause, previous, next,
-  shuffle, repeat), and Mochi dances while it plays. Nothing is polled: one
+  shuffle, repeat), and Rafiq dances while it plays. Nothing is polled: one
   thread waits for the session's change events while the pill is declared.
   The volume is Spotify's own in the Windows mixer. Works with the installer
   from spotify.com and the Microsoft Store app; **Open Spotify** goes through
   its `spotify:` link, and without Spotify **Get Spotify** opens its download
   page. Windows gives no Spotify link for the track, so an ad is told apart by
   having a title and no artist or album.
-- Not in this version: sending a dropped file by email and dragging Mochi onto
+- Not in this version: sending a dropped file by email and dragging Rafiq onto
   a window to attach it as context. On the Mac, email goes through Resend or
   Apple Mail's scripting; neither has a safe equivalent that attaches a file
   here, and the drop card would need a third button it doesn't have.
 - New versions: the Mac checks the downloaded app's Developer ID signature and
   notarization; the Windows installer isn't code-signed yet, so it is checked
-  against the SHA-256 GitHub publishes for it, and the installer (not Coucou)
+  against the SHA-256 GitHub publishes for it, and the installer (not Rafiq)
   replaces the app and starts it again.
 - Cal.com shows the next bookings as a list rather than the Mac's calendar.
 - The Cursor pill carries both Cursor Agent's own hooks and Claude Code running
   in Cursor's terminal.
-- Hermes: Coucou writes the plugin but does not run the `hermes` CLI, so it is
+- Hermes: Rafiq writes the plugin but does not run the `hermes` CLI, so it is
   turned on once by hand. Hermes runs natively on Linux; on Windows it is
   untested.
 - Plan usage: the user's previous status line runs through Git Bash on Windows
@@ -691,7 +681,7 @@ on; other agents and Claude Desktop ask in their own window.
   row scrolls into view where the Mac's three-row list doesn't follow it; in the
   chat field `Ctrl+↑` `Ctrl+↓` keep moving the cursor. **Go to alert** brings
   up any agent's waiting card on its own pill; **Toggle the island** folds a
-  waiting card rather than dropping it, like `Esc` in the island. **Send Mochi
+  waiting card rather than dropping it, like `Esc` in the island. **Send Rafiq
   to the desktop** (`Ctrl+Alt+D`, the Mac's `⌃⌥D`)
   flies him to his spot, or to the bottom-right corner when that spot was on a
   display that is gone; pressed again, he flies home.
@@ -710,14 +700,14 @@ on; other agents and Claude Desktop ask in their own window.
     leaves to the image. A turn cut short by the session ending still counts.
   - Tray → Pause doesn't stop the history (it stays on the machine anyway);
     switch it off in Settings → General.
-- The wardrobe opens with a right-click on Mochi, from the tray menu, or with
+- The wardrobe opens with a right-click on Rafiq, from the tray menu, or with
   its global shortcut (`Ctrl+Alt+G` by default). In the compact island a tall hat
   is cut by the top edge of the screen, as it is by the notch on a Mac.
 - Languages: chosen in Settings, independently of the system, and applied
-  without a restart (the Mac's **Restart Coucou** isn't needed). Arabic turns
-  the island's text right to left but not its layout: Mochi and the pills keep
+  without a restart (the Mac's **Restart Rafiq** isn't needed). Arabic turns
+  the island's text right to left but not its layout: Rafiq and the pills keep
   their sides.
-- Mochi on the desktop dances to Spotify. While he dances he stays awake (the
+- Rafiq on the desktop dances to Spotify. While he dances he stays awake (the
   Mac lets him doze off mid-dance). Dropping him on a window doesn't attach it
   to the chat. While he
   sleeps, the transparent square around him (120 px) takes the first mouse
@@ -747,7 +737,7 @@ npm run pack           # AppImage, .deb and .rpm in windows/release/
 On Arch Linux, build and install the package from `linux/arch/`:
 
 ```bash
-git clone https://github.com/Louis-CFM/coucou.git
+git clone https://github.com/Edra3k/Rafiq.git
 cd coucou/linux/arch
 makepkg -si
 ```
@@ -760,22 +750,22 @@ What changes on Linux:
 - **The island** is a gtk-layer-shell overlay anchored to the top edge, over any
   top panel, on compositors that support it: COSMIC, KDE Plasma, Hyprland, Sway
   and other wlroots compositors. GNOME has no layer-shell and ignores where a
-  Wayland window asks to go, so there Coucou runs through XWayland as a dock
+  Wayland window asks to go, so there Rafiq runs through XWayland as a dock
   window: top centre, on every workspace, still there after Super+D.
   `COUCOU_X11=0` keeps the native Wayland window, `COUCOU_DOCK=0` makes it a
   utility window instead of a dock. `COUCOU_LAYER_SHELL=0` forces the regular
   window anywhere.
 - **Click-through** is the window's input region, kept equal to the island
   shape, so the compositor sends every other click to what is underneath.
-- **Mochi's eyes** follow the pointer only while it is over the island: Wayland
+- **Rafiq's eyes** follow the pointer only while it is over the island: Wayland
   gives no app the cursor position anywhere else. On the desktop, likewise,
   they follow it only while it is over him, and "the cursor is far away" (so
   he may fall asleep) means it hasn't been over him for a few seconds.
-- **Mochi on the desktop** is a layer-shell surface on the island's display
+- **Rafiq on the desktop** is a layer-shell surface on the island's display
   (KDE Plasma, COSMIC, Hyprland, Sway…), placed with margins and dragged within
   that display; on X11 it is an ordinary always-on-top window that goes
   anywhere. **GNOME on Wayland** has no layer-shell and lets no app place its
-  own window, so there Mochi can't leave the island: dragging him does nothing,
+  own window, so there Rafiq can't leave the island: dragging him does nothing,
   and the desktop shortcut only makes him grumble.
 - **Claude Code hooks** go through `~/.local/share/coucou/bin/coucou-hook` and a
   Unix socket at `$XDG_RUNTIME_DIR/coucou.sock`. Both ends check that the other
@@ -787,7 +777,7 @@ What changes on Linux:
   On X11, AltGr is a modifier of its own and never clashes with `Ctrl+Alt`;
   combinations the desktop already uses (GNOME's `Ctrl+Alt+T` terminal and
   `Ctrl+Alt+←`/`→` workspace switching) show up as *In use*.
-  Wayland has no key grabs, so there Coucou hands its shortcuts to the desktop
+  Wayland has no key grabs, so there Rafiq hands its shortcuts to the desktop
   through the XDG **GlobalShortcuts portal** (`xdg-desktop-portal`, with a
   backend that has it: KDE Plasma 6, GNOME 48+, Hyprland, COSMIC…). Each
   shortcut goes with its description and your keys as the preferred trigger;
@@ -796,8 +786,8 @@ What changes on Linux:
   given there, and you change them in the desktop's own shortcut settings.
   **Settings → Shortcuts** says the shortcuts are registered with the desktop,
   shows next to each one the keys the desktop reports (*Desktop: …*), and flags
-  one it left out. Changing or turning off a shortcut in Coucou binds the new
-  set in a new portal session. Coucou names itself `fr.louisraille.coucou` to
+  one it left out. Changing or turning off a shortcut in Rafiq binds the new
+  set in a new portal session. Rafiq names itself `com.edra3k.rafiq` to
   the portal where the portal allows it (`xdg-desktop-portal` 1.19+); a
   desktop that wants an app name may otherwise refuse.
   Where there is no such portal, or the desktop refuses, nothing is registered
@@ -805,21 +795,21 @@ What changes on Linux:
   desktop's own keyboard settings instead (they are shown with the portal too,
   for any shortcut that doesn't work):
   `coucou --shortcut openChat` (or the AppImage's path) runs the action in the
-  Coucou that is already open. The ids are `toggleIsland`, `openChat`,
+  Rafiq that is already open. The ids are `toggleIsland`, `openChat`,
   `goToAlert`, `jumpToTerminal`, `nextPill`, `prevPill`, `muteToggle`,
   `desktopToggle` and `wardrobeToggle`.
 - **Keys** live in the Secret Service (GNOME Keyring, KWallet).
 - **Spotify** (Settings → Integrations) is read over MPRIS, Spotify's D-Bus
   interface on the session bus: the pill shows the track and plays, pauses
   or skips on hover, the card has the cover, the progress bar (drag to
-  seek), shuffle, previous, next, repeat and the volume, and Mochi dances
+  seek), shuffle, previous, next, repeat and the volume, and Rafiq dances
   while it plays — in the compact island, on the Spotify card, on the pill
   and on the desktop. Nothing is polled: one thread waits on the bus for
   Spotify's own signals while the pill is declared, and stops when it isn't.
   **Open Spotify** brings it forward or starts `spotify` from your `PATH`,
   else the Flatpak (`com.spotify.Client`) or the Snap; without one, **Get
   Spotify** opens its download page. Covers come from Spotify's image CDN
-  (or a local track's file) and are fetched by Coucou itself, not the page.
+  (or a local track's file) and are fetched by Rafiq itself, not the page.
   Spotify builds that don't report the position over MPRIS show the bar
   from where the track started; the Mac's Automation prompt has no
   equivalent here.
@@ -828,21 +818,21 @@ What changes on Linux:
   Code. Codex is found on `$PATH`, in `~/.local/bin`, npm's global prefix, Volta,
   Bun, pnpm, or nvm (newest Node first), since a desktop launch often has a
   shorter `$PATH` than your shell.
-- **Mochi's greeting** uses the full name in your account's GECOS field
+- **Rafiq's greeting** uses the full name in your account's GECOS field
   (`chfn` sets it); without one the chat stays neutral.
 - **Files**: preferences in `~/.config/coucou/`, the log at
   `~/.local/share/coucou/coucou.log`, the weekly recap history beside it in
   `recap.json`. A saved recap image goes to the pictures folder named in
   `~/.config/user-dirs.dirs`, else `~/Pictures`, else `~/Downloads`.
 - **Languages**: Hindi, Bengali, Chinese and Arabic need fonts that carry those
-  scripts; Coucou asks for the Noto families (`fonts-noto-core` and
+  scripts; Rafiq asks for the Noto families (`fonts-noto-core` and
   `fonts-noto-cjk` on Debian and Ubuntu, `noto-fonts` and `noto-fonts-cjk` on
   Arch). **System** reads the language from the webview, which follows
   `LANGUAGE` / `LANG`.
 - **Copying the recap image** needs a WebKitGTK with image clipboard support;
   where it is missing, the island says so and Save still works.
 - What the Windows build leaves out, this one does too: sending a file by
-  email and dragging Mochi onto a window.
+  email and dragging Rafiq onto a window.
 - **New versions** are announced (once you agree), but **Update now** opens
   the release page: update the AppImage, .deb, .rpm or Arch package the way
   you installed it.
