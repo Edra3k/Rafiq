@@ -289,7 +289,7 @@ test("an agent's permission request is declined, never shown as Claude Code's", 
   }
 });
 
-test("an Antigravity command Coucou puts on the card waits there on its own pill", () => {
+test("an Antigravity command Rafiq puts on the card waits there on its own pill", () => {
   State.focusId = CLAUDE;
   // The event itself comes first, as for any agent; then the card (pipe.rs).
   const payload = {
@@ -307,7 +307,7 @@ test("an Antigravity command Coucou puts on the card waits there on its own pill
   assert.deepEqual(sent("approval_decline"), []);
   assert.equal(task("agent_antigravity").state, "approval");
   assert.equal(State.focusId, "agent_antigravity");
-  // Antigravity gave up, or Coucou's wait ran out: the card goes.
+  // Antigravity gave up, or Rafiq's wait ran out: the card goes.
   emit("approval-expired", "a1");
   assert.equal(State.pendingApproval, null);
 });

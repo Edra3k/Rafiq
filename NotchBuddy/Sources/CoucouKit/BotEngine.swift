@@ -70,20 +70,21 @@ enum BadgeType {
     case bang(CGColor)
     case question(CGColor)
     case dot(CGColor)
-    /// A new Coucou is waiting (Mac GitHub build): a white up arrow.
+    /// A new Rafiq is waiting (Mac GitHub build): a white up arrow.
     case arrow(CGColor)
 }
 
-// MARK: - Mochi track constants (from PISTES.mochi)
+// MARK: - Rafiq track constants (from PISTES.mochi)
 
 enum MochiConst {
     static let eyeW: CGFloat  = 0.25
     static let eyeH: CGFloat  = 0.27
     static let eyeSp: CGFloat = 0.37
     static let eyeP: CGFloat  = -0.12
-    static let baseTop    = CGColor(red: 0.929, green: 0.929, blue: 0.937, alpha: 1)  // #EDEDEF
-    static let baseBottom = CGColor(red: 0.769, green: 0.773, blue: 0.792, alpha: 1)  // #C4C5CA
-    static let ink        = CGColor(red: 0.102, green: 0.082, blue: 0.071, alpha: 1)  // #1A1412
+    // Rafiq's colours (RafiqLook.swift): ivory to sand, navy ink.
+    static let baseTop    = RafiqLook.bodyTopCG
+    static let baseBottom = RafiqLook.bodyBottomCG
+    static let ink        = RafiqLook.inkCG
     static let miniInk    = CGColor(red: 0.063, green: 0.075, blue: 0.102, alpha: 1)  // #10131A
 }
 
@@ -174,10 +175,10 @@ let BotStates: [BotState: BotStateCfg] = [
 final class BotEngine: ObservableObject {
     var isMini: Bool = false
     var bodyColor: CGColor? = nil    // override for mini bots
-    /// A new version waits (BotCanvasView sets it while Mochi has nothing else to say):
+    /// A new version waits (BotCanvasView sets it while Rafiq has nothing else to say):
     /// the blue up-arrow badge instead of the state's own.
     private(set) var updateHint = false
-    /// #3B82F6: Mochi's colour while an update waits.
+    /// #3B82F6: Rafiq's colour while an update waits.
     static let updateBlue = CGColor(red: 0.231, green: 0.510, blue: 0.965, alpha: 1)
 
     // Animation state (mirrors prototype 's' object)
@@ -260,7 +261,7 @@ final class BotEngine: ObservableObject {
 
     // Timing
     var lastTime: Double = CACurrentMediaTime()
-    /// Fractional engine steps owed when drawing slower than the display (Mac mini Mochis).
+    /// Fractional engine steps owed when drawing slower than the display (Mac mini Rafiqs).
     var stepDebt: Double = 0
     var t0: Double = CACurrentMediaTime() - Double.random(in: 0...5)
     var nextBlink: Double = CACurrentMediaTime() + 1.5 + Double.random(in: 0...2)
@@ -347,7 +348,7 @@ final class BotEngine: ObservableObject {
         }
     }
 
-    /// The caller decides when (an update waits, Mochi idle or asleep); the badge follows.
+    /// The caller decides when (an update waits, Rafiq idle or asleep); the badge follows.
     func setUpdateHint(_ on: Bool) {
         guard on != updateHint else { return }
         updateHint = on
@@ -1141,8 +1142,15 @@ final class BotEngine: ObservableObject {
         if tilt != 0 { ctx.rotate(by: .radians(tilt)) }
         ctx.scaleBy(x: sx, y: sy)
 
-        // Body path (superellipse for Mochi, morph to rect for upload)
+        // Body path (Rafiq's dome, morph to rect for upload)
         let bodyPath = mochiPath(rx: rx, ry: ry, morph: morph, R: R)
+
+        // The golden crescent above the dome: the main companion only, hidden by an outfit
+        // and by the upload box.
+        if !isMini {
+            let finial = Double((1 - outfitPresence) * (1 - min(1, morph * 3)))
+            RafiqLook.drawFinial(ctx, ry: ry, R: R, opacity: finial)
+        }
 
         // Body fill
         drawBody(ctx: &ctx, path: bodyPath, R: R, rx: rx, ry: ry,
@@ -1208,13 +1216,13 @@ final class BotEngine: ObservableObject {
         // (We'll pass world-space cx/cy to these helpers)
     }
 
-    // MARK: - Draw hands behind body (called before draw() so hands appear under Mochi)
+    // MARK: - Draw hands behind body (called before draw() so hands appear under Rafiq)
 
     func drawHandsBehind(context: GraphicsContext, size: CGSize) {
         guard hands > 0.01, !isMini else { return }
         let W = size.width, H = size.height
         let R = W * 0.3
-        // Only draw hands when Mochi is large enough to be meaningful (not compact/peek)
+        // Only draw hands when Rafiq is large enough to be meaningful (not compact/peek)
         guard R > 14 else { return }
         let rx = R * 1.14
         let ry = R * 0.88
@@ -1362,7 +1370,7 @@ final class BotEngine: ObservableObject {
                               presence: outfitPresence, rollTurns: rollTurns)
     }
 
-    /// World-space center of Mochi's body (used by BotCanvasView for rigid-roll transform)
+    /// World-space center of Rafiq's body (used by BotCanvasView for rigid-roll transform)
     func bodyCenter(size: CGSize) -> CGPoint {
         let W = size.width, R = W * 0.3
         let cx = W / 2 + ox * R
@@ -1381,7 +1389,6 @@ final class BotEngine: ObservableObject {
 
     private func mochiPath(rx: CGFloat, ry: CGFloat, morph: CGFloat, R: CGFloat) -> Path {
         let n = 72
-        let expN: CGFloat = 2.0 / 2.7
         // Target mailbox dims (spec: 1.0R wide, 0.94R tall, 0.42R corner radius)
         let tw = R * 1.0
         let th = R * 0.94
@@ -1390,8 +1397,9 @@ final class BotEngine: ObservableObject {
         for i in 0...n {
             let a = CGFloat(i) / CGFloat(n) * .pi * 2
             let ca = cos(a), sa = sin(a)
-            let px0 = rx * (ca >= 0 ? pow(ca, expN) : -pow(-ca, expN))
-            let py0 = ry * (sa >= 0 ? pow(sa, expN) : -pow(-sa, expN))
+            let dome = RafiqLook.point(ca: ca, sa: sa, rx: rx, ry: ry)
+            let px0 = dome.x
+            let py0 = dome.y
             let px: CGFloat
             let py: CGFloat
             if morph < 0.005 {
@@ -1456,11 +1464,11 @@ final class BotEngine: ObservableObject {
             ctx.fill(path, with: .color(Color(cgColor: bc)))
         } else {
             // Main bot: linear gradient body
-            let top: Color = pumpkinColors ? Color(hex: "#FFA94D") : Color(red: 0.929, green: 0.929, blue: 0.937)
-            let bot: Color = pumpkinColors ? Color(hex: "#E8590C") : Color(red: 0.769, green: 0.773, blue: 0.792)
+            let top: Color = pumpkinColors ? Color(hex: "#FFA94D") : RafiqLook.bodyTop
+            let bot: Color = pumpkinColors ? Color(hex: "#E8590C") : RafiqLook.bodyBottom
             ctx.fill(path, with: .linearGradient(
                 Gradient(colors: [top, bot]),
-                startPoint: CGPoint(x: rx*0.7, y: -ry*0.85),
+                startPoint: CGPoint(x: rx*0.7, y: -ry * RafiqLook.domeHeight),
                 endPoint: CGPoint(x: -rx*0.8, y: ry*0.9)
             ))
             // State tint — fades out as morph increases (mailbox has no tint)
@@ -1506,7 +1514,7 @@ final class BotEngine: ObservableObject {
             let by = ry * 0.2
             var ellipse = Path()
             ellipse.addEllipse(in: CGRect(x: bx - R*0.17, y: by - R*0.1, width: R*0.34, height: R*0.2))
-            ctx.fill(ellipse, with: .color(Color(red: 1, green: 0.471, blue: 0.588, opacity: Double(0.5 * blush))))
+            ctx.fill(ellipse, with: .color(RafiqLook.gold.opacity(Double(0.45 * blush))))
         }
     }
 

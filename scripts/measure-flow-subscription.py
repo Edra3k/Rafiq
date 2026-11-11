@@ -1,17 +1,17 @@
 #!/usr/bin/env python3
 """How long Flow's clean-up takes on your own AI subscription, tool by tool (Mac).
 
-Each installed tool is run the way Coucou runs Claude Code for Flow: the same flags, an empty
+Each installed tool is run the way Rafiq runs Claude Code for Flow: the same flags, an empty
 folder, none of your shell's AI keys (the app never sees them), and a short dictation to clean
 up. Two ways:
 
-  cold  the tool starts when the dictation key comes up (what Coucou does).
+  cold  the tool starts when the dictation key comes up (what Rafiq does).
   warm  the tool starts when the key goes down; the first bytes of the prompt are written at
         once (Claude Code gives up on a stdin that stays empty for 3 s), the rest when the key
         comes up after --hold seconds. Only for the tools that read the prompt on stdin.
 
 Prints the time from the key coming up to the answer: what you wait for before the words are
-pasted. Coucou gives Claude Code 10 s for a clean-up, 14 s for a translation, 18 s for a prompt.
+pasted. Rafiq gives Claude Code 10 s for a clean-up, 14 s for a translation, 18 s for a prompt.
 
     python3 scripts/measure-flow-subscription.py [--runs 3] [--hold 3] [--tools claude,codex] [--text "…"]
 

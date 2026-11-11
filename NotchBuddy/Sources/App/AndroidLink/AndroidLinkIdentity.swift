@@ -92,7 +92,7 @@ struct AndroidLinkIdentity {
         let key = P256.Signing.PrivateKey()
         var serial = (0..<16).map { _ in UInt8.random(in: 0...255) }
         serial[0] = (serial[0] & 0x7F) | 0x01   // positive, never starts with a zero byte
-        guard let der = AndroidLinkDER.selfSignedCertificate(key: key, commonName: "Coucou phone link", serial: serial) else { return nil }
+        guard let der = AndroidLinkDER.selfSignedCertificate(key: key, commonName: "Rafiq phone link", serial: serial) else { return nil }
         let cert = Data(der)
         // Key first: a certificate without its key is useless, the reverse is harmless.
         guard store.set(privateKeyKey, AndroidLinkProtocol.hex(key.rawRepresentation)),

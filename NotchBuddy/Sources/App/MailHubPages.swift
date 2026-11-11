@@ -1,7 +1,7 @@
 #if !APPSTORE
 import SwiftUI
 
-// The Mail section of the Coucou window: the automatic sorting and its journal, the rules,
+// The Mail section of the Rafiq window: the automatic sorting and its journal, the rules,
 // the banned words and the VIPs. What they decide lives in MailTriage.swift.
 
 private let mailBlue = "#2F8CFF"

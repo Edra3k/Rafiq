@@ -1,4 +1,4 @@
-// The island: DOM shell, sizing animation, Mochi placement, mouse handling.
+// The island: DOM shell, sizing animation, Rafiq placement, mouse handling.
 // Mirrors IslandRootView.swift + IslandWindowController.swift.
 
 import { Tracked, Spring, clamp } from "../core/anim";
@@ -41,7 +41,7 @@ import { UPDATE_BLUE, showsUpdateHint } from "../whats-new/whats-new";
 const BOT_OVERHANG = 40;
 const UPDATE_BLUE_RGB = hexToRGB(UPDATE_BLUE);
 const CLAUDE_DESKTOP_ID = "agent_claude-desktop";
-/** Extra canvas on each side of Mochi, for the witch hat's brim and the Santa hat's tip. */
+/** Extra canvas on each side of Rafiq, for the witch hat's brim and the Santa hat's tip. */
 const BOT_SIDE = 24;
 /** Same margin as the Rust hit test (src-tauri/src/island.rs). */
 const HIT_MARGIN = 14;
@@ -59,7 +59,7 @@ const modeOrder = (m: IslandMode) => (m === "hidden" ? 0 : m === "compact" ? 1 :
 
 export class Island {
   readonly fsm = new IslandStateMachine();
-  /** Mochi on the desktop: his life cycle and the drag out of the island. */
+  /** Rafiq on the desktop: his life cycle and the drag out of the island. */
   readonly desktop: DesktopLink;
 
   private root: HTMLElement;
@@ -80,7 +80,7 @@ export class Island {
   private closedKey = "";
   /** Width of the closed island for what it shows now. */
   private closedW = 120;
-  /** Mochi's little life in the closed island: where he looks, and until when
+  /** Rafiq's little life in the closed island: where he looks, and until when
    *  the loop runs for what he is doing (a blink, a glance). */
   private closedLook = { x: 0, y: 0 };
   private closedAwakeUntil = 0;
@@ -115,7 +115,7 @@ export class Island {
   private lastFrame = 0;
   private dirty = true;
   private canvasPx = 0;
-  /** The pixel ratio Mochi's bitmap was sized for: it changes with the monitor. */
+  /** The pixel ratio Rafiq's bitmap was sized for: it changes with the monitor. */
   private canvasDpr = 0;
 
   // Rust starts the window at full size so the launch greeting has room.
@@ -142,7 +142,7 @@ export class Island {
   onGreetingDone: (() => void) | null = null;
   onWake: (() => void) | null = null;
 
-  /** Where a press on Mochi started: moving past DRAG_THRESHOLD drags him out. */
+  /** Where a press on Rafiq started: moving past DRAG_THRESHOLD drags him out. */
   private botPress: { x: number; y: number } | null = null;
 
   /** The next reveal from hidden makes no peek (music starting, as on macOS). */
@@ -359,7 +359,7 @@ export class Island {
     for (const v of this.views.values()) this.viewsEl.append(v.el);
     this.contentEl = h("div", { id: "content" }, this.header.el, this.viewsEl);
 
-    // The drop sequence draws the card, the bar and its own Mochi. It sits under
+    // The drop sequence draws the card, the bar and its own Rafiq. It sits under
     // the header, which stays visible on top of it exactly as on macOS.
     this.uploadCanvas = new UploadCanvas({
       ask: () => {
@@ -545,14 +545,14 @@ export class Island {
     this.expand(view);
   }
 
-  /** A new Coucou waits and Mochi has nothing else to say (he is blue). */
+  /** A new Rafiq waits and Rafiq has nothing else to say (he is blue). */
   private updateHintOn(): boolean {
     return !State.paused && showsUpdateHint(Updates.waiting(), State.effectiveState, State.pendingApproval != null);
   }
 
   /**
-   * What a click or a hover opens on: while Mochi is blue, the new version
-   * ("Coucou X is out", Update now); otherwise the usual view. A waiting
+   * What a click or a hover opens on: while Rafiq is blue, the new version
+   * ("Rafiq X is out", Update now); otherwise the usual view. A waiting
    * permission or question always comes first.
    */
   private openingView(): IslandViewName {
@@ -570,17 +570,17 @@ export class Island {
     this.silentReveal = false;
   }
 
-  /** Right-click on Mochi: wardrobe open ↔ back to the usual view. */
+  /** Right-click on Rafiq: wardrobe open ↔ back to the usual view. */
   toggleWardrobe() {
     if (State.paused || State.mode === "hidden") return;
-    // The greeting and the drop sequence draw a Mochi of their own.
+    // The greeting and the drop sequence draw a Rafiq of their own.
     if (State.mode === "expanded" && (State.view === "greeting" || this.uploadActive)) return;
     if (State.mode === "expanded" && State.view === "wardrobe") this.setView(State.defaultView());
     else this.setView("wardrobe");
   }
 
   /**
-   * Right-click on the desktop Mochi (macOS openWardrobeFromDesktop): opens the
+   * Right-click on the desktop Rafiq (macOS openWardrobeFromDesktop): opens the
    * wardrobe from any state, or goes back if it is already open.
    */
   wardrobeFromDesktop() {
@@ -589,7 +589,7 @@ export class Island {
 
   /**
    * The wardrobe from any state — compact or hidden island included — or back
-   * to the usual view if it is already open. The desktop Mochi's right-click
+   * to the usual view if it is already open. The desktop Rafiq's right-click
    * and the wardrobe shortcut (`open-wardrobe`) both land here.
    */
   wardrobeAnywhere() {
@@ -634,14 +634,14 @@ export class Island {
     void Bridge.focusWindow(true);
   }
 
-  /** The desktop shortcut needs a desktop Mochi: none on GNOME's Wayland. */
+  /** The desktop shortcut needs a desktop Rafiq: none on GNOME's Wayland. */
   canLeaveIsland(): boolean {
     return this.desktop.supported;
   }
 
   /** The desktop shortcut (macOS DesktopMochiController.flyOutOrHome). */
   flyOutOrHome() {
-    // The greeting and the drop sequence draw a Mochi of their own: he stays
+    // The greeting and the drop sequence draw a Rafiq of their own: he stays
     // for them, as he does for a drag (canDragOut).
     const busy = State.mode === "expanded" && (State.view === "greeting" || this.uploadActive);
     if (busy && !State.mochiOnDesktop) return;
@@ -761,7 +761,7 @@ export class Island {
   }
 
   /**
-   * Mochi eats the file. Nothing here waits on the file system: the copy into
+   * Rafiq eats the file. Nothing here waits on the file system: the copy into
    * the inbox runs in the background and swaps the path in when it lands, so a
    * slow disk can never stall the animation — same as FileDropHandler on macOS.
    */
@@ -817,7 +817,7 @@ export class Island {
 
   /**
    * Sounds and view changes hung off the canvas timeline: a `tick` every 10 %,
-   * the ✓ chime when the bar completes, then `choose` once Mochi has grown back.
+   * the ✓ chime when the bar completes, then `choose` once Rafiq has grown back.
    */
   private stepSequence() {
     const since = UploadSeq.sinceDrop();
@@ -825,7 +825,7 @@ export class Island {
     const dur = State.uploadDuration;
     const p = Math.max(0, Math.min(1, (since - PRE_PROGRESS) / dur));
 
-    // The bar and the percentage follow the same eased curve as Mochi.
+    // The bar and the percentage follow the same eased curve as Rafiq.
     State.uploadProgress = uploadProgressCurve(p);
     if (State.view === "uploading") this.views.get("uploading")?.sync();
 
@@ -938,7 +938,7 @@ export class Island {
   }
 
   /**
-   * Mochi in the closed island now and then blinks or glances around, as he
+   * Rafiq in the closed island now and then blinks or glances around, as he
    * does on a Mac without a notch: a few frames every few seconds, the loop
    * asleep in between. Nothing runs for the other closed islands.
    */
@@ -1035,11 +1035,11 @@ export class Island {
       State.lastActivity = performance.now();
       // A click makes a hover-opened island an ordinary open one.
       this.fsm.userInteracted();
-      // A press on Mochi may become a drag out to the desktop.
+      // A press on Rafiq may become a drag out to the desktop.
       if (e.button === 0 && this.isBotHit(e.clientX, e.clientY)) {
         this.botPress = { x: e.clientX, y: e.clientY };
       }
-      // Right-click on Mochi opens the wardrobe, and closes it again.
+      // Right-click on Rafiq opens the wardrobe, and closes it again.
       if (e.button === 2 && this.isBotHit(e.clientX, e.clientY)) {
         this.cancelBotHover();
         this.toggleWardrobe();
@@ -1055,13 +1055,13 @@ export class Island {
       }
     });
 
-    // No browser menu over Mochi: his right-click is the wardrobe. Everywhere
+    // No browser menu over Rafiq: his right-click is the wardrobe. Everywhere
     // else (the chat field) the webview keeps its own menu.
     this.islandEl.addEventListener("contextmenu", (e) => {
       if (this.isBotHit(e.clientX, e.clientY)) e.preventDefault();
     });
 
-    // Dragging Mochi out of the island puts him on the desktop.
+    // Dragging Rafiq out of the island puts him on the desktop.
     window.addEventListener("mousemove", (e) => {
       if (this.desktop.carrying) {
         this.desktop.carry(e.clientX, e.clientY);
@@ -1177,14 +1177,14 @@ export class Island {
     this.ensureRunning();
   }
 
-  /** The greeting and the drop sequence draw a Mochi of their own: not that one. */
+  /** The greeting and the drop sequence draw a Rafiq of their own: not that one. */
   private canDragOut(): boolean {
     if (State.mode === "hidden" || !this.desktop.canPickUp()) return false;
     return !(State.mode === "expanded" && (State.view === "greeting" || this.uploadActive));
   }
 
   private isBotHit(x: number, y: number): boolean {
-    // Out on the desktop, the island's Mochi is invisible: nothing to hit.
+    // Out on the desktop, the island's Rafiq is invisible: nothing to hit.
     if (State.mochiOnDesktop) return false;
     const rect = this.islandRect();
     const cx = rect.x + this.botCx.value;
@@ -1281,7 +1281,7 @@ export class Island {
         this.greeting.draw(gctx);
       }
     } else {
-      // Kept running even while the drop canvas is up, so the island's own Mochi
+      // Kept running even while the drop canvas is up, so the island's own Rafiq
       // is already in the right place the moment the canvas fades out.
       this.drawBot(dt);
     }
@@ -1310,7 +1310,7 @@ export class Island {
     const settling =
       this.width.animating || this.height.animating || this.radius.animating;
     const botMoving = !this.botCx.settled || !this.botCy.settled || !this.botSize.settled;
-    // Closed, only the folding — and Mochi reaching his place in the closed island.
+    // Closed, only the folding — and Rafiq reaching his place in the closed island.
     const busy = State.mode === "hidden"
       ? settling || (closedIsland(State.settings.closedIsland) === "mochi" &&
         (botMoving || nowMs < this.closedAwakeUntil))
@@ -1328,7 +1328,7 @@ export class Island {
 
   private updateBotTargets() {
     let p = botPosition(State.mode, State.view, this.height.value, State.uploadProgress);
-    // The closed island with Mochi in it, as on a Mac without a notch.
+    // The closed island with Rafiq in it, as on a Mac without a notch.
     if (State.mode === "hidden" && closedIsland(State.settings.closedIsland) === "mochi") {
       p = { cx: this.width.value / 2, cy: this.height.value / 2, diameter: CLOSED_BOT_D, opacity: 1 };
     }
@@ -1337,7 +1337,7 @@ export class Island {
     this.botSize.target = p.diameter / 0.6;
 
     const greetingActive = State.mode === "expanded" && State.view === "greeting";
-    // The drop canvas draws its own Mochi; two of them would overlap. Out on the
+    // The drop canvas draws its own Rafiq; two of them would overlap. Out on the
     // desktop, he isn't here at all.
     const away = State.mochiOnDesktop;
     const visible = p.opacity > 0 && !greetingActive && !this.uploadActive && !away;
@@ -1365,7 +1365,7 @@ export class Island {
     const wCss = w + BOT_SIDE * 2;
     const dpr = Math.min(2, window.devicePixelRatio || 1);
     // Drawn at the current ratio, so a bitmap sized for another monitor's
-    // would show Mochi too big and cut, or too small.
+    // would show Rafiq too big and cut, or too small.
     if (this.canvasPx !== w || this.canvasDpr !== dpr) {
       this.canvasPx = w;
       this.canvasDpr = dpr;
@@ -1381,10 +1381,10 @@ export class Island {
     if (!ctx) return;
 
     const focus = State.focusTask;
-    // A new Coucou waits: over an idle or sleeping Mochi, the blue and the arrow
-    // badge (whats-new.ts). Anything Mochi has to say comes first.
+    // A new Rafiq waits: over an idle or sleeping Rafiq, the blue and the arrow
+    // badge (whats-new.ts). Anything Rafiq has to say comes first.
     this.engine.setUpdateHint(this.updateHintOn() ? UPDATE_BLUE_RGB : null);
-    // While a plan card is open Mochi wears the plan's colour, like its pill.
+    // While a plan card is open Rafiq wears the plan's colour, like its pill.
     this.engine.bodyColor = planCardOpen()
       ? hexToRGB(openPlanColor())
       : this.engine.showsUpdateHint
@@ -1404,7 +1404,7 @@ export class Island {
         this.engine.slotHVel = 0;
       }
     }
-    // Only the main Mochi is dressed — the one of the main tool's pill (Settings →
+    // Only the main Rafiq is dressed — the one of the main tool's pill (Settings →
     // Active pills): a focused integration pill shows its own colours, unless
     // the wardrobe is open (BotCanvasView.showOutfit, macOS).
     // In the wardrobe the hovered outfit swaps in at once, without the drop-in.

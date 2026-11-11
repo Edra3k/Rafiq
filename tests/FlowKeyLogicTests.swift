@@ -170,7 +170,7 @@ enum FlowKeyLogicTests {
             g.absorb("Salut coucou comment tu vas", pieces: words([(0.0, "Salut"), (0.4, "coucou"), (0.8, "comment"), (1.1, "tu"), (1.3, "vas")]))
             g.absorb("Salut, coucou, comment tu vas ?", pieces: words([(2.0, "Salut,"), (2.4, "coucou,"), (2.8, "comment"), (3.1, "tu"), (3.3, "vas ?")]))
             check("same words at other times: said once", g.text == "Salut, coucou, comment tu vas ?")
-            check("normalized", DictationTranscript.normalized("Salut, Coucou !") == "salut coucou")
+            check("normalized", DictationTranscript.normalized("Salut, Rafiq !") == "salut coucou")
 
             check("a short correction is not a fresh start", !DictationTranscript.isRestart(previous: "one two three four", new: "one two"))
             check("too little text to call it a fresh start", !DictationTranscript.isRestart(previous: "one two", new: "three"))

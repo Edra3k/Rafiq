@@ -1,5 +1,5 @@
 // The island's "New Claude Code session" card — port of LaunchView in
-// SessionLauncher.swift: Mochi on the left, the project, what Claude should do.
+// SessionLauncher.swift: Rafiq on the left, the project, what Claude should do.
 // Rust opens the terminal (src-tauri/src/launch.rs); the session then shows in
 // the island through the hooks like any other.
 //

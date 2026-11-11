@@ -3,7 +3,7 @@
 // Approve commands from the notch). Port of AgyPermissionRules.swift (Mac, PR #934), same
 // files, same matching, same tests.
 //
-// This never allows anything. A verdict only decides whether Coucou shows a card:
+// This never allows anything. A verdict only decides whether Rafiq shows a card:
 // - `Allowed` / `Denied`: no card, the relay answers "ask" and Antigravity applies its rule.
 // - `Unknown`: the card shows, and only a click on Allow lets the command run.
 // Both mistakes are safe: a command wrongly read as allowed gets Antigravity's own prompt,

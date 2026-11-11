@@ -17,7 +17,7 @@ claude (terminal, VS Code, app Claude)
                          ◄─ décision (pour PermissionRequest)
 ```
 - `nb-hook` (script shell) et `nb-hook.py` (relais Python) : écrits par l'app (`HookServer.swift`). Version GitHub : au lancement, dans `~/Library/Application Support/NotchBuddy/`. Version App Store : à l'installation des hooks, dans `~/.claude/coucou/`. Voir `docs/AGENTS.md` pour les autres agents qui utilisent ces scripts.
-- Socket : `~/Library/Application Support/NotchBuddy/nb.sock` (version GitHub) ou `~/Library/Containers/fr.louisraille.Coucou/Data/nb.sock` (version App Store). Dossier en 0700, socket en 0600. Connexions du même utilisateur seulement (vérification `getpeereid`). 1 Mio et 5 s maximum par message, 32 connexions simultanées.
+- Socket : `~/Library/Application Support/NotchBuddy/nb.sock` (version GitHub) ou `~/Library/Containers/com.edra3k.rafiq.ios/Data/nb.sock` (version App Store). Dossier en 0700, socket en 0600. Connexions du même utilisateur seulement (vérification `getpeereid`). 1 Mio et 5 s maximum par message, 32 connexions simultanées.
 - `nb-hook [--agent <nom>] <Event>` lit le JSON du hook sur stdin, ajoute le contexte du terminal (`TERM_PROGRAM`, `ITERM_SESSION_ID`, `TERM_SESSION_ID`, `__CFBundleIdentifier`, le tty trouvé en remontant les processus parents, `cwd`) et, si `--agent` est fourni, le champ `coucou_agent`, puis l'envoie à l'app.
 - **Si l'app ne répond pas en 300 ms, `nb-hook` sort en code 0 sans rien écrire** : Claude Code continue normalement. Jamais de blocage.
 - Champ optionnel `coucou_agent` : nom en minuscules, chiffres et tirets, 24 caractères au plus. Si absent ou invalide, l'événement va dans la pastille Claude. Voir `docs/AGENTS.md` pour les autres agents.
@@ -107,11 +107,11 @@ nb-hook.py, en mode `--statusline`, lit le JSON de stdin, en extrait `rate_limit
 
 ### Installation et activation
 
-Réglages → Agents → Plan usage → **Install relay**. Coucou montre le diff de `~/.claude/settings.json` avant d'écrire quoi que ce soit. Si une `statusLine` existait, seul le champ `command` est remplacé ; les autres champs (`padding`, `refreshInterval`, etc.) sont conservés. Une fois le relais installé, activer le toggle **Show in the notch** pour faire apparaître le pill dans l'en-tête. Si le toggle est activé avant l'installation du relais, l'installation est lancée automatiquement ; le toggle s'active après confirmation.
+Réglages → Agents → Plan usage → **Install relay**. Rafiq montre le diff de `~/.claude/settings.json` avant d'écrire quoi que ce soit. Si une `statusLine` existait, seul le champ `command` est remplacé ; les autres champs (`padding`, `refreshInterval`, etc.) sont conservés. Une fois le relais installé, activer le toggle **Show in the notch** pour faire apparaître le pill dans l'en-tête. Si le toggle est activé avant l'installation du relais, l'installation est lancée automatiquement ; le toggle s'active après confirmation.
 
 ### Désinstallation
 
-Réglages → Agents → Plan usage → **Uninstall relay**. Remet l'objet `statusLine` d'origine à l'identique, ou retire la clé si elle n'existait pas. Si la `statusLine` actuelle n'est plus celle de Coucou (l'utilisateur l'a changée), elle n'est pas touchée.
+Réglages → Agents → Plan usage → **Uninstall relay**. Remet l'objet `statusLine` d'origine à l'identique, ou retire la clé si elle n'existait pas. Si la `statusLine` actuelle n'est plus celle de Rafiq (l'utilisateur l'a changée), elle n'est pas touchée.
 
 ---
 
@@ -286,7 +286,7 @@ Connexion à un serveur local compatible OpenAI. Aucune clé d'API requise.
 
 ### Connexion
 
-Réglages → Chat → Local models → **Connect**. Coucou envoie une requête `GET /v1/models` au serveur. Si le serveur répond avec des modèles, l'URL est sauvegardée et le fournisseur apparaît dans le sélecteur de modèle. Les modèles d'embedding (`nomic-embed-text`, `bge-*`, etc.) sont filtrés automatiquement.
+Réglages → Chat → Local models → **Connect**. Rafiq envoie une requête `GET /v1/models` au serveur. Si le serveur répond avec des modèles, l'URL est sauvegardée et le fournisseur apparaît dans le sélecteur de modèle. Les modèles d'embedding (`nomic-embed-text`, `bge-*`, etc.) sont filtrés automatiquement.
 
 ### Streaming
 
@@ -323,11 +323,11 @@ Réglages → Chat → Local models → **Disconnect**. Efface l'URL sauvegardé
 ### Pill Mail : recherche et filtres
 
 - Loupe dans l'en-tête de la carte : un champ de recherche. Mots libres (objet ou expéditeur), `de:` / `from:` pour l'expéditeur, `objet:` / `subject:` pour l'objet, guillemets pour une phrase (`MailQuery.parse`).
-- Filtres rapides sous l'en-tête : Tous · Non lus · Importants (drapeau de Mail) · Aujourd'hui. Pas de clause `whose` AppleScript (elle parcourt toute la boîte et fige Mail) : Coucou lit les 300 mails les plus récents de chaque boîte de réception par tranches de 50 (`messages a thru b`, 30 s au plus par lecture) et filtre en Swift (`MailSearch.matches`), 60 résultats au plus, les plus récents d'abord. Un mail ouvert est retrouvé par sa référence directe (`«class mssg» id N`), la recherche dans la boîte ne sert qu'en secours. Au lancement de Mail, Coucou attend 30 s qu'il ait fini de se synchroniser.
+- Filtres rapides sous l'en-tête : Tous · Non lus · Importants (drapeau de Mail) · Aujourd'hui. Pas de clause `whose` AppleScript (elle parcourt toute la boîte et fige Mail) : Rafiq lit les 300 mails les plus récents de chaque boîte de réception par tranches de 50 (`messages a thru b`, 30 s au plus par lecture) et filtre en Swift (`MailSearch.matches`), 60 résultats au plus, les plus récents d'abord. Un mail ouvert est retrouvé par sa référence directe (`«class mssg» id N`), la recherche dans la boîte ne sert qu'en secours. Au lancement de Mail, Rafiq attend 30 s qu'il ait fini de se synchroniser.
 - « Voir plus » au bas de la liste : 12 mails de plus à chaque clic, jusqu'à 60.
 - Détail d'un mail : Important / Pas important (drapeau), Indésirable, et dans « … » : Toujours important (VIP), Toujours ignorer cet expéditeur (son adresse devient un mot banni).
 
-### Section Mail de la fenêtre Coucou (tri automatique)
+### Section Mail de la fenêtre Rafiq (tri automatique)
 
 - Quatre pages, après Flow et Notch : Aperçu, Règles, Mots bannis, VIP. Réglages et journal en JSON dans `Application Support/NotchBuddy/Mail` (`MailTriageStore`).
 - Tri automatique, désactivé par défaut. Une fois activé, seuls les mails arrivés après l'activation sont regardés (`autoSortSince`), chacun une seule fois (`seen.json`). Le relevé de Mail tourne alors toutes les 60 s même si la pill est éteinte, seulement quand Mail est ouvert.
@@ -340,24 +340,24 @@ Réglages → Chat → Local models → **Disconnect**. Efface l'URL sauvegardé
 - Bouton « Mail » à côté du choix du modèle, éteint à chaque lancement. Allumé, chaque message du chat part avec, en dessous, les 40 derniers mails des boîtes de réception, numérotés `[n]` (`MailAgent.decorate`) : comptes et adresses, date, lu ou non, expéditeur, objet. Les 8 plus récents ont leurs pièces jointes et le début du texte ; ceux que la demande nomme (expéditeur ou mot de l'objet) ont 3 000 caractères de texte.
 - Le prompt système reçoit `MailAgentPrompt.instructions` : l'IA répond en une phrase puis donne au plus un plan, bloc ` ```coucou-mail ` en JSON. Actions : `flag` / `junk` / `read` / `move`, `reply` (brouillon ouvert dans Mail, jamais envoyé), `send` (destinataires, objet, texte, pièces jointes d'un mail ou fichiers du Mac), `merge` (un mail par destinataire, chacun avec la page d'un PDF qui contient sa clé, ou la page dans l'ordre), `save_attachments`. Pas de suppression. Marche avec tous les fournisseurs du chat (clé API ou abonnement).
 - Le bloc n'est jamais affiché tel quel : la bulle montre une carte (`MailPlanCard`) qui prépare le plan (PDF enregistré depuis Mail, découpé page par page avec PDFKit, chaque page nommée « Plans - Bordeaux.pdf »), liste les mails, en rouge ceux sans page trouvée ou à l'adresse invalide (jamais envoyés).
-- Rien ne se passe sans clic : « M'envoyer un test » envoie le premier mail à l'adresse du premier compte, « Lancer (N) » démarre un compte à rebours de 5 s annulable, puis les étapes une par une, 1,2 s entre deux envois. Rapport : faits / échecs. Les envois sont listés dans Aperçu → Envoyés par Coucou.
+- Rien ne se passe sans clic : « M'envoyer un test » envoie le premier mail à l'adresse du premier compte, « Lancer (N) » démarre un compte à rebours de 5 s annulable, puis les étapes une par une, 1,2 s entre deux envois. Rapport : faits / échecs. Les envois sont listés dans Aperçu → Envoyés par Rafiq.
 
 ---
 
 ## 6bis. WhatsApp (expérimental, build GitHub uniquement)
 
-Pas d'API WhatsApp pour un compte perso : Coucou parle à une **passerelle locale non officielle** que l'utilisateur lance sur son Mac, [GOWA](https://github.com/aldinokemal/go-whatsapp-web-multidevice) (par défaut) ou [OpenWA](https://github.com/rmyndharis/OpenWA). Tout le code est sous `#if !APPSTORE` ; la pill `integration_whatsapp` (#25D366) est `githubOnly`.
+Pas d'API WhatsApp pour un compte perso : Rafiq parle à une **passerelle locale non officielle** que l'utilisateur lance sur son Mac, [GOWA](https://github.com/aldinokemal/go-whatsapp-web-multidevice) (par défaut) ou [OpenWA](https://github.com/rmyndharis/OpenWA). Tout le code est sous `#if !APPSTORE` ; la pill `integration_whatsapp` (#25D366) est `githubOnly`.
 
-- **Fichiers** : `WhatsAppModels.swift` (boîte en mémoire, filtres, garde-fous, requête HTTP), `WhatsAppGateway.swift` (payloads et réponses des deux passerelles, HMAC), `WhatsAppProvider.swift` (`GOWAProvider`, `OpenWAProvider`), `WhatsAppWebhook.swift` (serveur 127.0.0.1), `WhatsAppController.swift`, `WhatsAppViews.swift` (carte, conversation, Réglages), `WhatsAppGOWAProcess.swift` (GOWA lancé par Coucou). Tests : `scripts/test-whatsapp.sh`.
-- **GOWA** : `http://127.0.0.1:3000`, auth basique `user:pass` facultative. Coucou prend l'appareil connecté, sinon crée `coucou` (`POST /devices`) ; QR = PNG de `GET /devices/{id}/login`, récupéré sur la passerelle elle-même ; webhook déclaré par `PATCH /devices/{id}/webhook` (événement `message`), signé `X-Hub-Signature-256: sha256=<hex>`. Messages : `GET /chats`, `GET /chat/{jid}/messages` ; envoi `POST /send/message` ; lu `POST /message/{id}/read`. Pas de liste de mentions : `@<mon numéro>` dans le texte.
-- **OpenWA** : `http://127.0.0.1:2785/api`, en-tête `X-API-Key`, moteur `ENGINE_TYPE=baileys`. Session prête, sinon `coucou` créée et démarrée ; QR = data-URL de `GET /sessions/{id}/qr` ; webhook `POST /sessions/{id}/webhooks` (`message.received`, `message.sent`), signé `X-OpenWA-Signature`. Il faut `SSRF_ALLOWED_HOSTS=127.0.0.1` côté OpenWA, sinon il refuse l'adresse locale (Coucou passe alors au polling).
+- **Fichiers** : `WhatsAppModels.swift` (boîte en mémoire, filtres, garde-fous, requête HTTP), `WhatsAppGateway.swift` (payloads et réponses des deux passerelles, HMAC), `WhatsAppProvider.swift` (`GOWAProvider`, `OpenWAProvider`), `WhatsAppWebhook.swift` (serveur 127.0.0.1), `WhatsAppController.swift`, `WhatsAppViews.swift` (carte, conversation, Réglages), `WhatsAppGOWAProcess.swift` (GOWA lancé par Rafiq). Tests : `scripts/test-whatsapp.sh`.
+- **GOWA** : `http://127.0.0.1:3000`, auth basique `user:pass` facultative. Rafiq prend l'appareil connecté, sinon crée `coucou` (`POST /devices`) ; QR = PNG de `GET /devices/{id}/login`, récupéré sur la passerelle elle-même ; webhook déclaré par `PATCH /devices/{id}/webhook` (événement `message`), signé `X-Hub-Signature-256: sha256=<hex>`. Messages : `GET /chats`, `GET /chat/{jid}/messages` ; envoi `POST /send/message` ; lu `POST /message/{id}/read`. Pas de liste de mentions : `@<mon numéro>` dans le texte.
+- **OpenWA** : `http://127.0.0.1:2785/api`, en-tête `X-API-Key`, moteur `ENGINE_TYPE=baileys`. Session prête, sinon `coucou` créée et démarrée ; QR = data-URL de `GET /sessions/{id}/qr` ; webhook `POST /sessions/{id}/webhooks` (`message.received`, `message.sent`), signé `X-OpenWA-Signature`. Il faut `SSRF_ALLOWED_HOSTS=127.0.0.1` côté OpenWA, sinon il refuse l'adresse locale (Rafiq passe alors au polling).
 - **Temps réel** : `NWListener` lié à `127.0.0.1` (port 47823 par défaut), pairs non-loopback refusés, signature HMAC-SHA256 vérifiée sur le corps brut avec un secret aléatoire du Keychain. Sans livraison depuis 5 min : polling toutes les 20 s. Statut toutes les 5 s tant que ce n'est pas lié, toutes les minutes ensuite, toutes les 30 s après une minute de panne. Réveil : on redemande tout.
 - **Pill** : une ligne par conversation (initiales, nom, aperçu, non-lus), médias en libellé. Nouveau message : émote `happy`, son `pop` (réglage son global), état `finished` comme Stripe (règles d'ouverture habituelles), seulement le nom de la conversation dans la pill, jamais le texte. Passerelle en panne deux fois de suite : badge rouge, rien de plus.
 - **Répondre** : clic → 10 derniers messages + champ (Entrée envoie, Maj+Entrée saut de ligne, Échap ferme ; le brouillon garde l'île ouverte). Réponse seulement dans une conversation déjà là, 4 096 caractères max, 6 par minute. Lu à l'ouverture (option) ou à la réponse, jamais à la réception.
 - **Filtres** : groupes muets sauf mention, chats ignorés (clic droit ou Réglages), Concentration via `INFocusStatusCenter` (demande la capability Communication Notifications ; sans elle, le réglage s'affiche indisponible).
 - **Vie privée** : rien d'autre que la passerelle locale (pas de photo de profil, elles sont sur les serveurs de WhatsApp), historique en mémoire seulement (20 messages par conversation), vidé à la fermeture ou à la désactivation, aucun contenu dans les logs ni sur disque. URL, identifiants et secret dans le Keychain.
-- **Installer WhatsApp (un clic)** : `WhatsAppGOWAInstaller` lit la dernière release de GOWA (`api.github.com/repos/aldinokemal/go-whatsapp-web-multidevice/releases/latest`), prend `whatsapp_<version>_darwin_<arm64|amd64>.zip`, vérifie son SHA-256 avec `checksums-macos.txt` (sinon le `digest` de GitHub ; sans empreinte, rien n'est installé), dézippe avec `/usr/bin/ditto`, range le binaire `darwin-<arch>` sous `~/Library/Application Support/Coucou/GOWA/gowa` (chmod 755, sans quarantaine), puis active « Lancer GOWA automatiquement » et redémarre l'intégration : le QR suit. Redirections acceptées vers github.com et *.githubusercontent.com seulement. C'est le seul appel réseau hors passerelle, et seulement au clic.
-- **Lancer GOWA automatiquement** : processus enfant `rest --host=127.0.0.1 --port=<port de l'URL> --auto-download-media=false`, identifiant passé par `APP_BASIC_AUTH` (pas sur la ligne de commande), sortie vers `/dev/null`, dossier `~/Library/Application Support/Coucou/GOWA`, arrêté à la fermeture de Coucou ou quand l'option est coupée, redémarré seulement si son binaire, son adresse ou son mot de passe change (en attendant que l'ancien soit parti), relancé s'il tombe (une fois par minute au plus). Aucune requête ne suit de redirection : rien ne part ailleurs que vers la passerelle.
+- **Installer WhatsApp (un clic)** : `WhatsAppGOWAInstaller` lit la dernière release de GOWA (`api.github.com/repos/aldinokemal/go-whatsapp-web-multidevice/releases/latest`), prend `whatsapp_<version>_darwin_<arm64|amd64>.zip`, vérifie son SHA-256 avec `checksums-macos.txt` (sinon le `digest` de GitHub ; sans empreinte, rien n'est installé), dézippe avec `/usr/bin/ditto`, range le binaire `darwin-<arch>` sous `~/Library/Application Support/Rafiq/GOWA/gowa` (chmod 755, sans quarantaine), puis active « Lancer GOWA automatiquement » et redémarre l'intégration : le QR suit. Redirections acceptées vers github.com et *.githubusercontent.com seulement. C'est le seul appel réseau hors passerelle, et seulement au clic.
+- **Lancer GOWA automatiquement** : processus enfant `rest --host=127.0.0.1 --port=<port de l'URL> --auto-download-media=false`, identifiant passé par `APP_BASIC_AUTH` (pas sur la ligne de commande), sortie vers `/dev/null`, dossier `~/Library/Application Support/Rafiq/GOWA`, arrêté à la fermeture de Rafiq ou quand l'option est coupée, redémarré seulement si son binaire, son adresse ou son mot de passe change (en attendant que l'ancien soit parti), relancé s'il tombe (une fois par minute au plus). Aucune requête ne suit de redirection : rien ne part ailleurs que vers la passerelle.
 
 ---
 
@@ -379,7 +379,7 @@ Aucune permission Accessibilité nécessaire.
 
 ## 8. Codex — filtre « revue automatique » (relais GitHub uniquement)
 
-Le hook Coucou s'exécute **avant** le routage natif des approbations Codex : pour un tour dont le reviewer d'approbations est automatique (`auto_review`/`strict_auto_review` dans le `turn_context` du rollout), Codex traite la demande lui-même et une carte dans le notch n'aurait aucun sens. Le relais `nb-hook.py` (version GitHub seulement) appelle donc `codex_uses_automatic_review(payload)` **avant toute connexion au socket** pour les `PermissionRequest` de l'agent `codex` et sort immédiatement (stdout vide, code 0) quand la revue automatique est prouvée. Le filtre n'émet jamais de décision et ne touche aucune politique d'approbation côté app.
+Le hook Rafiq s'exécute **avant** le routage natif des approbations Codex : pour un tour dont le reviewer d'approbations est automatique (`auto_review`/`strict_auto_review` dans le `turn_context` du rollout), Codex traite la demande lui-même et une carte dans le notch n'aurait aucun sens. Le relais `nb-hook.py` (version GitHub seulement) appelle donc `codex_uses_automatic_review(payload)` **avant toute connexion au socket** pour les `PermissionRequest` de l'agent `codex` et sort immédiatement (stdout vide, code 0) quand la revue automatique est prouvée. Le filtre n'émet jamais de décision et ne touche aucune politique d'approbation côté app.
 
 Règles appliquées :
 - seul `payload.transcript_path` est lu, uniquement sous `$CODEX_HOME/sessions` ou `$CODEX_HOME/archived_sessions` (chemin résolu + appartenance vérifiées, fichier régulier ouvert avec `O_NOFOLLOW`/`O_NONBLOCK`) ; lectures bornées : 1 Mio d'en-tête + 8 Mio de queue au maximum, enregistrements JSON complets seulement ;
@@ -413,4 +413,4 @@ listener always returned `ask`:
   count stayed at one. The persisted turn context recorded `auto_review`.
 
 These are native CLI checks; they do not claim Desktop question-card coverage.
-The production profile, hook trust and Coucou installation were unchanged.
+The production profile, hook trust and Rafiq installation were unchanged.

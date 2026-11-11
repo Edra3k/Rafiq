@@ -124,7 +124,7 @@ export interface Settings {
   showPlanInNotch: boolean;
   /** Show the Claude plan percentage in the compact island next to the agent dots. */
   showPlanInCompactIsland: boolean;
-  /** Coucou's status line relay is installed in Claude Code's settings. */
+  /** Rafiq's status line relay is installed in Claude Code's settings. */
   planRelayInstalled: boolean;
   /** Show the Codex plan pill in the island's header. */
   showCodexPlanInNotch: boolean;
@@ -141,23 +141,23 @@ export interface Settings {
   /** Global shortcuts the user changed, by action id (see core/shortcuts.ts). */
   shortcuts: Bindings;
   /**
-   * Mochi's outfit: "auto" (dresses for the season), "none" or an outfit id.
+   * Rafiq's outfit: "auto" (dresses for the season), "none" or an outfit id.
    * Same raw values as the Mac's "mochiOutfit"; read it through parseOutfit.
    */
   mochiOutfit: string;
   /**
-   * A colour of the user's own for a pill's Mochi, by pill ID ("#RRGGBB").
+   * A colour of the user's own for a pill's Rafiq, by pill ID ("#RRGGBB").
    * Empty means the catalog's colours; read it through core/pill-colors.ts.
    * Same key and values as the Mac's "pillColors".
    */
   pillColors: Record<string, string>;
   /**
-   * Interface language: "" follows the system (when Coucou has its language,
+   * Interface language: "" follows the system (when Rafiq has its language,
    * else English), or one of src/i18n's ten codes ("fr", "pt-BR", "zh-Hans"…).
    */
   language: string;
   /**
-   * The phone link for Coucou for Android is on. Rust owns it (only the switch in
+   * The phone link for Rafiq for Android is on. Rust owns it (only the switch in
    * Settings → Android phone turns it on): whatever the page sends back is ignored.
    */
   phoneLink?: boolean;
@@ -167,7 +167,7 @@ export interface Settings {
   phoneDetails?: boolean;
   /** Which models the phone may use, "provider/model". Rust owns it too. */
   phoneChatModels?: string[];
-  /** Mochi on the desktop. Rust owns it: whatever the page sends back is ignored. */
+  /** Rafiq on the desktop. Rust owns it: whatever the page sends back is ignored. */
   desktopMochi?: {
     onDesktop: boolean;
     spot: { x: number; y: number; space: string } | null;
@@ -268,12 +268,12 @@ class AppState {
   /** Rows in the list on screen, 0 when there is none (AppState.cardItemCount). */
   cardItemCount = 0;
   /**
-   * Mochi is out of the island — on the desktop, flying, or being dragged
-   * there — so the island's own Mochi is hidden (AppState.mochiOnDesktop).
+   * Rafiq is out of the island — on the desktop, flying, or being dragged
+   * there — so the island's own Rafiq is hidden (AppState.mochiOnDesktop).
    */
   mochiOnDesktop = false;
 
-  /** Outfit shown on Mochi while the pointer rests on a wardrobe button. */
+  /** Outfit shown on Rafiq while the pointer rests on a wardrobe button. */
   wardrobePreview: Outfit | null = null;
 
   lastActivity = performance.now();
@@ -303,7 +303,7 @@ class AppState {
     return this.stateOverride ?? this.focusTask?.state ?? "idle";
   }
 
-  /** Spotify plays on a declared pill: Mochi dances (Linux; never on Windows yet). */
+  /** Spotify plays on a declared pill: Rafiq dances (Linux; never on Windows yet). */
   get spotifyPlaying(): boolean {
     return musicPlaying(Spotify.state, sanitizeDeclared(this.settings, this.os).activeIntegrations);
   }

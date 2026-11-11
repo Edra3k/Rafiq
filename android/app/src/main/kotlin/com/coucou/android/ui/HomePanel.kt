@@ -71,7 +71,7 @@ internal fun stateColor(state: BotState): Color =
 
 /**
  * The hero of Home: Louis's island grown to full width and hanging from the top edge of the screen. It
- * holds the agent that matters most, with its own Mochi in its own colour (the one you chose on the
+ * holds the agent that matters most, with its own Rafiq in its own colour (the one you chose on the
  * computer), its name, one plain sentence, and at most two buttons. Black, with a soft
  * glow in the state's colour. No step counter: the computer cannot know how many steps are left.
  */
@@ -148,7 +148,7 @@ fun HeroCard(
     }
 }
 
-/** The other agents, one full-width row each: its small Mochi in its colour, its name and one plain line. Tap to make it the main one. */
+/** The other agents, one full-width row each: its small Rafiq in its colour, its name and one plain line. Tap to make it the main one. */
 @Composable
 fun AgentRows(others: List<SessionInfo>, engineFor: (SessionInfo) -> MochiEngine, onPick: (SessionInfo) -> Unit) {
     val t = tokens()

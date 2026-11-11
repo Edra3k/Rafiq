@@ -1,5 +1,5 @@
 #!/bin/bash
-# render-outfits.sh — compile and run the Mochi outfit planche renderer
+# render-outfits.sh — compile and run the Rafiq outfit planche renderer
 # NOT in CI. Run manually: bash scripts/render-outfits.sh
 # Output: /tmp/coucou-outfits.png
 

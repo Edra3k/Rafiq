@@ -19,28 +19,28 @@ enum IslandPlacement: String, CaseIterable, Sendable {
     /// Room the corner island keeps from the screen's edges (inside the visible frame).
     static let margin: CGFloat = 10
     /// The island panel is wider than the open island; this much empty room on each side
-    /// (Mochi's hearts, the shadow). Same value as (panel width − open width) / 2.
+    /// (Rafiq's hearts, the shadow). Same value as (panel width − open width) / 2.
     static let side: CGFloat = 40
-    /// A drop of Mochi this close to a corner of the screen moves the island there.
+    /// A drop of Rafiq this close to a corner of the screen moves the island there.
     static let snapDistance: CGFloat = 180
-    /// The resting island in a corner: a square tile with rounded corners, Mochi alone in it.
+    /// The resting island in a corner: a square tile with rounded corners, Rafiq alone in it.
     static let tile: CGFloat = 60
     static let tileCorner: CGFloat = 18
     /// Hovering the tile: the other pills come out of it one after the other, as small tiles
     /// along the screen's edge (the size of each, and the room between two).
     static let bubble: CGFloat = 40
     static let bubbleGap: CGFloat = 8
-    /// Open in a corner, the circle of Mochis is centred this far from the island's corner…
+    /// Open in a corner, the circle of Rafiqs is centred this far from the island's corner…
     static let cornerInset: CGFloat = 50
-    /// …and Mochi sits nearer to them, this much further in on each side.
+    /// …and Rafiq sits nearer to them, this much further in on each side.
     static let cornerPull: CGFloat = 30
     /// …raised a little: his body is drawn a bit below the middle of his canvas, so the room
     /// above him and beside him look the same.
     static let lift: CGFloat = 4
-    /// The other pills' Mochis sit on a quarter circle of this radius around him, far enough
+    /// The other pills' Rafiqs sit on a quarter circle of this radius around him, far enough
     /// apart for their names and for two of them to cross when they swap.
     static let arcRadius: CGFloat = 150
-    /// The room Mochi and his circle take in the corner of the open island (the card has the rest).
+    /// The room Rafiq and his circle take in the corner of the open island (the card has the rest).
     static let cornerColumn: CGFloat = 230
     /// The home view open in a corner (the Mail card reading a message: `homeReadingSize`).
     static let homeSize = CGSize(width: 640, height: 260)
@@ -49,7 +49,7 @@ enum IslandPlacement: String, CaseIterable, Sendable {
     /// The placement the views read without reaching AppState (set by AppState.islandPlacement).
     nonisolated(unsafe) static var current: IslandPlacement = .notch
 
-    /// The centre of the circle the other Mochis sit on, in an open island of `size`, in the
+    /// The centre of the circle the other Rafiqs sit on, in an open island of `size`, in the
     /// island's own coordinates (y down): near its corner.
     func cornerArcCenter(in size: CGSize) -> CGPoint {
         let i = Self.cornerInset
@@ -57,7 +57,7 @@ enum IslandPlacement: String, CaseIterable, Sendable {
                        y: (isBottom ? size.height - i : i) - Self.lift)
     }
 
-    /// Mochi's centre in an open island (y down): in the corner, pulled towards his circle.
+    /// Rafiq's centre in an open island (y down): in the corner, pulled towards his circle.
     func cornerBotCenter(in size: CGSize) -> CGPoint {
         let c = cornerArcCenter(in: size), d = Self.cornerPull
         return CGPoint(x: c.x + (isRight ? -d : d), y: c.y + (isBottom ? -d : d))
@@ -81,7 +81,7 @@ enum IslandPlacement: String, CaseIterable, Sendable {
         return CGRect(x: isRight ? -w : 0, y: 0, width: tile + w, height: tile)
     }
 
-    /// The other pills' Mochis around him (y down): `count` points on the quarter circle that
+    /// The other pills' Rafiqs around him (y down): `count` points on the quarter circle that
     /// faces the inside of the screen, from the side along the edge to the side going inwards.
     func arcPoints(count: Int, in size: CGSize) -> [CGPoint] {
         guard count > 0, isCorner else { return [] }
@@ -138,7 +138,7 @@ enum IslandPlacement: String, CaseIterable, Sendable {
         return CGRect(x: x, y: y, width: size.width, height: size.height)
     }
 
-    /// Where Mochi dropped at `point` sends the island: a corner when the drop is near one,
+    /// Where Rafiq dropped at `point` sends the island: a corner when the drop is near one,
     /// the notch when it is near the top centre, else nil (the drop does what it did before).
     static func snap(_ point: CGPoint, screen: CGRect) -> IslandPlacement? {
         let d = snapDistance

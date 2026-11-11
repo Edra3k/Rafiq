@@ -1,4 +1,4 @@
-// The Coucou window: a sidebar with Flow (dictation, the Notetaker, the
+// The Rafiq window: a sidebar with Flow (dictation, the Notetaker, the
 // statistics, the dictionary, the snippets, the styles and their settings)
 // and Notch (every setting of the island), and the page on the right, under
 // its coloured band. Port of FlowHub.swift.
@@ -36,11 +36,11 @@ export const FLOW_PAGES: PageDef[] = [
 ];
 
 export const NOTCH_PAGES: PageDef[] = [
-  { id: "general", icon: "gear", title: () => t("General"), subtitle: () => t("Mochi, his sounds and how the island behaves.") },
+  { id: "general", icon: "gear", title: () => t("General"), subtitle: () => t("Rafiq, his sounds and how the island behaves.") },
   { id: "pills", icon: "grid", title: () => t("Active pills"), subtitle: () => t("The pills shown in the island, their order and their colours.") },
-  { id: "agents", icon: "terminal", title: () => t("Agents"), subtitle: () => t("Claude Code, Codex and the other agents Mochi follows.") },
+  { id: "agents", icon: "terminal", title: () => t("Agents"), subtitle: () => t("Claude Code, Codex and the other agents Rafiq follows.") },
   { id: "chat", icon: "chat", title: () => t("Chat"), subtitle: () => t("The AI of the island's chat, with your own keys.") },
-  { id: "voice", icon: "wave", title: () => "OK Coucou" },
+  { id: "voice", icon: "wave", title: () => "OK Rafiq" },
   { id: "integrations", icon: "puzzle", title: () => t("Integrations"), subtitle: () => t("Stripe, GitHub, Vercel, n8n, Notion and the rest.") },
   { id: "phone", icon: "phone", title: () => t("Android phone"), subtitle: () => t("Your agents and their approvals on your Android phone, over your Wi-Fi.") },
   { id: "shortcuts", icon: "keyboard", title: () => t("Shortcuts"), subtitle: () => t("The keys that open the island and its actions.") },
@@ -64,7 +64,7 @@ export interface HubContext {
   refresh(): Promise<FlowStatus>;
   /** Saves new preferences and keeps them as the window's. */
   setPrefs(change: (p: FlowPrefs) => void): Promise<void>;
-  /** The band of a page, its Mochis walking. */
+  /** The band of a page, its Rafiqs walking. */
   hero(page: PageId, title: string, subtitle: string | null, actions?: HTMLElement[], compact?: boolean): HTMLElement;
   /** Set by a page: called when the page is left. */
   onLeave?: () => void;
@@ -199,7 +199,7 @@ export async function startHub(root: HTMLElement, opts: HubOptions) {
   // ── The sidebar ──
   const side = h("nav", { class: "hub-side" });
   const logo = h("canvas", {});
-  side.append(h("div", { class: "hub-brand" }, logo, h("span", { text: "Coucou" })));
+  side.append(h("div", { class: "hub-brand" }, logo, h("span", { text: "Rafiq" })));
   liveMochi(logo as HTMLCanvasElement);
 
   // Settings search field
@@ -312,7 +312,7 @@ export async function startHub(root: HTMLElement, opts: HubOptions) {
     if (searchInput.value.trim()) renderSearchResults();
   });
 
-  side.append(h("div", { class: "spacer" }), statusLine, h("div", { class: "hub-version", text: `Coucou ${opts.version}` }));
+  side.append(h("div", { class: "spacer" }), statusLine, h("div", { class: "hub-version", text: `Rafiq ${opts.version}` }));
 
   clear(root);
   root.append(side, h("main", { class: "hub-panel" }, scroll));

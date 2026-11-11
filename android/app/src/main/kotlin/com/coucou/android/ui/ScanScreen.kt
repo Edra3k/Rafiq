@@ -88,7 +88,7 @@ private tailrec fun Context.activity(): Activity? = when (this) {
  * Reads the pairing QR code with the camera. The camera is asked for only here, used only while this screen is
  * showing (it is released when the screen is left, paused, or a code was accepted), and no picture is kept or
  * sent: each frame is looked at for a code and dropped. [onText] gets the text of a code and says whether it was
- * a Coucou pairing code; anything else is ignored with a short hint.
+ * a Rafiq pairing code; anything else is ignored with a short hint.
  */
 @Composable
 fun ScanScreen(onBack: () -> Unit, onText: (String) -> Boolean) {

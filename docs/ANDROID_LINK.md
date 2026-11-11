@@ -1,6 +1,6 @@
 # Android link (protocol v1)
 
-How *Coucou for Android* talks to a desktop Coucou. The iPhone uses iCloud (CloudKit) and Apple
+How *Rafiq for Android* talks to a desktop Rafiq. The iPhone uses iCloud (CloudKit) and Apple
 push, neither of which exists on Android, so the Android app connects to the desktop directly over
 the local network.
 
@@ -271,10 +271,10 @@ What it does not do: a device that floods from many addresses at once can still 
 for a few seconds at a time; it cannot keep out the phone that is already paired. A wrong token still costs the caller
 a pause and is never admitted.
 
-## Mochi's outfit (optional capability `prefs`)
+## Rafiq's outfit (optional capability `prefs`)
 
 A phone that sends `caps: ["prefs"]` in its `hello` is offered `prefs` in `welcome.caps` (no switch on the computer: what
-Mochi wears is no secret and says nothing about the user's work). It is then sent what the island's wardrobe says, right
+Rafiq wears is no secret and says nothing about the user's work). It is then sent what the island's wardrobe says, right
 after the first `sessions` and again whenever it changes:
 
 ```json
@@ -285,7 +285,7 @@ after the first `sessions` and again whenever it changes:
 `pumpkin`, `santaHat`, `bunnyEars`: the PC's and the Mac's stored values, nothing else is ever sent (the computer checks the
 list; a test compares it with `windows/src/mochi/wardrobe.ts`). `auto` means "dress for the season": **the phone applies the
 seasons to its own calendar**, the computer sends no date. A phone ignores a value it does not know and keeps what it wore.
-The phone has its own choice too (Settings > Mochi's wardrobe): "Same as my computer" (default) or one outfit, which then wins.
+The phone has its own choice too (Settings > Rafiq's wardrobe): "Same as my computer" (default) or one outfit, which then wins.
 Nothing goes back to the computer.
 
 ## Finding the computer again (optional, still protocol v1)
@@ -313,10 +313,10 @@ simply keeps using the saved address.**
      that copied the short id) is dropped and never saved. When the paired fingerprint is announced twice, the first that
      passes wins.
   5. The stored host and port are replaced; the token and the pinned fingerprint are untouched. The link reconnects.
-- If nothing is found, the phone says so calmly (same Wi-Fi? computer awake and Coucou running? firewall? hotspots and guest
+- If nothing is found, the phone says so calmly (same Wi-Fi? computer awake and Rafiq running? firewall? hotspots and guest
   networks can block devices from finding each other, "client isolation") and offers to pair again or to type the address.
 - Limits, honestly: multicast does not cross routers or VPNs; some access points block it between clients; a firewall that
-  blocks UDP 5353 on the private profile hides the computer (the Windows prompt "allow Coucou on private networks" covers
+  blocks UDP 5353 on the private profile hides the computer (the Windows prompt "allow Rafiq on private networks" covers
   it); two computers with the same certificate do not exist (each has its own).
 
 ## Behaviour rules (same as the other ports)
@@ -362,7 +362,7 @@ The Mac app speaks the same protocol v1 as the Windows/Linux one, in Swift with 
   (island changes are published after a short debounce, a phone's lines are handled as they arrive), with no polling. Not in the
   App Store build (the sandbox has no server entitlement); that build keeps the iPhone link only.
 - **Transport**: an `NWListener` on port 47821 (else any free port), IPv4 only, TLS 1.2 or 1.3, with the self-signed certificate
-  (ECDSA P-256, valid 2024 to 2124, common name `Coucou phone link`). Peers that are not on the local network are dropped before any byte
+  (ECDSA P-256, valid 2024 to 2124, common name `Rafiq phone link`). Peers that are not on the local network are dropped before any byte
   is read. At most 8 connections, 10 s to say hello (3 s when the pool is filling up), 20 min idle, 64 KiB lines.
 - **Secrets**: the certificate, its key and the pairing token are generic-password items of the Keychain
   (`android-link-cert`, `android-link-key`, `android-link-token`), never a file and never UserDefaults. Network.framework needs a

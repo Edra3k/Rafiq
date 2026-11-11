@@ -123,7 +123,7 @@ try:
         if app.poll() is not None:
             break
         try:
-            windows = command("xdotool", "search", "--onlyvisible", "--name", "^Coucou$").splitlines()
+            windows = command("xdotool", "search", "--onlyvisible", "--name", "^Rafiq$").splitlines()
         except subprocess.CalledProcessError:
             continue
         for window in windows:

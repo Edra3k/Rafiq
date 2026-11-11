@@ -1,7 +1,7 @@
 #if !APPSTORE
 import Foundation
 
-// The two local WhatsApp gateways Coucou can talk to. Each call goes to the URL set in
+// The two local WhatsApp gateways Rafiq can talk to. Each call goes to the URL set in
 // Settings (127.0.0.1 by default) and nowhere else: no photo, no media, nothing from
 // WhatsApp's own servers. Endpoints, headers and bodies follow each gateway's docs (see
 // WhatsAppGateway.swift for the references).
@@ -24,7 +24,7 @@ protocol WhatsAppProvider: Sendable {
     /// The QR to scan, as PNG bytes, and how long it stays valid; nil when there is none to
     /// show (already linked, not ready yet).
     func qrCode() async throws -> (png: Data, seconds: Int)?
-    /// Tells the gateway to post new messages to Coucou's local webhook, signed with `secret`.
+    /// Tells the gateway to post new messages to Rafiq's local webhook, signed with `secret`.
     func registerWebhook(url: String, secret: String) async throws
     /// Messages of every chat since `date` (the polling fallback), oldest first.
     func recentMessages(since date: Date, me: String?) async throws -> [WAMessage]
@@ -101,7 +101,7 @@ final class WAHTTP: Sendable {
 // MARK: - GOWA
 
 /// go-whatsapp-web-multidevice, `./whatsapp rest` (port 3000). Auth: HTTP basic `user:pass`
-/// when the gateway was started with `--basic-auth`. Coucou works on one device (the one
+/// when the gateway was started with `--basic-auth`. Rafiq works on one device (the one
 /// already logged in, else a new one named "coucou"), named in `X-Device-Id`.
 actor GOWAProvider: WhatsAppProvider {
     nonisolated let kind = WAGatewayKind.gowa
@@ -223,7 +223,7 @@ actor GOWAProvider: WhatsAppProvider {
 
 // MARK: - OpenWA
 
-/// OpenWA (port 2785, every route under /api). Auth: `X-API-Key`. Coucou works on one session
+/// OpenWA (port 2785, every route under /api). Auth: `X-API-Key`. Rafiq works on one session
 /// (the one ready, else one named "coucou", created and started when missing).
 actor OpenWAProvider: WhatsAppProvider {
     nonisolated let kind = WAGatewayKind.openwa
@@ -349,7 +349,7 @@ actor OpenWAProvider: WhatsAppProvider {
         return name
     }
 
-    /// OpenWA names people `<number>@c.us` (Coucou keeps the @s.whatsapp.net form inside).
+    /// OpenWA names people `<number>@c.us` (Rafiq keeps the @s.whatsapp.net form inside).
     static func openwaId(_ jid: String) -> String {
         jid.hasSuffix("@s.whatsapp.net") ? jid.replacingOccurrences(of: "@s.whatsapp.net", with: "@c.us") : jid
     }

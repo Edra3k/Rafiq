@@ -3,7 +3,7 @@ import Foundation
 
 // MARK: - Android link, protocol v1: the wire (docs/ANDROID_LINK.md)
 //
-// The Mac side of the link with Coucou for Android, the same protocol the
+// The Mac side of the link with Rafiq for Android, the same protocol the
 // Windows/Linux app speaks (windows/src-tauri/src/phone_link/). Newline-delimited
 // JSON over TLS, a self-signed certificate the phone pins, a pairing token that is
 // the shared secret. This file is the pure part: no sockets, no Keychain, no
@@ -133,11 +133,11 @@ enum AndroidLinkProtocol {
         return ["v": txtVersion, "fp": id]
     }
 
-    /// The service's instance name: the computer's name, at most 48 characters, "Coucou" if empty.
+    /// The service's instance name: the computer's name, at most 48 characters, "Rafiq" if empty.
     static func instanceName(_ name: String) -> String {
         let trimmed = String(name.trimmingCharacters(in: .whitespacesAndNewlines).prefix(48))
             .trimmingCharacters(in: .whitespacesAndNewlines)
-        return trimmed.isEmpty ? "Coucou" : trimmed
+        return trimmed.isEmpty ? "Rafiq" : trimmed
     }
 
     /// The name the phone shows for this Mac.

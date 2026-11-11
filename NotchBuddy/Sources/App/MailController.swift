@@ -16,7 +16,7 @@ struct MailMessage: Identifiable, Equatable, Sendable {
     let subject: String
     let date: Date
     var isRead: Bool
-    /// Flagged in Mail: what Coucou calls important.
+    /// Flagged in Mail: what Rafiq calls important.
     var isFlagged: Bool = false
 
     var id: String { "\(account)/\(mailbox)/\(messageId)" }
@@ -56,7 +56,7 @@ struct MailMessage: Identifiable, Equatable, Sendable {
 /// Reads the inboxes of Apple Mail (every account added to Mail, Gmail included) through
 /// Apple Events: unread count, latest messages, and a message's text on demand.
 /// Read-only except for the user's own clicks (mark as read, reply window, open in Mail);
-/// it never sends anything. Mail is never launched by Coucou: nothing is read while Mail
+/// it never sends anything. Mail is never launched by Rafiq: nothing is read while Mail
 /// is closed. Polls every 60 s, only while the pill is active and Mail is open.
 /// GitHub build only (Apple Events are not allowed in the App Store build).
 @MainActor
@@ -103,7 +103,7 @@ final class MailController: ObservableObject {
     private var timer: Timer?
     private var fetching = false
     private var lastFetch: Date = .distantPast
-    private let queue = DispatchQueue(label: "fr.louisraille.coucou.mail")
+    private let queue = DispatchQueue(label: "com.edra3k.rafiq.mail")
 
     private var isPillActive: Bool {
         AppState.shared.activeIntegrations.contains(Self.pillId)
@@ -127,7 +127,7 @@ final class MailController: ObservableObject {
             Task { @MainActor [weak self] in
                 self?.isMailRunning = true
                 // Mail just opened: it syncs its accounts first (a minute or two of full CPU on
-                // a big inbox). Coucou waits 30 s before its first read instead of adding to it.
+                // a big inbox). Rafiq waits 30 s before its first read instead of adding to it.
                 try? await Task.sleep(for: .seconds(30))
                 guard Self.mailRunning() else { return }
                 self?.updatePolling()
@@ -415,7 +415,7 @@ final class MailController: ObservableObject {
         }
     }
 
-    /// Flag or unflag the message (Coucou's "important").
+    /// Flag or unflag the message (Rafiq's "important").
     func toggleFlag(_ message: MailMessage) {
         guard Self.mailRunning() else { return }
         let on = !message.isFlagged

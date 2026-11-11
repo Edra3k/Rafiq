@@ -57,7 +57,7 @@ object MochiPainter {
         }
     }
 
-    /** Draws Mochi centred in this DrawScope. `nowSec` drives spirals, wave and badge pulses. */
+    /** Draws Rafiq centred in this DrawScope. `nowSec` drives spirals, wave and badge pulses. */
     fun DrawScope.drawMochi(e: MochiEngine, nowSec: Double) {
         val w = size.width.toDouble()
         val h = size.height.toDouble()

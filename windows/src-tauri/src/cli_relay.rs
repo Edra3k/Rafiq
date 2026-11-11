@@ -2,13 +2,13 @@
 // subscriptions, as on the Mac: CLIRelay.swift). With the switch on, the chat
 // is answered by the provider's official terminal tool, signed in with the
 // user's own account: Claude Code (claude_code.rs), Antigravity CLI or Gemini
-// CLI, Codex CLI, Cursor CLI and GitHub Copilot CLI. Coucou reads no
+// CLI, Codex CLI, Cursor CLI and GitHub Copilot CLI. Rafiq reads no
 // credential and makes no network call of its own.
 //
 // Each run is kept apart from the user's sessions and can only answer: plan,
 // ask or read-only modes, no shell, no edits, no user hooks, MCP servers,
 // extensions or plugins where the tool lets us turn them off, nothing saved to
-// resume, in an empty folder of Coucou's. Web search for the chat only: a
+// resume, in an empty folder of Rafiq's. Web search for the chat only: a
 // dropped file is read with no web at all (a file written to steer the model
 // could otherwise send what it reads to a website). Claude Code reads the file
 // itself; the other tools get a text file's contents in the prompt.
@@ -33,7 +33,7 @@ const CHAT_TIMEOUT: Duration = Duration::from_secs(180);
 const MAX_INLINE_TEXT: u64 = 200_000;
 
 /// The Gemini CLI policy that keeps a run off the web while it reads a file.
-const NO_WEB_POLICY: &str = "[[rule]]\ntoolName = [\"google_web_search\", \"web_fetch\"]\ndecision = \"deny\"\npriority = 900\ndenyMessage = \"No web while Coucou reads a file.\"\n";
+const NO_WEB_POLICY: &str = "[[rule]]\ntoolName = [\"google_web_search\", \"web_fetch\"]\ndecision = \"deny\"\npriority = 900\ndenyMessage = \"No web while Rafiq reads a file.\"\n";
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum Cli {

@@ -58,13 +58,13 @@ export interface ViewActions {
   blip(): void;
   /** Wardrobe click: keeps the outfit ("auto" and "none" included). */
   chooseOutfit(selection: OutfitSelection): void;
-  /** Wardrobe hover: shows an outfit on Mochi without keeping it; null ends it. */
+  /** Wardrobe hover: shows an outfit on Rafiq without keeping it; null ends it. */
   previewOutfit(outfit: Outfit | null): void;
   /** The island takes the keyboard (a text field in a card) or gives it back. */
   keyboard(on: boolean): void;
   /** Something is being typed in a card: the island stays open until it is sent or cleared. */
   holdOpen(on: boolean): void;
-  /** A Claude Code session was started from the launch card: Mochi is pleased, the island folds. */
+  /** A Claude Code session was started from the launch card: Rafiq is pleased, the island folds. */
   launched(): void;
 }
 

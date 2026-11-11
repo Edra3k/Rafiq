@@ -178,7 +178,7 @@ struct ChatMailToggle: View {
     }
 }
 
-/// The Overview's list of what Coucou sent for the chat.
+/// The Overview's list of what Rafiq sent for the chat.
 struct HubMailSentList: View {
     @ObservedObject private var store = MailTriageStore.shared
 

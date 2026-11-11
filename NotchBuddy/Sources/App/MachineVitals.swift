@@ -3,11 +3,11 @@ import Combine
 import Darwin
 import IOKit.ps
 
-/// How the Mac is doing, as Mochi shows it: a busy processor makes him sweat, a warm Mac
+/// How the Mac is doing, as Rafiq shows it: a busy processor makes him sweat, a warm Mac
 /// flushes him, short memory puffs him up, a low battery makes him tired, then asleep. Long
 /// hours with the agents and no break make him sleepy too (WorkStreak).
 ///
-/// It only reads while Mochi is on screen (the island showing, or Mochi on the desktop), every
+/// It only reads while Rafiq is on screen (the island showing, or Rafiq on the desktop), every
 /// few seconds: a hidden island costs nothing. Everything stays on the Mac.
 @MainActor
 final class MachineVitals: ObservableObject {
@@ -15,14 +15,14 @@ final class MachineVitals: ObservableObject {
 
     static let enabledKey = "mochiFeelsTheMac"
 
-    /// What Mochi shows, read by his canvases every frame.
+    /// What Rafiq shows, read by his canvases every frame.
     @Published private(set) var mood = MochiMood.calm
-    /// The line shown under the island while the pointer is on Mochi ("CPU 94 % · node, Chrome").
+    /// The line shown under the island while the pointer is on Rafiq ("CPU 94 % · node, Chrome").
     @Published private(set) var summary: String? = nil
-    /// The pointer is on Mochi (set by the island's poll).
+    /// The pointer is on Rafiq (set by the island's poll).
     @Published var hovered = false
 
-    /// Off in Settings → General: Mochi no longer reacts to the Mac.
+    /// Off in Settings → General: Rafiq no longer reacts to the Mac.
     var enabled: Bool {
         get { UserDefaults.standard.object(forKey: Self.enabledKey) as? Bool ?? true }
         set {
@@ -46,11 +46,11 @@ final class MachineVitals: ObservableObject {
 
     private init() {}
 
-    /// Starts following whether Mochi is on screen. Called once at launch.
+    /// Starts following whether Rafiq is on screen. Called once at launch.
     func start() {
         let state = AppState.shared
         // Everything is received on the main thread: macOS posts some of these (the thermal
-        // state) from a background queue, and Mochi's code only runs on the main one.
+        // state) from a background queue, and Rafiq's code only runs on the main one.
         state.$mode.removeDuplicates().receive(on: DispatchQueue.main).sink { [weak self] _ in
             Task { @MainActor in self?.refreshRunning() }
         }.store(in: &subscriptions)
@@ -153,7 +153,7 @@ final class MachineVitals: ObservableObject {
                 self.sample()
             }
         }
-        // The source fires only on changes, so a level left over from before Mochi hid would stick.
+        // The source fires only on changes, so a level left over from before Rafiq hid would stick.
         // Read the current one (1 normal, 2 warning, 4 critical).
         var level: Int32 = 0
         var size = MemoryLayout<Int32>.size

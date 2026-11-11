@@ -205,8 +205,8 @@ struct OverviewView: View {
         }
     }
 
-    /// Open in a corner: the card beside Mochi and his circle (CornerArcView, drawn over the
-    /// island), full height. The cards keep room on their left for Mochi at the notch; here it
+    /// Open in a corner: the card beside Rafiq and his circle (CornerArcView, drawn over the
+    /// island), full height. The cards keep room on their left for Rafiq at the notch; here it
     /// is cut off, so they start at the card's edge.
     private var cornerBody: some View {
         let placement = state.islandPlacement
@@ -4481,7 +4481,7 @@ struct MusicPill: View {
                 .stroke(Color(hex: task.color).opacity(isHovered ? 0.55 : 0.14), lineWidth: 1)
                 .allowsHitTesting(false)
 
-            // Mini Mochi at leading edge
+            // Mini Rafiq at leading edge
             HStack(spacing: 0) {
                 MiniBotCanvasView(task: task, isDancing: isPlaying)
                     .frame(width: 22 / 0.6, height: 22 / 0.6)
@@ -4585,7 +4585,7 @@ struct MusicCardView: View {
                 .padding(.leading, 108)
                 .padding(.trailing, 36)
 
-                Text("Allow Coucou to control Music")
+                Text("Allow Rafiq to control Music")
                     .font(.system(size: 11))
                     .foregroundColor(Color(hex: "#8E939C"))
                     .padding(.leading, 108)
@@ -4770,7 +4770,7 @@ struct WardrobeView: View {
                             onHover: { h in
                                 hoveredOutfit = h ? outfit : nil
                                 if h {
-                                    // Preview on main Mochi
+                                    // Preview on main Rafiq
                                     let preview: Outfit = outfit == .auto
                                         ? Outfit.seasonal(for: Date(), calendar: .current)
                                         : outfit
@@ -4868,8 +4868,7 @@ private func drawOutfitIcon(context: GraphicsContext, size: CGSize, outfit: Outf
         var ctx = context
         ctx.translateBy(x: cx, y: iconCY)
         ctx.fill(bodyPath, with: .linearGradient(
-            Gradient(colors: [Color(red: 0.929, green: 0.929, blue: 0.937),
-                              Color(red: 0.769, green: 0.773, blue: 0.792)]),
+            Gradient(colors: [RafiqLook.bodyTop, RafiqLook.bodyBottom]),
             startPoint: CGPoint(x: rx*0.7, y: -ry*0.85),
             endPoint:   CGPoint(x: -rx*0.8, y: ry*0.9)
         ))
@@ -4921,7 +4920,7 @@ private func drawOutfitIcon(context: GraphicsContext, size: CGSize, outfit: Outf
         ctx.stroke(slash, with: .color(Color(hex: "#454850")), style: StrokeStyle(lineWidth: 1.4, lineCap: .round))
 
     default:
-        // Small Mochi wearing the outfit
+        // Small Rafiq wearing the outfit
         let iconR: CGFloat = 10.0
         let rx = iconR * 1.14, ry = iconR * 0.88
         let mH = MochiH(R: iconR, yaw: 0, pitch: 0)
@@ -4937,8 +4936,8 @@ private func drawOutfitIcon(context: GraphicsContext, size: CGSize, outfit: Outf
         var ctx = context
         ctx.translateBy(x: cx, y: iconCY)
         let pumpkin = outfit == .pumpkin
-        let top = pumpkin ? Color(hex: "#FFA94D") : Color(red: 0.929, green: 0.929, blue: 0.937)
-        let bot = pumpkin ? Color(hex: "#E8590C") : Color(red: 0.769, green: 0.773, blue: 0.792)
+        let top = pumpkin ? Color(hex: "#FFA94D") : RafiqLook.bodyTop
+        let bot = pumpkin ? Color(hex: "#E8590C") : RafiqLook.bodyBottom
         ctx.fill(bodyPath, with: .linearGradient(
             Gradient(colors: [top, bot]),
             startPoint: CGPoint(x: rx * 0.7, y: -ry * 0.85),

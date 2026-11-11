@@ -1,8 +1,8 @@
 import SwiftUI
 
-// MARK: - Coucoudoro card
+// MARK: - Pomodoro card
 
-/// The focused Coucoudoro pill: the clock, the last event, and start / pause / stop.
+/// The focused Pomodoro pill: the clock, the last event, and start / pause / stop.
 struct CoucoudoroCardView: View {
     @ObservedObject private var coucoudoro = CoucoudoroController.shared
 
@@ -34,7 +34,7 @@ struct CoucoudoroCardView: View {
                 Circle()
                     .fill(accent)
                     .frame(width: 7, height: 7)
-                Text(verbatim: "Coucoudoro")
+                Text(verbatim: "Pomodoro")
                     .font(.system(size: 12, weight: .semibold))
                     .foregroundColor(Color(hex: "#F5F6F8"))
                 Text(subtitle)
@@ -97,7 +97,7 @@ struct CoucoudoroCardView: View {
     }
 }
 
-// MARK: - Coucoudoro pill
+// MARK: - Pomodoro pill
 
 /// The capsule in the pill grid. A fresh event replaces the clock for a few seconds.
 struct CoucoudoroPill: View {

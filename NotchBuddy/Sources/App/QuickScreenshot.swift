@@ -8,7 +8,7 @@ import AppKit
 ///   to put it away. It goes by itself after a few seconds, unless the pointer rests on it.
 ///
 /// The screen is the one the pointer is on. The image stays on the Mac, in the temporary folder
-/// Coucou keeps its captures in (the last 20 of them).
+/// Rafiq keeps its captures in (the last 20 of them).
 @MainActor
 final class QuickScreenshot {
     static let shared = QuickScreenshot()

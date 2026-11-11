@@ -124,6 +124,6 @@ struct CoucoudoroEngineTests {
             print("\(failed) failed")
             exit(1)
         }
-        print("All Coucoudoro engine checks passed")
+        print("All Pomodoro engine checks passed")
     }
 }

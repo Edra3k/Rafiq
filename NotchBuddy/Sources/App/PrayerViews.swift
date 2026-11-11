@@ -365,7 +365,7 @@ struct PrayerSettingsSection: View {
             }
             if playAdhan {
                 Text(PrayerController.adhanFile == nil
-                     ? String(localized: "prayer.adhan.missing", defaultValue: "Put a file named adhan.mp3 (or .m4a, .wav) in the sounds folder. Until then Mochi greets you.")
+                     ? String(localized: "prayer.adhan.missing", defaultValue: "Put a file named adhan.mp3 (or .m4a, .wav) in the sounds folder. Until then Rafiq greets you.")
                      : String(localized: "prayer.adhan.found", defaultValue: "Your adhan file is ready. Stop it from the card."))
                     .font(.system(size: 10))
                     .foregroundColor(hint)
@@ -402,7 +402,7 @@ struct PrayerSettingsSection: View {
 
     private var automaticCityLabel: String {
         let found = PrayerCities.matching(timeZoneId: TimeZone.current.identifier)?.name
-            ?? String(localized: "prayer.city.none", defaultValue: "none")
+            ?? String(localized: "prayer.city.none", defaultValue: "no city found")
         return String(format: String(localized: "prayer.city.automatic %@", defaultValue: "Automatic · %@"), found)
     }
 
@@ -426,7 +426,7 @@ struct PrayerSettingsSection: View {
             Slider(value: minutes, in: Double(bounds.lowerBound)...Double(bounds.upperBound), step: 5)
                 .accessibilityLabel(Text(label))
                 .accessibilityValue(Text(verbatim: "\(shown) \(unit)"))
-            Text(shown == 0 ? String(localized: "prayer.reminder.off", defaultValue: "Off") : "\(shown) \(unit)")
+            Text(shown == 0 ? String(localized: "prayer.reminder.off", defaultValue: "No reminder") : "\(shown) \(unit)")
                 .monospacedDigit()
                 .foregroundColor(.secondary)
                 .frame(minWidth: 44, alignment: .trailing)

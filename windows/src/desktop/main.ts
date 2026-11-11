@@ -1,4 +1,4 @@
-// The desktop Mochi's own window (mochi.html): draws him, and turns clicks and
+// The desktop Rafiq's own window (mochi.html): draws him, and turns clicks and
 // drags on him into pokes, flights home, the wardrobe and a new spot. Port of
 // DesktopBotView + the mouse half of DesktopMochiController (DesktopMochi.swift).
 //
@@ -20,7 +20,7 @@ import {
 const ISLAND = "island";
 
 /**
- * Width Mochi is drawn at. The engine's body radius is 0.3 × width, so this
+ * Width Rafiq is drawn at. The engine's body radius is 0.3 × width, so this
  * gives the 28.8 px body the hit test uses, and leaves room around him for
  * hats, hands and hearts inside the 120 px window.
  */

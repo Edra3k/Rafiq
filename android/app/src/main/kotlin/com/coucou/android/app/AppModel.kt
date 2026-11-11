@@ -72,7 +72,7 @@ class AppModel(private val context: Context) : LinkListener {
     /** Set only by LaunchActivity (not exported), read by MainActivity: see [com.coucou.android.core.PendingLaunch]. */
     val launch = com.coucou.android.core.PendingLaunch()
 
-    /** Text shared to Coucou from another app, waiting to be put in the chat box (see [com.coucou.android.core.ShareDraft]). */
+    /** Text shared to Rafiq from another app, waiting to be put in the chat box (see [com.coucou.android.core.ShareDraft]). */
     val shareDraft = com.coucou.android.core.ShareDraft()
 
     /** Changes with every share, so a chat screen that is already open notices there is a new draft. */
@@ -184,7 +184,7 @@ class AppModel(private val context: Context) : LinkListener {
         com.coucou.android.core.MotionState.choice = settings.motion
     }
 
-    /** What the computer says Mochi wears ("auto" or an outfit); the last one it told, kept for when it is away. */
+    /** What the computer says Rafiq wears ("auto" or an outfit); the last one it told, kept for when it is away. */
     var computerOutfit by mutableStateOf(com.coucou.android.mochi.outfit.Wardrobe.parse(kv.getString("computer_outfit", "")))
         private set
 
@@ -192,7 +192,7 @@ class AppModel(private val context: Context) : LinkListener {
     val outfitSelection: String
         get() = com.coucou.android.mochi.outfit.Wardrobe.choose(settings.outfit, computerOutfit)
 
-    /** What Mochi wears today ("auto" resolved with the phone's calendar). */
+    /** What Rafiq wears today ("auto" resolved with the phone's calendar). */
     fun dress(today: java.time.LocalDate = java.time.LocalDate.now()): com.coucou.android.mochi.outfit.Outfit =
         com.coucou.android.mochi.outfit.Wardrobe.resolve(outfitSelection, today)
 
@@ -419,7 +419,7 @@ class AppModel(private val context: Context) : LinkListener {
      */
     var pairRequest by mutableStateOf<String?>(null); private set
 
-    /** True if [text] is a Coucou pairing link (the user is now asked to confirm); false for any other text. */
+    /** True if [text] is a Rafiq pairing link (the user is now asked to confirm); false for any other text. */
     fun requestPairing(text: String?): Boolean {
         val d = PairingScan.decide(text)
         if (d !is ScanDecision.Pairing) return false

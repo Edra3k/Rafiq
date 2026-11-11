@@ -1,7 +1,7 @@
-// Coucou relay — a stateless Cloudflare Worker.
+// Rafiq relay — a stateless Cloudflare Worker.
 //
 // The Mac app can't send Live Activity pushes itself: that needs the APNs key,
-// which must never ship inside an app. The Mac posts Mochi's state here, the
+// which must never ship inside an app. The Mac posts Rafiq's state here, the
 // relay signs a token with the key (a Worker secret) and forwards the push to
 // Apple. Nothing is stored and nothing is logged: no database, observability
 // off. The state holds no project name, command or path (see
@@ -36,7 +36,7 @@ export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const url = new URL(request.url);
     if (request.method === "GET" && url.pathname === "/") {
-      return text(200, "Coucou relay");
+      return text(200, "Rafiq relay");
     }
     if (request.method !== "POST" || url.pathname !== "/v1/live-activity") {
       return text(404, "not found");
@@ -125,7 +125,7 @@ function buildPayload(body: RelayRequest) {
   // Only the known fields, so nothing else rides along.
   const state: Record<string, unknown> = {};
   for (const key of [...STATE_STRINGS, ...STATE_NUMBERS]) state[key] = body.state[key];
-  // When Mochi left for the iPhone: the activity counts the time from it.
+  // When Rafiq left for the iPhone: the activity counts the time from it.
   if (typeof body.state["since"] === "number") state["since"] = body.state["since"];
   // The pending command's fingerprint (a hash), for Allow / Deny on the Lock Screen.
   if (typeof body.state["approval"] === "string") state["approval"] = body.state["approval"];
@@ -141,7 +141,7 @@ function buildPayload(body: RelayRequest) {
     aps["attributes-type"] = "MochiActivityAttributes";
     aps["attributes"] = {};
     // iOS requires an alert to start a Live Activity from a push.
-    aps["alert"] = { title: "Coucou", body: `${state.agent} · ${state.statusText}` };
+    aps["alert"] = { title: "Rafiq", body: `${state.agent} · ${state.statusText}` };
   }
   if (body.event === "update" && body.urgent) {
     // Waiting for your OK or a question: the Dynamic Island opens and the

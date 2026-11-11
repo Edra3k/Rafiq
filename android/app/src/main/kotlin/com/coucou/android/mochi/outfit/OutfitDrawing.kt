@@ -11,7 +11,7 @@ import kotlin.math.pow
 import kotlin.math.sin
 
 /**
- * Mochi's outfits, a line-by-line port of windows/src/mochi/outfits.ts (itself a port of the Mac's
+ * Rafiq's outfits, a line-by-line port of windows/src/mochi/outfits.ts (itself a port of the Mac's
  * MochiOutfitDrawing.swift). Coordinates are the body space of [Head]. Every function keeps the order of
  * its drawing calls, because a test records them and compares with the TypeScript original.
  */

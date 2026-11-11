@@ -20,7 +20,7 @@ import com.coucou.android.core.WidgetTone
 import kotlin.math.roundToInt
 
 /**
- * The one place that pushes the Widgets (Solo, List, Mochi Big, Status Pill, Waiting Alert, Usage Ring, Today, Mochi Mood and Team). The app calls [update] on every change of sessions, requests and
+ * The one place that pushes the Widgets (Solo, List, Rafiq Big, Status Pill, Waiting Alert, Usage Ring, Today, Rafiq Mood and Team). The app calls [update] on every change of sessions, requests and
  * link (from AppModel.pushGlance); a push whose content is the same as the last one is dropped, so a change that does not
  * show on a widget costs nothing. There is no timer: a widget is drawn when something changes or when it is added, and the Today
  * widget once at local midnight (one inexact alarm, see [scheduleMidnight]).
@@ -227,12 +227,12 @@ object WidgetHub {
     const val CODE_TODAY = 0x5800
     const val CODE_MOOD = 0x5900
 
-    /** The buttons: one code each, from these bases (the Status Pill has 4, Mochi Big 6, the summary none). */
+    /** The buttons: one code each, from these bases (the Status Pill has 4, Rafiq Big 6, the summary none). */
     const val CODE_PILL_BUTTON = 0x5A00
     const val CODE_BIG_BUTTON = 0x5B00
     const val CODE_GLANCE = 0x5C00
 
-    /** Mochi Big's usage side: Settings when plan usage is off, the app otherwise. */
+    /** Rafiq Big's usage side: Settings when plan usage is off, the app otherwise. */
     const val CODE_BIG_USAGE_SETTINGS = 0x5D00
     const val CODE_BIG_USAGE_APP = 0x5E00
     const val CODE_MIDNIGHT = 0x5F00

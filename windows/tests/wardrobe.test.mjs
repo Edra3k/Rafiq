@@ -1,5 +1,5 @@
-// Mochi's wardrobe: season → outfit, stored preference → outfit (src/mochi/wardrobe.ts).
-// Mirrors tests/MochiWardrobeTests.swift so both platforms dress Mochi alike.
+// Rafiq's wardrobe: season → outfit, stored preference → outfit (src/mochi/wardrobe.ts).
+// Mirrors tests/MochiWardrobeTests.swift so both platforms dress Rafiq alike.
 
 import { test } from "node:test";
 import assert from "node:assert/strict";

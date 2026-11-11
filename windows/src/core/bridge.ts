@@ -283,12 +283,12 @@ export const Bridge = {
 
   openSettingsWindow: () => call<void>("open_settings_window"),
 
-  /** Writes to %LOCALAPPDATA%\Coucou\coucou.log, next to the Rust lines. */
+  /** Writes to %LOCALAPPDATA%\Rafiq\coucou.log, next to the Rust lines. */
   log: (message: string) => call<void>("log_line", { message }),
 
   // ── Claude Code hooks ─────────────────────────────────────────────────────
   hooksStatus: () => call<HookStatus>("hooks_status"),
-  /** Pill ID → whether that agent's hooks reach Coucou (read-only, Mac #183). */
+  /** Pill ID → whether that agent's hooks reach Rafiq (read-only, Mac #183). */
   agentHooksStatus: () => call<Record<string, boolean>>("agent_hooks_status"),
   /** Diff to show before anything is written. `install: false` previews removal. */
   hooksPreview: (install: boolean) => callOrThrow<HookPreview>("hooks_preview", { install }),
@@ -339,7 +339,7 @@ export const Bridge = {
   /** "Nobody can act on this" — Claude Code asks in the terminal right away. */
   approvalDecline: (requestId: string) => call<void>("approval_decline", { requestId }),
 
-  // ── Phone link (Coucou for Android) ───────────────────────────────────────
+  // ── Phone link (Rafiq for Android) ───────────────────────────────────────
   phoneLinkStatus: () => call<PhoneLinkStatus>("phone_link_status"),
   /** Only ever from the switch in Settings. Throws with the reason if it cannot start. */
   phoneLinkSetEnabled: (enabled: boolean) => callOrThrow<PhoneLinkStatus>("phone_link_set_enabled", { enabled }),
@@ -380,7 +380,7 @@ export const Bridge = {
   phoneLinkPublish: (sessions: PhoneLinkSession[], approval: PhoneLinkApproval | null) =>
     call<void>("phone_link_publish", { sessions, approval }),
   phoneLinkPublishQuestion: (question: PhoneLinkQuestion | null) => call<void>("phone_link_publish_question", { question }),
-  /** What Mochi wears ("auto" or an outfit), for phones that asked for it. */
+  /** What Rafiq wears ("auto" or an outfit), for phones that asked for it. */
   phoneLinkPublishPrefs: (outfit: string) => call<void>("phone_link_publish_prefs", { outfit }),
 
   // ── Chat, files, secrets ──────────────────────────────────────────────────
@@ -447,14 +447,14 @@ export const Bridge = {
   /** Opens the folder of the image saved last. */
   recapRevealSaved: () => call<void>("recap_reveal_saved"),
 
-  // ── Mochi on the desktop (src-tauri/src/desktop.rs) ───────────────────────
+  // ── Rafiq on the desktop (src-tauri/src/desktop.rs) ───────────────────────
   desktopInfo: () => call<DesktopInfo>("desktop_mochi_info"),
   /** Dragged out of the island: (x, y) is the pointer in island-window coordinates. */
   desktopPickUp: (x: number, y: number) => call<boolean>("desktop_mochi_pick_up", { x, y }),
   /** Linux: the pointer moved during that drag (Windows carries him from Rust). */
   desktopCarry: (x: number, y: number) => call<void>("desktop_mochi_carry", { x, y }),
   desktopCarryEnd: (x: number, y: number) => call<void>("desktop_mochi_carry_end", { x, y }),
-  /** A drag started on the desktop Mochi; resolves to his top-left corner. */
+  /** A drag started on the desktop Rafiq; resolves to his top-left corner. */
   desktopDragBegin: () => call<[number, number] | null>("desktop_mochi_drag_begin"),
   /** X11: top-left corner, physical pixels. */
   desktopDragMove: (x: number, y: number) => call<void>("desktop_mochi_drag_move", { x, y }),
@@ -505,7 +505,7 @@ export const Bridge = {
 
   // ── New versions (src-tauri/src/update.rs) ────────────────────────────────
   updateStatus: () => call<UpdateStatus>("update_status"),
-  /** The island's question or Settings' toggle: may Coucou look at GitHub on its own? */
+  /** The island's question or Settings' toggle: may Rafiq look at GitHub on its own? */
   updateSetConsent: (allowed: boolean) => call<void>("update_set_consent", { allowed }),
   /** "Check now": one look at GitHub, the toggle on or off. */
   updateCheck: () => call<UpdateStatus>("update_check"),
@@ -514,7 +514,7 @@ export const Bridge = {
   /** Settings → Install X: opens the island's update card. */
   updateShow: () => call<void>("update_show"),
   updateLater: () => call<void>("update_later"),
-  /** Blue Mochi in the tray while a new version waits (tray.rs). */
+  /** Blue Rafiq in the tray while a new version waits (tray.rs). */
   trayUpdateHint: (on: boolean) => call<void>("tray_update_hint", { on }),
   updateDismiss: () => call<void>("update_dismiss"),
   /** "Update now" (Windows): download, check the SHA-256, run the installer, quit. */
@@ -542,7 +542,7 @@ export interface ShortcutsReport {
   portal?: "pending" | "active" | null;
 }
 
-/** How the desktop Mochi's window works here (platform::DesktopMode). */
+/** How the desktop Rafiq's window works here (platform::DesktopMode). */
 export type DesktopMode = "poll" | "window" | "layer" | "off";
 
 export interface DesktopInfo {
@@ -551,7 +551,7 @@ export interface DesktopInfo {
   onDesktop: boolean;
 }
 
-/** An event for one window only (island ⇄ desktop Mochi). Never throws. */
+/** An event for one window only (island ⇄ desktop Rafiq). Never throws. */
 export async function emitToWindow(label: string, event: string, payload?: unknown) {
   if (!IS_TAURI) return;
   try {
@@ -606,7 +606,7 @@ export interface DroppedFile {
 
 export interface HookStatus {
   installed: boolean;
-  /** Coucou's status line relay (plan usage) is the status line in settings.json. */
+  /** Rafiq's status line relay (plan usage) is the status line in settings.json. */
   planRelayInstalled: boolean;
   settingsPath: string;
   hookPath: string;
@@ -616,7 +616,7 @@ export interface HookStatus {
 /** One agent other than Claude Code, as agents.rs reports it. */
 export interface AgyApprovalsStatus {
   enabled: boolean;
-  /** Coucou's PreToolUse hook can wait for a click (120 s); older hooks (10 s) must be installed again. */
+  /** Rafiq's PreToolUse hook can wait for a click (120 s); older hooks (10 s) must be installed again. */
   hooksReady: boolean;
 }
 
@@ -625,7 +625,7 @@ export interface AgentHookStatus {
   id: string;
   name: string;
   installed: boolean;
-  /** The file (or files, one per line) Coucou writes. */
+  /** The file (or files, one per line) Rafiq writes. */
   path: string;
   hookReady: boolean;
   /** The island can allow or deny this agent's permission requests. */
@@ -652,7 +652,7 @@ export interface HookPreview {
 
 /** Same as `call`, but surfaces the error so the UI can show what went wrong. */
 async function callOrThrow<T>(cmd: string, args?: Record<string, unknown>): Promise<T> {
-  if (!IS_TAURI) throw new Error("not running inside Coucou");
+  if (!IS_TAURI) throw new Error("not running inside Rafiq");
   return invoke<T>(cmd, args);
 }
 

@@ -78,7 +78,7 @@ enum WhatsAppSettings {
 /// WhatsApp in the notch (GitHub build only). Talks to the local gateway the user runs (GOWA
 /// or OpenWA), receives new messages on a webhook bound to 127.0.0.1, falls back to polling
 /// when no webhook comes, and keeps the conversations in memory only: nothing of a message is
-/// ever written to disk or to a log, and everything is forgotten when Coucou quits or the
+/// ever written to disk or to a log, and everything is forgotten when Rafiq quits or the
 /// integration is turned off. Runs only while the integration is on and its pill is active.
 @MainActor
 final class WhatsAppController: ObservableObject {
@@ -115,7 +115,7 @@ final class WhatsAppController: ObservableObject {
     @Published private(set) var qrPNG: Data?
     /// This account (JID or number), once linked.
     @Published private(set) var me: String?
-    /// Whether macOS lets Coucou read the Focus state (nil: not asked yet).
+    /// Whether macOS lets Rafiq read the Focus state (nil: not asked yet).
     @Published private(set) var focusReadable: Bool?
     /// A reply on its way.
     @Published private(set) var sending = false
@@ -208,7 +208,7 @@ final class WhatsAppController: ObservableObject {
         link = .connecting
         startListener(kind: provider.kind)
         if WhatsAppSettings.respectFocus { askFocus() }
-        // GOWA started by Coucou when asked to (Settings), before the first check.
+        // GOWA started by Rafiq when asked to (Settings), before the first check.
         WhatsAppGOWAProcess.shared.sync()
         let t = Timer(timeInterval: 5, repeats: true) { _ in
             MainActor.assumeIsolated { WhatsAppController.shared.onTick() }
@@ -248,7 +248,7 @@ final class WhatsAppController: ObservableObject {
 
     private func wake() {
         guard provider != nil else { return }
-        // Nothing is trusted after a sleep: the gateway may have restarted without Coucou's webhook.
+        // Nothing is trusted after a sleep: the gateway may have restarted without Rafiq's webhook.
         webhook = webhook == .portBusy ? .portBusy : .listening
         lastWebhook = nil
         refresh()
@@ -319,7 +319,7 @@ final class WhatsAppController: ObservableObject {
         failures += 1
         // Twice in a row (not a gateway still starting): a small red dot on the pill, nothing more.
         if failures == 2 { showDown(true) }
-        // GOWA started by Coucou and gone (crash, killed): started again, once a minute at most.
+        // GOWA started by Rafiq and gone (crash, killed): started again, once a minute at most.
         if error == .unreachable { WhatsAppGOWAProcess.shared.sync() }
     }
 
@@ -343,7 +343,7 @@ final class WhatsAppController: ObservableObject {
                     status = try await provider.status()
                     break
                 } catch WAError.unreachable where WhatsAppGOWAProcess.shared.isRunning && attempt < 8 {
-                    // GOWA just started by Coucou: give it a few seconds to come up.
+                    // GOWA just started by Rafiq: give it a few seconds to come up.
                     attempt += 1
                     try? await Task.sleep(for: .seconds(1))
                 }
@@ -373,7 +373,7 @@ final class WhatsAppController: ObservableObject {
         let secret = WhatsAppSettings.webhookSecret()
         listener.onRequest = { request in
             guard request.method == "POST", request.path.hasPrefix(WhatsAppController.webhookPath) else { return 404 }
-            // Signed by the gateway with Coucou's secret, over the exact bytes received.
+            // Signed by the gateway with Rafiq's secret, over the exact bytes received.
             guard WAWebhook.verify(kind: kind, headers: request.headers, body: request.body, secret: secret) else { return 401 }
             let body = request.body
             Task { @MainActor in WhatsAppController.shared.received(body, kind: kind) }
@@ -453,7 +453,7 @@ final class WhatsAppController: ObservableObject {
             let outcome = inbox.add(message, filters: filters)
             nameGroupIfNeeded(key)
             if key == openChat {
-                // Read on screen: no unread, no Mochi. The receipt waits for a reply (or the
+                // Read on screen: no unread, no Rafiq. The receipt waits for a reply (or the
                 // next opening), as Settings says.
                 inbox.markRead(key)
                 continue
@@ -559,9 +559,9 @@ final class WhatsAppController: ObservableObject {
         state.tasks[i].pillBadge = nil
     }
 
-    // MARK: - Mochi
+    // MARK: - Rafiq
 
-    /// A new message reaches you: Mochi's little "happy" emote, the global sound setting, and
+    /// A new message reaches you: Rafiq's little "happy" emote, the global sound setting, and
     /// the pill lights up under the island's usual rules. Silent during a Focus.
     private func announce(_ message: WAMessage) {
         if WhatsAppSettings.respectFocus && focusIsOn { return }
@@ -599,7 +599,7 @@ final class WhatsAppController: ObservableObject {
 
     // MARK: - Focus
 
-    /// macOS Focus (Concentration), when the system lets Coucou read it.
+    /// macOS Focus (Concentration), when the system lets Rafiq read it.
     private var focusIsOn: Bool {
         guard focusReadable == true else { return false }
         return INFocusStatusCenter.default.focusStatus.isFocused ?? false

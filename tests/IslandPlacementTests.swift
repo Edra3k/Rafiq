@@ -38,7 +38,7 @@ enum IslandPlacementTests {
         precondition(IslandPlacement.snap(CGPoint(x: 400, y: 960), screen: screen) == nil, "top, but not near the notch nor a corner")
         precondition(IslandPlacement(rawValue: "bottomRight") == .bottomRight)
 
-        // Open in a corner: Mochi in the corner, the others on a quarter circle facing inwards.
+        // Open in a corner: Rafiq in the corner, the others on a quarter circle facing inwards.
         let home = IslandPlacement.homeSize
         precondition(IslandPlacement.topRight.cornerArcCenter(in: home) == CGPoint(x: 590, y: 46))
         precondition(IslandPlacement.topRight.cornerBotCenter(in: home) == CGPoint(x: 560, y: 76), "nearer to his circle")
@@ -46,7 +46,7 @@ enum IslandPlacementTests {
         for p in IslandPlacement.allCases where p.isCorner {
             let c = p.cornerArcCenter(in: home)
             let pts = p.arcPoints(count: 4, in: home)
-            // Mochi closer to each of them than the circle's centre is, and never on one.
+            // Rafiq closer to each of them than the circle's centre is, and never on one.
             let b = p.cornerBotCenter(in: home)
             precondition(pts.count == 4)
             for q in pts {

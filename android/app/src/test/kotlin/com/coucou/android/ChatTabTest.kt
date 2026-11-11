@@ -96,7 +96,7 @@ class ChatTabSourceTest {
     @Test fun theChatScreenShowsAnEmptyStateWhenThereIsNothingToChatWithOrRead() {
         assertTrue(chat.contains("if (tabState != ChatTabState.READY && messages.isEmpty())"))
         assertTrue(chat.contains("ChatEmpty(tabState, onHome, onSettings)"))
-        assertTrue("a sleeping Mochi", chat.contains("BotState.SLEEPING"))
+        assertTrue("a sleeping Rafiq", chat.contains("BotState.SLEEPING"))
     }
 
     @Test fun anExistingConversationStaysReadableWithTheReasonAboveIt() {
@@ -108,7 +108,7 @@ class ChatTabSourceTest {
         assertTrue(strings.contains("Not connected"))
         assertTrue(strings.contains("Chat is off on your computer"))
         assertTrue(strings.contains("Your computer has no model allowed for the phone yet"))
-        assertTrue(strings.contains("On your computer open Coucou &gt; Settings &gt; Android phone, turn on"))
+        assertTrue(strings.contains("On your computer open Rafiq &gt; Settings &gt; Android phone, turn on"))
         assertTrue(strings.contains("Let the phone chat with my AI providers"))
         assertTrue(strings.contains("tick a model"))
         val body = Regex("""<string name="chat_(off|nomodel)[a-z_]*">([^<]*)</string>""").findAll(strings).map { it.groupValues[2].lowercase() }.toList()

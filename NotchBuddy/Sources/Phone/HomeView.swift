@@ -39,7 +39,7 @@ struct HomeView: View {
                 requestReview()
             }
         }
-        // A widget tile was tapped: open that Mochi.
+        // A widget tile was tapped: open that Rafiq.
         .onOpenURL { url in
             if let id = SharedSession.sessionId(from: url) { open(id) }
         }
@@ -62,7 +62,7 @@ struct HomeView: View {
         .fullScreenCover(isPresented: Binding(get: { !onboardingDone }, set: { if !$0 { onboardingDone = true } })) {
             OnboardingView()
         }
-        // The opening: Mochi alone while the app loads, then he flies to his tile.
+        // The opening: Rafiq alone while the app loads, then he flies to his tile.
         .overlay {
             if !introDone {
                 IntroView(ready: link.firstSyncDone) { introDone = true }
@@ -159,11 +159,11 @@ struct AgentsTab: View {
             .animation(.spring(duration: 0.5, bounce: 0.2),
                        value: link.sessions.map { "\($0.id)|\($0.statusText)" })
             .refreshable { await link.refresh() }
-            .navigationTitle("Coucou")
+            .navigationTitle("Rafiq")
             .navigationBarTitleDisplayMode(.inline)
             .navigationDestination(for: String.self) { id in
                 SessionDetailView(link: link, sessionId: id)
-                    // The Mochi tile grows into the session, and shrinks back.
+                    // The Rafiq tile grows into the session, and shrinks back.
                     .navigationTransition(.zoom(sourceID: id, in: zoom))
             }
             .toolbar {
@@ -189,7 +189,7 @@ struct AgentsTab: View {
     }
 }
 
-/// The service Mochi (GitHub, Stripe…), each with what it saw.
+/// The service Rafiq (GitHub, Stripe…), each with what it saw.
 struct ServicesTab: View {
     let link: PhoneLink
     @Binding var path: [String]
@@ -326,7 +326,7 @@ struct SessionPeek: View {
     }
 }
 
-/// The black island at the top: Mochi with the most urgent state and a
+/// The black island at the top: Rafiq with the most urgent state and a
 /// summary. When a command waits for your OK, Allow and Deny grow out of it
 /// (Liquid Glass morphing on iOS 26) and fold back once answered.
 struct NotchHeader: View {
@@ -492,7 +492,7 @@ struct SessionRow: View {
         }
     }
 
-    /// VS Code's Mochi is where the intro's Mochi lands.
+    /// VS Code's Rafiq is where the intro's Rafiq lands.
     @ViewBuilder private var mochi: some View {
         if session.id == "integration_claude" {
             MochiLive(state: session.state, fps: 60).introLanding(.tile)
@@ -521,7 +521,7 @@ struct EmptySessionsView: View {
         switch status {
         case .starting: "Connecting to iCloud…"
         case .noAccount(let reason): "\(reason) Sign in to iCloud with the same account as your Mac."
-        case .zoneMissing: "Open Coucou on your Mac: your sessions will show up here."
+        case .zoneMissing: "Open Rafiq on your Mac: your sessions will show up here."
         case .failed(let message): message
         case .ready: "No session yet. Start Claude Code, Cursor or Codex on your Mac."
         }

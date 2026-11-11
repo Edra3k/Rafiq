@@ -1,6 +1,6 @@
 // WhatsApp's reports → the page (src-tauri/src/whatsapp). The parts of WhatsAppController.swift that
 // touch the island: a new message lights the pill with the conversation's name (never the text),
-// Mochi smiles and the "pop" sound plays — once for a burst, not ten times — and the pill goes back
+// Rafiq smiles and the "pop" sound plays — once for a burst, not ten times — and the pill goes back
 // to idle a minute later; the pill gets its small red dot while the gateway is down.
 
 import { Bridge, onEvent } from "../core/bridge";

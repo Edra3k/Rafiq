@@ -24,7 +24,7 @@ object Protocol {
     const val CAP_DETAILS = "details"
     /** Answering the questions Claude Code asks, from the phone (each answer confirmed with the screen lock). */
     const val CAP_ANSWERS = "answers"
-    /** What Mochi wears on the computer (no switch there: it is no secret). */
+    /** What Rafiq wears on the computer (no switch there: it is no secret). */
     const val CAP_PREFS = "prefs"
     /** The files an agent changed (a list on each session) and, when asked for one, its lines. */
     const val CAP_DIFFS = "diffs"
@@ -140,7 +140,7 @@ sealed interface ServerMsg {
     data class Approval(val request: ApprovalRequest) : ServerMsg
     data class ApprovalResolved(val fingerprint: String) : ServerMsg
     data class Question(val request: QuestionRequest) : ServerMsg
-    /** What Mochi wears on the computer: "auto" or an outfit, exactly one of [com.coucou.android.mochi.outfit.Wardrobe.SELECTIONS]. */
+    /** What Rafiq wears on the computer: "auto" or an outfit, exactly one of [com.coucou.android.mochi.outfit.Wardrobe.SELECTIONS]. */
     data class Prefs(val outfit: String) : ServerMsg
     /** The relay's access key was replaced on the computer (only with the `relay` capability). */
     data class RelayAccess(val access: String) : ServerMsg

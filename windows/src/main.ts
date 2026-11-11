@@ -18,7 +18,7 @@ import { Updates } from "./island/update";
 import { WhatsNew } from "./whats-new/controller";
 import { onLanguageChange, resolveLanguage, setLanguage, systemLanguages } from "./i18n/i18n";
 
-/** Shows the language Settings asks for ("" = the system's, when Coucou has it). */
+/** Shows the language Settings asks for ("" = the system's, when Rafiq has it). */
 function applyLanguage() {
   setLanguage(resolveLanguage(State.settings.language, systemLanguages()));
 }
@@ -90,7 +90,7 @@ async function main() {
         setPaused(false);
         island.alert("wardrobe");
         break;
-      // "Update Coucou to X…", only in the menu while a new version is out.
+      // "Update Rafiq to X…", only in the menu while a new version is out.
       case "update":
         setPaused(false);
         Updates.show();
@@ -116,7 +116,7 @@ async function main() {
 
   // A query only matches the ratio it was made for: once it changes, watch the
   // new one, or the next monitor's scale goes unnoticed and the zoom stays wrong.
-  // One frame redraws Mochi at the new ratio, even while the loop is idle.
+  // One frame redraws Rafiq at the new ratio, even while the loop is idle.
   const watchRatio = () => {
     window
       .matchMedia(`(resolution: ${window.devicePixelRatio}dppx)`)

@@ -142,7 +142,7 @@ for (const outfit of OUTFITS) cases.push({ kind: "icon", outfit, size: 40 });
 function run(c) {
   const { main, log } = newMain();
   if (c.kind === "icon") {
-    drawWardrobeIcon(main, c.size, c.outfit, "none", "AUTO"); // a chosen outfit: the little Mochi, no label
+    drawWardrobeIcon(main, c.size, c.outfit, "none", "AUTO"); // a chosen outfit: the little Rafiq, no label
   } else {
     const h = makeHead(c.head.R, c.head.yaw, c.head.pitch, c.head.physDx, c.head.physDy);
     (c.kind === "behind" ? drawOutfitBehind : drawOutfitFront)(main, c.outfit, h, c.state);

@@ -23,10 +23,10 @@ pub struct Prefs {
     pub mute_groups: bool,
     /// Normalized chat ids.
     pub ignored: Vec<String>,
-    /// Coucou starts the GOWA binary at `gowa_path` itself.
+    /// Rafiq starts the GOWA binary at `gowa_path` itself.
     pub auto_start: bool,
     pub gowa_path: String,
-    /// GOWA's version once installed by Coucou.
+    /// GOWA's version once installed by Rafiq.
     pub gowa_version: Option<String>,
 }
 

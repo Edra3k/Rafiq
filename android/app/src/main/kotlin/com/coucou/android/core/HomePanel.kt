@@ -44,7 +44,7 @@ object HomePanel {
     /** Newest first, as the detail screen lists them. */
     fun stepsNewestFirst(s: SessionInfo): List<String> = s.steps.asReversed()
 
-    /** "#8AB4F8" to a colour for a mini Mochi's body; a malformed value gives null (the default body). */
+    /** "#8AB4F8" to a colour for a mini Rafiq's body; a malformed value gives null (the default body). */
     fun rgb(hex: String): Rgb? {
         val h = hex.trim().removePrefix("#")
         if (h.length != 6) return null

@@ -6,8 +6,8 @@
 // that event tagged `coucou_kind: "agy_pre_tool"` and reads one line back:
 //   * `ask` at once — this module found no reason for a card, and Antigravity decides;
 //   * or `pending` once the card is up, then `allow`, `deny` or `ask` (pipe.rs).
-// Only a click on Allow ever lets a command run. No click, Reply in terminal, Coucou closed
-// or slow: "ask", and Antigravity shows its own prompt as if Coucou were not there.
+// Only a click on Allow ever lets a command run. No click, Reply in terminal, Rafiq closed
+// or slow: "ask", and Antigravity shows its own prompt as if Rafiq were not there.
 
 use std::path::Path;
 use std::time::Duration;
@@ -20,7 +20,7 @@ use crate::agy_rules::{AgyRules, Verdict};
 use crate::{log, platform, settings, Shared};
 
 /// The PreToolUse hook needs this long (seconds) for a card to wait for a click: the hooks
-/// Coucou wrote before had 10 s and must be installed again (agents.rs writes 120).
+/// Rafiq wrote before had 10 s and must be installed again (agents.rs writes 120).
 pub const HOOK_TIMEOUT: u64 = 120;
 
 /// What the relay tags the PreToolUse events it waits on with.
@@ -59,7 +59,7 @@ pub fn gate(payload: &Value, enabled: bool, home: &Path) -> Option<Gate> {
     if command.is_empty() {
         return None;
     }
-    // Coucou gives up 10 s before Antigravity stops waiting for the hook.
+    // Rafiq gives up 10 s before Antigravity stops waiting for the hook.
     let timeout = pre_tool_timeout(home).filter(|t| *t >= HOOK_TIMEOUT)?;
     let cwd = payload.get("cwd").and_then(Value::as_str).unwrap_or_default();
     if AgyRules::load(home, cwd).verdict(&command) != Verdict::Unknown {
@@ -68,7 +68,7 @@ pub fn gate(payload: &Value, enabled: bool, home: &Path) -> Option<Gate> {
     Some(Gate { command, wait: Duration::from_secs((timeout - 10).min(110)) })
 }
 
-/// Timeout (seconds) of Coucou's PreToolUse hook in ~/.gemini/config/hooks.json, None if
+/// Timeout (seconds) of Rafiq's PreToolUse hook in ~/.gemini/config/hooks.json, None if
 /// it is not there.
 pub fn pre_tool_timeout(home: &Path) -> Option<u64> {
     let bytes = std::fs::read(home.join(".gemini").join("config").join("hooks.json")).ok()?;
@@ -90,8 +90,8 @@ pub fn pre_tool_timeout(home: &Path) -> Option<u64> {
 #[serde(rename_all = "camelCase")]
 pub struct AgyApprovalsStatus {
     pub enabled: bool,
-    /// Coucou's PreToolUse hook gives Antigravity time to wait for a click: hooks
-    /// written by an older Coucou (10 s) must be installed again.
+    /// Rafiq's PreToolUse hook gives Antigravity time to wait for a click: hooks
+    /// written by an older Rafiq (10 s) must be installed again.
     pub hooks_ready: bool,
 }
 
@@ -105,7 +105,7 @@ pub fn agy_approvals_status(shared: State<Shared>) -> AgyApprovalsStatus {
     status(shared.settings.lock().unwrap().agy_approvals_enabled)
 }
 
-/// "Approve commands from the notch". Off by default; only the switch in the Coucou window
+/// "Approve commands from the notch". Off by default; only the switch in the Rafiq window
 /// turns it on, and save_settings keeps what it says.
 #[tauri::command]
 pub fn agy_approvals_set_enabled(
@@ -115,7 +115,7 @@ pub fn agy_approvals_set_enabled(
     enabled: bool,
 ) -> Result<AgyApprovalsStatus, String> {
     if window.label() != crate::HUB_LABEL {
-        return Err("only the Coucou window may change this".into());
+        return Err("only the Rafiq window may change this".into());
     }
     let updated = {
         let mut current = shared.settings.lock().unwrap();

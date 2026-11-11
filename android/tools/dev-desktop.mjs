@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// A pretend Coucou desktop for developing and testing the Android app without the real one.
+// A pretend Rafiq desktop for developing and testing the Android app without the real one.
 // Speaks docs/ANDROID_LINK.md (v1): TLS with a self-signed certificate, newline-delimited JSON.
 //
 //   node android/tools/dev-desktop.mjs [--host IP] [--port N] [--name "My PC"] [--step MS] [--once] [--fake-chat] [--details] [--answers] [--diffs] [--usage] [--recap] [--services]
@@ -377,5 +377,5 @@ server.listen(Number(arg("port", "47821")), "0.0.0.0", () => {
   const port = server.address().port;
   const link = `coucou://pair?v=${V}&host=${HOST}&port=${port}&fp=${certSha256}&token=${TOKEN}&name=${encodeURIComponent(NAME)}`;
   log(JSON.stringify({ listening: port, fp: certSha256, link }));
-  if (!flag("quiet")) console.error(`\nPairing link (paste it in Coucou for Android):\n${link}\n`);
+  if (!flag("quiet")) console.error(`\nPairing link (paste it in Rafiq for Android):\n${link}\n`);
 });

@@ -237,7 +237,7 @@ fn start(spawn: &Spawn, new_console: bool) -> std::io::Result<()> {
     #[cfg(not(windows))]
     {
         let _ = new_console;
-        // Coucou's own GDK settings stay out of the terminal (platform/linux.rs).
+        // Rafiq's own GDK settings stay out of the terminal (platform/linux.rs).
         platform::no_console(&mut cmd);
     }
     for (k, v) in &spawn.env {

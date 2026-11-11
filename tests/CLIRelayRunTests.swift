@@ -32,7 +32,7 @@ enum CLIRelayRunTests {
         print("CLIRelay run tests: all passed")
     }
 
-    /// The prompt goes in on stdin, the run starts in Coucou's folder with thinking off, and
+    /// The prompt goes in on stdin, the run starts in Rafiq's folder with thinking off, and
     /// the answer is the result's text.
     static func answers() async throws {
         let out = root.path

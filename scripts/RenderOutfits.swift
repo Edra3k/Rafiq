@@ -1,4 +1,4 @@
-// RenderOutfits.swift — standalone planche renderer for Mochi outfits
+// RenderOutfits.swift — standalone planche renderer for Rafiq outfits
 // Compile + run via: bash scripts/render-outfits.sh
 // Output: /tmp/coucou-outfits.png
 

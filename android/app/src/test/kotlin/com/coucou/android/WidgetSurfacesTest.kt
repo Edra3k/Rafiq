@@ -168,7 +168,7 @@ class WidgetSurfacesTest {
 
     @Test fun mochiHasAtLeastHalfOfTheSoloCard() {
         val solo = read("src/main/res/layout/widget_solo.xml")
-        // Mochi takes the leftover height (weight 1) while the text rows wrap their content.
+        // Rafiq takes the leftover height (weight 1) while the text rows wrap their content.
         assertTrue(solo.contains("""android:layout_weight="1""""))
         assertTrue(read(main + "app/SoloWidget.kt").contains("glow = true"))
     }
@@ -281,7 +281,7 @@ class WidgetSurfacesTest {
         assertFalse(texts.contains("Wedge", ignoreCase = true))
         // The picker names: short, and the same ones in the README.
         val readme = File("../README.md").readText()
-        for (w in listOf("Mochi at a glance", "All your agents", "Mochi, big", "One-line status", "Approvals waiting", "Plan usage", "Finished today", "Mochi's mood")) {
+        for (w in listOf("Rafiq at a glance", "All your agents", "Rafiq, big", "One-line status", "Approvals waiting", "Plan usage", "Finished today", "Rafiq's mood")) {
             assertTrue(w, strings.contains(w))
             assertTrue("$w is not in the README", readme.contains(w))
         }

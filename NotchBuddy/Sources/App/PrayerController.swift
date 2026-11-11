@@ -7,7 +7,7 @@ import Foundation
 /// island opening at the time itself (with the music paused and, if the user dropped one in
 /// the sounds folder, their own adhan). Everything is calculated on the Mac: no network.
 /// One timer waits for the next reminder, prayer or midnight (nothing ticks in between, so
-/// Coucou stays at 0 % CPU while hidden); the card and the pill draw from the stored times.
+/// Rafiq stays at 0 % CPU while hidden); the card and the pill draw from the stored times.
 @MainActor
 final class PrayerController: ObservableObject {
     static let shared = PrayerController()
@@ -143,7 +143,7 @@ final class PrayerController: ObservableObject {
         adhanPlaying = false
     }
 
-    /// The user's own adhan: adhan.mp3 (or .m4a, .wav…) in Coucou's sounds folder.
+    /// The user's own adhan: adhan.mp3 (or .m4a, .wav…) in Rafiq's sounds folder.
     static var adhanFile: URL? { SoundEngine.customURL(for: "adhan") }
 
     private func playAdhan() {

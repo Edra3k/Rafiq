@@ -17,7 +17,7 @@ struct MailCondition: Codable, Equatable, Sendable {
     var value: String
 }
 
-/// What a rule does to a message. Coucou never deletes a message.
+/// What a rule does to a message. Rafiq never deletes a message.
 enum MailRuleAction: Codable, Equatable, Hashable, Sendable {
     case junk
     case important

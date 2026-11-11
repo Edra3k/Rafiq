@@ -8,7 +8,7 @@ connect *out* to a relay on the internet that passes encrypted messages between 
 (wire details: `docs/RELAY_LINK.md`, reasoning and threats: `android/RELAY_PLAN.md`, `android/RELAY_THREAT_CHECK.md`).
 
 You need: a free Cloudflare account, Node 22 or newer on the computer, this repository, and a phone with a debug build of
-Coucou for Android (`cd android && ./gradlew assembleDebug`, then `adb install -r app/build/outputs/apk/debug/app-debug.apk`).
+Rafiq for Android (`cd android && ./gradlew assembleDebug`, then `adb install -r app/build/outputs/apk/debug/app-debug.apk`).
 
 ## 1. Deploy the relay
 
@@ -31,7 +31,7 @@ Store it on the relay as a secret (this prompts for the value; it is never writt
 ```
 npx wrangler secret put ACCESS_KEY      # paste the key when asked
 npx wrangler deploy                     # prints https://coucou-link.<your-name>.workers.dev
-curl https://coucou-link.<your-name>.workers.dev/     # must print: Coucou link relay
+curl https://coucou-link.<your-name>.workers.dev/     # must print: Rafiq link relay
 ```
 
 Notes:
@@ -60,7 +60,7 @@ If you change the address or the key later, press **Show pairing code** again an
 ## 3. Pair the phone (the real test: mobile data, not Wi-Fi)
 
 1. On the phone, **turn Wi-Fi off** (mobile data only) and make sure the data connection works.
-2. Open Coucou for Android, scan the code on the computer's screen (the camera does not need a network). The confirmation names
+2. Open Rafiq for Android, scan the code on the computer's screen (the camera does not need a network). The confirmation names
    the computer **and the relay's host**: check that it is yours, then pair.
 3. Within a few seconds Home should show the computer as connected, and Settings > **Away from home Wi-Fi** should say
    **Connected through your relay (coucou-link...)**. The computer's block says **The phone is connected through the relay.**
@@ -73,7 +73,7 @@ Tick each line and note anything odd. "Expect" is what should happen.
 
 | # | Do | Expect |
 |---|---|---|
-| 1 | `curl` the relay address | `Coucou link relay` |
+| 1 | `curl` the relay address | `Rafiq link relay` |
 | 2 | Computer: relay on | `Connected to the relay, waiting for the phone.` |
 | 3 | Phone on mobile data: scan, pair | Connected, card says **through your relay** |
 | 4 | Start an agent on the computer | Its session appears on the phone |

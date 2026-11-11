@@ -12,7 +12,7 @@ import com.coucou.android.core.WidgetSpoken
 
 /**
  * The Team widget: up to four agents the user picked (a choice screen opens when it is added and from its long-press menu), two by two,
- * each with Mochi's small face in its state, its name and a state word. Drawn by [WidgetHub] when something changes (updatePeriodMillis = 0).
+ * each with Rafiq's small face in its state, its name and a state word. Drawn by [WidgetHub] when something changes (updatePeriodMillis = 0).
  * A tap on an agent that runs opens it; a tap on one that does not, or anywhere else, opens the app. It only opens things: a request waits
  * for you in the app, behind the fingerprint.
  */

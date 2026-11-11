@@ -1,11 +1,12 @@
 // The launch "coucou" (greeting v2) — port of GreetingCanvasView.swift.
-// Mochi drops into the island, bounces, slides to the side and waves hello with
+// Rafiq drops into the island, bounces, slides to the side and waves hello with
 // a quick little hand, then comes back and settles in the compact island.
 // Everything is laid out in the same 640×150 reference space as on macOS.
 
 import { closeCurve } from "../core/anim";
 import { Sound } from "../core/sound";
 import { COMPACT_W, NOTCH_H, NOTCH_W } from "../core/layout";
+import { BODY_BOTTOM_CSS, BODY_TOP_CSS, silhouette } from "./look";
 
 // ── Timing (GT in the Swift file) ─────────────────────────────────────────────
 
@@ -220,13 +221,13 @@ function smallPose(): Pose {
   };
 }
 
-/** Mochi's pose `t` seconds in; `tc` is when the collapse began (∞ if not yet). */
+/** Rafiq's pose `t` seconds in; `tc` is when the collapse began (∞ if not yet). */
 export function greetingPose(t: number, tc = Number.POSITIVE_INFINITY): Pose {
   if (t < tc) return greetPose(Math.min(t, T.end + 10));
   const a = greetPose(tc);
   const b = smallPose();
   // Same curve and duration (340 ms) as the island shrinking around him: with
-  // the Mac's inOut ease the island got ahead of Mochi and cut his body off
+  // the Mac's inOut ease the island got ahead of Rafiq and cut his body off
   // when the greeting was left early.
   const k = seg(t, tc, tc + T.COLLAPSE);
   const e = k >= 1 ? 1 : closeCurve(k);
@@ -290,7 +291,7 @@ function handRPos(hw: number, hh: number, p: Pose) {
 }
 
 /**
- * Bounding box of Mochi's body and hands in the 640×150 space — what must stay
+ * Bounding box of Rafiq's body and hands in the 640×150 space — what must stay
  * inside the island so nothing of him is cut off.
  */
 export function mochiBounds(p: Pose): { left: number; right: number; top: number; bottom: number } | null {
@@ -365,21 +366,9 @@ function rr(x: CanvasRenderingContext2D, X: number, Y: number, W: number, H: num
   x.closePath();
 }
 
+/** Rafiq's dome (look.ts). */
 function mochiPath(hw: number, hh: number): Path2D {
-  const n = 3.2;
-  const p = new Path2D();
-  const steps = 96;
-  for (let i = 0; i <= steps; i++) {
-    const a = (i / steps) * 2 * Math.PI;
-    const ca = Math.cos(a);
-    const sa = Math.sin(a);
-    const px = hw * (ca < 0 ? -1 : 1) * Math.pow(Math.abs(ca), 2 / n);
-    const py = hh * (sa < 0 ? -1 : 1) * Math.pow(Math.abs(sa), 2 / n);
-    if (i === 0) p.moveTo(px, py);
-    else p.lineTo(px, py);
-  }
-  p.closePath();
-  return p;
+  return silhouette(hw, hh, 96);
 }
 
 /** White body gradient. A canvas gradient pads past its ends, so the corners are never left unpainted. */
@@ -388,8 +377,8 @@ function whiteFill(
   x0: number, y0: number, x1: number, y1: number,
 ) {
   const g = x.createLinearGradient(x0, y0, x1, y1);
-  g.addColorStop(0, "rgb(251,251,252)");
-  g.addColorStop(1, "rgb(231,233,236)");
+  g.addColorStop(0, BODY_TOP_CSS);
+  g.addColorStop(1, BODY_BOTTOM_CSS);
   x.fillStyle = g;
   x.fill(path);
 }
@@ -416,8 +405,8 @@ function drawHandR(x: CanvasRenderingContext2D, hw: number, hh: number, p: Pose)
   x.rotate(h.ang);
   rr(x, -h.L / 2, -h.T / 2, h.L, h.T, h.T / 2);
   const g = x.createLinearGradient(h.L / 2, -h.T / 2, -h.L / 2, h.T / 2);
-  g.addColorStop(0, "rgb(251,251,252)");
-  g.addColorStop(1, "rgb(231,233,236)");
+  g.addColorStop(0, BODY_TOP_CSS);
+  g.addColorStop(1, BODY_BOTTOM_CSS);
   x.fillStyle = g;
   x.fill();
   x.strokeStyle = "rgba(0,0,0,0.08)";
@@ -530,7 +519,7 @@ function drawMochi(x: CanvasRenderingContext2D, p: Pose) {
 function drawParticles(x: CanvasRenderingContext2D, t: number, p: Pose) {
   if (!(p.card > 0 || p.fx < 1)) return;
 
-  // Warp streaks: white vertical lines while Mochi falls in
+  // Warp streaks: white vertical lines while Rafiq falls in
   if (t < 0.55) {
     const fadeOut = 1 - seg(t, 0.4, 0.55);
     x.lineCap = "butt";

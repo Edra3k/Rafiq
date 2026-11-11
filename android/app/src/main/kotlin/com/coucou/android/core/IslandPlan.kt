@@ -9,7 +9,7 @@ import com.coucou.android.mochi.BotState
  * give the same answer, so every rule is unit-tested.
  */
 object IslandPlan {
-    /** The switch, the system permission and Coucou not being on screen. */
+    /** The switch, the system permission and Rafiq not being on screen. */
     fun allowed(overlayOn: Boolean, permitted: Boolean, appInForeground: Boolean) =
         OverlayPolicy.shouldShow(overlayOn, permitted, appInForeground)
 

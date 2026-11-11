@@ -4,7 +4,7 @@
 // The list: the newest messages of every inbox, unread ones tinted, a flag on the important
 // ones; a search (free words, from:, subject:) and quick filters (All, Unread, Important,
 // Today); Load more. A click opens the message: its sender, subject and the start of its text,
-// with Open in Outlook, Reply (Outlook's own window: nothing is sent from Coucou), Mark as read,
+// with Open in Outlook, Reply (Outlook's own window: nothing is sent from Rafiq), Mark as read,
 // Important, Junk, and in ⋯ Always important (VIP) and Always ignore this sender.
 //
 // Built once and synced in place: the search field keeps its text and the keyboard.

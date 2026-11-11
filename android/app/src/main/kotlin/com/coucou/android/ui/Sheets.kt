@@ -113,7 +113,7 @@ fun BottomSheetHost(onDismiss: () -> Unit, wash: Color? = null, announce: String
     }
 }
 
-/** The colour of an agent for its Mochi: the user's choice on the computer, else the catalog's, else none. */
+/** The colour of an agent for its Rafiq: the user's choice on the computer, else the catalog's, else none. */
 private fun agentColour(model: AppModel, pillId: String) =
     (model.sessions.firstOrNull { it.pillId == pillId }?.let { HomePanel.colorHex(it) } ?: Pills.byId(pillId)?.colorHex)?.let { HomePanel.rgb(it) }
 

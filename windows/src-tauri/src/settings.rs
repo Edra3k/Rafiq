@@ -35,7 +35,7 @@ pub struct Settings {
     pub show_plan_in_notch: bool,
     /// Show the Claude plan percentage in the compact island next to the agent dots.
     pub show_plan_in_compact_island: bool,
-    /// Coucou's status line relay is the one in Claude Code's settings.json.
+    /// Rafiq's status line relay is the one in Claude Code's settings.json.
     /// Like `hooks_installed`, the real state wins at launch over what was stored.
     pub plan_relay_installed: bool,
     /// Show the Codex plan pill (5 h / weekly limits from `codex app-server`).
@@ -60,11 +60,11 @@ pub struct Settings {
     /// Global shortcuts the user changed, by action id; the others keep their
     /// default (see shortcuts.rs).
     pub shortcuts: crate::shortcuts::Bindings,
-    /// Mochi's outfit, picked in the wardrobe: "auto" (dresses for the
+    /// Rafiq's outfit, picked in the wardrobe: "auto" (dresses for the
     /// season), "none" or an outfit id — the Mac's raw values. The island reads
     /// anything it doesn't know as "auto", so the value is stored as it comes.
     pub mochi_outfit: String,
-    /// A colour of the user's own for a pill's Mochi, by pill ID ("#RRGGBB"),
+    /// A colour of the user's own for a pill's Rafiq, by pill ID ("#RRGGBB"),
     /// picked in Settings → Active pills. Empty means the catalog's colours.
     /// Kept as it comes, like `mochi_outfit`: src/core/pill-colors.ts reads
     /// whatever is not a colour as "no choice".
@@ -73,7 +73,7 @@ pub struct Settings {
     /// ("fr", "pt-BR", "zh-Hans"…). Kept as it comes, like `mochi_outfit`: a
     /// code this build doesn't know reads as "".
     pub language: String,
-    /// Mochi on the desktop: whether he lives there, and his spot. Owned by
+    /// Rafiq on the desktop: whether he lives there, and his spot. Owned by
     /// the Rust side (desktop.rs) — what a webview sends back is ignored.
     pub desktop_mochi: DesktopMochiPref,
     /// The phone link (phone_link/) is on: a TLS server for the Android app on

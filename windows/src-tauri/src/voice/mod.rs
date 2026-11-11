@@ -1,11 +1,11 @@
-// « OK Coucou » on Windows and Linux: say it, then ask anything. Port of the
+// « OK Rafiq » on Windows and Linux: say it, then ask anything. Port of the
 // Mac's Voice/ (VoiceEngine.swift and its friends).
 //
 // While it is on, the microphone is open and a cheap energy detector cuts what
 // you say into stretches; only a stretch of speech goes to Parakeet, on this
-// computer, and only a stretch that starts with « OK Coucou » goes further:
+// computer, and only a stretch that starts with « OK Rafiq » goes further:
 // what you said after it goes to Claude with your own key (brain.rs), never
-// the audio. Mochi shows it all in the pill at the bottom of the screen —
+// the audio. Rafiq shows it all in the pill at the bottom of the screen —
 // listening, thinking, then the answer, said out loud by the system's voice
 // (the pill's speechSynthesis) or ElevenLabs with your key.
 //
@@ -34,9 +34,9 @@ use crate::speech::{self, audio};
 pub struct VoiceView {
     /// "listening", "thinking", "speaking".
     pub phase: String,
-    /// What you said (after « OK Coucou »).
+    /// What you said (after « OK Rafiq »).
     pub heard: String,
-    /// Coucou's answer.
+    /// Rafiq's answer.
     pub answer: String,
 }
 
@@ -53,7 +53,7 @@ fn pending() -> &'static Mutex<HashMap<u64, mpsc::Sender<String>>> {
 }
 static NEXT_ID: AtomicU64 = AtomicU64::new(1);
 
-/// Whether « OK Coucou » can run: the voice model and a Claude key.
+/// Whether « OK Rafiq » can run: the voice model and a Claude key.
 pub fn requirements_met() -> bool {
     speech::is_ready() && crate::secrets::present(crate::claude::KEY)
 }
@@ -70,7 +70,7 @@ pub fn sync(app: &AppHandle) {
             std::thread::Builder::new().name("coucou-voice".into()).spawn(move || run(app2, stop2)).ok();
             *running = Some(Running { stop });
             speech::preload();
-            crate::log::line("voice: « OK Coucou » listening");
+            crate::log::line("voice: « OK Rafiq » listening");
         }
         (false, true) => {
             if let Some(r) = running.take() {
@@ -80,13 +80,13 @@ pub fn sync(app: &AppHandle) {
             if !dictation && !crate::notes::is_recording(app) {
                 speech::unload();
             }
-            crate::log::line("voice: « OK Coucou » off");
+            crate::log::line("voice: « OK Rafiq » off");
         }
         _ => {}
     }
 }
 
-/// « OK Coucou » is listening (the voice model stays loaded).
+/// « OK Rafiq » is listening (the voice model stays loaded).
 pub fn is_listening() -> bool {
     RUNNING.lock().unwrap().is_some()
 }
@@ -104,11 +104,11 @@ fn show(app: &AppHandle, view: Option<VoiceView>) {
 }
 
 enum Mode {
-    /// Waiting for « OK Coucou ».
+    /// Waiting for « OK Rafiq ».
     Wake,
-    /// Heard « OK Coucou » alone: what comes next is the question.
+    /// Heard « OK Rafiq » alone: what comes next is the question.
     Command { text: String, until: Instant },
-    /// Coucou asked something back: an answer comes without « OK Coucou ».
+    /// Rafiq asked something back: an answer comes without « OK Rafiq ».
     FollowUp { until: Instant },
 }
 
@@ -130,7 +130,7 @@ fn run(app: AppHandle, stop: Arc<AtomicBool>) {
     let mut mode = Mode::Wake;
     let mut brain = brain::Brain::default();
     let mut hide_at: Option<Instant> = None;
-    // Silence for the question that follows « OK Coucou » (flow/hush.rs).
+    // Silence for the question that follows « OK Rafiq » (flow/hush.rs).
     let mut hush: Option<crate::flow::hush::Guard> = None;
     let quiet = || crate::flow::get(&app).is_some_and(|f| f.store.lock().unwrap().prefs.mute_others);
     while !stop.load(Ordering::Relaxed) {
@@ -160,7 +160,7 @@ fn run(app: AppHandle, stop: Arc<AtomicBool>) {
             }
             _ => {}
         }
-        // Dictation and calls have the microphone: Coucou doesn't listen meanwhile.
+        // Dictation and calls have the microphone: Rafiq doesn't listen meanwhile.
         if pill::dictating(&app) || crate::notes::is_recording(&app) {
             vad.reset();
             continue;
@@ -177,7 +177,7 @@ fn run(app: AppHandle, stop: Arc<AtomicBool>) {
             let question = match &mut mode {
                 Mode::Wake => match wake::after_wake(&heard) {
                     Some(rest) => {
-                        crate::log::line("voice: « OK Coucou » heard");
+                        crate::log::line("voice: « OK Rafiq » heard");
                         hide_at = None;
                         if crate::flow::text::word_count(&rest) >= 2 {
                             Some(rest)
@@ -208,7 +208,7 @@ fn run(app: AppHandle, stop: Arc<AtomicBool>) {
                 show(&app, Some(VoiceView {
                     phase: "speaking".into(),
                     heard: question,
-                    answer: if done { "✓".into() } else { crate::i18n::t("Coucou couldn't answer: check your Claude key in Notch → Chat.") },
+                    answer: if done { "✓".into() } else { crate::i18n::t("Rafiq couldn't answer: check your Claude key in Notch → Chat.") },
                 }));
                 hide_at = Some(Instant::now() + Duration::from_secs(5));
                 continue;
@@ -216,7 +216,7 @@ fn run(app: AppHandle, stop: Arc<AtomicBool>) {
             show(&app, Some(VoiceView { phase: "speaking".into(), heard: question.clone(), answer: answer.clone() }));
             speak(&app, &answer);
             vad.reset();
-            // Drop what the microphone heard of Coucou's own voice.
+            // Drop what the microphone heard of Rafiq's own voice.
             while rx.try_recv().is_ok() {}
             if answer.trim_end().ends_with('?') {
                 mode = Mode::FollowUp { until: Instant::now() + Duration::from_secs(8) };

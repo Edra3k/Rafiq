@@ -56,20 +56,20 @@ const CREATE_NO_WINDOW: u32 = 0x0800_0000;
 
 // ── Files ─────────────────────────────────────────────────────────────────────
 
-/// %APPDATA%\Coucou — preferences.
+/// %APPDATA%\Rafiq — preferences.
 pub fn config_dir() -> PathBuf {
     let base = std::env::var_os("APPDATA")
         .map(PathBuf::from)
         .unwrap_or_else(|| PathBuf::from("."));
-    base.join("Coucou")
+    base.join("Rafiq")
 }
 
-/// %LOCALAPPDATA%\Coucou — where coucou-hook.exe, the inbox and the log live.
+/// %LOCALAPPDATA%\Rafiq — where coucou-hook.exe, the inbox and the log live.
 pub fn local_dir() -> PathBuf {
     let base = std::env::var_os("LOCALAPPDATA")
         .map(PathBuf::from)
         .unwrap_or_else(|| PathBuf::from("."));
-    base.join("Coucou")
+    base.join("Rafiq")
 }
 
 /// Where a saved image goes, best first: Pictures (also where OneDrive moves
@@ -222,7 +222,7 @@ pub fn current_user_sid() -> Option<String> {
     }
 }
 
-// The display name only feeds Mochi's greeting (identity.rs). The calls are
+// The display name only feeds Rafiq's greeting (identity.rs). The calls are
 // declared here by hand, with their documented C signatures, so they need no
 // extra `windows` crate features.
 #[link(name = "secur32")]
@@ -498,7 +498,7 @@ fn bring_forward(raw: isize) -> bool {
             let _ = ShowWindow(hwnd, SW_SHOW);
         }
 
-        // The island window has WS_EX_NOACTIVATE, so clicks on it do not make Coucou
+        // The island window has WS_EX_NOACTIVATE, so clicks on it do not make Rafiq
         // the active foreground window. Windows blocks SetForegroundWindow unless the
         // calling thread is attached to the foreground thread or owns foreground rights.
         let fg_hwnd = GetForegroundWindow();
@@ -756,7 +756,7 @@ pub fn ctrl_alt_types(vk: u16, shift: bool) -> Option<String> {
     None
 }
 
-// ── Desktop Mochi window ──────────────────────────────────────────────────────
+// ── Desktop Rafiq window ──────────────────────────────────────────────────────
 
 /// Windows places a window wherever it is asked, and the cursor poll is there.
 pub fn desktop_mode() -> super::DesktopMode {

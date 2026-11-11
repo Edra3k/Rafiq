@@ -34,7 +34,7 @@ data class UserSettings(
     val volume: Float = com.coucou.android.sound.SoundVolume.DEFAULT,
     val notifyDone: Boolean = true,
     val quiet: QuietHours = QuietHours(false, 22 * 60, 8 * 60),
-    /** Mochi's outfit on this phone: "computer" (follow the one chosen on the computer), "auto", "none" or an outfit. */
+    /** Rafiq's outfit on this phone: "computer" (follow the one chosen on the computer), "auto", "none" or an outfit. */
     val outfit: String = com.coucou.android.mochi.outfit.Wardrobe.FOLLOW,
     /** Use the relay when the computer is not reachable on this network (only matters when the pairing includes one). */
     val useRelay: Boolean = true,
@@ -125,8 +125,8 @@ object StatusPolicy {
      * - Quiet hours silence those too (no sound, no pill) but the notice stays in the shade.
      *   A question is never silenced: like a permission request it needs the user.
      * - A muted agent ([UserSettings.mutedAgents]) is silent for those too, but never for a question.
-     * - Inside Coucou the screen already shows everything: no notification, no pill. The sound stays.
-     * - The notification is always posted quietly (shade only): the sound is Mochi's own and the pill
+     * - Inside Rafiq the screen already shows everything: no notification, no pill. The sound stays.
+     * - The notification is always posted quietly (shade only): the sound is Rafiq's own and the pill
      *   is the on-screen alert, so nothing overlaps or rings twice.
      */
     fun announce(previous: BotState?, now: BotState, s: UserSettings, minuteOfDay: Int, appInForeground: Boolean, pillId: String? = null): Announce {

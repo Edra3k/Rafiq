@@ -1,7 +1,7 @@
 // Classic Outlook on Windows, driven through its own COM objects by a small PowerShell
 // script: the Windows counterpart of Apple Mail's AppleScript on the Mac (MailController.swift).
 //
-// Coucou attaches to the Outlook already open (GetActiveObject) and never starts it. No
+// Rafiq attaches to the Outlook already open (GetActiveObject) and never starts it. No
 // sign-in, no app registration, no admin consent: it is the user's Outlook, on the user's PC.
 // The new Outlook for Windows has no COM objects, so it is not reached this way.
 //
@@ -65,7 +65,7 @@ const PRELUDE: &str = r#"$ErrorActionPreference = 'Stop'
 try { $ol = [System.Runtime.InteropServices.Marshal]::GetActiveObject('Outlook.Application') }
 catch { Write-Output '{"error":"notRunning"}'; exit 0 }
 $ns = $ol.GetNamespace('MAPI')
-function Coucou-Address($i) {
+function Rafiq-Address($i) {
   try {
     if ($i.SenderEmailType -eq 'EX') {
       $u = $i.Sender.GetExchangeUser()
@@ -74,21 +74,21 @@ function Coucou-Address($i) {
   } catch {}
   return [string]$i.SenderEmailAddress
 }
-function Coucou-Row($i, $store) {
+function Rafiq-Row($i, $store) {
   [pscustomobject]@{
     entryId = $i.EntryID; storeId = $store.StoreID; account = $store.DisplayName
-    senderName = [string]$i.SenderName; address = (Coucou-Address $i); subject = [string]$i.Subject
+    senderName = [string]$i.SenderName; address = (Rafiq-Address $i); subject = [string]$i.Subject
     date = [long](([DateTimeOffset]$i.ReceivedTime).ToUnixTimeMilliseconds())
     unread = [bool]$i.UnRead; flagged = ($i.FlagStatus -eq 2)
     local = $i.ReceivedTime.ToString('yyyy-MM-dd HH:mm')
   }
 }
-function Coucou-Inboxes {
+function Rafiq-Inboxes {
   foreach ($s in $ns.Stores) {
     try { $f = $s.GetDefaultFolder(6); if ($f) { [pscustomobject]@{ store = $s; inbox = $f } } } catch {}
   }
 }
-function Coucou-Item($entryId, $storeId) { $ns.GetItemFromID($entryId, $storeId) }
+function Rafiq-Item($entryId, $storeId) { $ns.GetItemFromID($entryId, $storeId) }
 "#;
 
 fn script(body: &str) -> String {
@@ -99,13 +99,13 @@ fn script(body: &str) -> String {
 pub fn list_script(per_inbox: usize) -> String {
     script(&format!(
         r#"$rows = @(); $unread = 0
-foreach ($b in (Coucou-Inboxes)) {{
+foreach ($b in (Rafiq-Inboxes)) {{
   try {{ $unread += $b.inbox.UnReadItemCount }} catch {{}}
   $items = $b.inbox.Items
   $items.Sort('[ReceivedTime]', $true)
   $n = 0; $i = $items.GetFirst()
   while ($i -ne $null -and $n -lt {per_inbox}) {{
-    if ($i.Class -eq 43) {{ $rows += (Coucou-Row $i $b.store); $n++ }}
+    if ($i.Class -eq 43) {{ $rows += (Rafiq-Row $i $b.store); $n++ }}
     $i = $items.GetNext()
   }}
 }}
@@ -148,13 +148,13 @@ pub fn dasl(q: &Query, filter: Filter) -> Option<String> {
 pub fn search_script(filter: &str, limit: usize) -> String {
     script(&format!(
         r#"$rows = @()
-foreach ($b in (Coucou-Inboxes)) {{
+foreach ($b in (Rafiq-Inboxes)) {{
   try {{
     $found = $b.inbox.Items.Restrict({filter})
     $found.Sort('[ReceivedTime]', $true)
     $n = 0; $i = $found.GetFirst()
     while ($i -ne $null -and $n -lt {limit}) {{
-      if ($i.Class -eq 43) {{ $rows += (Coucou-Row $i $b.store); $n++ }}
+      if ($i.Class -eq 43) {{ $rows += (Rafiq-Row $i $b.store); $n++ }}
       $i = $found.GetNext()
     }}
   }} catch {{}}
@@ -185,7 +185,7 @@ $m = $i.Move($dest); $new = $m.EntryID"#,
 /// Sorts one message; prints {"entryId": its id afterwards}.
 pub fn apply_script(entry_id: &str, store_id: &str, action: &Action) -> String {
     script(&format!(
-        r#"$i = Coucou-Item {e} {s}
+        r#"$i = Rafiq-Item {e} {s}
 $st = $ns.GetStoreFromID({s})
 {body}
 [pscustomobject]@{{ entryId = $new }} | ConvertTo-Json -Compress"#,
@@ -203,7 +203,7 @@ pub fn undo_script(entry_id: &str, store_id: &str, action: &Action) -> String {
         Action::MarkRead => "$i.UnRead = $true; $i.Save()",
     };
     script(&format!(
-        r#"$i = Coucou-Item {e} {s}
+        r#"$i = Rafiq-Item {e} {s}
 $st = $ns.GetStoreFromID({s})
 {body}
 Write-Output '{{"ok":true}}'"#,
@@ -214,7 +214,7 @@ Write-Output '{{"ok":true}}'"#,
 
 pub fn unflag_script(entry_id: &str, store_id: &str) -> String {
     script(&format!(
-        "$i = Coucou-Item {} {}\n$i.ClearTaskFlag(); $i.Save()\nWrite-Output '{{\"ok\":true}}'",
+        "$i = Rafiq-Item {} {}\n$i.ClearTaskFlag(); $i.Save()\nWrite-Output '{{\"ok\":true}}'",
         ps(entry_id),
         ps(store_id)
     ))
@@ -223,7 +223,7 @@ pub fn unflag_script(entry_id: &str, store_id: &str) -> String {
 /// The message's text (`limit` characters) and its attachments' names.
 pub fn detail_script(entry_id: &str, store_id: &str, limit: usize) -> String {
     script(&format!(
-        r#"$i = Coucou-Item {e} {s}
+        r#"$i = Rafiq-Item {e} {s}
 $body = [string]$i.Body
 if ($body.Length -gt {limit}) {{ $body = $body.Substring(0, {limit}) }}
 $names = @(); foreach ($a in $i.Attachments) {{ $names += [string]$a.FileName }}
@@ -242,7 +242,7 @@ pub fn open_script(entry_id: &str, store_id: &str, reply_body: Option<&str>) -> 
         Some(text) => format!("$r = $i.Reply(); $r.Body = {} + \"`r`n`r`n\" + $r.Body; $r.Display()", ps(text)),
     };
     script(&format!(
-        "$i = Coucou-Item {} {}\n{body}\nWrite-Output '{{\"ok\":true}}'",
+        "$i = Rafiq-Item {} {}\n{body}\nWrite-Output '{{\"ok\":true}}'",
         ps(entry_id),
         ps(store_id)
     ))
@@ -252,7 +252,7 @@ pub fn open_script(entry_id: &str, store_id: &str, reply_body: Option<&str>) -> 
 pub fn save_attachments_script(entry_id: &str, store_id: &str, folder: &str, only: Option<&str>) -> String {
     let test = only.map_or("$true".to_string(), |n| format!("$a.FileName -eq {}", ps(n)));
     script(&format!(
-        r#"$i = Coucou-Item {e} {s}
+        r#"$i = Rafiq-Item {e} {s}
 $dir = {d}
 $null = New-Item -ItemType Directory -Force -Path $dir
 $saved = @()
@@ -443,14 +443,14 @@ mod tests {
     #[test]
     fn actions_move_flag_and_never_delete() {
         let junk = apply_script("E1", "S1", &Action::Junk);
-        assert!(junk.contains("GetItemFromID($entryId, $storeId)") || junk.contains("Coucou-Item 'E1' 'S1'"));
+        assert!(junk.contains("GetItemFromID($entryId, $storeId)") || junk.contains("Rafiq-Item 'E1' 'S1'"));
         assert!(junk.contains("GetDefaultFolder(23)") && junk.contains("$new = $m.EntryID"));
         assert!(apply_script("E", "S", &Action::Important).contains("MarkAsTask(4)"));
         let mv = apply_script("E", "S", &Action::Move("Compta".into()));
         assert!(mv.contains("Folders.Item('Compta')") && mv.contains("Folders.Add('Compta')"));
         for a in [Action::Junk, Action::Important, Action::MarkRead, Action::Move("X".into())] {
             let s = apply_script("E", "S", &a) + &undo_script("E", "S", &a);
-            assert!(!s.contains(".Delete("), "Coucou never deletes a message");
+            assert!(!s.contains(".Delete("), "Rafiq never deletes a message");
         }
         assert!(undo_script("E", "S", &Action::Junk).contains("Move($st.GetDefaultFolder(6))"));
         assert!(undo_script("E", "S", &Action::Important).contains("ClearTaskFlag()"));

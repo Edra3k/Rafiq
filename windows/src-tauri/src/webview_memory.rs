@@ -1,7 +1,7 @@
 // Memory of the webviews that nobody is looking at.
 //
-// Coucou keeps four WebView2 windows alive (the island, the Coucou window, the
-// pill, Mochi on the desktop): windows made later come up blank (see
+// Rafiq keeps four WebView2 windows alive (the island, the Rafiq window, the
+// pill, Rafiq on the desktop): windows made later come up blank (see
 // create_settings_window in lib.rs), so they cannot simply be closed and made
 // again. What WebView2 offers instead is a memory target: at "low" it trims what
 // a webview holds while it is hidden, and gives it back when it is shown.

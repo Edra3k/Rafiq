@@ -85,7 +85,7 @@ test("on Windows the same folder in another letter case is the same project", ()
 
 test("a project is shown by its last folder name", () => {
   assert.equal(projectName("/home/me/my-app/"), "my-app");
-  assert.equal(projectName("C:\\code\\Coucou"), "Coucou");
+  assert.equal(projectName("C:\\code\\Rafiq"), "Rafiq");
   assert.equal(projectName("/"), "/");
 });
 
@@ -261,7 +261,7 @@ test("the row under the pointer takes the file; elsewhere on the card, none", ()
   assert.equal(dropTargetAt(...mid(rows[2]), 3), 2);
   assert.equal(dropTargetAt(rows[1].x - 3, rows[1].y + 2, 3), 1, "a little slack around a row");
   assert.equal(dropTargetAt(rows[1].x - 10, rows[1].y + 2, 3), null);
-  assert.equal(dropTargetAt(USC.REST_X, USC.REST_Y, 3), null, "Mochi's box is the usual drop");
+  assert.equal(dropTargetAt(USC.REST_X, USC.REST_Y, 3), null, "Rafiq's box is the usual drop");
   const two = dropTargetsLayout(2).rows;
   assert.equal(dropTargetAt(two[1].x + 20, two[1].y + two[1].h + 10, 2), null, "no third row with two sessions");
   assert.equal(dropTargetAt(...mid(rows[0]), 0), null);

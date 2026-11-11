@@ -1,6 +1,6 @@
 # Maintainer: Dorian Luyet (@DurianTheWAV), with linux/nix/package.nix.
 {
-  description = "Coucou: Mochi lives at the top of your screen and keeps an eye on your AI coding agents";
+  description = "Rafiq: Rafiq lives at the top of your screen and keeps an eye on your AI coding agents";
 
   # Try it:          nix run github:Louis-CFM/coucou
   # On NixOS, add the flake to your inputs, then:

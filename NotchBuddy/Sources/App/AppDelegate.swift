@@ -8,10 +8,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private(set) var islandController: IslandWindowController?
     private var demoMenuItem: NSMenuItem?
     #if !APPSTORE
-    /// "Update Coucou to 0.6.0…", shown only when a new version is out.
+    /// "Update Rafiq to 0.6.0…", shown only when a new version is out.
     private var updateMenuItem: NSMenuItem?
     private var updateMenuSeparator: NSMenuItem?
-    /// The menu bar Mochi turns blue while a new version waits (MacUpdater.hintActive).
+    /// The menu bar Rafiq turns blue while a new version waits (MacUpdater.hintActive).
     private var updateHintWatch: AnyCancellable?
     #endif
 
@@ -20,7 +20,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         NoteTaker.shared.shutdown()
         // A dictation still listening never leaves the Mac muted.
         SystemMute.shared.releaseNow()
-        // The GOWA gateway Coucou started never outlives it.
+        // The GOWA gateway Rafiq started never outlives it.
         WhatsAppGOWAProcess.shared.stopNow()
         #endif
         DemoEngine.shared.stop()
@@ -31,7 +31,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         // Ignore SIGPIPE — prevents crash when nb-hook closes socket before we write response
         signal(SIGPIPE, SIG_IGN)
         #if !APPSTORE
-        // Before anything writes its settings: did Coucou just update itself? (What's new, once.)
+        // Before anything writes its settings: did Rafiq just update itself? (What's new, once.)
         WhatsNewCenter.shared.noteLaunch()
         #endif
         // Warm up Keychain cache on main thread BEFORE any poller or view touches it
@@ -39,14 +39,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         #if APPSTORE
         NSApp.setActivationPolicy(.accessory)
         #else
-        // In the Dock like a regular app (Coucou → Settings → Flow), or only in the menu bar.
+        // In the Dock like a regular app (Rafiq → Settings → Flow), or only in the menu bar.
         NSApp.setActivationPolicy(FlowHubController.showInDock ? .regular : .accessory)
         #endif
         setupMenuBarItem()
         setupIsland()
         MachineVitals.shared.start()
         #if !APPSTORE
-        // Opened by hand (Finder, Dock, Spotlight): the Coucou window shows. Not at login.
+        // Opened by hand (Finder, Dock, Spotlight): the Rafiq window shows. Not at login.
         if FlowHubController.openAtLaunch && !FlowHubController.launchedAtLogin() {
             Task { @MainActor in
                 try? await Task.sleep(for: .milliseconds(600))
@@ -65,7 +65,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         CloudProbe.shared.startIfEnabled()
         #endif
         #if !APPSTORE
-        // Coucou for Android (off unless the user turned it on in Settings)
+        // Rafiq for Android (off unless the user turned it on in Settings)
         AndroidLinkService.shared.startIfEnabled()
         #endif
     }
@@ -74,7 +74,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         #if APPSTORE
         openIsland()
         #else
-        // A click on the Dock icon: the Coucou window.
+        // A click on the Dock icon: the Rafiq window.
         FlowHubController.shared.show()
         #endif
         return true
@@ -94,7 +94,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         add(NoteTaker.shared.isRecording ? String(localized: "notes.stop") : String(localized: "hub.record-call"),
             #selector(toggleCallRecording))
         menu.addItem(.separator())
-        add(String(localized: "Open Coucou"), #selector(openIsland))
+        add(String(localized: "Open Rafiq"), #selector(openIsland))
         add(NSLocalizedString("Settings…", comment: ""), #selector(openSettings))
         return menu
     }
@@ -119,9 +119,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private func setupMenuBarItem() {
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         guard let button = statusItem?.button else { return }
-        button.image = NSImage(named: "MenuBarIcon") ?? NSImage(systemSymbolName: "circle.fill", accessibilityDescription: "Coucou")
+        button.image = NSImage(named: "MenuBarIcon") ?? NSImage(systemSymbolName: "circle.fill", accessibilityDescription: "Rafiq")
         button.image?.size = NSSize(width: 24, height: 18)
-        button.image?.accessibilityDescription = "Coucou"
+        button.image?.accessibilityDescription = "Rafiq"
         button.image?.isTemplate = true
 
         let menu = NSMenu()
@@ -142,7 +142,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         demoMenuItem = demoItem
         menu.addItem(demoItem)
         menu.addItem(.separator())
-        menu.addItem(withTitle: NSLocalizedString("Open Coucou", comment: ""), action: #selector(openIsland), keyEquivalent: "")
+        menu.addItem(withTitle: NSLocalizedString("Open Rafiq", comment: ""), action: #selector(openIsland), keyEquivalent: "")
         menu.addItem(.separator())
         menu.addItem(withTitle: NSLocalizedString("Weekly recap", comment: ""), action: #selector(openWeeklyRecap), keyEquivalent: "")
         #if !APPSTORE
@@ -165,7 +165,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     #if !APPSTORE
-    /// Blue Mochi in the menu bar while a new Coucou waits, like the one in the notch; the usual
+    /// Blue Rafiq in the menu bar while a new Rafiq waits, like the one in the notch; the usual
     /// template icon (black or white with the menu bar) otherwise.
     private func setMenuBarUpdateHint(_ on: Bool) {
         guard let button = statusItem?.button else { return }
@@ -174,10 +174,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
               let rep = NSBitmapImageRep(bitmapDataPlanes: nil, pixelsWide: Int(size.width * 2), pixelsHigh: Int(size.height * 2),
                                          bitsPerSample: 8, samplesPerPixel: 4, hasAlpha: true, isPlanar: false,
                                          colorSpaceName: .deviceRGB, bytesPerRow: 0, bitsPerPixel: 0) else {
-            let icon = NSImage(named: "MenuBarIcon") ?? NSImage(systemSymbolName: "circle.fill", accessibilityDescription: "Coucou")
+            let icon = NSImage(named: "MenuBarIcon") ?? NSImage(systemSymbolName: "circle.fill", accessibilityDescription: "Rafiq")
             icon?.size = size
             icon?.isTemplate = true
-            icon?.accessibilityDescription = "Coucou"
+            icon?.accessibilityDescription = "Rafiq"
             button.image = icon
             return
         }
@@ -186,13 +186,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         NSGraphicsContext.saveGraphicsState()
         NSGraphicsContext.current = NSGraphicsContext(bitmapImageRep: rep)
         base.draw(in: rect)
-        NSColor(srgbRed: 0.231, green: 0.510, blue: 0.965, alpha: 1).set()   // #3B82F6, Mochi's update blue
+        NSColor(srgbRed: 0.231, green: 0.510, blue: 0.965, alpha: 1).set()   // #3B82F6, Rafiq's update blue
         rect.fill(using: .sourceAtop)
         NSGraphicsContext.restoreGraphicsState()
         let blue = NSImage(size: size)
         blue.addRepresentation(rep)
         blue.isTemplate = false
-        blue.accessibilityDescription = "Coucou"
+        blue.accessibilityDescription = "Rafiq"
         button.image = blue
     }
     #endif
@@ -237,7 +237,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         // The island floats above every window; fold it away so it can't cover Settings.
         if AppState.shared.mode == .expanded { islandController?.collapse() }
         #if !APPSTORE
-        // Everything in one place: Settings are the notch's pages of the Coucou window.
+        // Everything in one place: Settings are the notch's pages of the Rafiq window.
         let section = UserDefaults.standard.string(forKey: "settingsSection") ?? "general"
         FlowHubController.shared.show(HubPage.forSettings(section))
         #else
@@ -353,7 +353,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         NotionPoller.shared.start()
         NotificationCenter.default.addObserver(self, selector: #selector(openSettingsFromNotification(_:)),
                                                name: .openFullSettings, object: nil)
-        // After the greeting ends, fly Mochi back to the desktop if it was there at last quit
+        // After the greeting ends, fly Rafiq back to the desktop if it was there at last quit
         NotificationCenter.default.addObserver(forName: .greetComplete, object: nil, queue: .main) { [weak self] _ in
             DesktopMochiController.shared.launchFlyIfNeeded()
             self?.checkMondayRecap()

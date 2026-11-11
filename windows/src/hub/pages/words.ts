@@ -1,4 +1,4 @@
-// Dictionary (names Coucou always spells right, and replacements) and
+// Dictionary (names Rafiq always spells right, and replacements) and
 // Snippets (say a short phrase, paste a whole text). Port of FlowHubWords.swift.
 
 import { h, clear } from "../../views/dom";
@@ -23,7 +23,7 @@ export async function dictionaryPage(page: HTMLElement, ctx: HubContext) {
   const data = (await FlowBridge.words()) ?? { words: [], replacements: [] };
   let words = data.words;
   let replacements: Replacement[] = data.replacements;
-  page.append(ctx.hero("dictionary", t("Dictionary"), t("Names and words Coucou must always spell right.")));
+  page.append(ctx.hero("dictionary", t("Dictionary"), t("Names and words Rafiq must always spell right.")));
   const write = pageSave(page);
   const save = async (next: typeof data) => {
     if (await write(() => FlowBridge.setWords(next)) !== "saved") return false;
@@ -45,7 +45,7 @@ export async function dictionaryPage(page: HTMLElement, ctx: HubContext) {
   const drawWords = () => {
     clear(chips);
     if (words.length === 0) {
-      chips.append(h("div", { class: "hub-note", text: t("No word yet. Add the names, brands and jargon Coucou gets wrong.") }));
+      chips.append(h("div", { class: "hub-note", text: t("No word yet. Add the names, brands and jargon Rafiq gets wrong.") }));
       return;
     }
     for (const w of words) {
@@ -64,7 +64,7 @@ export async function dictionaryPage(page: HTMLElement, ctx: HubContext) {
   drawWords();
 
   // ── Replacements ──
-  page.append(label(t("Replacements")), h("div", { class: "hub-note", style: "margin-top:-10px", text: t("When Coucou hears the words on the left, it writes the ones on the right.") }));
+  page.append(label(t("Replacements")), h("div", { class: "hub-note", style: "margin-top:-10px", text: t("When Rafiq hears the words on the left, it writes the ones on the right.") }));
   const list = h("div", {});
   const from = input(t("Heard, e.g. cloud code"));
   const to = input(t("Written, e.g. Claude Code"), () => addReplacement());
@@ -98,7 +98,7 @@ export async function dictionaryPage(page: HTMLElement, ctx: HubContext) {
 
 export async function snippetsPage(page: HTMLElement, ctx: HubContext) {
   let snippets: Snippet[] = (await FlowBridge.snippets()) ?? [];
-  page.append(ctx.hero("snippets", t("Snippets"), t("Say the trigger while dictating: Coucou pastes the whole text in its place.")));
+  page.append(ctx.hero("snippets", t("Snippets"), t("Say the trigger while dictating: Rafiq pastes the whole text in its place.")));
   const write = pageSave(page);
   const save = async (next: Snippet[]) => {
     if (await write(() => FlowBridge.setSnippets(next)) !== "saved") return false;
@@ -110,7 +110,7 @@ export async function snippetsPage(page: HTMLElement, ctx: HubContext) {
   let editing: Snippet | null = null;
   const formTitle = h("div", { style: "font:700 14px var(--font)" });
   const trigger = h("input", { class: "hub-input", placeholder: t("What you say, e.g. my signature") }) as HTMLInputElement;
-  const text = h("textarea", { class: "hub-textarea", placeholder: t("The text Coucou pastes") }) as HTMLTextAreaElement;
+  const text = h("textarea", { class: "hub-textarea", placeholder: t("The text Rafiq pastes") }) as HTMLTextAreaElement;
   const cancel = button(t("Cancel"), () => edit(null));
   const saveButton = button(t("Save"), async () => {
     const tr = trigger.value.trim();

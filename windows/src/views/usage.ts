@@ -6,7 +6,7 @@
 // The pills sit in the header's right side, before the gear, on the overview
 // only, Claude first. Clicking one puts its card in place of the overview's
 // left card (clicking it again, or the other pill, closes or swaps it), and
-// Mochi wears the plan's colour while it is open. It closes when the view, the
+// Rafiq wears the plan's colour while it is open. It closes when the view, the
 // mode or the focused pill changes.
 
 import { Bridge } from "../core/bridge";
@@ -48,7 +48,7 @@ export function planCardOpen(): boolean {
 const claudeColor = (now = Date.now()) => planColor(dominantPct(State.planUsage, now));
 const codexColor = (now = Date.now()) => planColor(dominantPct(State.codexPlanUsage, now));
 
-/** The colour of the open card's plan, which Mochi wears while it is open. */
+/** The colour of the open card's plan, which Rafiq wears while it is open. */
 export function openPlanColor(): string {
   return State.planDetailIsCodex ? codexColor() : claudeColor();
 }

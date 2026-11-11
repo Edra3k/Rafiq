@@ -1,14 +1,14 @@
-COUCOU FOR ANDROID: LICENCES AND NOTICES
+RAFIQ FOR ANDROID: LICENCES AND NOTICES
 
-Coucou for Android, by Rhytam Biswas, is part of Coucou by Louis Raillé (https://github.com/Louis-CFM/coucou). It is free, has no ads and no analytics.
+Rafiq for Android (https://github.com/Edra3k/Rafiq) is based on Coucou for Android, by Rhytam Biswas, part of Coucou by Louis Raillé (https://github.com/Louis-CFM/coucou). It is free, has no ads and no analytics.
 
-1. The code of Coucou
+1. The code
 
-The source code of Coucou is Copyright (c) 2026 Louis Raillé and is released under the MIT License. The full text is below ("MIT License").
+The source code Rafiq is built on is Copyright (c) 2026 Louis Raillé (Coucou) and Copyright (c) Rhytam Biswas (Coucou for Android), and is released under the MIT License. The full text is below ("MIT License").
 
 2. The name, the character, the icon and the sounds
 
-The names "Coucou" and "Mochi", the Mochi character (its design, look, expressions and animations), the app icon and the sounds are Copyright (c) 2026 Louis Raillé. All rights reserved. They are NOT covered by the MIT License (see LICENSE-ASSETS.md in https://github.com/Louis-CFM/coucou). They are used in this app with the written permission of Louis Raillé, for this Android app only, and may not be reused elsewhere without his permission.
+The name "Rafiq", the Rafiq character (the dome with its golden crescent), the app icon and the sounds are Rafiq's own and are NOT covered by the MIT License (see LICENSE-ASSETS.md in https://github.com/Edra3k/Rafiq). None of Coucou's name, character, icon or sounds is used.
 
 3. ZXing
 

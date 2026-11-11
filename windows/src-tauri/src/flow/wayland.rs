@@ -7,8 +7,8 @@
 // the desktop's own dialog, Ctrl+Alt+V suggested.
 //
 // The paste: Ctrl+V sent through the RemoteDesktop portal, keyboard only. The
-// desktop asks once whether Coucou may control the keyboard; the answer is
-// remembered with the restore token the portal gives back, kept in Coucou's
+// desktop asks once whether Rafiq may control the keyboard; the answer is
+// remembered with the restore token the portal gives back, kept in Rafiq's
 // folder. Where neither works, the words stay on the clipboard and the pill
 // says so.
 
@@ -75,7 +75,7 @@ struct Remote {
 
 /// The RemoteDesktop session, opened on the first paste and kept.
 static REMOTE: Mutex<Option<Remote>> = Mutex::new(None);
-/// Refused once: not asked again until Coucou restarts.
+/// Refused once: not asked again until Rafiq restarts.
 static REFUSED: Mutex<bool> = Mutex::new(false);
 
 fn token_file() -> std::path::PathBuf {

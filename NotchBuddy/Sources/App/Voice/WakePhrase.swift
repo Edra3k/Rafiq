@@ -21,11 +21,12 @@ enum WakePhrase {
     /// preserving the original casing and punctuation of the command portion.
     ///
     /// Accepted patterns (case-insensitive, after phonetic normalisation):
-    /// - "ok coucou" and variants: "okay coucou", "ok cuckoo", "ok kuku", "ok cou cou" …
-    /// - "hey coucou"
+    /// - "ok rafiq" and the ways speech recognition writes it: "okay rafik", "ok rafique",
+    ///   "ok rafeeq", "ok ra fiq" …
+    /// - "hey rafiq"
     ///
-    /// Word-boundary search means "euh ok coucou add" matches and returns "add".
-    /// Standalone "coucou" never matches (no preceding "ok"/"hey").
+    /// Word-boundary search means "euh ok rafiq add" matches and returns "add".
+    /// Standalone "rafiq" never matches (no preceding "ok"/"hey").
     static func split(_ raw: String) -> SplitResult {
         // Split original into whitespace-separated tokens (punctuation stays attached to words)
         let originalWords = raw.components(separatedBy: .whitespaces).filter { !$0.isEmpty }
@@ -35,12 +36,12 @@ enum WakePhrase {
         let normWords = originalWords.map(normWord)
 
         // Wake phrase patterns (normalised).
-        // "ok cou cou" handled as a 3-token pattern in case the STT splits it.
+        // "ok ra fiq" handled as a 3-token pattern in case the STT splits it.
         let patterns: [[String]] = [
-            ["ok",  "coucou"],
-            ["ok",  "cou", "cou"],
-            ["hey", "coucou"],
-            ["hey", "cou", "cou"],
+            ["ok",  "rafiq"],
+            ["ok",  "ra", "fiq"],
+            ["hey", "rafiq"],
+            ["hey", "ra", "fiq"],
         ]
 
         // Find LAST occurrence of any pattern
@@ -83,14 +84,18 @@ enum WakePhrase {
 
     // MARK: - Private
 
+    /// How speech recognition writes "Rafiq" (French, English, Arabic accents).
+    static let rafiqSpellings: Set<String> = [
+        "rafiq", "rafik", "rafique", "rafic", "rafeeq", "rafeek", "rafiik", "raffik", "raffiq",
+        "raphik", "raphique", "rafiqs", "rafiks", "rafiki",
+    ]
+
     /// Normalise a single word token for wake-phrase matching.
     private static func normWord(_ w: String) -> String {
-        var t = normalise(w)
-        t = t
-            .replacingOccurrences(of: "cuckoo", with: "coucou")
-            .replacingOccurrences(of: "kuku",   with: "coucou")
-            .replacingOccurrences(of: "kucou",  with: "coucou")
-            .replacingOccurrences(of: "okay",   with: "ok")
+        var t = normalise(w).folding(options: .diacriticInsensitive, locale: nil)
+        t = t.replacingOccurrences(of: "okay", with: "ok")
+        if rafiqSpellings.contains(t) { return "rafiq" }
+        if ["fik", "fique", "feek", "feeq", "fic"].contains(t) { return "fiq" }
         return t
     }
 }

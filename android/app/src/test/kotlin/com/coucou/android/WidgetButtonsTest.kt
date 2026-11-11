@@ -8,7 +8,7 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 
 /**
- * The buttons of the Status Pill and Mochi Big, and the room they take. A button only opens a screen of the app (or the top agent):
+ * The buttons of the Status Pill and Rafiq Big, and the room they take. A button only opens a screen of the app (or the top agent):
  * none approves, denies or sends anything, and each has its own request code, a name and a content description.
  */
 class WidgetButtonsTest {
@@ -125,7 +125,7 @@ class WidgetButtonsTest {
         assertTrue(src.contains("R.id.pill_state, if (size == WidgetHub.Size.LARGE) View.VISIBLE else View.GONE"))
     }
 
-    // ── Mochi Big ───────────────────────────────────────────────────────────────────────────────────
+    // ── Rafiq Big ───────────────────────────────────────────────────────────────────────────────────
 
     private val bigLayout get() = read(res + "layout/widget_big.xml")
     private val bigSource get() = read(main + "app/MochiBigWidget.kt")
@@ -152,7 +152,7 @@ class WidgetButtonsTest {
         assertEquals("horizontal", top.getAttribute("android:orientation"))
         val sides = top.children()
         assertEquals(listOf("@+id/big_left", "@+id/big_right"), sides.map { it.getAttribute("android:id") })
-        assertEquals("Mochi's side is about 45% of the width", listOf("45", "55"), sides.map { it.getAttribute("android:layout_weight") })
+        assertEquals("Rafiq's side is about 45% of the width", listOf("45", "55"), sides.map { it.getAttribute("android:layout_weight") })
         val left = byId(root, "big_left").descendants().mapNotNull { it.getAttribute("android:id").takeIf { id -> id.isNotEmpty() } }
         assertEquals(listOf("@+id/big_mochi", "@+id/big_row", "@+id/big_offline", "@+id/big_dot", "@+id/big_name", "@+id/big_state"), left)
         assertEquals("the badge stays in the top-right corner", "top|end", byId(root, "big_badge").getAttribute("android:layout_gravity"))
@@ -249,7 +249,7 @@ class WidgetButtonsTest {
         assertTrue(src.contains("R.id.big_buttons, if (small) View.GONE else View.VISIBLE"))
         assertTrue(src.contains("R.id.big_buttons_m, if (large) View.GONE else View.VISIBLE"))
         assertTrue(src.contains("R.id.big_buttons_l, if (large) View.VISIBLE else View.GONE"))
-        // Small: Mochi and the first row of usage only.
+        // Small: Rafiq and the first row of usage only.
         assertTrue(src.contains("rows.getOrNull(1)?.takeIf { !small }"))
     }
 
@@ -259,14 +259,14 @@ class WidgetButtonsTest {
         val minHeight = Regex("""android:minHeight="(\d+)dp"""").find(read(res + "xml/coucou_big_widget_info.xml"))!!.groupValues[1].toDouble()
         val tile = dimens.getValue("widget_tile_height")
         val padding = 24.0
-        // The top area is what the buttons leave; under Mochi sit the name row and the state word (about 20 + 16).
+        // The top area is what the buttons leave; under Rafiq sit the name row and the state word (about 20 + 16).
         val status = 36.0
         val small = minHeight - padding
         val withRow = medium - padding - (8 + tile)
         val withGrid = large - padding - (8 + tile + 6 + tile)
         for ((what, top) in listOf("small" to small, "one row" to withRow, "two rows" to withGrid)) {
             assertTrue("$what: the top area is ${top.toInt()}dp", top >= 100)
-            assertTrue("$what: Mochi has ${(top - status).toInt()} of ${top.toInt()}dp", (top - status) / top >= 0.40)
+            assertTrue("$what: Rafiq has ${(top - status).toInt()} of ${top.toInt()}dp", (top - status) / top >= 0.40)
         }
         // The two usage rows (label 15, percentage 35, bar 6, gaps) fit beside him at every size where both show.
         val twoRows = 2 * (15 + 35 + 2 + 6) + 8

@@ -12,7 +12,7 @@ import com.coucou.android.core.WidgetContent
 import com.coucou.android.core.WidgetSpoken
 
 /**
- * The Solo widget: Mochi with a glow in the state's colour, the name of the most urgent agent with a dot and one state
+ * The Solo widget: Rafiq with a glow in the state's colour, the name of the most urgent agent with a dot and one state
  * word. Drawn by [WidgetHub] when something changes (updatePeriodMillis = 0). A tap opens that agent, or the app when none
  * is running. It only opens things: nothing is changed from here.
  */

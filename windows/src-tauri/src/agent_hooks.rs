@@ -6,7 +6,7 @@
 //
 // Claude Code is read here, with the Mac's own rule. Every other agent is read
 // by agents.rs — the code that writes their configs is the one source of truth
-// for where those files are and what Coucou's entries look like, so the pill
+// for where those files are and what Rafiq's entries look like, so the pill
 // and Settings → Agents always agree.
 
 use std::collections::HashMap;
@@ -17,7 +17,7 @@ use serde_json::Value;
 
 /// Port of `coucouHooksPresent(inSettings:)` (ClaudeHookDetection.swift): true
 /// when a parsed `~/.claude/settings.json` routes Claude Code's SessionStart
-/// events to Coucou. The command text is what tells: Coucou's relay here is
+/// events to Rafiq. The command text is what tells: Rafiq's relay here is
 /// `coucou-hook`, the Mac's is `~/.claude/coucou/nb-hook` (or NotchBuddy in the
 /// App Store build), so a settings file shared between machines reads the same.
 pub fn claude_hooks_present(settings: &Value) -> bool {
@@ -80,7 +80,7 @@ mod tests {
     fn the_hook_coucou_writes_is_installed() {
         assert!(claude_hooks_present(&settings(
             r#"{"hooks":{"SessionStart":[{"hooks":[
-              {"type":"command","command":"\"C:/Users/me/AppData/Local/Coucou/bin/coucou-hook.exe\" SessionStart"}]}]}}"#
+              {"type":"command","command":"\"C:/Users/me/AppData/Local/Rafiq/bin/coucou-hook.exe\" SessionStart"}]}]}}"#
         )));
         assert!(claude_hooks_present(&settings(
             r#"{"hooks":{"SessionStart":[{"hooks":[

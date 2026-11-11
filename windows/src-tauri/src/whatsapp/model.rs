@@ -1,4 +1,4 @@
-// WhatsApp in the island: what Coucou keeps of the conversations, in memory only, and the
+// WhatsApp in the island: what Rafiq keeps of the conversations, in memory only, and the
 // rules that decide what reaches the pill. Port of WhatsAppModels.swift (the Mac's spec):
 // same rules, same limits. Nothing here is ever written to disk or to a log.
 
@@ -185,7 +185,7 @@ impl Inbox {
         self.conversations.values().map(|c| c.unread).sum()
     }
 
-    /// Adds a message to its conversation. `Notify` when it should reach you (Mochi reacts),
+    /// Adds a message to its conversation. `Notify` when it should reach you (Rafiq reacts),
     /// `Quiet` when it is kept but stays silent (a muted group, your own message).
     /// `history`: an older message loaded on demand: kept, never counted as unread, never announced.
     pub fn add(&mut self, message: Message, filters: &Filters, name: Option<&str>, history: bool) -> Outcome {
@@ -296,7 +296,7 @@ impl Inbox {
         }
     }
 
-    /// Everything goes (Coucou quits, WhatsApp turned off).
+    /// Everything goes (Rafiq quits, WhatsApp turned off).
     pub fn clear(&mut self) {
         self.conversations.clear();
         self.seen.clear();
@@ -332,7 +332,7 @@ pub fn check_reply(text: &str, chat: &str, inbox: &Inbox) -> Option<Refusal> {
     None
 }
 
-/// A few sends a minute at most, whatever is clicked: Coucou is no bulk sender.
+/// A few sends a minute at most, whatever is clicked: Rafiq is no bulk sender.
 pub struct RateLimit {
     limit: usize,
     window: Duration,

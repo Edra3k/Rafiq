@@ -66,7 +66,7 @@ export function behaviour(name: string, make: () => Promise<Harness>) {
     };
 
     it("answers the health check and nothing else on /", async () => {
-      expect(await h.http("/")).toEqual({ status: 200, text: "Coucou link relay" });
+      expect(await h.http("/")).toEqual({ status: 200, text: "Rafiq link relay" });
       expect((await h.http("/", "POST")).status).toBe(405);
       expect((await h.http("/elsewhere")).status).toBe(404);
     });

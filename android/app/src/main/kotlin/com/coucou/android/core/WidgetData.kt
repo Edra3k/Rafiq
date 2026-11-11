@@ -16,18 +16,18 @@ import java.util.Locale
 import kotlin.math.roundToInt
 
 /**
- * The one palette of every Widget: the colour of the glow behind Mochi, the card's gradient and 1dp border, the status dot, the badge
+ * The one palette of every Widget: the colour of the glow behind Rafiq, the card's gradient and 1dp border, the status dot, the badge
  * and the button tiles. Each tone has its colour in res/values/colors.xml (`widget_tone_<name>`, `widget_tint_<name>`,
  * `widget_border_<name>`), and a test keeps the two in step; no Widget picks a colour of its own for a state.
  *
- * - [DONE] green: finished, Mochi's happy face.
+ * - [DONE] green: finished, Rafiq's happy face.
  * - [WORKING] blue.
  * - [ATTENTION] orange: waiting for the user (an approval or a question).
  * - [IDLE] soft grey: calm, "All calm", "No agents running".
  * - [MUTED] muted grey, with the "not connected" icon: the computer is not there.
  * - [TROUBLE] red: an agent stopped on an error or a limit.
  *
- * Taken from the app's own state colours ([MochiConst]), so a Widget and Mochi on Home always agree.
+ * Taken from the app's own state colours ([MochiConst]), so a Widget and Rafiq on Home always agree.
  */
 enum class WidgetTone(val rgb: Rgb) {
     MUTED(MochiConst.C_SLEEPING),
@@ -142,7 +142,7 @@ data class UsageRing(val plan: String, val window: String, val pct: Int, val not
     val nearLimit: Boolean get() = PlanUsageLook.nearLimit(pct)
 }
 
-/** What the right side of Mochi Big shows: the plan usage rows, a calm "Plan usage is off", or "Not connected". Never nothing. */
+/** What the right side of Rafiq Big shows: the plan usage rows, a calm "Plan usage is off", or "Not connected". Never nothing. */
 enum class UsageSide { ROWS, OFF, NOT_CONNECTED }
 
 /**
@@ -162,12 +162,12 @@ data class WidgetContent(
     val ring: UsageRing? = null,
     /** Agent tasks finished today, counted on this phone only. */
     val today: Int = 0,
-    /** Mochi Big's plan usage: Claude then Codex, each with its main window; empty when the computer sends none or is not connected. */
+    /** Rafiq Big's plan usage: Claude then Codex, each with its main window; empty when the computer sends none or is not connected. */
     val usageRows: List<UsageRing> = emptyList(),
     /** Every agent that runs, most urgent first (the [tiles] are its first few): the Team widget picks its own from it. */
     val roster: List<WidgetTile> = emptyList(),
 ) {
-    /** Which of the three things Mochi Big's right side shows. */
+    /** Which of the three things Rafiq Big's right side shows. */
     val usageSide: UsageSide get() = when {
         !connected -> UsageSide.NOT_CONNECTED
         usageRows.isEmpty() -> UsageSide.OFF
@@ -198,7 +198,7 @@ data class WidgetContent(
         else -> Texts.t("widget_nothing_needs_you", "Nothing needs you")
     }
 
-    /** Mochi's face on the Today widget: pleased once something finished today, calm before. */
+    /** Rafiq's face on the Today widget: pleased once something finished today, calm before. */
     val todayMood: BotState get() = if (today > 0) BotState.FINISHED else BotState.IDLE
 
     /** The Today widget glows green once something finished today, soft grey before. */
@@ -215,7 +215,7 @@ data class WidgetContent(
         else -> top?.let { WidgetTone.of(it.state) } ?: WidgetTone.IDLE
     }
 
-    /** The state Mochi is drawn in: the top agent's, else calm when connected and asleep when not. */
+    /** The state Rafiq is drawn in: the top agent's, else calm when connected and asleep when not. */
     val mood: BotState get() = top?.state ?: if (connected) BotState.IDLE else BotState.SLEEPING
 }
 
@@ -244,7 +244,7 @@ fun Glance.look(): WidgetTone = when {
     else -> lines.firstOrNull()?.let { WidgetTone.of(it.state) } ?: WidgetTone.IDLE
 }
 
-/** The state of Mochi's face on the summary widget: the most urgent agent's, else calm when connected and asleep when not. */
+/** The state of Rafiq's face on the summary widget: the most urgent agent's, else calm when connected and asleep when not. */
 fun Glance.mood(): BotState = lines.firstOrNull()?.state ?: if (connected) BotState.IDLE else BotState.SLEEPING
 
 object WidgetData {
@@ -270,7 +270,7 @@ object WidgetData {
     }
 
     /**
-     * Up to two rows for Mochi Big: Claude, then Codex, each with its main window (five hours, else the week). A plan the computer
+     * Up to two rows for Rafiq Big: Claude, then Codex, each with its main window (five hours, else the week). A plan the computer
      * does not know has no row. The same data as the Usage Ring, with a window that has reset counted as zero ([PlanText]).
      */
     fun usageRows(usage: UsageSnapshot?, nowMs: Long): List<UsageRing> {
@@ -282,7 +282,7 @@ object WidgetData {
 
     /**
      * The content a [WidgetSample] stands for, built like a real one. [nowMs] only sets when the sample plan windows reset.
-     * [usagePct], when given, replaces Claude's five-hour usage (Mochi Big and the Usage Ring); null keeps the sample's own.
+     * [usagePct], when given, replaces Claude's five-hour usage (Rafiq Big and the Usage Ring); null keeps the sample's own.
      */
     fun sample(which: WidgetSample, nowMs: Long = 0L, usagePct: Int? = null): WidgetContent {
         val link = if (which == WidgetSample.DISCONNECTED) LinkState.DISCONNECTED else LinkState.CONNECTED
@@ -307,7 +307,7 @@ object WidgetData {
         val names = sessions.associate { it.pillId to it.agent }
         val glance = GlanceBuilder.build(true, link, "Your PC", sessions, approvals) { names[it] ?: "An agent" }
         fun plan(five: Int, week: Int) = PlanUsage(PlanWindow(five, nowMs + 2 * HOUR_MS), PlanWindow(week, nowMs + 3 * 24 * HOUR_MS))
-        // Codex has only its week here, so the second row of Mochi Big reads "Codex · week".
+        // Codex has only its week here, so the second row of Rafiq Big reads "Codex · week".
         fun week(pct: Int) = PlanUsage(null, PlanWindow(pct, nowMs + 3 * 24 * HOUR_MS))
         val usage = if (usagePct != null && which != WidgetSample.DISCONNECTED) {
             // Debug preview of the near-limit look: Claude's five-hour window at [usagePct], reset in two hours; Codex stays as in the sample.

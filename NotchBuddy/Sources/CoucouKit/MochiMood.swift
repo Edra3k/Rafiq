@@ -1,25 +1,25 @@
 import QuartzCore
 import SwiftUI
 
-/// How the Mac feels, as Mochi shows it. Each level runs from 0 (not at all) to 1.
-/// The Mac reads it (MachineVitals); the iPhone never sets it, so Mochi stays calm there.
+/// How the Mac feels, as Rafiq shows it. Each level runs from 0 (not at all) to 1.
+/// The Mac reads it (MachineVitals); the iPhone never sets it, so Rafiq stays calm there.
 struct MochiMood: Equatable, Sendable {
-    /// The processor is at full load: Mochi sweats and breathes fast.
+    /// The processor is at full load: Rafiq sweats and breathes fast.
     var busy: CGFloat = 0
-    /// The Mac is warm: Mochi flushes red, with heat waves above his head.
+    /// The Mac is warm: Rafiq flushes red, with heat waves above his head.
     var hot: CGFloat = 0
-    /// Memory is short: Mochi puffs up, like after a big meal.
+    /// Memory is short: Rafiq puffs up, like after a big meal.
     var full: CGFloat = 0
     /// The battery is low: heavy eyelids, a yawn now and then.
     var tired: CGFloat = 0
-    /// The battery is nearly empty: Mochi sleeps.
+    /// The battery is nearly empty: Rafiq sleeps.
     var asleep = false
 
     static let calm = MochiMood()
 }
 
-/// A drop of sweat thrown from Mochi's side: it rises, then falls to the floor in an arc.
-/// In Mochi's units (R), from his resting centre; the time is real time.
+/// A drop of sweat thrown from Rafiq's side: it rises, then falls to the floor in an arc.
+/// In Rafiq's units (R), from his resting centre; the time is real time.
 struct MoodDrop {
     var x: CGFloat
     var y: CGFloat
@@ -34,7 +34,7 @@ struct MoodDrop {
     var wobble: CGFloat
 }
 
-/// One of Mochi's stressed hops, from side to side.
+/// One of Rafiq's stressed hops, from side to side.
 struct MoodHop {
     var from: CGFloat = 0
     var to: CGFloat = 0
@@ -45,10 +45,10 @@ struct MoodHop {
     var landed = true
 }
 
-// MARK: - Mochi's moods
+// MARK: - Rafiq's moods
 
 extension BotEngine {
-    /// States where the Mac's mood shows: Mochi is not asking for anything.
+    /// States where the Mac's mood shows: Rafiq is not asking for anything.
     private var moodShows: Bool {
         switch state {
         case .idle, .working, .thinking, .searching, .finished: return true
@@ -59,7 +59,7 @@ extension BotEngine {
     /// Gravity of the sweat drops, in R per second².
     private static let dropGravity: CGFloat = 6.0
 
-    /// Takes back last frame's hop offset before anything else moves Mochi.
+    /// Takes back last frame's hop offset before anything else moves Rafiq.
     func undoMoodOffsets() {
         if moodShiftApplied != 0 { ox -= moodShiftApplied; moodShiftApplied = 0 }
         if moodLiftApplied != 0 { oy -= moodLiftApplied; moodLiftApplied = 0 }
@@ -126,7 +126,7 @@ extension BotEngine {
         }
     }
 
-    /// The processor at full load: Mochi panics, hopping from side to side at random, quick and
+    /// The processor at full load: Rafiq panics, hopping from side to side at random, quick and
     /// short, leaning into each hop, squashing when he lands, eyes darting where he jumps.
     private func updateStress(now: Double) {
         let level = moodBusy
@@ -171,7 +171,7 @@ extension BotEngine {
             tgTilt += dir * 0.12 * sin(.pi * q) * amount
         }
 
-        // The look of a scared Mochi: the eyes dart from one spot to another, quick and
+        // The look of a scared Rafiq: the eyes dart from one spot to another, quick and
         // jerky, looking for a way out, tremble, and blink nervously, sometimes twice.
         if level > 0.3 {
             if now > nextStressLook {
@@ -242,13 +242,13 @@ extension BotEngine {
         ))
     }
 
-    /// What goes over Mochi in world space: sweat drops and heat waves.
+    /// What goes over Rafiq in world space: sweat drops and heat waves.
     func drawMoodExtras(context: GraphicsContext, R: CGFloat, rx: CGFloat, ry: CGFloat, cx: CGFloat, cy: CGFloat) {
         guard !isMini, morph < 0.3 else { return }
         let real = CACurrentMediaTime()
         let now = CGFloat(real - t0)
 
-        // Sweat: each drop follows its arc from where it left Mochi's side.
+        // Sweat: each drop follows its arc from where it left Rafiq's side.
         if !moodDrops.isEmpty {
             let baseX = cx - ox * R, baseY = cy - oy * R
             for drop in moodDrops {

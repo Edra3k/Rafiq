@@ -26,7 +26,7 @@ struct SharedSession: Codable, Identifiable, Hashable, Sendable {
     var isWaitingForYou: Bool { tone == .waiting || tone == .question }
     var isWorking: Bool { tone == .working }
 
-    /// Opens one Mochi in the app, a session or a service (widgets link here).
+    /// Opens one Rafiq in the app, a session or a service (widgets link here).
     static func url(for id: String) -> URL {
         URL(string: "coucou://mochi/\(id.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? id)")!
     }
@@ -50,7 +50,7 @@ struct SharedSession: Codable, Identifiable, Hashable, Sendable {
 }
 
 enum SharedSessions {
-    static let appGroup = "group.fr.louisraille.Coucou"
+    static let appGroup = "group.com.edra3k.rafiq.ios"
 
     private static var fileURL: URL? {
         FileManager.default

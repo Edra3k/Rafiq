@@ -110,7 +110,7 @@ enum AndroidLinkTests {
         check(P.txtRecord(fingerprint: "not a fingerprint") == nil, "no TXT without a fingerprint")
         check(P.serviceType == "_coucou._tcp", "service type")
         check(P.instanceName("Rhytam's Mac") == "Rhytam's Mac", "instance is the name")
-        check(P.instanceName("   ") == "Coucou", "empty name")
+        check(P.instanceName("   ") == "Rafiq", "empty name")
         check(P.instanceName(String(repeating: "x", count: 100)).count == 48, "name cut at 48")
     }
 
@@ -258,7 +258,7 @@ enum AndroidLinkTests {
         check(first.fingerprint.count == 64 && first.fingerprint == AndroidLinkProtocol.sha256Hex(first.certificateDER), "fingerprint is the SHA-256 of the DER")
         // The system's own parser accepts it, and it carries the key we signed with.
         if let cert = SecCertificateCreateWithData(nil, first.certificateDER as CFData) {
-            check((SecCertificateCopySubjectSummary(cert) as String?) == "Coucou phone link", "subject")
+            check((SecCertificateCopySubjectSummary(cert) as String?) == "Rafiq phone link", "subject")
             var trust: SecTrust?
             check(SecTrustCreateWithCertificates(cert, SecPolicyCreateBasicX509(), &trust) == errSecSuccess, "usable as a trust object")
         } else {

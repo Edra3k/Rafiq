@@ -277,7 +277,7 @@ class MainActivity : ComponentActivity() {
         }
         // A tap on a widget button: a screen of the closed list ([LaunchScreen]), even when the app is locked, not connected or not paired.
         model.launch.takeScreen()?.let { screen = it.screen }
-        // Text shared to Coucou from another app (ShareActivity, which only keeps cleaned text): it waits in the model for the chat box.
+        // Text shared to Rafiq from another app (ShareActivity, which only keeps cleaned text): it waits in the model for the chat box.
         if (model.shareDraft.pending()) screen = Screen.CHAT
         val launch = model.launch.take() ?: return
         val fp = launch.fingerprint
@@ -350,14 +350,14 @@ private fun Home(
     val key = focus?.pillId ?: HOME_KEY
     val engine = engines.getOrPut(key) { MochiEngine(clock, sound = model.sounds) }
     val touch = touches.getOrPut(key) { MochiTouch(engine, model.sounds) { model.sessions.firstOrNull { it.pillId == key }?.state ?: BotState.IDLE } }
-    val state = focus?.state ?: BotState.SLEEPING // no agent: a sleeping Mochi
+    val state = focus?.state ?: BotState.SLEEPING // no agent: a sleeping Rafiq
     if (engine.state != state && !touch.dizzy) engine.setState(state)
 
     // The hero wears what the computer says, or what the user picked here (a new engine starts dressed, a change animates).
     val dressed = remember { HashSet<MochiEngine>() }
     model.dress().let { outfit -> if (dressed.add(engine)) engine.setOutfit(outfit, animated = false) else engine.setOutfit(outfit) }
 
-    // The hero's Mochi wears its agent's colour, like the small ones (never white by default).
+    // The hero's Rafiq wears its agent's colour, like the small ones (never white by default).
     engine.bodyColor = focus?.let { HomePanel.colorHex(it) }?.let { HomePanel.rgb(it) }
 
     val pair = HomePanel.link(model.isPaired, model.mode == Mode.DEMO, hasApproval = model.approvals.isNotEmpty())

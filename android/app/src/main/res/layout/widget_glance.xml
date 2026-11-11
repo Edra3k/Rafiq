@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- The summary widget (3x2) on the shared card: a small Mochi in the state of the most urgent agent on the left; on the right a clear
+<!-- The summary widget (3x2) on the shared card: a small Rafiq in the state of the most urgent agent on the left; on the right a clear
      headline (with a badge for what waits for you), one detail line when there is room, and up to three short lines with a dot in the
-     state's tone. Until the first update it shows a calm Mochi and a short line. A tap anywhere opens the app. Plain RemoteViews. -->
+     state's tone. Until the first update it shows a calm Rafiq and a short line. A tap anywhere opens the app. Plain RemoteViews. -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/widget_root"
     android:layout_width="match_parent"

@@ -143,7 +143,7 @@ struct SettingsView: View {
 
     // Sidebar selection persisted across sessions
     @AppStorage("settingsSection") private var selectedSection: String = "general"
-    /// Shown inside the Coucou Flow window (GitHub build): one section, without this window's
+    /// Shown inside the Rafiq Flow window (GitHub build): one section, without this window's
     /// sidebar, as the window has its own.
     private var embeddedSection: String? = nil
     private var section: String { embeddedSection ?? selectedSection }
@@ -176,7 +176,7 @@ struct SettingsView: View {
                             .resizable()
                             .frame(width: 32, height: 32)
                         VStack(alignment: .leading, spacing: 1) {
-                            Text("Coucou")
+                            Text("Rafiq")
                                 .font(.system(size: 13, weight: .semibold))
                             Text(appVersion)
                                 .font(.system(size: 11))
@@ -340,7 +340,7 @@ struct SettingsView: View {
                     }
                 }
                 .disabled(!state.soundEnabled)
-                Text("Drop a file named like one of Mochi's sounds (finish.wav, approval.mp3, greet.m4a…) in the sounds folder to replace it, then Reload.")
+                Text("Drop a file named like one of Rafiq's sounds (finish.wav, approval.mp3, greet.m4a…) in the sounds folder to replace it, then Reload.")
                     .font(.system(size: 11))
                     .foregroundColor(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
@@ -376,7 +376,7 @@ struct SettingsView: View {
 
         GroupBox("Display") {
             VStack(alignment: .leading, spacing: 10) {
-                Picker("Show Mochi on", selection: $state.islandDisplay) {
+                Picker("Show Rafiq on", selection: $state.islandDisplay) {
                     Text("Screen with the notch").tag(IslandDisplayChoice.notch)
                     Text("Main screen (menu bar)").tag(IslandDisplayChoice.menuBar)
                     Text("Follow the mouse").tag(IslandDisplayChoice.followMouse)
@@ -390,7 +390,7 @@ struct SettingsView: View {
                     }
                 }
                 .frame(maxWidth: 360)
-                Text("On a screen without a notch, Mochi sits in a small bar at the top. Follow the mouse moves it to your cursor's screen while it is closed.")
+                Text("On a screen without a notch, Rafiq sits in a small bar at the top. Follow the mouse moves it to your cursor's screen while it is closed.")
                     .font(.system(size: 11))
                     .foregroundColor(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
@@ -520,7 +520,7 @@ struct SettingsView: View {
                     UserDefaults.standard.synchronize()
                 }
                 HStack(spacing: 8) {
-                    Button(String(localized: "Restart Coucou")) {
+                    Button(String(localized: "Restart Rafiq")) {
                         #if APPSTORE
                         // Sandboxed: no helper process that outlives the app (guideline 2.4.5).
                         // Launch a fresh copy through Launch Services, then quit once it is on its way.
@@ -598,7 +598,7 @@ struct SettingsView: View {
     @ViewBuilder private var activePillsSection: some View {
         GroupBox {
             VStack(alignment: .leading, spacing: 10) {
-                Text("Choose the tools you use. Coucou only shows what you declare here.")
+                Text("Choose the tools you use. Rafiq only shows what you declare here.")
                     .font(.system(size: 11))
                     .foregroundColor(.secondary)
 
@@ -780,7 +780,7 @@ struct SettingsView: View {
                         .font(.system(size: 11))
                         .foregroundColor(.secondary)
                         .fixedSize(horizontal: false, vertical: true)
-                    // Hooks written by an older Coucou give Antigravity 10 s: too short to wait for a click.
+                    // Hooks written by an older Rafiq give Antigravity 10 s: too short to wait for a click.
                     if agyApprovalsEnabled, (agyHookTimeout ?? 0) < HookServer.agyApprovalHookTimeout {
                         Text(String(localized: "hooks.antigravity.approvals.update"))
                             .font(.caption)
@@ -1103,7 +1103,7 @@ struct SettingsView: View {
                     }
                 }
                 Divider()
-                Text("Shows your Codex plan usage (weekly limit and free resets left) in the notch header. Coucou asks the Codex CLI (codex app-server) when the pill shows; nothing is installed. Codex must be signed in with ChatGPT.")
+                Text("Shows your Codex plan usage (weekly limit and free resets left) in the notch header. Rafiq asks the Codex CLI (codex app-server) when the pill shows; nothing is installed. Codex must be signed in with ChatGPT.")
                     .font(.system(size: 11))
                     .foregroundColor(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
@@ -1519,17 +1519,17 @@ struct SettingsView: View {
                 .onChange(of: cryptoExchange) { _, _ in CryptoController.shared.settingsChanged() }
                 .onChange(of: cryptoCurrency) { _, _ in CryptoController.shared.settingsChanged() }
 
-                // Coucoudoro: a local countdown. Lengths are minutes and apply to the next phase.
+                // Pomodoro: a local countdown. Lengths are minutes and apply to the next phase.
                 VStack(alignment: .leading, spacing: 5) {
                     HStack(spacing: 6) {
                         Circle().fill(Color(hex: "#0EA5E9")).frame(width: 8, height: 8)
-                        Text(verbatim: "Coucoudoro").font(.system(size: 12, weight: .semibold))
+                        Text(verbatim: "Pomodoro").font(.system(size: 12, weight: .semibold))
                     }
                     coucoudoroMinutes(String(localized: "coucoudoro.work", defaultValue: "Work"),
                                  value: $coucoudoroWork, bounds: CoucoudoroSettings.workBounds)
                     coucoudoroMinutes(String(localized: "coucoudoro.rest", defaultValue: "Rest"),
                                  value: $coucoudoroRest, bounds: CoucoudoroSettings.restBounds)
-                    Text(String(localized: "coucoudoro.hint", defaultValue: "Work, then rest, on repeat, until you stop. Turn the Coucoudoro pill on to use it."))
+                    Text(String(localized: "coucoudoro.hint", defaultValue: "Work, then rest, on repeat, until you stop. Turn the Pomodoro pill on to use it."))
                         .font(.system(size: 10))
                         .foregroundColor(Color(hex: "#8E939C"))
                         .fixedSize(horizontal: false, vertical: true)
@@ -1583,8 +1583,8 @@ struct SettingsView: View {
 
     private func speakVoiceSample() {
         let en = voiceLanguage != "fr"
-        VoiceSpeaker.shared.speak(en ? "Hi, I'm Coucou. Say OK Coucou whenever you need me."
-                                     : "Salut, c'est Coucou. Dis OK Coucou quand tu as besoin de moi.",
+        VoiceSpeaker.shared.speak(en ? "Hi, I'm Rafiq. Say OK Rafiq whenever you need me."
+                                     : "Salut, c'est Rafiq. Dis OK Rafiq quand tu as besoin de moi.",
                                   locale: Locale(identifier: en ? "en-US" : "fr-FR"))
     }
 
@@ -1592,9 +1592,9 @@ struct SettingsView: View {
         // Flow dictation: hold a key anywhere, speak, the words are pasted where you type.
         FlowSettingsBox()
 
-        // Claude is Coucou's brain: no model, language or feature switches any more,
-        // only the wake word, the Anthropic key it needs, and Coucou's voice.
-        GroupBox(String(localized: "«\u{202F}OK Coucou\u{202F}» — voice wake word")) {
+        // Claude is Rafiq's brain: no model, language or feature switches any more,
+        // only the wake word, the Anthropic key it needs, and Rafiq's voice.
+        GroupBox(String(localized: "«\u{202F}OK Rafiq\u{202F}» — voice wake word")) {
             VStack(alignment: .leading, spacing: 10) {
                 Toggle(String(localized: "Enable voice command"), isOn: $voiceEngine.isEnabled)
                     .disabled(!voicePermissionsGranted && !voiceEngine.isEnabled)
@@ -1675,7 +1675,7 @@ struct SettingsView: View {
                     .pickerStyle(.segmented)
                     .frame(maxWidth: 180)
                     .onChange(of: voiceLanguage) { _, _ in
-                        // Chosen by hand: Coucou no longer offers to switch.
+                        // Chosen by hand: Rafiq no longer offers to switch.
                         VoiceSettings.languageOfferDone = true
                         ElevenLabsTTS.shared.reset()
                     }
@@ -1881,7 +1881,7 @@ struct SettingsView: View {
 
     private func installHooksAppStore() {
         guard let claudeURL = pickClaudeFolder(prompt: "Select") else { return }
-        // Show the settings.json Coucou is about to write, as the GitHub build does.
+        // Show the settings.json Rafiq is about to write, as the GitHub build does.
         let preview: String
         do {
             preview = try HookServer.shared.previewClaudeHooksAppStore(claudeURL: claudeURL)
@@ -2704,7 +2704,7 @@ struct ShortcutRecorderButton: View {
 }
 
 extension SettingsView {
-    /// One section of Settings, for the Coucou Flow window.
+    /// One section of Settings, for the Rafiq Flow window.
     init(embeddedSection: String) {
         self.init()
         self.embeddedSection = embeddedSection

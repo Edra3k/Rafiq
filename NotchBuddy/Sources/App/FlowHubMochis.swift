@@ -9,7 +9,7 @@ private struct HubVisibleKey: EnvironmentKey {
 }
 
 extension EnvironmentValues {
-    /// Whether the Coucou window is on screen: the Mochis rest (no frame drawn) while it is hidden,
+    /// Whether the Rafiq window is on screen: the Rafiqs rest (no frame drawn) while it is hidden,
     /// minimized or covered.
     var hubVisible: Bool {
         get { self[HubVisibleKey.self] }
@@ -17,7 +17,7 @@ extension EnvironmentValues {
     }
 }
 
-/// Follows the Coucou window's occlusion, for `hubVisible`.
+/// Follows the Rafiq window's occlusion, for `hubVisible`.
 @MainActor
 final class HubWindowState: ObservableObject {
     @Published private(set) var visible = true
@@ -42,9 +42,9 @@ final class HubWindowState: ObservableObject {
     }
 }
 
-// MARK: - A troupe of mini Mochis
+// MARK: - A troupe of mini Rafiqs
 
-/// One Mochi of a scene: its look, and whether it walks around.
+/// One Rafiq of a scene: its look, and whether it walks around.
 struct HubMochiSpec: Hashable {
     var color: String
     /// The drawing's width in points (the body is about two thirds of it).
@@ -57,7 +57,7 @@ struct HubMochiSpec: Hashable {
     var start: CGFloat = 0.5
 }
 
-/// The Mochis of a scene, moved frame by frame.
+/// The Rafiqs of a scene, moved frame by frame.
 @MainActor
 final class HubMochiTroupe: ObservableObject {
     @MainActor final class Walker {
@@ -128,7 +128,7 @@ final class HubMochiTroupe: ObservableObject {
         case 3:    actor.engine.doRoll(duration: 900, turns: 1)
         default:   break
         }
-        // Two Mochis meeting say hello.
+        // Two Rafiqs meeting say hello.
         for other in walkers where other !== actor && abs(other.x - actor.x) < 0.09 && now - actor.lastHello > 12 {
             actor.lastHello = now
             other.lastHello = now
@@ -138,7 +138,7 @@ final class HubMochiTroupe: ObservableObject {
         }
     }
 
-    /// A click on a Mochi: it blushes and jumps.
+    /// A click on a Rafiq: it blushes and jumps.
     func poke(at point: CGPoint, in size: CGSize) {
         let hit = walkers.min { distance(point, $0, size) < distance(point, $1, size) }
         guard let hit, distance(point, hit, size) < hit.spec.size * 0.6 else { return }
@@ -163,7 +163,7 @@ final class HubMochiTroupe: ObservableObject {
             let w = actor.spec.size
             let cx = xPosition(actor, width: size.width)
             let lift = actor.spec.roams ? abs(sin(actor.hop)) * w * 0.07 : 0
-            // Its shadow on the floor (a scene, not a lone Mochi).
+            // Its shadow on the floor (a scene, not a lone Rafiq).
             if size.height > w * 1.05 || walkers.count > 1 {
                 let shadow = CGRect(x: cx - w * 0.26, y: size.height - w * 0.12, width: w * 0.52, height: w * 0.09)
                 context.fill(Path(ellipseIn: shadow), with: .color(.black.opacity(0.28 - Double(lift / w))))
@@ -175,7 +175,7 @@ final class HubMochiTroupe: ObservableObject {
     }
 }
 
-/// A strip where a few mini Mochis live: drawn in one canvas, at the display's rate while the
+/// A strip where a few mini Rafiqs live: drawn in one canvas, at the display's rate while the
 /// window shows, still otherwise. Click one to say hello.
 struct HubMochiScene: View {
     @StateObject private var troupe: HubMochiTroupe
@@ -205,7 +205,7 @@ struct HubMochiScene: View {
     }
 }
 
-/// One Mochi that stays where it is (the logo, the empty pages).
+/// One Rafiq that stays where it is (the logo, the empty pages).
 struct HubLiveMochi: View {
     var color = "#F5F6F8"
     /// Width of the body; the drawing around it is larger.
@@ -222,7 +222,7 @@ struct HubLiveMochi: View {
 
 // MARK: - The top of each page
 
-/// A page's colour and its Mochis.
+/// A page's colour and its Rafiqs.
 struct HubHeroTheme {
     var color: Color
     var cast: [HubMochiSpec]
@@ -276,7 +276,7 @@ struct HubHeroTheme {
     }
 }
 
-/// The top of a page: a coloured band with the title, a line, an action, and the page's Mochis
+/// The top of a page: a coloured band with the title, a line, an action, and the page's Rafiqs
 /// walking on its floor.
 struct HubHero<Trailing: View>: View {
     let page: HubPage
@@ -499,7 +499,7 @@ struct HubGlowCard<Content: View>: View {
     }
 }
 
-/// An empty page: a Mochi asleep, and a line.
+/// An empty page: a Rafiq asleep, and a line.
 struct HubEmptyState: View {
     let text: String
     var state: BotState = .sleeping

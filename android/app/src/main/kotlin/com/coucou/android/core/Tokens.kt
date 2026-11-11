@@ -4,7 +4,7 @@ package com.coucou.android.core
  * The design tokens as plain numbers, so a test can check contrast and the scale without Compose. There are two sets, dark and light
  * (Settings > Theme); the island over other apps and the camera screen are always dark.
  *
- * Louis Raillé's Mochi, its state colours and the pill colours are not here and are not changed.
+ * Louis Raillé's Rafiq, its state colours and the pill colours are not here and are not changed.
  */
 data class Tokens(
     /** The screen. */

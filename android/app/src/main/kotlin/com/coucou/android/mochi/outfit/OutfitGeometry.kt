@@ -11,7 +11,7 @@ import kotlin.math.sin
 
 /**
  * The head's 3D helpers of windows/src/mochi/outfits.ts. Body space: origin at the body centre, y down,
- * R = width x 0.3, rx = 1.14 R, ry = 0.88 R. The head is a superellipsoid, so its silhouette matches Mochi's body.
+ * R = width x 0.3, rx = 1.14 R, ry = 0.88 R. The head is a superellipsoid, so its silhouette matches Rafiq's body.
  */
 const val EXP = 2.7
 const val VIEW_TILT = -0.3
@@ -119,7 +119,7 @@ fun invert(p: Path2D, h: Head): Path2D {
     return q
 }
 
-/** Mochi's body outline, the same superellipse as the engine. */
+/** Rafiq's body outline, the same superellipse as the engine. */
 fun bodyOutline(rx: Double, ry: Double): Path2D {
     val p = Path2D()
     val n = 96

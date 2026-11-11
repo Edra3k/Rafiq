@@ -42,7 +42,7 @@ class PairingScanTest {
     @Test fun otherCodesAreIgnored() {
         for (s in listOf(
             "https://coucou.example/pair?host=x", "BEGIN:VCARD", "12345", "mailto:a@b.c", "tel:+123", "http://192.168.1.20:47821",
-            null, "", "coucou://pair/?", "COUCOU://PAIR?v=1",
+            null, "", "coucou://pair/?", "RAFIQ://PAIR?v=1",
         )) assertEquals(s, ScanDecision.NotPairing, PairingScan.decide(s))
     }
 

@@ -72,7 +72,7 @@ class WidgetPreviewTest {
             assertFalse("$n description spans lines", d.contains("\n") || d.contains("\\n"))
             assertTrue("$n description should end with a full stop", d.endsWith("."))
             assertFalse("$n label is the description", l == d)
-            assertTrue("$n label says Coucou although the picker already shows the app", !l.startsWith("Coucou"))
+            assertTrue("$n label says Rafiq although the picker already shows the app", !l.startsWith("Rafiq"))
             labels += l
         }
         assertEquals("two Widgets with the same name", providers.size, labels.size)
@@ -80,9 +80,9 @@ class WidgetPreviewTest {
 
     @Test fun theNamesAreTheOnesInTheBrief() {
         val expected = mapOf(
-            "widget_solo_label" to "Mochi at a glance", "widget_list_label" to "All your agents", "widget_big_label" to "Mochi, big",
+            "widget_solo_label" to "Rafiq at a glance", "widget_list_label" to "All your agents", "widget_big_label" to "Rafiq, big",
             "widget_pill_label" to "One-line status", "widget_alert_label" to "Approvals waiting", "widget_ring_label" to "Plan usage",
-            "widget_today_label" to "Finished today", "widget_mood_label" to "Mochi's mood", "widget_glance_label" to "Agents summary",
+            "widget_today_label" to "Finished today", "widget_mood_label" to "Rafiq's mood", "widget_glance_label" to "Agents summary",
         )
         for ((k, v) in expected) assertEquals(k, v, strings[k])
     }
@@ -134,7 +134,7 @@ class WidgetPreviewTest {
         assertEquals("Waiting for you", list.first())
         assertEquals(listOf("Waiting for you", "1", "Claude Code", "Waiting for your approval", "Codex", "Working", "Gemini CLI", "Finished"), list)
         assertEquals(3, Regex("""android:minHeight="@dimen/widget_row_min"""").findAll(preview("list")).count())
-        // Mochi Big: Mochi, the agent and its state on the left; Claude 68% and Codex 41% on the right; the six tiles.
+        // Rafiq Big: Rafiq, the agent and its state on the left; Claude 68% and Codex 41% on the right; the six tiles.
         assertEquals(
             listOf("Claude Code", "Working", "Claude · 5 h", "68%", "Codex · week", "41%", "Home", "Chat", "Settings", "Recent", "Top agent", "Pair again"),
             text("big"),
@@ -168,7 +168,7 @@ class WidgetPreviewTest {
         assertTrue(preview("alert").contains("""android:textColor="@color/widget_tone_attention_text""""))
     }
 
-    // ── The vector Mochi ───────────────────────────────────────────────────────────────────────────
+    // ── The vector Rafiq ───────────────────────────────────────────────────────────────────────────
 
     private val states = mapOf("working" to WidgetTone.WORKING, "waiting" to WidgetTone.ATTENTION, "done" to WidgetTone.DONE, "idle" to WidgetTone.MUTED)
     private fun hex(t: WidgetTone) = t.argb.toUInt().toString(16).uppercase().padStart(8, '0').substring(2)
@@ -246,7 +246,7 @@ class WidgetPreviewTest {
             assertTrue("$n has no starting face", xml.contains("@drawable/preview_mochi_idle") || xml.contains("@drawable/preview_face_idle") || n == "pill")
             if (n != "mood") assertTrue("$n has no starting line", xml.contains("@string/widget_initial_"))
         }
-        assertEquals("Coucou", strings["widget_initial_title"])
+        assertEquals("Rafiq", strings["widget_initial_title"])
         assertEquals("Waiting for your agents", strings["widget_initial_line"])
         // The List starts on its empty state, not on empty rows.
         val list = read(res + "layout/widget_list.xml")
@@ -281,7 +281,7 @@ class WidgetPreviewTest {
     }
 
     @Test fun theSummaryPreviewFitsItsHeadlineAndItsLinesInTheRightColumn() {
-        // A 3x2 about 250dp wide: padding 12 + 12, Mochi 64 and 8 beside it.
+        // A 3x2 about 250dp wide: padding 12 + 12, Rafiq 64 and 8 beside it.
         val room = 250 - 24 - 64 - 8
         assertTrue("headline ${width(sample("widget_sample_two_agents"), 16.0, true).toInt()}dp of $room", width(sample("widget_sample_two_agents"), 16.0, true) <= room)
         for ((name, state) in listOf("widget_sample_claude" to "widget_sample_working", "widget_sample_codex" to "widget_sample_thinking", "widget_sample_gemini" to "widget_sample_idle")) {
@@ -291,7 +291,7 @@ class WidgetPreviewTest {
     }
 
     @Test fun theMochiBigPreviewFitsItsTwoSidesAtTheWidthOfA4x4() {
-        // A 4x4 about 300dp wide: padding 12 + 12, so 276; Mochi's side is 45% of it, the usage side 55% less its 8dp margin.
+        // A 4x4 about 300dp wide: padding 12 + 12, so 276; Rafiq's side is 45% of it, the usage side 55% less its 8dp margin.
         val left = 0.45 * (300 - 24)
         val right = 0.55 * (300 - 24) - 8
         val name = 10 + 6 + width(sample("widget_sample_claude"), 16.0, true)

@@ -183,21 +183,9 @@ private func mInvert(_ p: Path, H: MochiH) -> Path {
     return q
 }
 
-// mochiOutfitPath — clean superellipse (n=96), same exponent as JS mochiPath
+// mochiOutfitPath — Rafiq's silhouette (n=96), the same as the island's (RafiqLook)
 func mochiOutfitPath(_ rx: CGFloat, _ ry: CGFloat) -> Path {
-    let n = 96
-    let e: CGFloat = 2.0 / kEXP
-    var p = Path()
-    for i in 0...n {
-        let a = CGFloat(i) / CGFloat(n) * .pi * 2
-        let ca = cos(a), sa = sin(a)
-        let x = rx * (ca >= 0 ? pow(ca, e) : -pow(-ca, e))
-        let y = ry * (sa >= 0 ? pow(sa, e) : -pow(-sa, e))
-        if i == 0 { p.move(to: CGPoint(x: x, y: y)) }
-        else       { p.addLine(to: CGPoint(x: x, y: y)) }
-    }
-    p.closeSubpath()
-    return p
+    RafiqLook.path(rx: rx, ry: ry, points: 96)
 }
 
 // ringPoints — all 120+1 projected points on ring (full circle, for frontRun)

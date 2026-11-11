@@ -10,7 +10,7 @@ import kotlin.math.min
 import kotlin.math.pow
 import kotlin.math.sin
 
-/** Which outfit is drawn behind and in front of Mochi. The drawing of each is in OutfitHats.kt and OutfitWear.kt, the shared helpers in OutfitDrawing.kt. */
+/** Which outfit is drawn behind and in front of Rafiq. The drawing of each is in OutfitHats.kt and OutfitWear.kt, the shared helpers in OutfitDrawing.kt. */
 
 private fun faceTurnedAway(h: Head) = proj(h, 0.0, 0.0, 1.0).z < 0
 
@@ -30,7 +30,7 @@ fun layerAlpha(st: OutfitState): Double {
     return morphFade * min(1.0, st.presence * 2.5)
 }
 
-/** The parts behind Mochi's body. [ctx] is in body space (translated to the body centre, tilted and squashed like the body). */
+/** The parts behind Rafiq's body. [ctx] is in body space (translated to the body centre, tilted and squashed like the body). */
 fun drawOutfitBehind(ctx: Ctx2D, outfit: Outfit, h: Head, st: OutfitState) {
     if (outfit == Outfit.NONE) return
     val alpha = layerAlpha(st)
@@ -58,7 +58,7 @@ fun drawOutfitBehind(ctx: Ctx2D, outfit: Outfit, h: Head, st: OutfitState) {
     ctx.restore()
 }
 
-/** The parts in front of Mochi, drawn after the body and the eyes. */
+/** The parts in front of Rafiq, drawn after the body and the eyes. */
 fun drawOutfitFront(ctx: Ctx2D, outfit: Outfit, h: Head, st: OutfitState) {
     if (outfit == Outfit.NONE || outfit == Outfit.BUNNY_EARS) return
     if (outfit in ON_FACE && faceTurnedAway(h)) return
@@ -99,7 +99,7 @@ fun drawOutfitFront(ctx: Ctx2D, outfit: Outfit, h: Head, st: OutfitState) {
 
 private const val INK = "rgb(26,20,18)"
 
-/** A little Mochi wearing [outfit], centred in a [size] x [size] icon (the PC's iconMochi). */
+/** A little Rafiq wearing [outfit], centred in a [size] x [size] icon (the PC's iconMochi). */
 fun drawIconMochi(ctx: Ctx2D, size: Double, outfit: Outfit) {
     val r = 10.0
     val h = makeHead(r)

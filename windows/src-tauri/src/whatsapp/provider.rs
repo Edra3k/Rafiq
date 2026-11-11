@@ -1,4 +1,4 @@
-// The two local WhatsApp gateways Coucou can talk to (port of WhatsAppProvider.swift). Each call
+// The two local WhatsApp gateways Rafiq can talk to (port of WhatsAppProvider.swift). Each call
 // goes to the URL set in Settings (127.0.0.1 by default) and nowhere else: no redirect, no proxy,
 // no cookie, every answer read with a ceiling. Nothing of a message is logged.
 
@@ -289,7 +289,7 @@ impl Provider {
         }
     }
 
-    /// Tells the gateway to post new messages to Coucou's local webhook, signed with `secret`.
+    /// Tells the gateway to post new messages to Rafiq's local webhook, signed with `secret`.
     pub async fn register_webhook(&self, url: &str, secret: &str) -> Result<(), WaError> {
         match self {
             Provider::Gowa { http, device } => {

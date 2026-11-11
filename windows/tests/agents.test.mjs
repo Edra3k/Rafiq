@@ -37,7 +37,7 @@ test("approval cards are for the agents the relay answers, no one else", () => {
   assert.deepEqual([...APPROVAL_AGENTS].sort(), ["claude-desktop", "codex", "copilot", "muse", "opencode"]);
 });
 
-test("Antigravity gets a card only for the commands Coucou itself puts on one", () => {
+test("Antigravity gets a card only for the commands Rafiq itself puts on one", () => {
   assert.equal(AGY_CARD_KIND, "agy_pre_tool"); // agy_approvals::KIND in Rust
   assert.equal(takesCard(null, undefined), true); // Claude Code
   assert.equal(takesCard("codex", undefined), true);

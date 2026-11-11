@@ -15,7 +15,7 @@ enum VoiceSettings {
         set { UserDefaults.standard.set(newValue, forKey: enabledKey) }
     }
 
-    /// Coucou responds aloud after each command. Default: on.
+    /// Rafiq responds aloud after each command. Default: on.
     static var speakEnabled: Bool {
         get {
             let d = UserDefaults.standard
@@ -35,21 +35,21 @@ enum VoiceSettings {
         set { UserDefaults.standard.set(newValue, forKey: captionEnabledKey) }
     }
 
-    /// Language Coucou ANSWERS in: "en" (default) or "fr".
+    /// Language Rafiq ANSWERS in: "en" (default) or "fr".
     static var language: String {
         get { UserDefaults.standard.string(forKey: "voiceLanguage") ?? "en" }
         set { UserDefaults.standard.set(newValue, forKey: "voiceLanguage") }
     }
     static var answerLocale: Locale { Locale(identifier: language == "fr" ? "fr-FR" : "en-US") }
 
-    /// Language Coucou LISTENS to: "auto" (the Mac's dictation language, default), "en" or "fr".
+    /// Language Rafiq LISTENS to: "auto" (the Mac's dictation language, default), "en" or "fr".
     /// Independent from the answer language: speak French, hear English.
     static var listenLanguage: String {
         get { UserDefaults.standard.string(forKey: "voiceListenLanguage") ?? "auto" }
         set { UserDefaults.standard.set(newValue, forKey: "voiceListenLanguage") }
     }
 
-    /// Coucou already offered to answer in the language you speak (asked once).
+    /// Rafiq already offered to answer in the language you speak (asked once).
     static var languageOfferDone: Bool {
         get { UserDefaults.standard.bool(forKey: "voiceLanguageOfferDone") }
         set { UserDefaults.standard.set(newValue, forKey: "voiceLanguageOfferDone") }
@@ -78,7 +78,7 @@ enum VoiceSettings {
     }
 
     /// Mac voice speed (Settings → Voice), as a multiple of the system's default rate.
-    /// The default keeps Coucou's usual pace, a little brisker than the Mac's. Range 0.7–1.5.
+    /// The default keeps Rafiq's usual pace, a little brisker than the Mac's. Range 0.7–1.5.
     static let rateKey     = "voiceRate"
     static let defaultRate = 1.1
     static var rate: Double {
@@ -86,8 +86,8 @@ enum VoiceSettings {
         return v == 0 ? defaultRate : min(1.5, max(0.7, v))
     }
 
-    /// Claude is Coucou's brain (the user's Anthropic API key): what I say after
-    /// "OK Coucou" goes to Claude, which acts with Coucou's tools and searches the web.
+    /// Claude is Rafiq's brain (the user's Anthropic API key): what I say after
+    /// "OK Rafiq" goes to Claude, which acts with Rafiq's tools and searches the web.
     /// Off by default: my words leave the Mac only once this is turned on.
     static var claudeBrainEnabled: Bool {
         get { UserDefaults.standard.bool(forKey: "voiceClaudeBrain") }

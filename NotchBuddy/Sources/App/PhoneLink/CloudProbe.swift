@@ -19,8 +19,8 @@ import CloudKit
 final class CloudProbe {
     static let shared = CloudProbe()
 
-    static let containerID = "iCloud.fr.louisraille.Coucou"
-    static let zoneID = CKRecordZone.ID(zoneName: "Coucou", ownerName: CKCurrentUserDefaultName)
+    static let containerID = "iCloud.com.edra3k.rafiq.ios"
+    static let zoneID = CKRecordZone.ID(zoneName: "Rafiq", ownerName: CKCurrentUserDefaultName)
     private static let subscriptionID = "coucou-zone-mac"
 
     private let container = CKContainer(identifier: CloudProbe.containerID)
@@ -106,7 +106,7 @@ final class CloudProbe {
         Task { _ = await prepare() }
 
         // Step 1 Ping/Pong test: off unless asked for, so the Mac stays idle at rest
-        // (defaults write fr.louisraille.NotchBuddy phoneLinkPing -bool YES).
+        // (defaults write com.edra3k.rafiq phoneLinkPing -bool YES).
         guard UserDefaults.standard.bool(forKey: "phoneLinkPing") else {
             log("ping test off (phoneLinkPing)")
             return
@@ -138,7 +138,7 @@ final class CloudProbe {
                 return false
             }
             _ = try await database.modifyRecordZones(saving: [CKRecordZone(zoneID: Self.zoneID)], deleting: [])
-            log("zone Coucou ready")
+            log("zone Rafiq ready")
 
             let sub = CKDatabaseSubscription(subscriptionID: Self.subscriptionID)
             let info = CKSubscription.NotificationInfo()
@@ -212,7 +212,7 @@ final class CloudProbe {
         } catch let error as CKError where error.code == .changeTokenExpired {
             changeToken = nil
         } catch let error as CKError where error.code == .zoneNotFound {
-            log("zone Coucou missing, recreating")
+            log("zone Rafiq missing, recreating")
             ready = false
         } catch {
             log("fetch (\(source)) failed: \(error.localizedDescription)")

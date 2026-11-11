@@ -131,7 +131,7 @@ enum PillCatalog {
         .init(id: "integration_crypto",    name: "Crypto",      color: "#F7931A",
               category: .service,   subtitle: String(localized: "Integration"),  source: .n8n),
         // Local countdown: work, then rest, until the user stops. No account, no network.
-        .init(id: "integration_coucoudoro", name: "Coucoudoro", color: "#0EA5E9",
+        .init(id: "integration_coucoudoro", name: "Pomodoro", color: "#0EA5E9",
               category: .service,   subtitle: String(localized: "Integration"),  source: .n8n),
         // Prayer times calculated on the Mac: the next prayer, a reminder before each one. No network.
         .init(id: "integration_prayer", name: String(localized: "prayer.title", defaultValue: "Prayer"), color: "#A78BFA",

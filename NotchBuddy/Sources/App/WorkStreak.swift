@@ -1,6 +1,6 @@
 import Foundation
 
-/// How long you have been working with your agents without a break, so Mochi gets sleepy after
+/// How long you have been working with your agents without a break, so Rafiq gets sleepy after
 /// a long stretch (heavy eyes, the odd yawn while he waits) and fresh again after a break.
 ///
 /// Only timestamps of the agents' hook events are kept, in memory: no timer runs, nothing is
@@ -8,7 +8,7 @@ import Foundation
 struct WorkStreak {
     /// A pause at least this long is a break: the streak starts over.
     static let breakGap: TimeInterval = 20 * 60
-    /// Mochi gets sleepy after this long…
+    /// Rafiq gets sleepy after this long…
     static let sleepyAfter: TimeInterval = 2 * 3600
     /// …and very sleepy after this long.
     static let verySleepyAfter: TimeInterval = 3 * 3600
@@ -22,7 +22,7 @@ struct WorkStreak {
         last = now
     }
 
-    /// How sleepy Mochi is, from 0 (fresh) to 1, as MochiMood.tired.
+    /// How sleepy Rafiq is, from 0 (fresh) to 1, as MochiMood.tired.
     mutating func tiredness(at now: Date, userIdle: TimeInterval) -> Double {
         guard isGoing(at: now, userIdle: userIdle), let start else {
             start = nil

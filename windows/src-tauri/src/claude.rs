@@ -5,8 +5,8 @@
 // the credential store, and file bytes never cross the IPC boundary.
 //
 // Without a key, the chat and the one-shot answers go to the user's own Claude
-// Code instead (claude_code.rs); « OK Coucou » still needs the key, its tools
-// being Coucou's own.
+// Code instead (claude_code.rs); « OK Rafiq » still needs the key, its tools
+// being Rafiq's own.
 //
 // COUCOU_ANTHROPIC_BASE_URL points the chat at an Anthropic-compatible gateway
 // instead (issue #180). Only that variable is read: Claude Code's own
@@ -206,7 +206,7 @@ pub async fn complete(model: &str, system: &str, user: &str, max_tokens: u32, ti
     Ok(text)
 }
 
-/// One turn of « OK Coucou »'s conversation with tools: the API's whole answer
+/// One turn of « OK Rafiq »'s conversation with tools: the API's whole answer
 /// (content blocks and stop_reason).
 pub async fn voice_turn(model: &str, system: &str, messages: &[Value], tools: &[Value]) -> Result<Value, String> {
     let key = secrets::get(KEY).ok_or_else(|| t("API key missing. Open settings."))?;

@@ -2,7 +2,7 @@ import SwiftUI
 
 #if !APPSTORE
 
-// Search in the Coucou window: every setting of Flow, the notch and Mail, by its words in
+// Search in the Rafiq window: every setting of Flow, the notch and Mail, by its words in
 // the app's language. A result opens its page, scrolls to its box and makes it glow.
 //
 // The index lists each box (a GroupBox of Settings, a card of a Flow or Mail page) with the
@@ -100,7 +100,7 @@ final class SettingsSearch: ObservableObject {
             e("general.demo", .general, "demo.groupbox.title"),
             e("general.sound", .general, "Sound", ["Enable sounds", "Volume", "Open sounds folder", "Reload sounds"]),
             e("general.behavior", .general, "Behavior", ["Open on hover", "Close after", "Hide after", "alerts.all-pills"]),
-            e("general.display", .general, "Display", ["Show Mochi on", "Screen with the notch", "Main screen (menu bar)", "Follow the mouse",
+            e("general.display", .general, "Display", ["Show Rafiq on", "Screen with the notch", "Main screen (menu bar)", "Follow the mouse",
                                                      "island.position", "island.position.top-left", "island.position.top-right",
                                                      "island.position.bottom-left", "island.position.bottom-right"]),
             e("general.vitals", .general, "vitals.title", ["vitals.toggle"]),
@@ -109,7 +109,7 @@ final class SettingsSearch: ObservableObject {
             e("general.update", .general, "update.settings.title"),
             e("general.recap", .general, "Weekly recap",
               ["Keep a history of my coding sessions", "Hide project names in shared images", "Clear history"]),
-            e("general.language", .general, "Language", ["Restart Coucou"]),
+            e("general.language", .general, "Language", ["Restart Rafiq"]),
             e("general.iphone", .general, "iPhone", ["iphone.sync.toggle", "iphone.live-activity.toggle", "iphone.instruction.toggle"]),
             e("general.android", .general, "Android phone", ["android.link.toggle", "android.link.details", "android.link.answers", "android.link.usage"]),
             // Notch → Active pills, Agents, Chat, Integrations
@@ -131,12 +131,12 @@ final class SettingsSearch: ObservableObject {
             e("chat.others", .chat, "chat.other-providers.title", ["Google AI", "OpenAI", "DeepSeek", "Gemini"]),
             e("chat.local", .chat, "chat.local.title", ["Ollama", "LM Studio"]),
             e("integrations.all", .integrations, "Integrations",
-              ["Stripe", "GitHub", "Vercel", "n8n", "Notion", "Resend", "Cal.com", "WhatsApp", "Spotify", "Crypto", "Coucoudoro",
+              ["Stripe", "GitHub", "Vercel", "n8n", "Notion", "Resend", "Cal.com", "WhatsApp", "Spotify", "Crypto", "Pomodoro",
                "crypto.exchange", "crypto.currency", "coucoudoro.work", "coucoudoro.rest", "coucoudoro.hint",
                "prayer.title", "prayer.city", "prayer.method", "prayer.reminder", "prayer.adhan", "prayer.hint",
                "Qibla", "Adhan", "Salat"]),
             // Notch → Voice, Shortcuts
-            e("voice.wake", .voice, "«\u{202F}OK Coucou\u{202F}» — voice wake word", ["Enable voice command", "Request permissions"]),
+            e("voice.wake", .voice, "«\u{202F}OK Rafiq\u{202F}» — voice wake word", ["Enable voice command", "Request permissions"]),
             e("voice.language", .voice, "Language", ["voice.listen-language", "voice.language"]),
             e("voice.tts", .voice, "voice.tts-engine", ["voice.tts-gender", "voice.tts-test"]),
             e("voice.history", .voice, "voice.history-title"),
@@ -315,9 +315,9 @@ private struct HubSearchRow: View {
 }
 #endif
 
-// The App Store build has no Coucou window: its boxes are never searched.
+// The App Store build has no Rafiq window: its boxes are never searched.
 extension View {
-    /// A box the search of the Coucou window can find (SettingsSearch.entries).
+    /// A box the search of the Rafiq window can find (SettingsSearch.entries).
     func settingsAnchor(_ id: String, cornerRadius: CGFloat = 8) -> some View {
         #if APPSTORE
         self

@@ -69,7 +69,7 @@ jobs:
       - name: Test Flow text (snippets, dictionary, numbers)
         run: bash scripts/test-flow-text.sh
 
-      - name: Test the work streak (Mochi sleepy after long work, fresh after a break)
+      - name: Test the work streak (Rafiq sleepy after long work, fresh after a break)
         run: bash scripts/test-work-streak.sh
 
       - name: Test prayer times (methods, high latitudes, reminders, qibla)
@@ -90,7 +90,7 @@ jobs:
       - name: Test Claude Desktop chat (stop button labels)
         run: bash scripts/test-claude-desktop-chat.sh
 
-      - name: Desktop Mochi and gaze tests
+      - name: Desktop Rafiq and gaze tests
         run: bash scripts/test-desktop-mochi.sh
 
       - name: Test auto-close timing

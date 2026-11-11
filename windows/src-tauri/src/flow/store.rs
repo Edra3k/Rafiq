@@ -1,6 +1,6 @@
-// Everything the Coucou window shows and edits about dictation: the history,
+// Everything the Rafiq window shows and edits about dictation: the history,
 // the numbers, the dictionary, the snippets, the styles and the preferences.
-// Small JSON files in the app's folder (%LOCALAPPDATA%\Coucou\Flow or
+// Small JSON files in the app's folder (%LOCALAPPDATA%\Rafiq\Flow or
 // ~/.local/share/coucou/Flow), on this computer only. Port of FlowStore.swift.
 
 use std::collections::{BTreeMap, HashSet};
@@ -104,13 +104,13 @@ pub struct Prefs {
     /// The style of the apps that have none of their own.
     pub default_style: Style,
     pub summary_engine: SummaryEngine,
-    /// Open the Coucou window when Coucou is opened (not when it starts with the computer).
+    /// Open the Rafiq window when Rafiq is opened (not when it starts with the computer).
     pub open_at_launch: bool,
-    /// « OK Coucou »: listen for it and answer with Claude (needs the Claude key).
+    /// « OK Rafiq »: listen for it and answer with Claude (needs the Claude key).
     pub voice: bool,
-    /// The other apps' sound is muted while Coucou listens to you (Windows).
+    /// The other apps' sound is muted while Rafiq listens to you (Windows).
     pub mute_others: bool,
-    /// How Coucou answers out loud: "system", "elevenlabs" or "off".
+    /// How Rafiq answers out loud: "system", "elevenlabs" or "off".
     pub voice_output: String,
     /// The ElevenLabs voice: "female" or "male".
     pub voice_gender: String,
@@ -373,7 +373,7 @@ mod tests {
     #[test]
     fn dictionary_edits_are_durable_and_failed_writes_keep_the_live_and_saved_words() {
         let (mut store, path) = temp_store();
-        let words = Words { words: vec!["Coucou".into()], replacements: vec![
+        let words = Words { words: vec!["Rafiq".into()], replacements: vec![
             Replacement { id: "one".into(), from: "cloud code".into(), to: "Claude Code".into() },
         ] };
         store.set_words(words.clone()).unwrap();
@@ -383,7 +383,7 @@ mod tests {
         assert!(store.set_words(Words::default()).is_err());
         assert_eq!(store.words, words);
         assert_eq!(std::fs::read(path.join("words.json")).unwrap(), before);
-        assert_eq!(store.prepare("coucou cloud code").text, "Coucou Claude Code");
+        assert_eq!(store.prepare("coucou cloud code").text, "Rafiq Claude Code");
         std::fs::remove_dir(path.join("words.json.tmp")).unwrap();
         store.set_words(Words::default()).unwrap();
         assert_eq!(Store::load_from(path.clone()).words, Words::default());

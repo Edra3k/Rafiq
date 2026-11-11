@@ -11,8 +11,8 @@ import com.coucou.android.core.WidgetContent
 import com.coucou.android.core.WidgetSpoken
 
 /**
- * The List widget: the headline with a badge, then one row per agent of at least 48dp (a bar in its own colour, Mochi's
- * face, its name, a state word and a dot in the state's tone). With no agent it is a centred empty state: Mochi asleep and
+ * The List widget: the headline with a badge, then one row per agent of at least 48dp (a bar in its own colour, Rafiq's
+ * face, its name, a state word and a dot in the state's tone). With no agent it is a centred empty state: Rafiq asleep and
  * one clear line. Drawn by [WidgetHub] when something changes (updatePeriodMillis = 0). A tap on a row opens that agent; a
  * tap anywhere else opens the app. It only opens things: a request waits for you in the app, behind the fingerprint.
  */
@@ -45,7 +45,7 @@ class ListWidget : AppWidgetProvider() {
             v.setContentDescription(R.id.list_root, WidgetSpoken.list(c))
 
             if (c.tiles.isEmpty()) {
-                // The empty state fills the card: Mochi asleep (or calm) with his glow, the headline and one clear line.
+                // The empty state fills the card: Rafiq asleep (or calm) with his glow, the headline and one clear line.
                 v.setViewVisibility(R.id.list_header, View.GONE)
                 v.setViewVisibility(R.id.list_rows, View.GONE)
                 v.setViewVisibility(R.id.list_empty, View.VISIBLE)

@@ -1,14 +1,14 @@
 # Maintainer: FabioLukas123
-# Coucou for Arch Linux — built from the Tauri app in windows/, which runs on
+# Rafiq for Arch Linux — built from the Tauri app in windows/, which runs on
 # Windows and Linux alike.
 
 pkgname=coucou-git
 _pkgname=coucou
 pkgver=0.5.9
 pkgrel=1
-pkgdesc="Mochi lives at the top of your screen and keeps an eye on your Claude Code sessions"
+pkgdesc="Rafiq lives at the top of your screen and keeps an eye on your Claude Code sessions"
 arch=('x86_64' 'aarch64')
-url="https://github.com/Louis-CFM/coucou"
+url="https://github.com/Edra3k/Rafiq"
 license=("MIT" "LicenseRef-coucou-assets")
 depends=(
   'webkit2gtk-4.1'
@@ -25,15 +25,15 @@ depends=(
 optdepends=(
   'gnome-keyring: store API keys (or any other Secret Service provider)'
   'kwallet: store API keys (or any other Secret Service provider)'
-  'speech-dispatcher: « OK Coucou » answers out loud where the webview has no voice'
-  'espeak-ng: « OK Coucou » answers out loud where the webview has no voice'
+  'speech-dispatcher: « OK Rafiq » answers out loud where the webview has no voice'
+  'espeak-ng: « OK Rafiq » answers out loud where the webview has no voice'
 )
 makedepends=('git' 'cargo' 'nodejs' 'npm')
 provides=("$_pkgname")
 conflicts=("$_pkgname")
 # makepkg's default LTO and debug flags make the Rust build very slow.
 options=('!lto' '!debug')
-source=("$_pkgname::git+https://github.com/Louis-CFM/coucou.git")
+source=("$_pkgname::git+https://github.com/Edra3k/Rafiq.git")
 sha256sums=('SKIP')
 
 pkgver() {
@@ -63,7 +63,7 @@ package() {
   install -Dm755 windows/target/release/coucou "$pkgdir/usr/bin/coucou"
   # Found next to the app, then copied into ~/.local/share/coucou/bin at launch.
   install -Dm755 windows/target/release/coucou-hook "$pkgdir/usr/bin/coucou-hook"
-  install -Dm644 linux/arch/coucou.desktop "$pkgdir/usr/share/applications/fr.louisraille.coucou.desktop"
+  install -Dm644 linux/arch/coucou.desktop "$pkgdir/usr/share/applications/com.edra3k.rafiq.desktop"
   install -Dm644 windows/src-tauri/icons/32x32.png "$pkgdir/usr/share/icons/hicolor/32x32/apps/coucou.png"
   install -Dm644 windows/src-tauri/icons/128x128.png "$pkgdir/usr/share/icons/hicolor/128x128/apps/coucou.png"
   install -Dm644 windows/src-tauri/icons/128x128@2x.png "$pkgdir/usr/share/icons/hicolor/256x256/apps/coucou.png"

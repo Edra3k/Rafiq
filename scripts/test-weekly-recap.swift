@@ -2,7 +2,7 @@
 // test-weekly-recap.swift
 // Fills recap.json with one fake week of activity so the weekly recap card has something to show.
 // Usage:  swift scripts/test-weekly-recap.swift
-// After running, open Coucou and choose "Weekly recap" from the menu bar, or wait for Monday ≥ 8 am.
+// After running, open Rafiq and choose "Weekly recap" from the menu bar, or wait for Monday ≥ 8 am.
 //
 // NOTE: To render the real RecapShareImageView to a PNG, use the Debug menu in the app (DEBUG builds
 // only): Debug → "Render recap image". This saves ~/Desktop/coucou-recap-debug.png and opens it.
@@ -132,7 +132,7 @@ try encoded.write(to: recapURL, options: .atomic)
 print("Wrote \(fakeTurns.count) test turns to \(recapURL.path)")
 print("Total activity: ~\(fakeTurns.reduce(0) { $0 + Int($1.end.timeIntervalSince($1.start) / 60) }) minutes")
 print("")
-print("Open Coucou → menu bar → 'Weekly recap' to see the card.")
+print("Open Rafiq → menu bar → 'Weekly recap' to see the card.")
 print("Or run `open \(recapURL.deletingLastPathComponent().path)` to inspect the file.")
 print("")
 print("To render the share card PNG, use the Debug menu in a DEBUG build of the app:")
