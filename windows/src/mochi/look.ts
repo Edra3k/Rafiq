@@ -1,5 +1,5 @@
 // Rafiq's look, in one place (port of RafiqLook.swift): a dome that rises to a point,
-// like a lantern's cap, on a soft, squarer base; ivory to sand; a small golden crescent
+// like a lantern's cap, on a soft, squarer base; ivory to sand; a golden crescent
 // on top; warm golden cheeks. The engine, the outfits and the greeting draw from here.
 
 /** How far the dome rises above the base, in units of the half height. */
@@ -57,12 +57,13 @@ export function drawFinial(x: CanvasRenderingContext2D, ry: number, R: number, o
   x.save();
   x.globalAlpha *= opacity;
   x.fillStyle = GOLD_CSS;
-  const ball = R * 0.065;
+  const ball = R * 0.075;
   x.beginPath();
   x.arc(0, tipY - R * 0.05 - ball, ball, 0, Math.PI * 2);
   x.fill();
-  const r = R * 0.12;
-  const cy = tipY - R * 0.27;
+  // Large enough to read on the small Rafiqs (compact island, pills), as on the Mac.
+  const r = R * 0.2;
+  const cy = tipY - R * 0.38;
   // A disc with a smaller disc taken out (even-odd inside a clip of the disc).
   x.beginPath();
   x.arc(0, cy, r, 0, Math.PI * 2);

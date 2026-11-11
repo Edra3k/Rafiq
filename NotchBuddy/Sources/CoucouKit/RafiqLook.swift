@@ -1,7 +1,7 @@
 import SwiftUI
 
 /// Rafiq's look, in one place: a dome that rises to a point, like a lantern's cap, on a
-/// soft, squarer base; ivory to sand; a small golden crescent on top; warm golden cheeks.
+/// soft, squarer base; ivory to sand; a golden crescent on top; warm golden cheeks.
 /// Every view that draws the companion (the island, the pills, the upload box, the
 /// wardrobe icons, the iPhone) takes its silhouette and its colours from here.
 enum RafiqLook {
@@ -69,12 +69,13 @@ enum RafiqLook {
         var c = ctx
         c.opacity = opacity
         // The ball, sitting on the point.
-        let ball = R * 0.065
+        let ball = R * 0.075
         c.fill(Path(ellipseIn: CGRect(x: -ball, y: tipY - R * 0.05 - ball * 2, width: ball * 2, height: ball * 2)),
                with: .color(gold))
         // The crescent: a disc with a smaller disc taken out, opening to the upper right.
-        let r = R * 0.12
-        let center = CGPoint(x: 0, y: tipY - R * 0.27)
+        // Large enough to read on the small Rafiqs (compact island, pills).
+        let r = R * 0.2
+        let center = CGPoint(x: 0, y: tipY - R * 0.38)
         var crescent = c
         let cut = Path(ellipseIn: CGRect(x: center.x - r * 0.82 + r * 0.55, y: center.y - r * 0.82 - r * 0.2,
                                          width: r * 1.64, height: r * 1.64))
