@@ -402,6 +402,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         CoucoudoroController.shared.start()
         PrayerController.shared.start()
         AgentShield.shared.syncCanary()
+        #if !APPSTORE
+        Homelab.shared.start()
+        ServerLink.shared.applySettings()
+        #endif
         AgentShield.shared.startCare()
         PortfolioController.shared.start()
     }

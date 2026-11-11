@@ -12,7 +12,7 @@ import SwiftUI
 // copy or dismiss.
 
 struct Digest: Identifiable, Equatable {
-    enum Kind: Equatable { case prayer, evening, cve, secret, verse, injection, canary, away, care }
+    enum Kind: Equatable { case prayer, evening, cve, secret, verse, injection, canary, away, care, server }
 
     struct Tile: Equatable {
         var value: String
@@ -45,6 +45,8 @@ struct Digest: Identifiable, Equatable {
         case openURL(URL)
         /// The tasbih after a prayer.
         case tasbih
+        /// "It's me": an SSH login from this address is the user's (the server watch).
+        case trustIP(String)
     }
 
     let id = UUID()
@@ -63,7 +65,7 @@ struct Digest: Identifiable, Equatable {
         switch kind {
         case .prayer, .verse:  return RafiqLook.gold
         case .evening, .away, .care: return Color(hex: "#F5F6F8")
-        case .cve, .secret, .injection, .canary: return Color(hex: "#F7C1C1")
+        case .cve, .secret, .injection, .canary, .server: return Color(hex: "#F7C1C1")
         }
     }
 }
@@ -90,7 +92,7 @@ final class DigestCenter: ObservableObject {
 
     /// Shows the card now if none is up, else after the ones before it.
     func show(_ digest: Digest) {
-        if [.secret, .cve, .injection, .canary].contains(digest.kind) {
+        if [.secret, .cve, .injection, .canary, .server].contains(digest.kind) {
             let key = Self.securityKey(Date())
             UserDefaults.standard.set(UserDefaults.standard.integer(forKey: key) + 1, forKey: key)
             objectWillChange.send()
@@ -139,6 +141,12 @@ final class DigestCenter: ObservableObject {
         case .tasbih:
             dismissKeepingView()
             TasbihCounter.shared.open()
+        case .trustIP(let ip):
+            #if !APPSTORE
+            ServerLink.shared.trust(ip)
+            #endif
+            _ = ip
+            dismiss()
         }
     }
 
@@ -275,7 +283,7 @@ struct DigestCardView: View {
     private var wash: CardBackground<EmptyView>.Wash? {
         switch center.current?.kind {
         case .prayer?, .verse?:  return .amber
-        case .cve?, .secret?, .injection?, .canary?: return .red
+        case .cve?, .secret?, .injection?, .canary?, .server?: return .red
         default: return .soft
         }
     }

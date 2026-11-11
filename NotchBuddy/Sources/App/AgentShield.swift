@@ -50,6 +50,23 @@ final class AgentShield: ObservableObject {
         }
     }
 
+    #if !APPSTORE
+    /// Hermes on the server: a snapshot of its VM, then allow. No snapshot, no allow.
+    func allowWithVMNet(approvalId: UUID?) {
+        guard !savingNet else { return }
+        savingNet = true
+        Homelab.shared.snapshotHermesVM { ok in
+            AgentShield.shared.savingNet = false
+            if ok {
+                SoundEngine.shared.play("attach")
+                HookServer.shared.sendApprovalDecision("allow", for: approvalId)
+            } else {
+                SoundEngine.shared.play("error")
+            }
+        }
+    }
+    #endif
+
     func net(for cwd: String?) -> SafetyNet.Net? {
         guard let cwd else { return nil }
         return lastNet[cwd]

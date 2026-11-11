@@ -20,6 +20,7 @@ enum IslandView: String, CaseIterable {
     case launch       // a new Claude Code session: a prompt, a project, and the terminal opens (GitHub build)
     case digest       // what Rafiq kept or noticed: after a prayer, the evening brief, a CVE, a secret
     case tasbih       // the adhkar after the prayer, counted with a click
+    case homelab      // the home server's VMs and labs, with their actions (GitHub build)
 }
 
 // MARK: - Bot State
@@ -282,6 +283,7 @@ enum IslandConst {
         // Digest: Rafiq on the left, the card (title, tiles, buttons) on the right
         .digest:       ViewLayout(height: 206, botX: 62,  botY: nil, botDiameter: 58, agentMode: .none),
         .tasbih:       ViewLayout(height: 180, botX: 62,  botY: nil, botDiameter: 58, agentMode: .none),
+        .homelab:      ViewLayout(height: 270, botX: 62,  botY: nil, botDiameter: 58, agentMode: .none),
         // New version: Rafiq on the left, the version and Update now
         .update:       ViewLayout(height: 160, botX: 62,  botY: nil, botDiameter: 58, agentMode: .none),
         // After an update: taller, four items then the stats (like mail, it fills the height)

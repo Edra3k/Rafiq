@@ -1392,6 +1392,10 @@ struct SettingsView: View {
     // MARK: - Integrations section
 
     @ViewBuilder private var integrationsSection: some View {
+        #if !APPSTORE
+        HomelabSettings()
+            .settingsAnchor("integrations.homelab")
+        #endif
         GroupBox {
             VStack(alignment: .leading, spacing: 14) {
 

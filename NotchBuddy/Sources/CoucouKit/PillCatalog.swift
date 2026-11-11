@@ -135,6 +135,10 @@ enum PillCatalog {
         // Local countdown: work, then rest, until the user stops. No account, no network.
         .init(id: "integration_coucoudoro", name: "Pomodoro", color: "#0EA5E9",
               category: .service,   subtitle: String(localized: "Integration"),  source: .n8n),
+        // The home server: Proxmox, its VMs and labs, the local models; agents on it come through
+        // the SSH tunnel (ServerLink). GitHub build: it runs ssh.
+        .init(id: "integration_homelab", name: String(localized: "homelab.title", defaultValue: "Server"), color: "#E57000",
+              category: .service,   subtitle: String(localized: "Integration"),  source: .n8n, githubOnly: true),
         // Prayer times calculated on the Mac: the next prayer, a reminder before each one. No network.
         .init(id: "integration_prayer", name: String(localized: "prayer.title", defaultValue: "Prayer"), color: "#A78BFA",
               category: .service,   subtitle: String(localized: "Integration"),  source: .n8n),

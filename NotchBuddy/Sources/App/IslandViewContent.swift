@@ -29,6 +29,12 @@ struct IslandViewContent: View {
         case .recap:     WeeklyRecapCardView(state: state)
         case .digest:    DigestCardView(state: state)
         case .tasbih:    TasbihView(state: state)
+        case .homelab:
+            #if !APPSTORE
+            HomelabView(state: state)
+            #else
+            EmptyView()
+            #endif
         case .listening:
             #if !APPSTORE
             VoiceListeningView(isActive: state.view == .listening)
@@ -515,6 +521,18 @@ struct ApprovalView: View {
                             }
                             .help(String(localized: "net.help", defaultValue: "Rafiq saves the project's files first (a Git snapshot kept aside, your branch untouched), then allows. You can go back to it from the session card."))
                         }
+                        #if !APPSTORE
+                        // Hermes on the home server: the net is a Proxmox snapshot of its VM.
+                        if let a = approval, PillCatalog.basePillId(a.pillId) == "agent_hermes", Homelab.shared.canNetHermes,
+                           CommandRisk.assess(tool: a.tool, command: a.command).level == .high {
+                            SecondaryButton(verbatim: shield.savingNet
+                                ? String(localized: "net.saving", defaultValue: "Saving…")
+                                : String(localized: "net.allow", defaultValue: "Allow with a net")) {
+                                AgentShield.shared.allowWithVMNet(approvalId: shownId)
+                            }
+                            .help(String(localized: "net.vm.help", defaultValue: "Rafiq takes a Proxmox snapshot of Hermes's VM first, then allows. Back to it from Server → VMs and labs."))
+                        }
+                        #endif
                         if let a = approval, RiskExplainer.available, explainer.answers[a.id] == nil {
                             SecondaryButton(verbatim: explainer.loading.contains(a.id)
                                 ? String(localized: "why.loading", defaultValue: "Thinking…")
@@ -2138,6 +2156,12 @@ struct IntegrationCardView: View {
             return true  // a local countdown: nothing to connect
         case "integration_prayer":
             return true  // calculated on the Mac: the city defaults to the Mac's time zone
+        case "integration_homelab":
+            #if !APPSTORE
+            return true  // its card says what is missing (address, token) itself
+            #else
+            return false
+            #endif
         case "integration_portfolio":
             return PortfolioSettings.hasAnyAccount
         case "ai_anthropic":  return KeychainStore.shared.get("anthropic-api-key") != nil || AppState.shared.subscriptionReady(.anthropic)
@@ -2401,6 +2425,11 @@ struct IntegrationCardView: View {
         } else if task.id == PrayerController.pillId {
             PrayerCardView()
                 .transition(.opacity)
+        } else if task.id == "integration_homelab" {
+            #if !APPSTORE
+            HomelabCardView(state: appState)
+                .transition(.opacity)
+            #endif
         } else if task.id == "integration_portfolio" {
             PortfolioCardView()
                 .transition(.opacity)

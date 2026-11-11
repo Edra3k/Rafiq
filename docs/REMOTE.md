@@ -1,5 +1,11 @@
 # Rafiq for agents on a remote machine (SSH)
 
+> **The simple way (GitHub build):** Settings → Integrations → Home server. Type the host
+> as in `~/.ssh/config`, click *Install the relay and the Hermes plugin on the server…*, and
+> turn on *Keep the tunnel open*. Rafiq runs the steps below itself (relay copy, Hermes
+> plugin, `ssh -R` kept up with a backoff, in BatchMode: keys only). The manual steps stay
+> here for Claude Code and Codex hooks, and for servers Rafiq should not touch.
+
 Claude Code and Codex sessions that run on a server (VS Code Remote - SSH, an SSH
 environment in the Claude app's Code tab, Codex on a dev box) can show up in Rafiq on
 your Mac like local ones, approvals and questions included, on the iPhone too. Their

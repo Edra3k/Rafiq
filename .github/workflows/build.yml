@@ -60,6 +60,12 @@ jobs:
       - name: Test the safety net (Git snapshot and restore)
         run: bash scripts/test-safety-net.sh
 
+      - name: Test the Proxmox answers
+        run: bash scripts/test-proxmox.sh
+
+      - name: Test the server log reading (SSH logins, open ports)
+        run: bash scripts/test-server-log.sh
+
       - name: Test the session board (sessions behind a pill, popping out, places)
         run: bash scripts/test-session-board.sh
 
