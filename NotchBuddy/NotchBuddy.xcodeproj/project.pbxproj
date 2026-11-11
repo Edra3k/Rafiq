@@ -92,6 +92,7 @@
 		25C48FFCCCBBD66DFDAF2DB1 /* WhatsAppGOWAInstaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1B680E79F7E7C05EA7E15B /* WhatsAppGOWAInstaller.swift */; };
 		25F611B3C1EC039BE3F9107C /* CoucoudoroEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1661E34BFBDDF4A9AD41FF75 /* CoucoudoroEngine.swift */; };
 		25F66E99460D62478899A292 /* MochiWardrobe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A7807ADD0963FF260D1FAD /* MochiWardrobe.swift */; };
+		266071DAF52EBAB2046E96A5 /* FlowHubToday.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1370B381DB75E34358B0428 /* FlowHubToday.swift */; };
 		26D933FDB84F83D33BE6B91B /* FlowPill.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD88FB0222D3F8893AF1D33D /* FlowPill.swift */; };
 		26E35C79CCD09FEBA04A3EF6 /* LinkTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6762C38A8952A90F394EDFE4 /* LinkTestView.swift */; };
 		273B404F55739D661D9489D8 /* VoiceBrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = C563E55884A7750B40EC9A01 /* VoiceBrain.swift */; };
@@ -183,6 +184,7 @@
 		56E12FFCAAB2C4F31600B0F8 /* FlowHubHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982CBB722685931BB8958162 /* FlowHubHome.swift */; };
 		57251211943B23F85582E786 /* ClaudeDesktopChatWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95FF987AE2A4E9EFB6A15519 /* ClaudeDesktopChatWatcher.swift */; };
 		57C3CBC0FC5BC5B8E9ACE39C /* WatchSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78F048CBA8EA24B1EF7743A /* WatchSnapshot.swift */; };
+		585619C8E637F814FFABD9D4 /* RafiqWordmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FF64B3DCB4197C7FF6B25FA /* RafiqWordmark.swift */; };
 		587116CE452870A8D4AC2E36 /* InjectionScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14BB63F91734D6B0429B8C0 /* InjectionScanner.swift */; };
 		5970C8B051B6BE24FBF2A6F5 /* MacUpdateViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3C36DE7C1DC055250C811D /* MacUpdateViews.swift */; };
 		59FABCC0B6794FE95319825C /* CoucouNotificationContent.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = D6DF93125491729E14636AD8 /* CoucouNotificationContent.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -315,6 +317,7 @@
 		91B8AAADB623A12FF6769755 /* ClaudeHookDetection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA7D927F6BB2667D37AA963 /* ClaudeHookDetection.swift */; };
 		920EC34AE78BDC6DDD4452F9 /* MochiActivityState.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE18399D1CD69468CCF57966 /* MochiActivityState.swift */; };
 		924CE1172B5572DA3E45A7C9 /* ColorHex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ACB4350729C6513824D1ADF /* ColorHex.swift */; };
+		928D4FF90ED64D0D6034BB17 /* RafiqWordmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FF64B3DCB4197C7FF6B25FA /* RafiqWordmark.swift */; };
 		9321A0D4BEC32E262D4A85ED /* IslandScreenGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9466FDE02C9B3FB4EF01DFF8 /* IslandScreenGeometry.swift */; };
 		9377B2B9A1B44E0113DBF619 /* TurnArchive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E5F9E4BB282FDE68D65FE6B /* TurnArchive.swift */; };
 		93AB64BF47D6D1EE7DB4C22B /* QuestionRelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB78996E9F9A2E8A80D45E54 /* QuestionRelay.swift */; };
@@ -444,6 +447,7 @@
 		C9ED8FFDC406DD1A23AABC7C /* TurnSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1C4152EBDBD7C24CABFFD7 /* TurnSnapshot.swift */; };
 		CA3321C14A11FED94E48B3E3 /* IslandRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A1A8206F73376F4CAF2057 /* IslandRootView.swift */; };
 		CAC1A12153A798730E5FA835 /* MochiStill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045E7300878138F0AC385920 /* MochiStill.swift */; };
+		CB72C3517DF9A4A3FA575867 /* FlowHubToday.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1370B381DB75E34358B0428 /* FlowHubToday.swift */; };
 		CC81DAE27417672CB93349A5 /* PillCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C64C4C5D705CE486221B74 /* PillCatalog.swift */; };
 		CC8E0ADAA825699DD39D0AC6 /* CommandRisk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255A7FE1B86EA4EAF6F295D9 /* CommandRisk.swift */; };
 		CD05A497A7D0B3D723D92C06 /* QuestionPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C6993B34A0FFF8E3D454ADC /* QuestionPayload.swift */; };
@@ -618,6 +622,7 @@
 		0BFB4C9E1BBD89E2E6319DCC /* FlowHub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowHub.swift; sourceTree = "<group>"; };
 		0D9CEB5655FCA197D6B10A91 /* CoucouPhoneApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoucouPhoneApp.swift; sourceTree = "<group>"; };
 		0FA2D136C81C6D930C5357BD /* LiveActivityLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveActivityLink.swift; sourceTree = "<group>"; };
+		0FF64B3DCB4197C7FF6B25FA /* RafiqWordmark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RafiqWordmark.swift; sourceTree = "<group>"; };
 		112D2BD70628CD67ACDD18AF /* LastTurnView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastTurnView.swift; sourceTree = "<group>"; };
 		1196E6DE4CA77C7D9B5851CD /* CLIRelayRun.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLIRelayRun.swift; sourceTree = "<group>"; };
 		11FCBBE20532B1F0A184EA06 /* approval.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = approval.wav; sourceTree = "<group>"; };
@@ -831,6 +836,7 @@
 		DE18399D1CD69468CCF57966 /* MochiActivityState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MochiActivityState.swift; sourceTree = "<group>"; };
 		DE925A6844FE3E3C09131CE0 /* VoiceTranscriptHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceTranscriptHistory.swift; sourceTree = "<group>"; };
 		E0CBDDCE1EB96295C55F5A78 /* AndroidLinkAdmission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AndroidLinkAdmission.swift; sourceTree = "<group>"; };
+		E1370B381DB75E34358B0428 /* FlowHubToday.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowHubToday.swift; sourceTree = "<group>"; };
 		E18E74B3586BC0861C69E70A /* InstructionComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionComposer.swift; sourceTree = "<group>"; };
 		E2C10416B58B437F402ABCEB /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		E4162B4B5D5776EC9FD0866F /* QuestionQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionQueue.swift; sourceTree = "<group>"; };
@@ -968,6 +974,7 @@
 				79E7E2106BCE86A472ED8051 /* FlowHubMochis.swift */,
 				CC2669CBBE5BDF9C775132D1 /* FlowHubNotes.swift */,
 				B249C39EA29E941BC52A6126 /* FlowHubSettings.swift */,
+				E1370B381DB75E34358B0428 /* FlowHubToday.swift */,
 				1A1A34DE2886E394C879CF64 /* FlowHubWords.swift */,
 				4983B1317913482E61EB344D /* FlowKeyLogic.swift */,
 				EBB761EA15EABCD584DD012B /* FlowLanguages.swift */,
@@ -1027,6 +1034,7 @@
 				3AFFF1C75C5AB2C30A441DBC /* PrayerViews.swift */,
 				E4162B4B5D5776EC9FD0866F /* QuestionQueue.swift */,
 				86D1099CC2AE61958DBCF570 /* QuickScreenshot.swift */,
+				0FF64B3DCB4197C7FF6B25FA /* RafiqWordmark.swift */,
 				78FB882D49084DEA6A10DB4D /* RecapStore.swift */,
 				61B5FDDE03F5F711146937E2 /* ResendPoller.swift */,
 				75E4681D3B1A3D6EB530CE6A /* SafetyNet.swift */,
@@ -1576,6 +1584,7 @@
 				D62CFFA91DA4BC5755E55186 /* FlowHubMochis.swift in Sources */,
 				14869F429444B31D072A75B8 /* FlowHubNotes.swift in Sources */,
 				4804DA9B3008C5C477E2818C /* FlowHubSettings.swift in Sources */,
+				266071DAF52EBAB2046E96A5 /* FlowHubToday.swift in Sources */,
 				7B7CBFAADFF687004012609D /* FlowHubWords.swift in Sources */,
 				EF584BA65AA62FCABD6FB6B2 /* FlowKeyLogic.swift in Sources */,
 				74B4C23EEEADCD73D66CBA2E /* FlowLanguages.swift in Sources */,
@@ -1651,6 +1660,7 @@
 				93AB64BF47D6D1EE7DB4C22B /* QuestionRelay.swift in Sources */,
 				D8BD2C7684DE02ADC2FE582C /* QuickScreenshot.swift in Sources */,
 				14CE4E2E6A764B3D9356FEB3 /* RafiqLook.swift in Sources */,
+				928D4FF90ED64D0D6034BB17 /* RafiqWordmark.swift in Sources */,
 				7A449E237CAAB62758508C7C /* RecapStore.swift in Sources */,
 				967B525F7D3837F31D740D18 /* ResendPoller.swift in Sources */,
 				FBDC1679522F378187862EA3 /* ReviewPolicy.swift in Sources */,
@@ -1892,6 +1902,7 @@
 				F558DBB511DF88077B8A6159 /* FlowHubMochis.swift in Sources */,
 				BEC3D806C75A6D6DDE9CCFDC /* FlowHubNotes.swift in Sources */,
 				0EB57943A58F60AF72906BB1 /* FlowHubSettings.swift in Sources */,
+				CB72C3517DF9A4A3FA575867 /* FlowHubToday.swift in Sources */,
 				66069F348A37AE19806376A7 /* FlowHubWords.swift in Sources */,
 				ACBC410CF50E4B96706DA074 /* FlowKeyLogic.swift in Sources */,
 				713F32381B1A47C5042063BB /* FlowLanguages.swift in Sources */,
@@ -1967,6 +1978,7 @@
 				9AEFD05D0A39D4AF3C091B3A /* QuestionRelay.swift in Sources */,
 				F575DDDCC33A44B135B8B821 /* QuickScreenshot.swift in Sources */,
 				103F39A7EA64980CBB2B9013 /* RafiqLook.swift in Sources */,
+				585619C8E637F814FFABD9D4 /* RafiqWordmark.swift in Sources */,
 				B69DE31E2B0C2E35594CAA87 /* RecapStore.swift in Sources */,
 				EB23ED9F1C12EA8B54A76A91 /* ResendPoller.swift in Sources */,
 				60AAAA2CC93483A175CEE986 /* ReviewPolicy.swift in Sources */,

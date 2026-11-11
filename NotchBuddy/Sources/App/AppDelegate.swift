@@ -126,6 +126,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
         let menu = NSMenu()
         menu.delegate = self
+        // The name in both scripts, as a title.
+        let header = NSMenuItem(title: "Rafiq", action: nil, keyEquivalent: "")
+        header.attributedTitle = RafiqName.attributed()
+        header.isEnabled = false
+        menu.addItem(header)
+        menu.addItem(.separator())
         #if !APPSTORE
         // A new version: the first line of the menu, shown only when one is out.
         let updateItem = NSMenuItem(title: "", action: #selector(openUpdate), keyEquivalent: "")
@@ -150,6 +156,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         #endif
         menu.addItem(withTitle: NSLocalizedString("Settings…", comment: ""), action: #selector(openSettings), keyEquivalent: ",")
         menu.addItem(.separator())
+        menu.addItem(withTitle: String(localized: "menu.about", defaultValue: "About Rafiq"), action: #selector(showAbout), keyEquivalent: "")
         menu.addItem(withTitle: NSLocalizedString("Quit", comment: ""), action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
 
         statusItem?.menu = menu
@@ -198,6 +205,23 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     #endif
 
     // MARK: - Actions
+
+    /// macOS's About panel, with the name in both scripts.
+    @objc private func showAbout() {
+        let credits = NSMutableAttributedString(
+            string: String(localized: "about.tagline", defaultValue: "your companion") + " · ",
+            attributes: [.font: NSFont.systemFont(ofSize: 11), .foregroundColor: NSColor.secondaryLabelColor])
+        credits.append(NSAttributedString(string: RafiqName.vocalised,
+                                          attributes: [.font: NSFont.systemFont(ofSize: 12), .foregroundColor: NSColor(RafiqLook.gold)]))
+        let centered = NSMutableParagraphStyle()
+        centered.alignment = .center
+        credits.addAttribute(.paragraphStyle, value: centered, range: NSRange(location: 0, length: credits.length))
+        NSApp.activate(ignoringOtherApps: true)
+        NSApp.orderFrontStandardAboutPanel(options: [
+            .applicationName: "Rafiq \(RafiqName.arabic)",
+            .credits: credits,
+        ])
+    }
 
     @objc private func toggleDemoMode() {
         if DemoEngine.shared.isActive { DemoEngine.shared.stop() }

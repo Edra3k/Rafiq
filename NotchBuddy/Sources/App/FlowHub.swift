@@ -5,6 +5,7 @@ import SwiftUI
 
 /// The pages of the Rafiq window: Flow (the dictation, the Notetaker) and the notch's settings.
 enum HubPage: String, CaseIterable, Identifiable {
+    case today
     case dictation, notes, insights, dictionary, snippets, styles, settings
     case general, pills, agents, chat, integrations, voice, shortcuts
     case mailOverview, mailRules, mailBanned, mailVIP
@@ -43,6 +44,7 @@ enum HubPage: String, CaseIterable, Identifiable {
         case .integrations: return String(localized: "Integrations")
         case .voice:        return String(localized: "Voice")
         case .shortcuts:    return String(localized: "Shortcuts")
+        case .today:      return String(localized: "hub.page.today", defaultValue: "Today")
         case .dictation:  return String(localized: "hub.page.dictation")
         case .notes:      return String(localized: "hub.page.notes")
         case .insights:   return String(localized: "hub.page.insights")
@@ -59,6 +61,7 @@ enum HubPage: String, CaseIterable, Identifiable {
 
     var symbol: String {
         switch self {
+        case .today:      return "sun.horizon"
         case .dictation:  return "mic"
         case .notes:      return "record.circle"
         case .insights:   return "chart.bar"
@@ -135,7 +138,7 @@ extension HubPage {
 
 @MainActor
 final class HubRouter: ObservableObject {
-    @Published var page: HubPage = .dictation
+    @Published var page: HubPage = .today
 }
 
 /// Opens the Rafiq Flow window: the history of the dictations, the Notetaker, the numbers, the
@@ -234,6 +237,7 @@ struct FlowHubView: View {
 
     @ViewBuilder private var page: some View {
         switch router.page {
+        case .today:      HubTodayPage(router: router)
         case .dictation:  HubHomePage(router: router)
         case .notes:      HubNotesPage()
         case .insights:   HubInsightsPage()
@@ -273,8 +277,7 @@ private struct HubSidebar: View {
                 // hops and hats): lifted so his body lines up with the name.
                 HubLiveMochi(size: 28)
                     .offset(y: -4)
-                Text(verbatim: "Rafiq")
-                    .font(.system(size: 18, weight: .bold))
+                RafiqWordmark(size: 18)
             }
             .padding(.horizontal, 8)
             // Halfway between the window's buttons and "FLOW".
@@ -289,6 +292,8 @@ private struct HubSidebar: View {
                     HubSearchResults(router: router)
                 } else {
                     VStack(alignment: .leading, spacing: 2) {
+                        HubSidebarItem(page: .today, selected: router.page == .today) { router.page = .today }
+                            .padding(.bottom, 10)
                         HubSidebarHeader(text: "Flow")
                         ForEach(HubPage.flowPages) { page in
                             HubSidebarItem(page: page, selected: router.page == page) { router.page = page }

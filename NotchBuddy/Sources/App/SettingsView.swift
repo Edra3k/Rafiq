@@ -176,8 +176,7 @@ struct SettingsView: View {
                             .resizable()
                             .frame(width: 32, height: 32)
                         VStack(alignment: .leading, spacing: 1) {
-                            Text("Rafiq")
-                                .font(.system(size: 13, weight: .semibold))
+                            RafiqWordmark(size: 13)
                             Text(appVersion)
                                 .font(.system(size: 11))
                                 .foregroundColor(.secondary)

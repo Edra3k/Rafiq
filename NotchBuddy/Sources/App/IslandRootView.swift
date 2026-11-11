@@ -78,6 +78,7 @@ struct IslandContainer: View {
     @ObservedObject var state: AppState
     @ObservedObject private var demoEngine = DemoEngine.shared
     @ObservedObject private var prayer = PrayerController.shared
+    @ObservedObject private var nameFlash = NameFlash.shared
     @State private var islandWidth:  CGFloat = IslandConst.notchWidth
     @State private var islandHeight: CGFloat = IslandConst.notchHeight
     @State private var cornerRadius: CGFloat = IslandConst.roundedCorner
@@ -247,6 +248,11 @@ struct IslandContainer: View {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
                     MainActor.assumeIsolated { VerseOfTheDay.maybeShow(state: state) }
                 }
+            }
+            // Folding back to compact: the name in Arabic beside Rafiq, for a moment.
+            if oldMode == .expanded, newMode == .compact, !state.islandPlacement.isCorner {
+                NameFlash.shared.trigger()
+                NotchLive.refreshEars(state: state, prayer: prayer)
             }
             let shrinking = modeOrder(newMode) < modeOrder(oldMode)
             let anim = shrinking ? closeEase : openSpring

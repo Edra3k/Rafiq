@@ -58,13 +58,33 @@ enum NotchLive {
 
     /// The ears have something to say: the compact island widens for them.
     static func earsActive(state: AppState, prayer: PrayerController) -> Bool {
-        prayer.soon != nil || agentWord(state: state) != nil
+        prayer.soon != nil || agentWord(state: state) != nil || NameFlash.shared.active
     }
 
     /// Keeps `NotchEars.extra` (read by islandSize) in step with what the ears say.
     static func refreshEars(state: AppState, prayer: PrayerController) {
         let on = !state.islandPlacement.isCorner && earsActive(state: state, prayer: prayer)
         NotchEars.extra = on ? NotchEars.width : 0
+    }
+}
+
+/// "رفيق" written for a moment beside Rafiq when the island folds back to compact.
+@MainActor
+final class NameFlash: ObservableObject {
+    static let shared = NameFlash()
+    @Published private(set) var active = false
+    private var token = 0
+
+    func trigger() {
+        token += 1
+        let t = token
+        active = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.6) {
+            MainActor.assumeIsolated {
+                guard NameFlash.shared.token == t else { return }
+                NameFlash.shared.active = false
+            }
+        }
     }
 }
 
@@ -110,6 +130,7 @@ struct NotchHalo: View {
 struct NotchEarsView: View {
     @ObservedObject var state: AppState
     @ObservedObject private var prayer = PrayerController.shared
+    @ObservedObject private var nameFlash = NameFlash.shared
     let islandW: CGFloat
     let islandH: CGFloat
 
@@ -120,7 +141,14 @@ struct NotchEarsView: View {
         ZStack(alignment: .topLeading) {
             if show {
                 // Left: Rafiq stays at x 40; the word sits between him and the notch.
-                if let soon = prayer.soon {
+                if nameFlash.active, prayer.soon == nil {
+                    Text(verbatim: RafiqName.arabic)
+                        .font(.custom("KufiStandardGK", size: fontSize + 3))
+                        .foregroundColor(RafiqLook.gold)
+                        .frame(width: max(0, side - 62), alignment: .leading)
+                        .position(x: 56 + max(0, side - 62) / 2, y: islandH / 2)
+                        .transition(.opacity)
+                } else if let soon = prayer.soon {
                     TimelineView(.everyMinute) { tl in
                         Text(verbatim: prayer.earLabel(at: tl.date))
                             .font(.system(size: fontSize, weight: .semibold))

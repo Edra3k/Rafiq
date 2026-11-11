@@ -78,8 +78,23 @@ final class DigestCenter: ObservableObject {
     /// A card up holds the island open like an approval, except the verse of the day.
     var holdsIsland: Bool { current != nil && current?.kind != .verse && current?.kind != .care }
 
+    /// Security cards shown today (secret, CVE, injection, trap), for the Today page.
+    func securityAlerts(on date: Date) -> Int {
+        UserDefaults.standard.integer(forKey: Self.securityKey(date))
+    }
+
+    private static func securityKey(_ date: Date) -> String {
+        let c = Calendar.current.dateComponents([.year, .month, .day], from: date)
+        return "securityAlerts-\(c.year ?? 0)-\(c.month ?? 0)-\(c.day ?? 0)"
+    }
+
     /// Shows the card now if none is up, else after the ones before it.
     func show(_ digest: Digest) {
+        if [.secret, .cve, .injection, .canary].contains(digest.kind) {
+            let key = Self.securityKey(Date())
+            UserDefaults.standard.set(UserDefaults.standard.integer(forKey: key) + 1, forKey: key)
+            objectWillChange.send()
+        }
         if current == nil {
             current = digest
             surface()

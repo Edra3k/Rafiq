@@ -153,6 +153,13 @@ final class EveningBrief {
         timer = t
     }
 
+    /// The next evening brief at or after `date` (the Today page shows it).
+    func nextBriefTime(after date: Date) -> Date? {
+        let today = briefTime(on: date)
+        if today > date { return today }
+        return Calendar.current.date(byAdding: .day, value: 1, to: date).map { briefTime(on: $0) }
+    }
+
     private func briefTime(on day: Date) -> Date {
         let cal = Calendar.current
         let prayer = PrayerController.shared

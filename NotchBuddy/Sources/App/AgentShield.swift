@@ -240,7 +240,11 @@ final class AgentShield: ObservableObject {
         let text = files > 0
             ? String(format: String(localized: "speak.done-files %@ %lld", defaultValue: "%@ is done, %lld files changed."), name, Int64(files))
             : String(format: String(localized: "speak.done %@", defaultValue: "%@ is done."), name)
+        #if !APPSTORE
         VoiceSpeaker.shared.speak(text, locale: Locale.current)
+        #else
+        _ = text
+        #endif
     }
 
     // MARK: Care

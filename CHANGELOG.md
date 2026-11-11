@@ -29,6 +29,8 @@ Rafiq starts from the code of Coucou 0.6 (MIT) and becomes its own app.
 - **"Why?"** — with Ollama or LM Studio set up, the approval card can ask the local model what the command does and what could go wrong. Nothing leaves the Mac.
 - **While you were away** — back after 10 minutes or more, a card says what your agents finished, what waits and what failed.
 - **Breaks and voice** — after two hours at the screen, Rafiq yawns and suggests a break (and wudu before a near prayer); optionally, he says when a session is done.
+- **Rafiq رفيق** — the name in both scripts (the Arabic in gold kufi) in the window's sidebar, Settings, the menu bar menu and the About panel; when the island folds back, "رفيق" is written beside Rafiq for a moment. The menu bar icon wears its crescent.
+- **Today** — the Rafiq window opens on the day: salam, the date in both calendars, prayers, sessions, lines, security alerts, the next prayer, the evening brief's time and the verse of the day.
 - **Your own identifiers** — `com.edra3k.rafiq` on the Mac, `com.edra3k.rafiq.ios` on the iPhone, `com.edra3k.rafiq.android` on Android; updates, links and support point to github.com/Edra3k/Rafiq.
 
 Coucou's own history is in [its repository](https://github.com/Louis-CFM/coucou/blob/main/CHANGELOG.md).

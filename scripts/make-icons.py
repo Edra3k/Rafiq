@@ -38,7 +38,7 @@ def vgrad(size, top, bottom):
     arr = np.array(top)[None, None, :] * (1 - k) + np.array(bottom)[None, None, :] * k
     return Image.fromarray(np.repeat(arr, w, axis=1).astype(np.uint8), "RGB")
 
-def draw_rafiq(img, cx, cy, R, glow=True, finial=True, flat=None, eyes=True):
+def draw_rafiq(img, cx, cy, R, glow=True, finial=True, flat=None, eyes=True, finial_scale=1.0):
     """The companion, centred on (cx, cy), unit R, like BotEngine (rx = 1.14 R, ry = 0.88 R)."""
     rx, ry = R * 1.14, R * 0.88
     pts = [(cx + x, cy + y) for x, y in silhouette(rx, ry)]
@@ -64,11 +64,13 @@ def draw_rafiq(img, cx, cy, R, glow=True, finial=True, flat=None, eyes=True):
     img.paste(body, (0, 0), mask)
     d = ImageDraw.Draw(img)
     if finial:
+        # finial_scale: a bigger crescent where the icon is tiny (the menu bar).
+        k = finial_scale
         tip = cy - ry * DOME_H
-        b = R * 0.065
-        d.ellipse([cx - b, tip - R * 0.05 - 2 * b, cx + b, tip - R * 0.05], fill=GOLD if not flat else flat)
-        r = R * 0.12
-        ccx, ccy = cx, tip - R * 0.27
+        b = R * 0.065 * k
+        d.ellipse([cx - b, tip - R * 0.05 * k - 2 * b, cx + b, tip - R * 0.05 * k], fill=GOLD if not flat else flat)
+        r = R * 0.12 * k
+        ccx, ccy = cx, tip - R * 0.27 * k
         cres = Image.new("L", img.size, 0)
         cd = ImageDraw.Draw(cres)
         cd.ellipse([ccx - r, ccy - r, ccx + r, ccy + r], fill=255)
@@ -140,8 +142,9 @@ def menubar(h):
     S = 8
     W, H = int(h * 4 / 3) * S, h * S
     img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
-    R = H * 0.47
-    draw_rafiq(img, W / 2, H * 0.56, R, glow=False, finial=False, flat=(0, 0, 0))
+    # Smaller body, lower, to leave room for a crescent big enough to read at 18 pt.
+    R = H * 0.34
+    draw_rafiq(img, W / 2, H * 0.66, R, glow=False, finial=True, flat=(0, 0, 0), finial_scale=1.8)
     return img.resize((W // S, H // S), Image.LANCZOS)
 
 def save(img, *path, rgb=False):

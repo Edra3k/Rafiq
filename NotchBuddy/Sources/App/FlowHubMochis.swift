@@ -233,6 +233,8 @@ struct HubHeroTheme {
             HubMochiSpec(color: color, size: size, outfit: outfit, state: state, roams: roams, start: start)
         }
         switch page {
+        case .today:
+            return .init(color: RafiqLook.gold, cast: [m("#F5F6F8", 64, 0.25), m("#E8B64A", 46, 0.7), m("#E9825B", 42, 0.95)])
         case .dictation:
             return .init(color: Color(hex: "#FB923C"), cast: [m("#F5F6F8", 66, 0.2), m("#FB923C", 52, 0.65), m("#F472B6", 44, 0.95, outfit: .bow)])
         case .notes:

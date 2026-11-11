@@ -173,7 +173,7 @@ final class PrayerController: ObservableObject {
         calendar.timeZone = location?.timeZone ?? .current
         let f = DateFormatter()
         f.calendar = calendar
-        f.locale = Locale(identifier: "ar")
+        f.locale = Locale(identifier: "ar-SA")   // Arabic-Indic digits: ١٢
         f.timeZone = calendar.timeZone
         f.dateFormat = "d MMMM"
         return f.string(from: date)
