@@ -1,0 +1,712 @@
+#if !APPSTORE
+import AppKit
+import ApplicationServices
+import Carbon
+
+/// The key that you hold to dictate, or your own shortcut (FlowShortcut).
+enum FlowKey: String, CaseIterable, Identifiable {
+    case rightOption, rightCommand, rightControl, fn, custom
+
+    var id: String { rawValue }
+
+    /// The keys of the menu; the custom shortcut has its own entries.
+    static let presets: [FlowKey] = [.rightOption, .rightCommand, .rightControl, .fn]
+
+    /// The custom shortcut has no single key: FlowShortcutTap watches it.
+    var keyCode: UInt16 {
+        switch self {
+        case .rightOption:  return UInt16(kVK_RightOption)
+        case .rightCommand: return UInt16(kVK_RightCommand)
+        case .rightControl: return UInt16(kVK_RightControl)
+        case .fn:           return UInt16(kVK_Function)
+        case .custom:       return UInt16.max
+        }
+    }
+
+    /// Whether this very key is down, from a flagsChanged event's flags. The device-dependent bits
+    /// tell the right key from the left one, so holding the left ⌥ never keeps the right one "down".
+    func isDown(_ flags: NSEvent.ModifierFlags) -> Bool {
+        let raw = flags.rawValue
+        switch self {
+        case .rightOption:  return raw & 0x0000_0040 != 0   // NX_DEVICERALTKEYMASK
+        case .rightCommand: return raw & 0x0000_0010 != 0   // NX_DEVICERCMDKEYMASK
+        case .rightControl: return raw & 0x0000_2000 != 0   // NX_DEVICERCTLKEYMASK
+        case .fn:           return flags.contains(.function)
+        case .custom:       return false
+        }
+    }
+
+    @MainActor var symbol: String {
+        switch self {
+        case .rightOption:  return "⌥"
+        case .rightCommand: return "⌘"
+        case .rightControl: return "⌃"
+        case .fn:           return "fn"
+        case .custom:
+            let keys = FlowShortcut.order
+            return keys.isEmpty ? "⌨︎" : FlowShortcut.compact(keys)
+        }
+    }
+
+    /// In sentences ("Hold ⌃ ⌥ D to dictate").
+    @MainActor var label: String {
+        switch self {
+        case .fn: return String(localized: "flow.key-fn")
+        case .custom:
+            let keys = FlowShortcut.order
+            return keys.isEmpty ? String(localized: "flow.key-custom") : FlowShortcut.compact(keys)
+        default:  return String(format: String(localized: "flow.key-right %@"), symbol)
+        }
+    }
+
+}
+
+/// Flow dictation, like Wispr Flow (GitHub build): hold a key anywhere on the Mac, speak, let go,
+/// and the words are pasted where you type. A small pill at the bottom of the screen shows that
+/// Coucou listens, its dots moving with the graves and the aigus of your voice.
+///
+/// Speech is recognised by the Mac (on-device when it can, see MacDictation); pasting goes
+/// through the clipboard and ⌘V, then the clipboard gets back what it held. Watching the key and
+/// pasting both need the Accessibility permission. Off by default; nothing listens until you hold the key.
+@MainActor
+final class FlowDictation: ObservableObject {
+    static let shared = FlowDictation()
+
+    static let enabledKey = "flowDictationEnabled"
+    /// How long the microphone stays open after the key comes up.
+    static let tailMilliseconds = 600
+    static let keyKey = "flowDictationKey"
+
+    @Published var isEnabled: Bool = UserDefaults.standard.bool(forKey: FlowDictation.enabledKey) {
+        didSet {
+            UserDefaults.standard.set(isEnabled, forKey: Self.enabledKey)
+            if isEnabled && !AXIsProcessTrusted() { askForAccessibility() }
+            refresh()
+        }
+    }
+    @Published var key: FlowKey = FlowKey(rawValue: UserDefaults.standard.string(forKey: FlowDictation.keyKey) ?? "") ?? .rightOption {
+        didSet {
+            UserDefaults.standard.set(key.rawValue, forKey: Self.keyKey)
+            pill.model.keyLabel = key.label
+            cancelAll()
+            // The custom shortcut is watched by its own tap: put it in place, or take it away.
+            if isEnabled { removeMonitors(); installMonitors() }
+        }
+    }
+    /// The custom shortcut's keys, in the order they were pressed (FlowShortcut.order).
+    @Published private(set) var shortcutOrder: [UInt16] = FlowShortcut.order
+    var shortcut: Set<UInt16> { Set(shortcutOrder) }
+    /// While Settings records a new shortcut, the keys start nothing.
+    var recordingShortcut = false {
+        didSet {
+            guard recordingShortcut != oldValue else { return }
+            shortcutTap?.paused = recordingShortcut
+            if recordingShortcut { cancelAll() }
+        }
+    }
+    /// Where the pill lives: centred along the bottom, or on the left or right edge.
+    @Published var pillEdge: FlowPillEdge = FlowPillEdge(rawValue: UserDefaults.standard.string(forKey: "flowPillEdge") ?? "") ?? .bottom {
+        didSet {
+            UserDefaults.standard.set(pillEdge.rawValue, forKey: "flowPillEdge")
+            pill.setEdge(pillEdge)
+        }
+    }
+    /// One short press of the key starts hands-free dictation, instead of two.
+    @Published var oneTapHandsFree: Bool = UserDefaults.standard.bool(forKey: "flowOneTapHandsFree") {
+        didSet {
+            UserDefaults.standard.set(oneTapHandsFree, forKey: "flowOneTapHandsFree")
+            logic.oneTap = oneTapHandsFree
+        }
+    }
+    /// Whether macOS lets Coucou watch the key and paste (System Settings → Privacy & Security → Accessibility).
+    @Published private(set) var trusted: Bool = AXIsProcessTrusted()
+
+    private var logic = FlowKeyLogic()
+    private var monitors: [Any] = []
+    private var shortcutTap: FlowShortcutTap?
+    private var current: Listen?
+    private var startTask: Task<Void, Never>?
+    private var tickTask: Task<Void, Never>?
+    private var trustTask: Task<Void, Never>?
+    private let bands: FlowAudioBands
+    /// The system's Accessibility prompt is shown at most once per launch, when a paste could not happen.
+    private var promptedThisRun = false
+    /// Claude Code signed out with the key standing in: said once per launch, nothing was lost.
+    private var toldKeyStoodIn = false
+    let pill: FlowPillController
+
+    private init() {
+        let bands = FlowAudioBands()
+        self.bands = bands
+        pill = FlowPillController(bands: bands)
+        // The pill's buttons, under the pointer.
+        pill.setEdge(pillEdge)
+        logic.oneTap = oneTapHandsFree
+        pill.model.keyLabel = key.label
+        pill.model.dictate = { [weak self] in self?.startHandsFree() }
+        pill.model.finishDictation = { [weak self] in self?.finishFromPill() }
+        pill.model.cancelDictation = { [weak self] in self?.cancelAll() }
+        pill.model.toggleNote = { NoteTaker.shared.toggleFromPill() }
+        pill.model.openHub = { FlowHubController.shared.show() }
+    }
+
+    /// The pill's microphone: hands-free, as after a double tap, until ✓ or the key.
+    func startHandsFree() {
+        guard isEnabled, logic.phase == .idle, current == nil else { return }
+        logic.lock()
+        begin()
+        pill.model.phase = .locked
+    }
+
+    /// The pill's ✓: stop listening and paste.
+    func finishFromPill() {
+        guard logic.phase == .locked else { return }
+        logic.reset()
+        finish()
+    }
+
+    /// A new custom shortcut, recorded in Settings: Flow uses it from now on.
+    func setShortcut(_ keys: [UInt16]) {
+        FlowShortcut.order = keys
+        shortcutOrder = keys
+        key = .custom                    // labels, the pill, and the tap with the new keys
+    }
+
+    /// At launch: listens for the key if Flow dictation is on.
+    func start() {
+        SystemMute.shared.restoreLeftover()   // a dictation cut short by a crash left the Mac muted
+        refresh()
+        if isEnabled, FlowStore.shared.engine == .parakeet { Parakeet.shared.preload() }
+    }
+
+    func refresh() {
+        removeMonitors()
+        trusted = AXIsProcessTrusted()
+        pill.setEnabled(isEnabled)
+        guard isEnabled else {
+            cancelAll()
+            trustTask?.cancel(); trustTask = nil
+            return
+        }
+        installMonitors()
+        if !trusted { waitForTrust() }
+    }
+
+    func askForAccessibility() {
+        let options = ["AXTrustedCheckOptionPrompt": true] as CFDictionary
+        trusted = AXIsProcessTrustedWithOptions(options)
+    }
+
+    /// Reads the permission again (Settings shows it; a new build of Coucou loses it, see flow.accessibility).
+    /// Once it is there, the monitors are reinstalled so the global one starts getting Esc and the other keys.
+    func recheckTrust() {
+        let now = AXIsProcessTrusted()
+        guard now != trusted else { return }
+        trusted = now
+        guard isEnabled else { return }
+        removeMonitors()
+        installMonitors()
+        if !now { waitForTrust() }
+    }
+
+    func openAccessibilitySettings() {
+        if let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility") {
+            NSWorkspace.shared.open(url)
+        }
+    }
+
+    // MARK: - The key
+
+    private func installMonitors() {
+        // A global monitor sees the key in other apps, a local one while Coucou itself is in front.
+        if let global = NSEvent.addGlobalMonitorForEvents(matching: [.flagsChanged, .keyDown], handler: { [weak self] event in
+            let info = (event.type, event.keyCode, event.modifierFlags,
+                        event.type == .keyDown ? event.charactersIgnoringModifiers : nil)
+            MainActor.assumeIsolated { self?.handle(type: info.0, keyCode: info.1, flags: info.2, characters: info.3) }
+        }) { monitors.append(global) }
+        if let local = NSEvent.addLocalMonitorForEvents(matching: [.flagsChanged, .keyDown], handler: { [weak self] event in
+            let info = (event.type, event.keyCode, event.modifierFlags,
+                        event.type == .keyDown ? event.charactersIgnoringModifiers : nil)
+            MainActor.assumeIsolated { self?.handle(type: info.0, keyCode: info.1, flags: info.2, characters: info.3) }
+            return event
+        }) { monitors.append(local) }
+        // A custom shortcut: held and released like the key, its own key kept from the app in front.
+        // Esc, ⌃⌘V and the other keys still come through the monitors above.
+        if key == .custom, !shortcut.isEmpty {
+            let tap = FlowShortcutTap(keys: shortcut)
+            tap.onDown = { [weak self] in
+                guard let self, !self.recordingShortcut else { return }
+                self.apply(self.logic.keyDown(at: ProcessInfo.processInfo.systemUptime))
+            }
+            tap.onUp = { [weak self] in
+                guard let self, !self.recordingShortcut else { return }
+                self.apply(self.logic.keyUp(at: ProcessInfo.processInfo.systemUptime))
+            }
+            tap.paused = recordingShortcut
+            if tap.start() { shortcutTap = tap }
+        }
+    }
+
+    private func removeMonitors() {
+        monitors.forEach { NSEvent.removeMonitor($0) }
+        monitors.removeAll()
+        shortcutTap?.stop()
+        shortcutTap = nil
+    }
+
+    /// Until macOS trusts Coucou, the global monitor gets nothing: check again every 2 s and
+    /// reinstall the monitors once it does.
+    private func waitForTrust() {
+        trustTask?.cancel()
+        trustTask = Task { @MainActor [weak self] in
+            while !Task.isCancelled {
+                try? await Task.sleep(for: .seconds(2))
+                guard let self, self.isEnabled else { return }
+                if AXIsProcessTrusted() {
+                    self.trusted = true
+                    self.removeMonitors()
+                    self.installMonitors()
+                    return
+                }
+            }
+        }
+    }
+
+    /// ⌃⌘V: the last dictation, pasted again.
+    static func isPasteAgain(characters: String?, flags: NSEvent.ModifierFlags) -> Bool {
+        let mods = flags.intersection([.command, .control, .option, .shift])
+        return mods == [.command, .control] && characters?.lowercased() == "v"
+    }
+
+    /// Pastes the last dictation again (⌃⌘V, or the button of the history).
+    func pasteAgain(_ text: String? = nil) {
+        guard let text = text ?? FlowStore.shared.lastText, !text.isEmpty else { return }
+        switch FlowPaste.insert(text) {
+        case .pasted:   pill.flash(.pastedAgain)
+        case .noAccess: announceNoAccess()
+        case .noField:  announceNoField(text)
+        }
+    }
+
+    private func handle(type: NSEvent.EventType, keyCode: UInt16, flags: NSEvent.ModifierFlags, characters: String?) {
+        guard !recordingShortcut else { return }
+        let now = ProcessInfo.processInfo.systemUptime
+        switch type {
+        case .keyDown:
+            if keyCode == UInt16(kVK_Escape) { apply(logic.escape()) }
+            else if logic.phase == .idle, Self.isPasteAgain(characters: characters, flags: flags) { pasteAgain() }
+            else { apply(logic.otherKey()) }
+        case .flagsChanged where keyCode == key.keyCode:
+            apply(key.isDown(flags) ? logic.keyDown(at: now) : logic.keyUp(at: now))
+        default:
+            break
+        }
+    }
+
+    private func apply(_ action: FlowKeyLogic.Action) {
+        switch action {
+        case .none:    break
+        case .start:   begin()
+        case .restart: abort(); begin()
+        case .lock:    pill.model.phase = .locked
+        case .finish:  finish()
+        case .cancel:  abort()
+        }
+        if case .tapWait(let until) = logic.phase { scheduleTick(at: until) }
+    }
+
+    private func scheduleTick(at until: Double) {
+        tickTask?.cancel()
+        let wait = max(0, until - ProcessInfo.processInfo.systemUptime) + 0.02
+        tickTask = Task { @MainActor [weak self] in
+            try? await Task.sleep(for: .seconds(wait))
+            guard !Task.isCancelled, let self else { return }
+            self.apply(self.logic.tick(at: ProcessInfo.processInfo.systemUptime))
+        }
+    }
+
+    // MARK: - Listening
+
+    /// One listen, from the key press to the paste. Cancelling it drops its words.
+    @MainActor private final class Listen {
+        /// The Mac's recognizer (its newer model when it knows the languages), or Parakeet when it
+        /// is chosen and downloaded. The Mac's is picked when the listen starts.
+        private(set) var apple: MacDictation?
+        /// `AnalyzerDictation`, kept untyped so Listen stays available before macOS 26.
+        private(set) var analyzer: AnyObject?
+        let parakeet: ParakeetDictation?
+        var cancelled = false
+        /// The app the words go to, seen when the key went down.
+        let app = NSWorkspace.shared.frontmostApplication
+        let startedAt = Date()
+        var stoppedAt: Date?
+
+        init(useParakeet: Bool) {
+            parakeet = useParakeet ? ParakeetDictation() : nil
+        }
+
+        var isRecording: Bool {
+            if #available(macOS 26.0, *), let analyzer = analyzer as? AnalyzerDictation { return analyzer.isRecording }
+            return apple?.isRecording ?? parakeet?.isRecording ?? false
+        }
+
+        func start(bands: FlowAudioBands) async {
+            if let parakeet {
+                parakeet.bands = bands
+                await parakeet.start()
+                return
+            }
+            if #available(macOS 26.0, *) {
+                let language = UserDefaults.standard.string(forKey: MacDictation.languageKey) ?? MacDictation.automatic
+                if let locales = await AnalyzerDictation.locales(for: language) {
+                    let analyzer = AnalyzerDictation(locales: locales)
+                    analyzer.bands = bands
+                    self.analyzer = analyzer
+                    await analyzer.start()
+                    if analyzer.isRecording || cancelled { return }
+                    // The newer model couldn't start: the Mac's recognizer listens instead.
+                    self.analyzer = nil
+                }
+            }
+            let apple = MacDictation()
+            apple.bands = bands
+            self.apple = apple
+            await apple.start(from: "")
+        }
+
+        func finish() async -> String {
+            if #available(macOS 26.0, *), let analyzer = analyzer as? AnalyzerDictation { return await analyzer.finish() }
+            if let apple { return await apple.finish() }
+            if let parakeet { return await parakeet.finish() }
+            return ""
+        }
+
+        func stop() {
+            if #available(macOS 26.0, *), let analyzer = analyzer as? AnalyzerDictation { analyzer.stop() }
+            apple?.stop()
+            parakeet?.stop()
+        }
+    }
+
+    private func begin() {
+        // After this key event is handled: a permission granted meanwhile reinstalls the monitors.
+        Task { @MainActor [weak self] in self?.recheckTrust() }
+        let listen = Listen(useParakeet: FlowStore.shared.engine == .parakeet && Parakeet.shared.isReady)
+        current = listen
+        FlowPaste.wakeAccessibility(of: listen.app)
+        bands.reset()
+        pill.listen()
+        SoundEngine.shared.play("blip")
+        // Once the blip is heard, everything else the Mac plays goes quiet (videos, music, a
+        // call…) so the microphone hears only you.
+        SystemMute.shared.engage(after: .milliseconds(150))
+        let bands = self.bands
+        startTask = Task { @MainActor [weak self] in
+            await listen.start(bands: bands)
+            guard let self else { return }
+            if listen.cancelled { listen.stop(); return }      // cancelled while the mic opened
+            if !listen.isRecording, self.current === listen {
+                // No permission, no recognizer for these languages, or no microphone.
+                self.logic.reset()
+                self.current = nil
+                SystemMute.shared.release(after: .zero)
+                self.pill.flash(.failed)
+                self.pill.announce(FlowAnnouncement(symbol: "mic.slash.fill", tint: "#FF6B6B", text: String(localized: "flow.ann.mic"),
+                                                    action: String(localized: "flow.ann.settings"))) {
+                    if let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Microphone") {
+                        NSWorkspace.shared.open(url)
+                    }
+                }
+            }
+        }
+    }
+
+    private func finish() {
+        guard let listen = current else { pill.rest(); return }
+        pill.model.phase = .thinking
+        listen.stoppedAt = Date()
+        let opening = startTask
+        Task { @MainActor [weak self] in
+            await opening?.value
+            // The key often comes up while the last word is still being said: keep listening a
+            // moment so it makes it in.
+            try? await Task.sleep(for: .milliseconds(Self.tailMilliseconds))
+            guard !listen.cancelled else { return }
+            let heard = await listen.finish().trimmingCharacters(in: .whitespacesAndNewlines)
+            // The microphone is closed: the Mac's sound comes back, unless another listen has begun.
+            if self?.current == nil || self?.current === listen { SystemMute.shared.release() }
+            guard let self, !listen.cancelled else { return }
+            // Replacements and the dictionary, then Claude's clean-up when it is on, then the snippets.
+            let store = FlowStore.shared
+            let prepared = store.prepare(heard)
+            var body = prepared.text
+            // Prompt mode or translation: one call to Claude does the clean-up too.
+            let language = FlowLanguages.language(store.translateTo)
+            var shaping: FlowCleanup.Outcome?
+            if (store.promptMode || language != nil), !body.isEmpty {
+                let shaped = await FlowCleanup.transform(body, prompt: store.promptMode, language: language,
+                                                         style: store.style(for: listen.app?.bundleIdentifier),
+                                                         app: listen.app?.localizedName, words: store.words)
+                guard !listen.cancelled else { return }
+                if FlowText.keepsMarks(shaped.text, prepared.snippets) { body = shaped.text }
+                shaping = shaped
+            } else if store.cleanupEnabled, !body.isEmpty {
+                let cleaned = await FlowCleanup.clean(body, style: store.style(for: listen.app?.bundleIdentifier),
+                                                      app: listen.app?.localizedName, words: store.words)
+                guard !listen.cancelled else { return }
+                if FlowText.keepsMarks(cleaned.text, prepared.snippets) { body = cleaned.text }
+                shaping = cleaned
+            }
+            let text = FlowText.finish(body, snippets: prepared.snippets)
+            if !text.isEmpty {
+                let spoken = (listen.stoppedAt ?? Date()).timeIntervalSince(listen.startedAt)
+                // What would have gone in without Claude, kept beside the rewrite in the history.
+                let original = FlowText.finish(prepared.text, snippets: prepared.snippets)
+                store.record(text: text, heard: original == text ? nil : original,
+                             app: listen.app?.localizedName, seconds: spoken)
+            }
+            // A new listen may have begun meanwhile: its pill is left alone, but these words still go in.
+            let latest = self.current === listen
+            if latest { self.current = nil }
+            guard !text.isEmpty else { if latest { self.pill.rest() }; return }
+            // A capture waiting on the island (⌘⇧S): the image goes in first, then the words.
+            _ = await ScreenCapture.shared.pasteForDictation()
+            let result = FlowPaste.insert(text)
+            if latest { self.pill.rest() }
+            switch result {
+            case .pasted:
+                if latest, let shaping, let tool = shaping.signedOut {
+                    self.announceSignedOut(tool, keyStoodIn: shaping.keyStoodIn)
+                }
+            case .noAccess:
+                // No Accessibility: the words wait on the clipboard, and macOS is asked once.
+                self.trusted = false
+                if !self.promptedThisRun { self.promptedThisRun = true; self.askForAccessibility() }
+                self.waitForTrust()
+                self.announceNoAccess()
+            case .noField:
+                self.announceNoField(text)
+            }
+        }
+    }
+
+    /// Claude Code is signed out, so Claude's clean-up was lost (or the key did it instead, said once
+    /// per launch): the pill says how to sign in again.
+    private func announceSignedOut(_ tool: SubscriptionCLI, keyStoodIn: Bool) {
+        if keyStoodIn {
+            guard !toldKeyStoodIn else { return }
+            toldKeyStoodIn = true
+        }
+        let format = keyStoodIn ? String(localized: "flow.ann.signed-out-key %@ %@")
+                                : String(localized: "flow.ann.signed-out %@ %@")
+        pill.announce(FlowAnnouncement(symbol: "person.crop.circle.badge.exclamationmark",
+                                       text: String(format: format, tool.displayName, tool.signIn),
+                                       action: String(localized: "flow.ann.terminal"))) {
+            NSWorkspace.shared.open(URL(fileURLWithPath: "/System/Applications/Utilities/Terminal.app"))
+        }
+    }
+
+    /// The words could not be pasted: they are on the clipboard, and the pill says how to get them in.
+    private func announceNoAccess() {
+        pill.announce(FlowAnnouncement(symbol: "lock.fill", text: String(localized: "flow.ann.no-access"),
+                                       action: String(localized: "flow.ann.allow"))) { [weak self] in
+            self?.openAccessibilitySettings()
+        }
+    }
+
+    /// Nowhere to paste: the pill grows with the words (three lines at most) and a Copy button, so
+    /// they can be pasted by hand. It stays 20 s, longer while the pointer is on it.
+    private func announceNoField(_ text: String) {
+        pill.announce(FlowAnnouncement(symbol: "text.cursor", text: String(localized: "flow.ann.no-field-title"),
+                                       action: String(localized: "hub.copy"), quote: text),
+                      for: 20, closesAfter: 0.9) {
+            let board = NSPasteboard.general
+            board.clearContents()
+            board.setString(text, forType: .string)
+        }
+    }
+
+    private func abort() {
+        tickTask?.cancel()
+        if let listen = current {
+            listen.cancelled = true
+            listen.stop()
+        }
+        current = nil
+        SystemMute.shared.release()
+        pill.rest()
+    }
+
+    private func cancelAll() {
+        logic.reset()
+        abort()
+    }
+}
+
+// MARK: - Paste
+
+/// Puts the words where the cursor is: on the clipboard, then ⌘V, then the clipboard gets back what it held.
+enum FlowPaste {
+    /// Marks the words as passing through, so clipboard managers leave them out of their history
+    /// (the nspasteboard.org convention).
+    static let transientType = NSPasteboard.PasteboardType("org.nspasteboard.TransientType")
+    static let autoGeneratedType = NSPasteboard.PasteboardType("org.nspasteboard.AutoGeneratedType")
+
+    enum Result {
+        /// ⌘V was sent where you type.
+        case pasted
+        /// No Accessibility permission: the words are only on the clipboard.
+        case noAccess
+        /// Nothing seems to take text where the focus is: ⌘V was sent anyway, and the words stay on
+        /// the clipboard for you to paste.
+        case noField
+    }
+
+    @MainActor static func insert(_ text: String) -> Result {
+        let board = NSPasteboard.general
+        let saved = snapshot(board)
+        board.clearContents()
+        board.declareTypes([.string, transientType, autoGeneratedType], owner: nil)
+        board.setString(text, forType: .string)
+        board.setData(Data(), forType: transientType)
+        board.setData(Data(), forType: autoGeneratedType)
+        guard AXIsProcessTrusted() else { return .noAccess }
+        let field = focusTakesText()
+
+        let source = CGEventSource(stateID: .combinedSessionState)
+        let v = vKeyCode()
+        let down = CGEvent(keyboardEventSource: source, virtualKey: v, keyDown: true)
+        let up = CGEvent(keyboardEventSource: source, virtualKey: v, keyDown: false)
+        down?.flags = .maskCommand
+        up?.flags = .maskCommand
+        down?.post(tap: .cghidEventTap)
+        up?.post(tap: .cghidEventTap)
+
+        // No text field: the words stay on the clipboard.
+        if field == false { return .noField }
+        // Give the app time to read the clipboard, then put back what was there, unless something
+        // else was copied meanwhile.
+        let count = board.changeCount
+        Task { @MainActor in
+            try? await Task.sleep(for: .milliseconds(700))
+            guard board.changeCount == count else { return }
+            restore(saved, to: board)
+        }
+        return .pasted
+    }
+
+    /// Whether the focused element takes text: true for a text field, false only when the focus is
+    /// clearly somewhere that never takes text (the desktop, a list, a button…), nil when it can't
+    /// be told (then the paste is trusted).
+    ///
+    /// Chromium and Electron apps (Claude, Slack, VS Code, Chrome…) build their accessibility
+    /// lazily: while their text box has the focus they often report no focused element, or a plain
+    /// group or window. Those used to count as "no text field" and the pill said the words were
+    /// only copied when they had in fact been pasted.
+    @MainActor static func focusTakesText() -> Bool? {
+        let front = NSWorkspace.shared.frontmostApplication?.bundleIdentifier ?? "?"
+        let browser = browsers.contains(front)
+        let system = AXUIElementCreateSystemWide()
+        var value: CFTypeRef?
+        let status = AXUIElementCopyAttributeValue(system, kAXFocusedUIElementAttribute as CFString, &value)
+        if status == .noValue {
+            // Nothing focused: only the desktop, and a browser whose accessibility is awake, say so reliably.
+            return front == "com.apple.finder" || browser ? false : nil
+        }
+        guard status == .success, let value, CFGetTypeID(value) == AXUIElementGetTypeID() else { return nil }
+        let element = value as! AXUIElement
+        var roleValue: CFTypeRef?
+        AXUIElementCopyAttributeValue(element, kAXRoleAttribute as CFString, &roleValue)
+        let role = roleValue as? String
+        // In a web browser the page itself has the focus (a YouTube video, an article): nothing to
+        // type in. A field of the page reports its own role (AXTextField, AXTextArea for an editor).
+        if browser, role == "AXWebArea" {
+            appendAppLog("nb.log", "[Flow] no text field in \(front) (the page): the words are shown with Copy")
+            return false
+        }
+        let textRoles: Set<String> = ["AXTextField", "AXTextArea", "AXComboBox", "AXSearchField", "AXWebArea"]
+        if let role, textRoles.contains(role) { return true }
+        var settable: DarwinBoolean = false
+        if AXUIElementIsAttributeSettable(element, kAXValueAttribute as CFString, &settable) == .success, settable.boolValue {
+            return true
+        }
+        var range: CFTypeRef?
+        if AXUIElementCopyAttributeValue(element, kAXSelectedTextRangeAttribute as CFString, &range) == .success { return true }
+        // Only roles that never take text say "no field"; any other one (AXGroup, AXWindow,
+        // AXUnknown… what web views often report) is trusted.
+        let notText: Set<String> = ["AXList", "AXOutline", "AXTable", "AXRow", "AXCell", "AXBrowser", "AXImage",
+                                    "AXButton", "AXCheckBox", "AXRadioButton", "AXSlider", "AXPopUpButton",
+                                    "AXMenu", "AXMenuItem", "AXMenuBar", "AXMenuBarItem", "AXDockItem"]
+        if let role, notText.contains(role) || browser {
+            appendAppLog("nb.log", "[Flow] no text field in \(front) (\(role)): the words are shown with Copy")
+            return false
+        }
+        return nil
+    }
+
+    /// Web browsers: their pages' accessibility is awake while Flow listens (see wakeAccessibility),
+    /// so what they report can be trusted. Electron apps (Claude, Slack, VS Code…) are not in it.
+    static let browsers: Set<String> = [
+        "com.apple.Safari", "com.apple.SafariTechnologyPreview", "com.google.Chrome", "com.google.Chrome.beta",
+        "com.google.Chrome.canary", "company.thebrowser.Browser", "company.thebrowser.dia", "com.brave.Browser",
+        "com.microsoft.edgemac", "org.mozilla.firefox", "com.operasoftware.Opera", "com.vivaldi.Vivaldi",
+        "app.zen-browser.zen", "org.chromium.Chromium",
+    ]
+    @MainActor private static var woken: Set<pid_t> = []
+
+    /// Chromium browsers build the accessibility of their pages only when asked: when Flow starts
+    /// listening in one, it is turned on (once per browser launch), so by the paste the focused
+    /// element is the real one, a field of the page or the page itself.
+    @MainActor static func wakeAccessibility(of app: NSRunningApplication?) {
+        guard let app, let id = app.bundleIdentifier, browsers.contains(id), AXIsProcessTrusted(),
+              !woken.contains(app.processIdentifier) else { return }
+        woken.insert(app.processIdentifier)
+        let element = AXUIElementCreateApplication(app.processIdentifier)
+        AXUIElementSetAttributeValue(element, "AXManualAccessibility" as CFString, kCFBooleanTrue)
+    }
+
+    /// The key that types "v" with ⌘ held in the current keyboard layout: the same key on QWERTY
+    /// and AZERTY, another one on Dvorak. Layouts with no "v" (Russian, Greek…) fall back to the
+    /// QWERTY key, which macOS uses for shortcuts there.
+    @MainActor static func vKeyCode() -> CGKeyCode {
+        let fallback = CGKeyCode(kVK_ANSI_V)
+        guard let source = TISCopyCurrentKeyboardLayoutInputSource()?.takeRetainedValue(),
+              let raw = TISGetInputSourceProperty(source, kTISPropertyUnicodeKeyLayoutData) else { return fallback }
+        let data = Unmanaged<CFData>.fromOpaque(raw).takeUnretainedValue() as Data
+        let commandState = UInt32((cmdKey >> 8) & 0xFF)
+        let found: CGKeyCode? = data.withUnsafeBytes { bytes in
+            guard let layout = bytes.baseAddress?.assumingMemoryBound(to: UCKeyboardLayout.self) else { return nil }
+            for code in 0..<128 {
+                var dead: UInt32 = 0
+                var length = 0
+                var chars = [UniChar](repeating: 0, count: 4)
+                let status = UCKeyTranslate(layout, UInt16(code), UInt16(kUCKeyActionDisplay), commandState,
+                                            UInt32(LMGetKbdType()), OptionBits(1 << kUCKeyTranslateNoDeadKeysBit),
+                                            &dead, 4, &length, &chars)
+                if status == noErr, length == 1, chars[0] == 0x76 { return CGKeyCode(code) }   // "v"
+            }
+            return nil
+        }
+        return found ?? fallback
+    }
+
+    private static func snapshot(_ board: NSPasteboard) -> [[NSPasteboard.PasteboardType: Data]] {
+        (board.pasteboardItems ?? []).map { item in
+            var out: [NSPasteboard.PasteboardType: Data] = [:]
+            for type in item.types { if let data = item.data(forType: type) { out[type] = data } }
+            return out
+        }
+    }
+
+    private static func restore(_ items: [[NSPasteboard.PasteboardType: Data]], to board: NSPasteboard) {
+        board.clearContents()
+        guard !items.isEmpty else { return }
+        let objects: [NSPasteboardItem] = items.map { entry in
+            let item = NSPasteboardItem()
+            for (type, data) in entry { item.setData(data, forType: type) }
+            return item
+        }
+        board.writeObjects(objects)
+    }
+}
+#endif
