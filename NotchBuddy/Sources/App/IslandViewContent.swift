@@ -433,6 +433,9 @@ struct EmptyStateView: View {
 
 struct ApprovalView: View {
     @ObservedObject var state: AppState
+    @ObservedObject private var shield = AgentShield.shared
+    @ObservedObject private var explainer = RiskExplainer.shared
+    @ObservedObject private var git = GitStatusStore.shared
 
     var approval: ApprovalInfo? { state.pendingApproval }
 
@@ -450,6 +453,8 @@ struct ApprovalView: View {
         let isPlan = approval?.tool == "ExitPlanMode"
         ZStack {
             CardBackground(wash: .amber)
+                .onAppear { if let c = approval?.cwd, !c.isEmpty { git.refresh(c) } }
+                .onChange(of: approval?.id) { _, _ in if let c = approval?.cwd, !c.isEmpty { git.refresh(c) } }
             VStack(alignment: .leading, spacing: 5) {
                 HStack(spacing: 7) {
                     AgentWho(task: asker, label: isPlan ? "has a plan ready" : "needs permission")
@@ -468,9 +473,10 @@ struct ApprovalView: View {
                 HStack(spacing: 8) {
                     CodeBlock(text: approval?.command ?? approval?.tool ?? "…")
                         .layoutPriority(1)
-                    // What the action can do, in plain words (the guard's reason).
+                    // What the action can do, in plain words (the guard's reason), or the local
+                    // model's explanation once asked.
                     if let approval, !isPlan {
-                        Text(verbatim: RiskBadge.explanation(
+                        Text(verbatim: explainer.answers[approval.id] ?? RiskBadge.explanation(
                             CommandRisk.assess(tool: approval.tool, command: approval.command).reason))
                             .font(.system(size: 10))
                             .foregroundColor(Color(hex: "#8E939C"))
@@ -498,6 +504,23 @@ struct ApprovalView: View {
                         }
                         PrimaryButton("Allow") {
                             HookServer.shared.sendApprovalDecision("allow", for: shownId)
+                        }
+                        // Risky, in a Git project: save the project first, then allow.
+                        if let a = approval, !a.cwd.isEmpty, git.summary(for: a.cwd) != nil,
+                           CommandRisk.assess(tool: a.tool, command: a.command).level == .high {
+                            SecondaryButton(verbatim: shield.savingNet
+                                ? String(localized: "net.saving", defaultValue: "Saving…")
+                                : String(localized: "net.allow", defaultValue: "Allow with a net")) {
+                                shield.allowWithNet(approvalId: shownId, cwd: a.cwd)
+                            }
+                            .help(String(localized: "net.help", defaultValue: "Rafiq saves the project's files first (a Git snapshot kept aside, your branch untouched), then allows. You can go back to it from the session card."))
+                        }
+                        if let a = approval, RiskExplainer.available, explainer.answers[a.id] == nil {
+                            SecondaryButton(verbatim: explainer.loading.contains(a.id)
+                                ? String(localized: "why.loading", defaultValue: "Thinking…")
+                                : String(localized: "why.ask", defaultValue: "Why?")) {
+                                explainer.explain(id: a.id, tool: a.tool, command: a.command)
+                            }
                         }
                         // Codex, Copilot CLI and Muse Code do not support updatedPermissions
                         let asking = PillCatalog.basePillId(approval?.pillId ?? "")

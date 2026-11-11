@@ -100,7 +100,7 @@ final class SettingsSearch: ObservableObject {
             e("general.demo", .general, "demo.groupbox.title"),
             e("general.sound", .general, "Sound", ["Enable sounds", "Volume", "Open sounds folder", "Reload sounds"]),
             e("general.behavior", .general, "Behavior", ["Open on hover", "Close after", "Hide after", "alerts.all-pills"]),
-            e("general.watch", .general, "watch.title", ["watch.prayer-quiet", "watch.brief", "watch.osv", "watch.verse"]),
+            e("general.watch", .general, "watch.title", ["watch.prayer-quiet", "watch.brief", "watch.osv", "watch.verse", "watch.canary", "watch.absence", "watch.care", "watch.speak"]),
             e("general.display", .general, "Display", ["Show Rafiq on", "Screen with the notch", "Main screen (menu bar)", "Follow the mouse",
                                                      "island.position", "island.position.top-left", "island.position.top-right",
                                                      "island.position.bottom-left", "island.position.bottom-right"]),

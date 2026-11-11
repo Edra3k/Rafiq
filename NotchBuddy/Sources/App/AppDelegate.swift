@@ -377,6 +377,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         CryptoController.shared.start()
         CoucoudoroController.shared.start()
         PrayerController.shared.start()
+        AgentShield.shared.syncCanary()
+        AgentShield.shared.startCare()
         PortfolioController.shared.start()
     }
 }

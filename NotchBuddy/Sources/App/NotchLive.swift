@@ -524,6 +524,7 @@ struct SessionDetailsView: View {
     let openTarget: () -> Void
     @ObservedObject private var riskLog = CommandRiskLog.shared
     @ObservedObject private var git = GitStatusStore.shared
+    @ObservedObject private var shield = AgentShield.shared
 
     var body: some View {
         let diffs = state.sessionDiffs[task.pill] ?? []
@@ -584,6 +585,11 @@ struct SessionDetailsView: View {
                 if let cwd = task.sessionCwd, !cwd.isEmpty {
                     shortcut("folder", String(localized: "session.folder", defaultValue: "Folder")) {
                         NSWorkspace.shared.open(URL(fileURLWithPath: cwd))
+                    }
+                    if shield.net(for: cwd) != nil {
+                        shortcut("arrow.uturn.backward", String(localized: "net.back", defaultValue: "Back to the net")) {
+                            AgentShield.shared.restore(cwd: cwd)
+                        }
                     }
                 }
             }

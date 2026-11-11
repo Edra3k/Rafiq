@@ -111,7 +111,7 @@ final class HookServer: @unchecked Sendable {
                                               command: head.command, inputKey: head.inputKey,
                                               pillId: head.displayPill, id: head.id,
                                               queueCount: approvals.count,
-                                              projectName: head.projectName)
+                                              projectName: head.projectName, cwd: head.cwd)
         state.isPinned = true
         // Approval always forces the island open — the user must be able to respond.
         // Save the focus once, so it comes back when the last request is gone.
@@ -371,7 +371,7 @@ final class HookServer: @unchecked Sendable {
                                                   command: head.command, inputKey: head.inputKey,
                                                   pillId: head.displayPill, id: head.id,
                                                   queueCount: approvals.count,
-                                                  projectName: head.projectName)
+                                                  projectName: head.projectName, cwd: head.cwd)
             state.isPinned = true
             withAnimation(.spring(response: 0.5, dampingFraction: 0.72)) { state.focusId = head.displayPill }
             expandIfNeeded(to: .approval)
@@ -792,6 +792,7 @@ final class HookServer: @unchecked Sendable {
             let label = localizedStep(tool: tool, input: input)
             // The agent guard rates it for the open card's badge (information only).
             CommandRiskLog.shared.record(pill: agentId, tool: tool, input: input)
+            AgentShield.shared.checkCanary(tool: tool, input: input)
             // A secret in what the agent is about to write: a card (the write still happens).
             if let written = SecretScanner.writtenText(tool: tool, input: input) {
                 let hits = SecretScanner.scan(written)
@@ -817,6 +818,8 @@ final class HookServer: @unchecked Sendable {
             // Live diff for Edit / MultiEdit / Write
             let diffTool = payload["tool_name"] as? String ?? ""
             let diffInput = payload["tool_input"] as? [String: Any] ?? [:]
+            // What the tool brought back: traps for the agent, or the canary's key.
+            AgentShield.shared.inspect(tool: diffTool, input: diffInput, response: payload["tool_response"], pill: agentId)
             if let diff = buildFileDiff(tool: diffTool, input: diffInput, pillId: agentId) {
                 let idx = state.appendSessionDiff(diff, for: agentId)
                 step(String.makeDiffStep(filename: diff.name, added: diff.added, removed: diff.removed, diffId: idx))
@@ -850,6 +853,7 @@ final class HookServer: @unchecked Sendable {
             // shows the session that finished (SessionBoard.finishMoment), then the busy one again.
             _ = sessions.endTurn(pill: agentId, session: sessionId)
             CommandRiskLog.shared.clear(pill: agentId)
+            AgentShield.shared.sessionFinished(name: projectName.isEmpty ? "Claude" : projectName, pill: agentId)
             GitStatusStore.shared.refresh(cwd, force: true)
             let rawFinal = (payload["last_assistant_message"] as? String)
                 ?? (payload["message"] as? String) ?? ""
@@ -1030,6 +1034,8 @@ final class HookServer: @unchecked Sendable {
         case .approval, .question, .finished, .error, .confused: isAlert = true
         default: isAlert = false
         }
+        // Away from the Mac: counted for the card when you come back (they still show).
+        if isAlert { AgentShield.shared.noteAlert(view) }
         // While you pray, alerts are counted for the card after the prayer, not shown.
         if isAlert, state.mode != .expanded, PrayerQuiet.shared.isActive {
             PrayerQuiet.shared.note(view, pill: state.focusId)
@@ -1039,7 +1045,10 @@ final class HookServer: @unchecked Sendable {
             // Approval and question always win; other alerts are blocked while a card is showing
             if view == .approval || view == .question {
                 state.view = view
-            } else if isAlert && state.pendingApproval == nil {
+            } else if isAlert && state.pendingApproval == nil
+                        && !(state.view == .digest && DigestCenter.shared.holdsIsland) {
+                // A Digest card being read (a secret, the canary…) is not covered by a
+                // "finished" or an error: they still count on their pills.
                 state.view = view
             }
         } else if isAlert {

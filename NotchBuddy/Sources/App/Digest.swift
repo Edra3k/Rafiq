@@ -12,7 +12,7 @@ import SwiftUI
 // copy or dismiss.
 
 struct Digest: Identifiable, Equatable {
-    enum Kind: Equatable { case prayer, evening, cve, secret, verse }
+    enum Kind: Equatable { case prayer, evening, cve, secret, verse, injection, canary, away, care }
 
     struct Tile: Equatable {
         var value: String
@@ -62,8 +62,8 @@ struct Digest: Identifiable, Equatable {
     var titleColor: Color {
         switch kind {
         case .prayer, .verse:  return RafiqLook.gold
-        case .evening: return Color(hex: "#F5F6F8")
-        case .cve, .secret: return Color(hex: "#F7C1C1")
+        case .evening, .away, .care: return Color(hex: "#F5F6F8")
+        case .cve, .secret, .injection, .canary: return Color(hex: "#F7C1C1")
         }
     }
 }
@@ -76,7 +76,7 @@ final class DigestCenter: ObservableObject {
     private var waiting: [Digest] = []
 
     /// A card up holds the island open like an approval, except the verse of the day.
-    var holdsIsland: Bool { current != nil && current?.kind != .verse }
+    var holdsIsland: Bool { current != nil && current?.kind != .verse && current?.kind != .care }
 
     /// Shows the card now if none is up, else after the ones before it.
     func show(_ digest: Digest) {
@@ -164,7 +164,13 @@ struct DigestCardView: View {
         content
             // The verse of the day goes away with the island (it never holds it open).
             .onChange(of: state.mode) { _, mode in
-                if mode != .expanded, center.current?.kind == .verse { center.dismiss() }
+                if mode != .expanded, center.current?.kind == .verse || center.current?.kind == .care { center.dismiss() }
+            }
+            // Covered by another card (finished, error) that then went home: come back.
+            .onChange(of: state.view) { _, view in
+                if view == .overview, state.mode == .expanded, center.holdsIsland {
+                    DispatchQueue.main.async { center.resumeIfWaiting() }
+                }
             }
     }
 
@@ -254,7 +260,7 @@ struct DigestCardView: View {
     private var wash: CardBackground<EmptyView>.Wash? {
         switch center.current?.kind {
         case .prayer?, .verse?:  return .amber
-        case .cve?, .secret?: return .red
+        case .cve?, .secret?, .injection?, .canary?: return .red
         default: return .soft
         }
     }

@@ -64,6 +64,8 @@ struct ApprovalInfo: Sendable {
     var queueCount: Int = 1
     /// Project of the session that asks (several sessions can share one pill).
     var projectName: String = ""
+    /// The session's folder (Allow with a net saves this project first).
+    var cwd: String = ""
 }
 
 // MARK: - Pill badge (shown on pill edge when non-focused task has an alert)

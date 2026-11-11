@@ -166,6 +166,7 @@
 		4F4176856B544D8C620B6204 /* ConversationContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A67DA3B8EEF063C44E07F7E /* ConversationContext.swift */; };
 		4FD6E6E41082A1BB77A3629C /* MailHubPages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D5E43B1ACC9C77D4A75A3A2 /* MailHubPages.swift */; };
 		502F2B0D607C511DD3B836B3 /* VoiceSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4543CB771E0B723783F529E /* VoiceSettings.swift */; };
+		50E5CC3551D7F7C795BF07A8 /* AgentShield.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E5C3BB2378E8E6322860496 /* AgentShield.swift */; };
 		525FB188F09F68D26A9D587D /* VoiceCaptionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8FB03801C49690C3789EFD /* VoiceCaptionManager.swift */; };
 		52F0DF1FBCB522951910390E /* InstructionRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADC1FE5696B1075932D0B7C /* InstructionRunner.swift */; };
 		530443F46F896F037A56F663 /* HotKeyCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1218B86E249691AF44F819AC /* HotKeyCenter.swift */; };
@@ -177,6 +178,7 @@
 		56BE8C733F10A030A638FB60 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C1A7D5CBE2AC084A10C5FF3 /* SettingsView.swift */; };
 		56E12FFCAAB2C4F31600B0F8 /* FlowHubHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982CBB722685931BB8958162 /* FlowHubHome.swift */; };
 		57251211943B23F85582E786 /* ClaudeDesktopChatWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95FF987AE2A4E9EFB6A15519 /* ClaudeDesktopChatWatcher.swift */; };
+		587116CE452870A8D4AC2E36 /* InjectionScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14BB63F91734D6B0429B8C0 /* InjectionScanner.swift */; };
 		5970C8B051B6BE24FBF2A6F5 /* MacUpdateViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3C36DE7C1DC055250C811D /* MacUpdateViews.swift */; };
 		59FABCC0B6794FE95319825C /* CoucouNotificationContent.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = D6DF93125491729E14636AD8 /* CoucouNotificationContent.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		5A3B1EF40C3605DADF71846C /* CoucoudoroController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63757212F52E5CE6F98F36B /* CoucoudoroController.swift */; };
@@ -189,6 +191,7 @@
 		607E548D1DD274CD73FDC290 /* ColorHex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ACB4350729C6513824D1ADF /* ColorHex.swift */; };
 		60AAAA2CC93483A175CEE986 /* ReviewPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EBFF7097973CC22F3893694 /* ReviewPolicy.swift */; };
 		60E361FFE84C387E5E3ED1AA /* SoundEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE21C2B315D37AA70ED45E9 /* SoundEngine.swift */; };
+		611EE8C88E2405E42EC23111 /* InjectionScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14BB63F91734D6B0429B8C0 /* InjectionScanner.swift */; };
 		61CB7049490F61CFA1B36B64 /* AppLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F6D7015D6A77AA59323C0E7 /* AppLog.swift */; };
 		61F73B27A7E3AFF584B2CC22 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E4F18AA940EFF7E047B9F7 /* AppState.swift */; };
 		62C4EE3F74DAA59764729E62 /* UploadCanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B241B043223AFBBFB7418A5E /* UploadCanvasView.swift */; };
@@ -263,8 +266,10 @@
 		81250AE3E83493CF806D459B /* BotEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E6F5FC81429871B6F766A8 /* BotEngine.swift */; };
 		8173F93555ED400954AA1CB3 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097F57179CC066459E64303A /* AboutView.swift */; };
 		818E87607FD9F0CA5406BF35 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = B2AA83D80260660475FAB052 /* Localizable.xcstrings */; };
+		82C15FF6F730C6E17508B47E /* SafetyNet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E4681D3B1A3D6EB530CE6A /* SafetyNet.swift */; };
 		82E72E0AFCAB192D98AB2004 /* MochiActivityState.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE18399D1CD69468CCF57966 /* MochiActivityState.swift */; };
 		845D762E9F4F0AD0D5FCEDF4 /* BotEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E6F5FC81429871B6F766A8 /* BotEngine.swift */; };
+		8485D1F115432BA1E1A77250 /* SafetyNet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E4681D3B1A3D6EB530CE6A /* SafetyNet.swift */; };
 		8551E592C5FFC6A0A7458A26 /* TurnEndPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 787D306C2399FBAE8BBB86ED /* TurnEndPolicy.swift */; };
 		856B67334EC6DD09930AC0B8 /* SessionBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A869C1D5C97B68BC04E49FF6 /* SessionBoard.swift */; };
 		862CE6CB220D55E46F646DA9 /* GitHubPulse.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D3AD61802A32C4833F3EDA /* GitHubPulse.swift */; };
@@ -503,6 +508,7 @@
 		EF584BA65AA62FCABD6FB6B2 /* FlowKeyLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4983B1317913482E61EB344D /* FlowKeyLogic.swift */; };
 		EF9E6418C3F39F6FE88FD812 /* CoucouPhoneApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9CEB5655FCA197D6B10A91 /* CoucouPhoneApp.swift */; };
 		EFAA9936D5C9DE635CFBA2AB /* SharedSessions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1064AD8471C51AFF4F12258 /* SharedSessions.swift */; };
+		EFCC52C879537C493A0CFE94 /* AgentShield.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E5C3BB2378E8E6322860496 /* AgentShield.swift */; };
 		F032CA1CBF8253D9E3981A90 /* NoteAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E5A3ADB1304C23C4AEDD48 /* NoteAudio.swift */; };
 		F06EE0A97CB77096A337AA8B /* sounds in Resources */ = {isa = PBXBuildFile; fileRef = C066E2B991AA4F56B2724263 /* sounds */; };
 		F0B7062107F8A91394707706 /* ClaudeVoiceBrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE8C8C843B4B30C547FF64A /* ClaudeVoiceBrain.swift */; };
@@ -687,6 +693,7 @@
 		73FA4DF1BE5246CCFFB72E5C /* CodexPlanGauge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodexPlanGauge.swift; sourceTree = "<group>"; };
 		74146BD3F4B9884F6A43936F /* NoteModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteModels.swift; sourceTree = "<group>"; };
 		74BA58E1F273995F1C51AAAC /* CaptureCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureCardView.swift; sourceTree = "<group>"; };
+		75E4681D3B1A3D6EB530CE6A /* SafetyNet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafetyNet.swift; sourceTree = "<group>"; };
 		77A7538E542C7A0696EB3FF2 /* WhatsAppController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsAppController.swift; sourceTree = "<group>"; };
 		787D306C2399FBAE8BBB86ED /* TurnEndPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TurnEndPolicy.swift; sourceTree = "<group>"; };
 		7889BA1980AB9D261DDE8A25 /* VitalsHoverLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VitalsHoverLine.swift; sourceTree = "<group>"; };
@@ -726,6 +733,7 @@
 		9B66D0C664FB9FF74517AAF5 /* MacStubs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacStubs.swift; sourceTree = "<group>"; };
 		9D4F560E1BEFB7B9D5865101 /* WhatsAppGateway.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsAppGateway.swift; sourceTree = "<group>"; };
 		9DFD657366DCCC47D6C0FEAB /* SettingsSearchMatch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSearchMatch.swift; sourceTree = "<group>"; };
+		9E5C3BB2378E8E6322860496 /* AgentShield.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgentShield.swift; sourceTree = "<group>"; };
 		9EF1D0C0784ED873065DD8C0 /* PillSessionRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PillSessionRegistry.swift; sourceTree = "<group>"; };
 		9F6D7015D6A77AA59323C0E7 /* AppLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLog.swift; sourceTree = "<group>"; };
 		A12EC8F605BBC37F8223D7AA /* WakePhrase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WakePhrase.swift; sourceTree = "<group>"; };
@@ -815,6 +823,7 @@
 		EFE8C8C843B4B30C547FF64A /* ClaudeVoiceBrain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaudeVoiceBrain.swift; sourceTree = "<group>"; };
 		F0E2C3ACD815230A0ECAB014 /* EnergyVAD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyVAD.swift; sourceTree = "<group>"; };
 		F1064AD8471C51AFF4F12258 /* SharedSessions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedSessions.swift; sourceTree = "<group>"; };
+		F14BB63F91734D6B0429B8C0 /* InjectionScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InjectionScanner.swift; sourceTree = "<group>"; };
 		F1BD8F3CAA60CF37640759E1 /* NotchBuddyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotchBuddyApp.swift; sourceTree = "<group>"; };
 		F205F7AFCEAC73DFF69F0A25 /* MailPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailPlan.swift; sourceTree = "<group>"; };
 		F289B4DB7C57BC593C2E7B7F /* VoiceDataSources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceDataSources.swift; sourceTree = "<group>"; };
@@ -886,6 +895,7 @@
 		2D4550630644796DA0649B81 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				9E5C3BB2378E8E6322860496 /* AgentShield.swift */,
 				2EB772E4D3897977DF1791C8 /* AgyPermissionRules.swift */,
 				B580132E58253D7BE8C34A22 /* AnalyzerDictation.swift */,
 				192844E7299DEED5C2372067 /* AppDelegate.swift */,
@@ -949,6 +959,7 @@
 				C581F7B1A9F14B281B60063E /* GreetingCanvasView.swift */,
 				79D8DD79C3DD9BBC584B3CB2 /* HookServer.swift */,
 				1218B86E249691AF44F819AC /* HotKeyCenter.swift */,
+				F14BB63F91734D6B0429B8C0 /* InjectionScanner.swift */,
 				4A09E73F1E58019EF6EA2A62 /* IslandDisplayChoice.swift */,
 				41B5FC38A89178D5CEF108B0 /* IslandPlacement.swift */,
 				15A1A8206F73376F4CAF2057 /* IslandRootView.swift */,
@@ -994,6 +1005,7 @@
 				86D1099CC2AE61958DBCF570 /* QuickScreenshot.swift */,
 				78FB882D49084DEA6A10DB4D /* RecapStore.swift */,
 				61B5FDDE03F5F711146937E2 /* ResendPoller.swift */,
+				75E4681D3B1A3D6EB530CE6A /* SafetyNet.swift */,
 				B2FDED98F7F6C755A72C97A3 /* SafeWebURL.swift */,
 				26CBF0D968BFB1AB0E36B18F /* ScreenCapture.swift */,
 				55728FDF3A762C5A46CEB34F /* SecretScanner.swift */,
@@ -1467,6 +1479,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EFCC52C879537C493A0CFE94 /* AgentShield.swift in Sources */,
 				04C17E035B28E501B1A83D3F /* AgyPermissionRules.swift in Sources */,
 				DABA9D574B931C51AF2B172F /* AnalyzerDictation.swift in Sources */,
 				2F7AA44EB15F7A7DF1947EBF /* AndroidLinkAdmission.swift in Sources */,
@@ -1548,6 +1561,7 @@
 				8C32A0C3EAF536D3836F61D5 /* GreetingCanvasView.swift in Sources */,
 				2C798C3837A63B9BB561A1A0 /* HookServer.swift in Sources */,
 				B733A76DD197F6D6D949284C /* HotKeyCenter.swift in Sources */,
+				587116CE452870A8D4AC2E36 /* InjectionScanner.swift in Sources */,
 				658C579523CF5F8D67B31369 /* InstructionRunner.swift in Sources */,
 				B09E884B33A35FA34543C64B /* IntentParser.swift in Sources */,
 				9E34044A001B01C3A514D20A /* IslandDisplayChoice.swift in Sources */,
@@ -1611,6 +1625,7 @@
 				967B525F7D3837F31D740D18 /* ResendPoller.swift in Sources */,
 				FBDC1679522F378187862EA3 /* ReviewPolicy.swift in Sources */,
 				6FC65C190ED614C664C9BC17 /* SafeWebURL.swift in Sources */,
+				8485D1F115432BA1E1A77250 /* SafetyNet.swift in Sources */,
 				6B0B39207A8DA88EA35E785A /* ScreenCapture.swift in Sources */,
 				0DA240533346EABC8C736413 /* SecretScanner.swift in Sources */,
 				2A30FA2F046492E22A1C5719 /* ServiceDetail.swift in Sources */,
@@ -1766,6 +1781,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				50E5CC3551D7F7C795BF07A8 /* AgentShield.swift in Sources */,
 				C1B1E5C70C748616473A7AB5 /* AgyPermissionRules.swift in Sources */,
 				E345BBD08FA34603D55DDE01 /* AnalyzerDictation.swift in Sources */,
 				00151CA0AD0896448D13DB28 /* AndroidLinkAdmission.swift in Sources */,
@@ -1847,6 +1863,7 @@
 				C0E18D0F6F5F6D131E6066B8 /* GreetingCanvasView.swift in Sources */,
 				9DD56C95ECABDDCE23652D50 /* HookServer.swift in Sources */,
 				530443F46F896F037A56F663 /* HotKeyCenter.swift in Sources */,
+				611EE8C88E2405E42EC23111 /* InjectionScanner.swift in Sources */,
 				52F0DF1FBCB522951910390E /* InstructionRunner.swift in Sources */,
 				6613EB914852E6EEB1FF37BF /* IntentParser.swift in Sources */,
 				1D23613B270FE8B11C5E27A7 /* IslandDisplayChoice.swift in Sources */,
@@ -1910,6 +1927,7 @@
 				EB23ED9F1C12EA8B54A76A91 /* ResendPoller.swift in Sources */,
 				60AAAA2CC93483A175CEE986 /* ReviewPolicy.swift in Sources */,
 				FEFEF1EBAB0E6CA74A33C10B /* SafeWebURL.swift in Sources */,
+				82C15FF6F730C6E17508B47E /* SafetyNet.swift in Sources */,
 				E4B93DC2345688488FEAE078 /* ScreenCapture.swift in Sources */,
 				A67FF97DDB864E532568740D /* SecretScanner.swift in Sources */,
 				8C9AF392DAE8F2098A7BE7B6 /* ServiceDetail.swift in Sources */,

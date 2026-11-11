@@ -2722,6 +2722,10 @@ struct RafiqWatchSettings: View {
     @AppStorage(EveningBrief.enabledKey) private var eveningBrief = true
     @AppStorage(OSVWatch.enabledKey) private var osvWatch = false
     @AppStorage(VerseOfTheDay.enabledKey) private var verse = true
+    @AppStorage(AgentShield.canaryKey) private var canary = true
+    @AppStorage(AgentShield.absenceKey) private var absence = true
+    @AppStorage(AgentShield.careKey) private var care = true
+    @AppStorage(AgentShield.speakKey) private var speak = false
 
     var body: some View {
         GroupBox(String(localized: "watch.title", defaultValue: "Rafiq watches")) {
@@ -2747,6 +2751,14 @@ struct RafiqWatchSettings: View {
                         VerseOfTheDay.show(VerseOfTheDay.verse(on: Date()))
                     }
                 }
+                Toggle(String(localized: "watch.canary", defaultValue: "Trap file for agents"), isOn: $canary)
+                    .onChange(of: canary) { _, _ in AgentShield.shared.syncCanary() }
+                Text(String(localized: "watch.canary.help", defaultValue: "A fake key in ~/.config/rafiq/.env.production. No tool of yours needs it: if an agent reads it, Rafiq warns you."))
+                    .font(.system(size: 11)).foregroundColor(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+                Toggle(String(localized: "watch.absence", defaultValue: "Card when I come back"), isOn: $absence)
+                Toggle(String(localized: "watch.care", defaultValue: "Remind me to take a break"), isOn: $care)
+                Toggle(String(localized: "watch.speak", defaultValue: "Say when a session is done"), isOn: $speak)
                 Toggle(String(localized: "watch.osv", defaultValue: "Vulnerability watch (OSV.dev)"), isOn: $osvWatch)
                 Text(String(localized: "watch.osv.help", defaultValue: "When a session starts in a project, Rafiq sends the names and versions in its lockfiles to OSV.dev, at most once a day, and warns you about known vulnerabilities. Nothing else leaves your Mac."))
                     .font(.system(size: 11)).foregroundColor(.secondary)

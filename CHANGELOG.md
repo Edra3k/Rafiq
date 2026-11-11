@@ -23,6 +23,12 @@ Rafiq starts from the code of Coucou 0.6 (MIT) and becomes its own app.
 - **Plan ring** — with the Claude plan gauge on, its share used circles Rafiq on the home view.
 - **Verse of the day** — one short verse, in Arabic with its meaning, the first time the island opens each day; it never holds the island open.
 - **Claude Code by its name** — the pill every Claude Code hook reaches is called Claude Code (it was "VS Code"), and Claude Desktop can be the main pill.
+- **Allow with a net** — on a high-risk approval in a Git project, Rafiq first saves the project's files (a snapshot under refs/rafiq/nets, your branch, index and stash untouched), then allows. "Back to the net" on the session card restores them, after a confirmation.
+- **Prompt injection watch** — what a tool brings back to the agent (web pages, files, command output) is read for text aimed at AI agents: orders to ignore instructions, to hide things from you or send secrets away, text hidden in invisible characters. A red card names the source.
+- **Trap file** — a fake key in ~/.config/rafiq/.env.production that no tool of yours needs; an agent opening it, or its key showing up in what an agent reads, brings a red card.
+- **"Why?"** — with Ollama or LM Studio set up, the approval card can ask the local model what the command does and what could go wrong. Nothing leaves the Mac.
+- **While you were away** — back after 10 minutes or more, a card says what your agents finished, what waits and what failed.
+- **Breaks and voice** — after two hours at the screen, Rafiq yawns and suggests a break (and wudu before a near prayer); optionally, he says when a session is done.
 - **Your own identifiers** — `com.edra3k.rafiq` on the Mac, `com.edra3k.rafiq.ios` on the iPhone, `com.edra3k.rafiq.android` on Android; updates, links and support point to github.com/Edra3k/Rafiq.
 
 Coucou's own history is in [its repository](https://github.com/Louis-CFM/coucou/blob/main/CHANGELOG.md).

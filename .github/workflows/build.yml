@@ -54,6 +54,12 @@ jobs:
       - name: Test the Git status reading
         run: bash scripts/test-git-status.sh
 
+      - name: Test the prompt injection scanner
+        run: bash scripts/test-injection-scanner.sh
+
+      - name: Test the safety net (Git snapshot and restore)
+        run: bash scripts/test-safety-net.sh
+
       - name: Test the session board (sessions behind a pill, popping out, places)
         run: bash scripts/test-session-board.sh
 
