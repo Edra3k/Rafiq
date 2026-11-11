@@ -4868,8 +4868,7 @@ private func drawOutfitIcon(context: GraphicsContext, size: CGSize, outfit: Outf
         var ctx = context
         ctx.translateBy(x: cx, y: iconCY)
         ctx.fill(bodyPath, with: .linearGradient(
-            Gradient(colors: [Color(red: 0.929, green: 0.929, blue: 0.937),
-                              Color(red: 0.769, green: 0.773, blue: 0.792)]),
+            Gradient(colors: [RafiqLook.bodyTop, RafiqLook.bodyBottom]),
             startPoint: CGPoint(x: rx*0.7, y: -ry*0.85),
             endPoint:   CGPoint(x: -rx*0.8, y: ry*0.9)
         ))
@@ -4937,8 +4936,8 @@ private func drawOutfitIcon(context: GraphicsContext, size: CGSize, outfit: Outf
         var ctx = context
         ctx.translateBy(x: cx, y: iconCY)
         let pumpkin = outfit == .pumpkin
-        let top = pumpkin ? Color(hex: "#FFA94D") : Color(red: 0.929, green: 0.929, blue: 0.937)
-        let bot = pumpkin ? Color(hex: "#E8590C") : Color(red: 0.769, green: 0.773, blue: 0.792)
+        let top = pumpkin ? Color(hex: "#FFA94D") : RafiqLook.bodyTop
+        let bot = pumpkin ? Color(hex: "#E8590C") : RafiqLook.bodyBottom
         ctx.fill(bodyPath, with: .linearGradient(
             Gradient(colors: [top, bot]),
             startPoint: CGPoint(x: rx * 0.7, y: -ry * 0.85),

@@ -9,6 +9,7 @@ import { Sound } from "../core/sound";
 import type { BotEmoteName, BotStateName } from "../core/layout";
 import { PUMPKIN_BODY, drawOutfitBehind, drawOutfitFront, makeHead } from "./outfits";
 import type { Outfit } from "./wardrobe";
+import { BODY_BOTTOM, BODY_TOP, drawFinial, edgePoint, GOLD_RGB, INK_CSS } from "./look";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -67,9 +68,10 @@ const EYE_W = 0.25;
 const EYE_H = 0.27;
 const EYE_SP = 0.37;
 const EYE_P = -0.12;
-const BASE_TOP: RGB = [0.929, 0.929, 0.937]; // #EDEDEF
-const BASE_BOTTOM: RGB = [0.769, 0.773, 0.792]; // #C4C5CA
-const INK = "rgb(26,20,18)"; // #1A1412
+// Rafiq's colours (look.ts): ivory to sand, navy ink.
+const BASE_TOP: RGB = BODY_TOP;
+const BASE_BOTTOM: RGB = BODY_BOTTOM;
+const INK = INK_CSS;
 const MINI_INK = "rgb(16,19,26)"; // #10131A
 
 const C = {
@@ -823,6 +825,8 @@ export class BotEngine {
     if (head) drawOutfitBehind(x, this.outfit, head, outfitState);
 
     const body = this.bodyPath(rx, ry, R);
+    // The golden crescent above the dome: the main companion only, hidden by an outfit and the upload box.
+    if (!this.isMini) drawFinial(x, ry, R, (1 - this.outfitPresence) * (1 - Math.min(1, this.morph * 3)));
     this.drawBody(x, body, R, rx, ry);
 
     const blushVal = Math.max(this.blush, this.tint * 0.5) * (1 - this.morph);
@@ -830,7 +834,7 @@ export class BotEngine {
       x.save();
       x.clip(body);
       const yOffset = Math.sin(this.yaw) * rx * 0.8;
-      x.fillStyle = `rgba(255,120,150,${0.5 * blushVal})`;
+      x.fillStyle = `rgba(${GOLD_RGB},${0.45 * blushVal})`;
       for (const sd of [-1, 1]) {
         x.beginPath();
         x.ellipse(sd * rx * 0.55 + yOffset, ry * 0.2, R * 0.17, R * 0.1, 0, 0, Math.PI * 2);
@@ -855,7 +859,6 @@ export class BotEngine {
 
   private bodyPath(rx: number, ry: number, R: number): Path2D {
     const n = 72;
-    const expN = 2.0 / 2.7;
     const tw = R * 1.0;
     const th = R * 0.94;
     const tr = R * 0.42;
@@ -865,8 +868,9 @@ export class BotEngine {
       const a = (i / n) * Math.PI * 2;
       const ca = Math.cos(a);
       const sa = Math.sin(a);
-      const px0 = rx * (ca >= 0 ? Math.pow(ca, expN) : -Math.pow(-ca, expN));
-      const py0 = ry * (sa >= 0 ? Math.pow(sa, expN) : -Math.pow(-sa, expN));
+      const dome = edgePoint(ca, sa, rx, ry);
+      const px0 = dome.x;
+      const py0 = dome.y;
       let px = px0;
       let py = py0;
       if (m >= 0.005) {

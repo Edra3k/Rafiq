@@ -324,26 +324,16 @@ private func gRR(_ ctx: CGContext, _ x: CGFloat, _ y: CGFloat,
     ctx.closePath()
 }
 
+/// Rafiq's dome (RafiqLook), as a CGPath for the greeting.
 private func mochiPath(hw: CGFloat, hh: CGFloat) -> CGPath {
-    let n: CGFloat = 3.2
-    let path = CGMutablePath()
-    let steps = 96
-    for i in 0...steps {
-        let a = CGFloat(i)/CGFloat(steps)*2 * .pi
-        let ca = cos(a), sa = sin(a)
-        let px = hw * (ca < 0 ? -1 : 1) * pow(abs(ca), 2/n)
-        let py = hh * (sa < 0 ? -1 : 1) * pow(abs(sa), 2/n)
-        if i == 0 { path.move(to: CGPoint(x: px, y: py)) }
-        else { path.addLine(to: CGPoint(x: px, y: py)) }
-    }
-    path.closeSubpath(); return path
+    RafiqLook.path(rx: hw, ry: hh, points: 96).cgPath
 }
 
 private func whiteFill(_ ctx: CGContext, _ path: CGPath,
                        x0: CGFloat, y0: CGFloat, x1: CGFloat, y1: CGFloat) {
     let cs = CGColorSpaceCreateDeviceRGB()
-    let c0 = CGColor(red: 251/255, green: 251/255, blue: 252/255, alpha: 1)
-    let c1 = CGColor(red: 231/255, green: 233/255, blue: 236/255, alpha: 1)
+    let c0 = RafiqLook.bodyTopCG
+    let c1 = RafiqLook.bodyBottomCG
     guard let g = CGGradient(colorsSpace: cs, colors: [c0,c1] as CFArray, locations: [0,1]) else { return }
     ctx.saveGState()
     ctx.addPath(path); ctx.clip()

@@ -306,8 +306,8 @@ struct UploadCanvasView: View {
 
         // ── Body gradient ──────────────────────────────────────────
         let bodyGrad = Gradient(stops:[
-            .init(color: Color(hex:"#EDEDEF"), location:0),
-            .init(color: Color(hex:"#C4C5CA"), location:1)
+            .init(color: RafiqLook.bodyTop, location:0),
+            .init(color: RafiqLook.bodyBottom, location:1)
         ])
         c.fill(bp, with: .linearGradient(bodyGrad,
             startPoint:  CGPoint(x:  rx*0.7, y: -ry*0.9),
@@ -563,8 +563,12 @@ func usBodyPath(m: Double, R: Double) -> (path: Path, rx: Double, ry: Double) {
     for i in 0...96 {
         let a  = Double(i)/96 * .pi*2
         let ca = cos(a), sa = sin(a)
-        let px = rx * (ca<0 ? -1 : ca>0 ? 1 : 0) * pow(abs(ca), 2/n)
-        let py = ry * (sa<0 ? -1 : sa>0 ? 1 : 0) * pow(abs(sa), 2/n)
+        // From Rafiq's dome (closed) to the squarer box (open), as the morph goes.
+        let box = CGPoint(x: rx * (ca<0 ? -1 : ca>0 ? 1 : 0) * pow(abs(ca), 2/n),
+                          y: ry * (sa<0 ? -1 : sa>0 ? 1 : 0) * pow(abs(sa), 2/n))
+        let dome = RafiqLook.point(ca: CGFloat(ca), sa: CGFloat(sa), rx: CGFloat(rx), ry: CGFloat(ry))
+        let px = Double(dome.x) + (Double(box.x) - Double(dome.x)) * mc
+        let py = Double(dome.y) + (Double(box.y) - Double(dome.y)) * mc
         if i == 0 { path.move(to:    CGPoint(x:px,y:py)) }
         else       { path.addLine(to: CGPoint(x:px,y:py)) }
     }

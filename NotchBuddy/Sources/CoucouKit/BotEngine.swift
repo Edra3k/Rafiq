@@ -81,9 +81,10 @@ enum MochiConst {
     static let eyeH: CGFloat  = 0.27
     static let eyeSp: CGFloat = 0.37
     static let eyeP: CGFloat  = -0.12
-    static let baseTop    = CGColor(red: 0.929, green: 0.929, blue: 0.937, alpha: 1)  // #EDEDEF
-    static let baseBottom = CGColor(red: 0.769, green: 0.773, blue: 0.792, alpha: 1)  // #C4C5CA
-    static let ink        = CGColor(red: 0.102, green: 0.082, blue: 0.071, alpha: 1)  // #1A1412
+    // Rafiq's colours (RafiqLook.swift): ivory to sand, navy ink.
+    static let baseTop    = RafiqLook.bodyTopCG
+    static let baseBottom = RafiqLook.bodyBottomCG
+    static let ink        = RafiqLook.inkCG
     static let miniInk    = CGColor(red: 0.063, green: 0.075, blue: 0.102, alpha: 1)  // #10131A
 }
 
@@ -1141,8 +1142,15 @@ final class BotEngine: ObservableObject {
         if tilt != 0 { ctx.rotate(by: .radians(tilt)) }
         ctx.scaleBy(x: sx, y: sy)
 
-        // Body path (superellipse for Mochi, morph to rect for upload)
+        // Body path (Rafiq's dome, morph to rect for upload)
         let bodyPath = mochiPath(rx: rx, ry: ry, morph: morph, R: R)
+
+        // The golden crescent above the dome: the main companion only, hidden by an outfit
+        // and by the upload box.
+        if !isMini {
+            let finial = Double((1 - outfitPresence) * (1 - min(1, morph * 3)))
+            RafiqLook.drawFinial(ctx, ry: ry, R: R, opacity: finial)
+        }
 
         // Body fill
         drawBody(ctx: &ctx, path: bodyPath, R: R, rx: rx, ry: ry,
@@ -1381,7 +1389,6 @@ final class BotEngine: ObservableObject {
 
     private func mochiPath(rx: CGFloat, ry: CGFloat, morph: CGFloat, R: CGFloat) -> Path {
         let n = 72
-        let expN: CGFloat = 2.0 / 2.7
         // Target mailbox dims (spec: 1.0R wide, 0.94R tall, 0.42R corner radius)
         let tw = R * 1.0
         let th = R * 0.94
@@ -1390,8 +1397,9 @@ final class BotEngine: ObservableObject {
         for i in 0...n {
             let a = CGFloat(i) / CGFloat(n) * .pi * 2
             let ca = cos(a), sa = sin(a)
-            let px0 = rx * (ca >= 0 ? pow(ca, expN) : -pow(-ca, expN))
-            let py0 = ry * (sa >= 0 ? pow(sa, expN) : -pow(-sa, expN))
+            let dome = RafiqLook.point(ca: ca, sa: sa, rx: rx, ry: ry)
+            let px0 = dome.x
+            let py0 = dome.y
             let px: CGFloat
             let py: CGFloat
             if morph < 0.005 {
@@ -1456,11 +1464,11 @@ final class BotEngine: ObservableObject {
             ctx.fill(path, with: .color(Color(cgColor: bc)))
         } else {
             // Main bot: linear gradient body
-            let top: Color = pumpkinColors ? Color(hex: "#FFA94D") : Color(red: 0.929, green: 0.929, blue: 0.937)
-            let bot: Color = pumpkinColors ? Color(hex: "#E8590C") : Color(red: 0.769, green: 0.773, blue: 0.792)
+            let top: Color = pumpkinColors ? Color(hex: "#FFA94D") : RafiqLook.bodyTop
+            let bot: Color = pumpkinColors ? Color(hex: "#E8590C") : RafiqLook.bodyBottom
             ctx.fill(path, with: .linearGradient(
                 Gradient(colors: [top, bot]),
-                startPoint: CGPoint(x: rx*0.7, y: -ry*0.85),
+                startPoint: CGPoint(x: rx*0.7, y: -ry * RafiqLook.domeHeight),
                 endPoint: CGPoint(x: -rx*0.8, y: ry*0.9)
             ))
             // State tint — fades out as morph increases (mailbox has no tint)
@@ -1506,7 +1514,7 @@ final class BotEngine: ObservableObject {
             let by = ry * 0.2
             var ellipse = Path()
             ellipse.addEllipse(in: CGRect(x: bx - R*0.17, y: by - R*0.1, width: R*0.34, height: R*0.2))
-            ctx.fill(ellipse, with: .color(Color(red: 1, green: 0.471, blue: 0.588, opacity: Double(0.5 * blush))))
+            ctx.fill(ellipse, with: .color(RafiqLook.gold.opacity(Double(0.45 * blush))))
         }
     }
 

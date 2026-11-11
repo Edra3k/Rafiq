@@ -14,6 +14,7 @@
 import { Ease } from "../core/anim";
 import type { Outfit, OutfitSelection } from "./wardrobe";
 import { SCRIPT_FONTS } from "../core/fonts";
+import { silhouette } from "./look";
 
 const EXP = 2.7;
 const VIEW_TILT = -0.3;
@@ -142,22 +143,9 @@ function fillAll(ctx: Ctx, H: Head) {
   ctx.fillRect(-H.rx * 4, -H.ry * 4, H.rx * 8, H.ry * 8);
 }
 
-/** Mochi's body outline, same superellipse as the engine. */
+/** Rafiq's body outline, the same dome as the engine (look.ts). */
 export function bodyOutline(rx: number, ry: number): Path2D {
-  const p = new Path2D();
-  const n = 96;
-  const e = 2 / EXP;
-  for (let i = 0; i <= n; i++) {
-    const a = (i / n) * Math.PI * 2;
-    const ca = Math.cos(a);
-    const sa = Math.sin(a);
-    const x = rx * Math.sign(ca) * Math.pow(Math.abs(ca), e);
-    const y = ry * Math.sign(sa) * Math.pow(Math.abs(sa), e);
-    if (i === 0) p.moveTo(x, y);
-    else p.lineTo(x, y);
-  }
-  p.closePath();
-  return p;
+  return silhouette(rx, ry, 96);
 }
 
 function lin(ctx: Ctx, x0: number, y0: number, x1: number, y1: number, stops: [number, string][]) {
