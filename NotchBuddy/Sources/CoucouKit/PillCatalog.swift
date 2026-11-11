@@ -133,6 +133,9 @@ enum PillCatalog {
         // Local countdown: work, then rest, until the user stops. No account, no network.
         .init(id: "integration_coucoudoro", name: "Coucoudoro", color: "#0EA5E9",
               category: .service,   subtitle: String(localized: "Integration"),  source: .n8n),
+        // Prayer times calculated on the Mac: the next prayer, a reminder before each one. No network.
+        .init(id: "integration_prayer", name: String(localized: "prayer.title", defaultValue: "Prayer"), color: "#A78BFA",
+              category: .service,   subtitle: String(localized: "Integration"),  source: .n8n),
         // GitHub build only, as intended when it was added (exchange API keys: not worth an
         // App Review question for the store build).
         .init(id: "integration_portfolio", name: "Portfolio",   color: "#FFD700",

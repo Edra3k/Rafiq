@@ -132,7 +132,9 @@ final class SettingsSearch: ObservableObject {
             e("chat.local", .chat, "chat.local.title", ["Ollama", "LM Studio"]),
             e("integrations.all", .integrations, "Integrations",
               ["Stripe", "GitHub", "Vercel", "n8n", "Notion", "Resend", "Cal.com", "WhatsApp", "Spotify", "Crypto", "Coucoudoro",
-               "crypto.exchange", "crypto.currency", "coucoudoro.work", "coucoudoro.rest", "coucoudoro.hint"]),
+               "crypto.exchange", "crypto.currency", "coucoudoro.work", "coucoudoro.rest", "coucoudoro.hint",
+               "prayer.title", "prayer.city", "prayer.method", "prayer.reminder", "prayer.adhan", "prayer.hint",
+               "Qibla", "Adhan", "Salat"]),
             // Notch → Voice, Shortcuts
             e("voice.wake", .voice, "«\u{202F}OK Coucou\u{202F}» — voice wake word", ["Enable voice command", "Request permissions"]),
             e("voice.language", .voice, "Language", ["voice.listen-language", "voice.language"]),
