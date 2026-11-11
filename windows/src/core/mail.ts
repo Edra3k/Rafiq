@@ -1,5 +1,5 @@
 // The Mail pill on Windows (classic Outlook, src-tauri/src/mail): the types the island and
-// the Coucou window read, and the calls to Rust. Port of MailController / MailTriageStore /
+// the Rafiq window read, and the calls to Rust. Port of MailController / MailTriageStore /
 // MailAgent's shapes; the wording is the Mac's (MailViews.swift, MailHubPages.swift).
 
 import { invoke } from "@tauri-apps/api/core";

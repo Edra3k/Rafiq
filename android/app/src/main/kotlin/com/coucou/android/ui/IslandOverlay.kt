@@ -144,7 +144,7 @@ class IslandOverlay(
         sync()
     }
 
-    /** Close at once, without animation (Coucou came to the front, the switch went off, the link dropped). */
+    /** Close at once, without animation (Rafiq came to the front, the switch went off, the link dropped). */
     fun hide() = safely {
         timeline.dismiss()
         removeView()

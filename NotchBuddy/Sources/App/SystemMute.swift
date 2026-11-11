@@ -6,13 +6,13 @@ import Foundation
 /// microphone hears only your voice; the sound comes back as it was once the listen ends.
 ///
 /// Every output device in use is muted or, when it has no mute, its volume set to 0. Only what
-/// Coucou changed is put back: a device that was already muted stays muted. What was changed is
+/// Rafiq changed is put back: a device that was already muted stays muted. What was changed is
 /// also kept in UserDefaults, so a crash in the middle of a dictation is undone at the next launch.
 @MainActor
 final class SystemMute {
     static let shared = SystemMute()
 
-    /// Coucou Flow → Settings → "Mute the Mac while you dictate". On by default.
+    /// Rafiq Flow → Settings → "Mute the Mac while you dictate". On by default.
     static let enabledKey = "flowMuteMac"
     private static let leftoverKey = "flowMuteLeftover"
 
@@ -20,7 +20,7 @@ final class SystemMute {
         UserDefaults.standard.object(forKey: enabledKey) as? Bool ?? true
     }
 
-    /// What Coucou changed on one device, to put it back.
+    /// What Rafiq changed on one device, to put it back.
     private struct Change: Codable {
         let uid: String
         /// The device was muted with its own mute…
@@ -37,7 +37,7 @@ final class SystemMute {
 
     private init() {}
 
-    /// Mutes the Mac in `delay` (the time for Coucou's own blip to be heard), unless it already is.
+    /// Mutes the Mac in `delay` (the time for Rafiq's own blip to be heard), unless it already is.
     /// A release still waiting is called off, so a listen that follows another keeps the silence.
     func engage(after delay: Duration = .zero) {
         pending?.cancel(); pending = nil
@@ -62,7 +62,7 @@ final class SystemMute {
         }
     }
 
-    /// Right away: when Coucou quits.
+    /// Right away: when Rafiq quits.
     func releaseNow() {
         pending?.cancel(); pending = nil
         restoreNow()

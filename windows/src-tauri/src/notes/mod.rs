@@ -209,7 +209,7 @@ pub fn setup(app: &AppHandle) {
         }
     }
     notes.sort_by(|a, b| b.start.cmp(&a.start));
-    // A call left recording or being written when Coucou last quit: written now.
+    // A call left recording or being written when Rafiq last quit: written now.
     let unfinished: Vec<String> = notes
         .iter()
         .filter(|n| matches!(n.status, Status::Recording | Status::Processing))
@@ -238,7 +238,7 @@ pub fn toggle(app: &AppHandle) {
         stop(app);
     } else if let Err(err) = start(app) {
         let (text, action) = if err == "models" {
-            (t("Download the voice model first, in Coucou → Settings → Recognition."), Some((t("Open Settings"), "openSettings")))
+            (t("Download the voice model first, in Rafiq → Settings → Recognition."), Some((t("Open Settings"), "openSettings")))
         } else {
             (err, None)
         };
@@ -290,7 +290,7 @@ fn start_inner(app: &AppHandle, taker: &Arc<NoteTaker>) -> Result<String, String
     .map_err(|err| {
         crate::log::line(format!("notes: microphone: {err}"));
         let _ = std::fs::remove_dir_all(&dir);
-        t("Coucou can't hear you: the microphone is not allowed or not available.")
+        t("Rafiq can't hear you: the microphone is not allowed or not available.")
     })?;
     // Without the computer's sound, the call is noted from the microphone alone.
     let (system, system_channel) = match Channel::new(&dir.join("system.wav")) {
@@ -351,8 +351,8 @@ fn spawn_live(
                 // `stop` here is the live loop's flag: the module's function.
                 crate::notes::stop(&app);
                 let text = match why {
-                    AutoStop::Silence => t("Nobody has spoken for 15 minutes: Coucou stopped recording the call."),
-                    AutoStop::Length => t("The call has been recorded for 4 hours: Coucou stopped recording it."),
+                    AutoStop::Silence => t("Nobody has spoken for 15 minutes: Rafiq stopped recording the call."),
+                    AutoStop::Length => t("The call has been recorded for 4 hours: Rafiq stopped recording it."),
                 };
                 pill::announce(&app, "mic", "#F7B32B", text, None, 30);
                 break;
@@ -423,7 +423,7 @@ pub fn stop(app: &AppHandle) {
     std::thread::spawn(move || process(&app, &id));
 }
 
-/// Coucou quits during a call: the recordings are closed properly, and the
+/// Rafiq quits during a call: the recordings are closed properly, and the
 /// transcript is written at the next launch.
 pub fn shutdown(app: &AppHandle) {
     let Some(taker) = get(app) else { return };
@@ -448,7 +448,7 @@ fn words_in(path: &std::path::Path) -> Result<(Vec<TimedWord>, Vec<f32>), String
         return Ok((Vec::new(), Vec::new()));
     }
     let samples = audio::read_wav(path).map_err(|e| e.to_string())?;
-    let transcript = speech::transcribe(&samples).ok_or_else(|| t("Download the voice model first, in Coucou → Settings → Recognition."))?;
+    let transcript = speech::transcribe(&samples).ok_or_else(|| t("Download the voice model first, in Rafiq → Settings → Recognition."))?;
     Ok((transcript.words, samples))
 }
 
@@ -662,7 +662,7 @@ pub fn notes_state(taker: State<Arc<NoteTaker>>) -> NotesState {
 #[tauri::command]
 pub async fn notes_start(app: AppHandle) -> Result<String, String> {
     tauri::async_runtime::spawn_blocking(move || {
-        start(&app).map_err(|e| if e == "models" { t("Download the voice model first, in Coucou → Settings → Recognition.") } else { e })
+        start(&app).map_err(|e| if e == "models" { t("Download the voice model first, in Rafiq → Settings → Recognition.") } else { e })
     })
     .await
     .map_err(|e| e.to_string())?
@@ -735,7 +735,7 @@ pub fn notes_markdown(taker: State<Arc<NoteTaker>>, id: String) -> Option<String
 /// Windows asks where to save; cancelling the native dialog writes nothing.
 #[tauri::command]
 pub async fn notes_export(window: tauri::WebviewWindow, taker: State<'_, Arc<NoteTaker>>, id: String) -> Result<Option<String>, String> {
-    if window.label() != crate::HUB_LABEL { return Err("Open the note in Coucou to export it.".into()); }
+    if window.label() != crate::HUB_LABEL { return Err("Open the note in Rafiq to export it.".into()); }
     let note = taker.note(&id).ok_or("no such note")?;
     let safe: String = note
         .title
@@ -745,7 +745,7 @@ pub async fn notes_export(window: tauri::WebviewWindow, taker: State<'_, Arc<Not
         .split_whitespace()
         .collect::<Vec<_>>()
         .join(" ");
-    let name = if safe.is_empty() { "Coucou notes" } else { &safe };
+    let name = if safe.is_empty() { "Rafiq notes" } else { &safe };
     #[cfg(windows)]
     {
         let owner = window.hwnd().map_err(|error| error.to_string())?.0 as isize;

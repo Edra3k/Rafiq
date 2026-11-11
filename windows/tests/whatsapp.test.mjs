@@ -153,7 +153,7 @@ test("the pill is the Mac's, connected with nothing to enter", () => {
   assert.ok(pill(), "declared, it is on the island");
 });
 
-test("a new message lights the pill with the chat's name only, and Mochi smiles once per burst", () => {
+test("a new message lights the pill with the chat's name only, and Rafiq smiles once per burst", () => {
   handlePillEvent(host, { kind: "message", name: "Marie" }, 10_000);
   assert.equal(pill().state, "finished");
   assert.deepEqual(pill().steps, ["Marie"]);

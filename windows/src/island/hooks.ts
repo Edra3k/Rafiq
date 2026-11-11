@@ -171,7 +171,7 @@ interface HookPayload {
   coucou_diff_truncated?: boolean;
   /** Optional agent tag: lowercase, digits and hyphens, ≤ 24 chars. */
   coucou_agent?: string;
-  /** "agy_pre_tool": an Antigravity command Coucou may show on the card (agents.ts). */
+  /** "agy_pre_tool": an Antigravity command Rafiq may show on the card (agents.ts). */
   coucou_kind?: string;
   /** Hermes: where the session runs (telegram, discord…; "cli" in a terminal). */
   platform?: string;
@@ -649,7 +649,7 @@ function handleHook(island: Island, payload: HookPayload) {
         ...(questions ? { questions } : {}),
       };
 
-      // Coucou answers within 108 s or not at all; after that the terminal has
+      // Rafiq answers within 108 s or not at all; after that the terminal has
       // taken over and the card would be lying.
       armRequestTimeout(island, requestId);
       Sound.play(view);

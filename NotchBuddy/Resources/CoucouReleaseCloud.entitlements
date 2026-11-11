@@ -9,12 +9,12 @@
     <key>com.apple.security.automation.apple-events</key>
     <true/>
     <key>com.apple.application-identifier</key>
-    <string>256AUJ9555.fr.louisraille.NotchBuddy</string>
+    <string>YOUR_TEAM_ID.com.edra3k.rafiq</string>
     <key>com.apple.developer.team-identifier</key>
-    <string>256AUJ9555</string>
+    <string>YOUR_TEAM_ID</string>
     <key>com.apple.developer.icloud-container-identifiers</key>
     <array>
-        <string>iCloud.fr.louisraille.Coucou</string>
+        <string>iCloud.com.edra3k.rafiq.ios</string>
     </array>
     <key>com.apple.developer.icloud-services</key>
     <array>

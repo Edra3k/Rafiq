@@ -1,13 +1,13 @@
 // The Claude Code relay: with no Anthropic API key saved, the chat, Flow's
 // clean-up and the notes of a call are answered by the user's own Claude Code
-// (`claude -p`), signed in with their own account. Coucou reads no credential
+// (`claude -p`), signed in with their own account. Rafiq reads no credential
 // and makes no network call of its own: Claude Code answers exactly as it does
 // in a terminal.
 //
 // Each run is kept apart from the user's sessions: no settings file is loaded
-// (so no hooks: Coucou's own would show the relay's runs as sessions), no MCP
+// (so no hooks: Rafiq's own would show the relay's runs as sessions), no MCP
 // server, no skill, nothing saved to resume, and it runs in an empty folder of
-// Coucou's, so no CLAUDE.md is picked up. It may only use the tools it is
+// Rafiq's, so no CLAUDE.md is picked up. It may only use the tools it is
 // given: web search for the chat, and reading the one dropped file.
 
 use std::ffi::OsString;

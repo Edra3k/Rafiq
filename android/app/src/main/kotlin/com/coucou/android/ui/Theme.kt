@@ -25,8 +25,8 @@ import com.coucou.android.core.ThemePolicy
 import com.coucou.android.core.Tokens
 
 /**
- * The look of the Coucou website (docs/site.css): a near-black page (or a pale one in the light theme), slightly lighter cards with a
- * thin border, soft blue accent, rounded corners and pill-shaped buttons. Mochi itself is untouched.
+ * The look of the Rafiq website (docs/site.css): a near-black page (or a pale one in the light theme), slightly lighter cards with a
+ * thin border, soft blue accent, rounded corners and pill-shaped buttons. Rafiq itself is untouched.
  */
 private fun scheme(p: Palette, t: Tokens): ColorScheme {
     // Surfaces and text come from the tokens, the accent from Palette.
@@ -63,7 +63,7 @@ object StatusColors {
 
 /**
  * The theme: light, dark or the phone's own ([theme]), and optionally the phone's own colours ([dynamic], Android 12 and later).
- * Mochi, his colours and the state colours are the same in both.
+ * Rafiq, his colours and the state colours are the same in both.
  */
 @Composable
 fun CoucouTheme(theme: ThemeChoice = ThemeChoice.SYSTEM, dynamic: Boolean = false, content: @Composable () -> Unit) {

@@ -1,8 +1,8 @@
-// The coloured band on top of each page of the Coucou window: a deep black
+// The coloured band on top of each page of the Rafiq window: a deep black
 // with the page's colour breathing in a corner, particles that drift all the
-// time and move away from the pointer, and the page's little Mochis walking on
+// time and move away from the pointer, and the page's little Rafiqs walking on
 // its floor — they hop, look around, wave, and react when poked. Also the
-// glowing cards and the Mochis of empty pages. Port of FlowHubMochis.swift.
+// glowing cards and the Rafiqs of empty pages. Port of FlowHubMochis.swift.
 //
 // One animation loop draws every live canvas; it stops when none is left or
 // the window is hidden, so a hidden window costs nothing, and skips the ones
@@ -29,7 +29,7 @@ let fallback: number | null = null;
 let starved = false;
 let last = performance.now();
 const start = performance.now();
-/** The Coucou window is on screen, as Rust last said (`setWindowShown`). */
+/** The Rafiq window is on screen, as Rust last said (`setWindowShown`). */
 let windowShown = true;
 
 function running(): boolean {
@@ -267,7 +267,7 @@ export function backdrop(canvas: HTMLCanvasElement, color: string, pointerFrom: 
   });
 }
 
-// ── The Mochis ────────────────────────────────────────────────────────────────
+// ── The Rafiqs ────────────────────────────────────────────────────────────────
 
 export interface MochiSpec {
   color: string;
@@ -301,7 +301,7 @@ class Walker {
   }
 }
 
-/** The page's Mochis on the band's floor, in the right part of `canvas`. */
+/** The page's Rafiqs on the band's floor, in the right part of `canvas`. */
 export function troupe(canvas: HTMLCanvasElement, cast: MochiSpec[], width: number) {
   const walkers = cast.map((spec) => new Walker(spec));
   let pointer: { x: number; y: number } | null = null;
@@ -399,7 +399,7 @@ export function troupe(canvas: HTMLCanvasElement, cast: MochiSpec[], width: numb
   });
 }
 
-/** One Mochi alone (the sidebar's logo, an empty page). */
+/** One Rafiq alone (the sidebar's logo, an empty page). */
 export function liveMochi(canvas: HTMLCanvasElement, color = "#F5F6F8", state: BotStateName = "idle") {
   const engine = new BotEngine();
   engine.bodyColor = hexToRGB(color);
@@ -466,7 +466,7 @@ export const THEMES: Record<string, Theme> = {
   mailVIP: { color: "#F5A524", cast: [m("#F5A524", 60, 0.3, { outfit: "crown" }), m("#2F8CFF", 46, 0.85)] },
 };
 
-/** The band itself: title, line, actions, and the Mochis. */
+/** The band itself: title, line, actions, and the Rafiqs. */
 export function hero(page: string, title: string, subtitle: string | null, actions: HTMLElement[] = [], compact = false): HTMLElement {
   const theme = THEMES[page] ?? THEMES.general;
   const el = document.createElement("div");
@@ -516,7 +516,7 @@ export function glowCard(color: string, ...content: (HTMLElement | string)[]): H
   return el;
 }
 
-/** An empty page: a Mochi asleep, and a line. */
+/** An empty page: a Rafiq asleep, and a line. */
 export function emptyState(text: string, state: BotStateName = "sleeping", color = "#F5F6F8"): HTMLElement {
   const el = document.createElement("div");
   el.className = "hub-empty";

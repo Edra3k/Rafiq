@@ -45,7 +45,7 @@ function el<K extends keyof HTMLElementTagNameMap>(tag: K, cls = "", text = ""):
   return e;
 }
 
-// ── Mochi ─────────────────────────────────────────────────────────────────────
+// ── Rafiq ─────────────────────────────────────────────────────────────────────
 
 const mochi = new BotEngine();
 mochi.isMini = true;
@@ -163,7 +163,7 @@ function content(l: Look): HTMLElement {
         m,
         pillButton("mic", t("Dictate · {0}", { 0: key }), () => void FlowBridge.pillAction("dictate")),
         pillButton("record", t("Record a call"), () => void FlowBridge.pillAction("note")),
-        pillButton("window", t("Open Coucou"), () => void FlowBridge.pillAction("hub")),
+        pillButton("window", t("Open Rafiq"), () => void FlowBridge.pillAction("hub")),
       );
       break;
     }
@@ -372,7 +372,7 @@ function animating(): boolean {
   return visible && look() !== "resting";
 }
 
-/** Where dot `i` goes: the voice, a slow wave while thinking, a lively one while Coucou speaks. */
+/** Where dot `i` goes: the voice, a slow wave while thinking, a lively one while Rafiq speaks. */
 function dotGoal(now: number, i: number): number {
   if (state.phase === "thinking") return 0.25 + 0.25 * Math.sin(now / 160 - i * 0.7);
   if (state.phase === "listening" || state.phase === "locked") return target[i];
@@ -402,7 +402,7 @@ function tick(now: number) {
     if (vertical()) bar.style.width = `${size}px`;
     else bar.style.height = `${size}px`;
   }
-  // Mochi: his eyes wander while you speak; still while only a call shows.
+  // Rafiq: his eyes wander while you speak; still while only a call shows.
   if (l !== "note" || hovered) {
     mochi.lookX = Math.sin(now / 900) * 0.6;
     mochi.lookY = Math.cos(now / 1300) * 0.3;
@@ -436,7 +436,7 @@ function wake() {
   }
 }
 
-// ── « OK Coucou » speaks ──────────────────────────────────────────────────────
+// ── « OK Rafiq » speaks ──────────────────────────────────────────────────────
 
 interface Say {
   id: number;

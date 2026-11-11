@@ -57,7 +57,7 @@ fun SessionScreen(model: AppModel, pillId: String, onBack: () -> Unit) {
         return
     }
     if (engine.state != s.state) engine.setState(s.state)
-    // Its own colour, like on Home: the Mochi's body, the glow's state colour stays Louis's.
+    // Its own colour, like on Home: the Rafiq's body, the glow's state colour stays Louis's.
     engine.bodyColor = HomePanel.colorHex(s)?.let { HomePanel.rgb(it) }
     val name = s.agent.ifBlank { Pills.byId(s.pillId)?.name.orEmpty() }
     val accent = HomePanel.colorHex(s)?.let { HomePanel.rgb(it) }?.let(::rgbColor) ?: tokens().text.c()

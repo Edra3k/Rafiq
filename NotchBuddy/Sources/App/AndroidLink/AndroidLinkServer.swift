@@ -35,7 +35,7 @@ final class AndroidLinkServer: @unchecked Sendable {
     /// Pause before answering a wrong token.
     static let authPenalty: TimeInterval = 0.4
 
-    private let queue = DispatchQueue(label: "fr.louisraille.NotchBuddy.androidlink", qos: .utility)
+    private let queue = DispatchQueue(label: "com.edra3k.rafiq.androidlink", qos: .utility)
     private let hub: AndroidLinkHub
     private let features: AndroidLinkFeatures
     private let admission = AndroidLinkAdmission()

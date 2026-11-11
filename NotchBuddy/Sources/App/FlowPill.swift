@@ -37,7 +37,7 @@ final class FlowPillModel: ObservableObject {
     enum Phase: Equatable {
         /// Resting: a small pill at the bottom of the screen, there as long as Flow dictation is on.
         case idle
-        /// The key is held: the pill opens, Mochi on the left, the dots follow the voice.
+        /// The key is held: the pill opens, Rafiq on the left, the dots follow the voice.
         case listening
         /// Hands-free (double tap, or the pill's microphone): ✕, the dots and ✓, with an orange ring.
         case locked
@@ -113,8 +113,8 @@ private extension Array {
 }
 
 /// The pill at the bottom of the screen, like Wispr Flow's bar. Resting, it is a small see-through
-/// pill; under the pointer it opens into Mochi and three buttons (dictate, record a call, open
-/// Coucou), each with its bubble. When you speak it opens into Mochi and nine dots rising and
+/// pill; under the pointer it opens into Rafiq and three buttons (dictate, record a call, open
+/// Rafiq), each with its bubble. When you speak it opens into Rafiq and nine dots rising and
 /// falling with the graves and the aigus of the voice. Messages (a paste that could not happen, a
 /// call's notes ready) grow above it, with a button to act.
 struct FlowPillView: View {
@@ -325,8 +325,8 @@ struct FlowPillView: View {
         }
     }
 
-    /// Mochi, drawn by the same engine as the compact island's mini Mochis: his eyes wander all
-    /// around while you speak. 22 pt wide like a pill's Mochi (the canvas is larger, as there).
+    /// Rafiq, drawn by the same engine as the compact island's mini Rafiqs: his eyes wander all
+    /// around while you speak. 22 pt wide like a pill's Rafiq (the canvas is larger, as there).
     private var mochi: some View {
         // Still while only a recorded call shows: the pill costs nothing during a long call.
         FlowMochiView(active: model.phase != .idle || model.hovered)
@@ -558,7 +558,7 @@ private struct FlowQuoteCard: View {
     }
 }
 
-/// The pill's Mochi: a mini Mochi (BotEngine, like the pills of the compact island), white, idle,
+/// The pill's Rafiq: a mini Rafiq (BotEngine, like the pills of the compact island), white, idle,
 /// so his eyes wander around. Drawn only while the pill is open.
 private struct FlowMochiView: View {
     let active: Bool

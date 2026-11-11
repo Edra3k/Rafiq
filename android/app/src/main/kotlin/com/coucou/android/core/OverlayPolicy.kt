@@ -8,7 +8,7 @@ package com.coucou.android.core
  * it is answered.
  */
 object OverlayPolicy {
-    /** The pill is for when you are in another app; inside Coucou the screen already shows it. */
+    /** The pill is for when you are in another app; inside Rafiq the screen already shows it. */
     fun shouldShow(enabled: Boolean, permitted: Boolean, appInForeground: Boolean): Boolean =
         blocker(enabled, permitted, appInForeground) == null
 
@@ -45,7 +45,7 @@ interface WishStore {
 }
 
 /**
- * The switch "Show Mochi over other apps". The wish is saved the moment the user taps, before the
+ * The switch "Show Rafiq over other apps". The wish is saved the moment the user taps, before the
  * system permission screen opens: if Android recreates the activity or the process while the user is
  * in Settings, nothing is lost. The permission is asked live each time, so granting it later from
  * Android's own settings makes the pill work without another tap.

@@ -11,7 +11,7 @@ import com.coucou.android.core.WidgetSpoken
 
 /**
  * The Waiting Alert widget: calm when nothing waits for you; a bright orange "N waiting", an orange border and an anxious
- * Mochi when something does. A tap opens the app and the sheet for the request rises by itself over whatever is on screen,
+ * Rafiq when something does. A tap opens the app and the sheet for the request rises by itself over whatever is on screen,
  * so there is no deep link here. It only opens things: a request waits for you in the app, behind the fingerprint.
  */
 class WaitingAlertWidget : AppWidgetProvider() {

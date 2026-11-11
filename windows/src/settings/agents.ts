@@ -11,22 +11,22 @@ import { t } from "../i18n/i18n";
 const TEXT = {
   get title() { return t("Agents"); },
   get intro() {
-    return t("Show other coding agents in the island. Coucou adds its entries to each agent's own config: you see the exact change and where the backup goes before anything is written, and uninstalling removes only what Coucou added.");
+    return t("Show other coding agents in the island. Rafiq adds its entries to each agent's own config: you see the exact change and where the backup goes before anything is written, and uninstalling removes only what Rafiq added.");
   },
-  get none() { return t("Coucou could not list the agents."); },
+  get none() { return t("Rafiq could not list the agents."); },
   get approvals() { return t("Sessions, and Allow / Deny from the island"); },
   get displayOnly() { return t("Sessions — approvals stay in the agent"); },
   get install() { return t("Install…"); },
   get reinstall() { return t("Reinstall…"); },
   get uninstall() { return t("Uninstall…"); },
-  get relayMissing() { return t("The relay isn't installed yet. Restart Coucou."); },
+  get relayMissing() { return t("The relay isn't installed yet. Restart Rafiq."); },
   // Antigravity: the Mac's own strings (hooks.antigravity.approvals*, Settings → Antigravity).
   get agyApprovals() { return t("Approve commands from the notch"); },
-  get agyApprovalsOn() { return t("Before Antigravity runs a shell command that none of its rules covers, the notch asks you first: Allow, Deny or Reply in terminal. Antigravity waits up to 2 min, then asks in its terminal. Coucou can't see Antigravity's mode, so in Auto mode the notch also asks about commands Antigravity would have run on its own."); },
+  get agyApprovalsOn() { return t("Before Antigravity runs a shell command that none of its rules covers, the notch asks you first: Allow, Deny or Reply in terminal. Antigravity waits up to 2 min, then asks in its terminal. Rafiq can't see Antigravity's mode, so in Auto mode the notch also asks about commands Antigravity would have run on its own."); },
   get agyApprovalsOff() { return t("Antigravity asks for permission in its terminal, as usual."); },
-  get agyApprovalsUpdate() { return t("Click Install hooks once more, then restart Antigravity: hooks from an older Coucou don't let it wait for your answer."); },
+  get agyApprovalsUpdate() { return t("Click Install hooks once more, then restart Antigravity: hooks from an older Rafiq don't let it wait for your answer."); },
   previewInstall: (name: string) => t("This is exactly what changes for {name}. Nothing else is touched.", { name }),
-  get previewRemove() { return t("This removes Coucou's entries only. Everything else stays."); },
+  get previewRemove() { return t("This removes Rafiq's entries only. Everything else stays."); },
   backup: (to: string) => (to ? t("Backup → {path}", { path: to }) : t("No existing file — nothing to back up.")),
   get confirmInstall() { return t("Back up and write"); },
   get confirmRemove() { return t("Back up and remove"); },
@@ -110,7 +110,7 @@ function agentBlock(initial: AgentHookStatus): HTMLElement {
 
   /**
    * Antigravity's commands waiting for Allow / Deny on the island, as on the Mac: off by
-   * default, shown once the hooks are installed. Hooks written by an older Coucou give
+   * default, shown once the hooks are installed. Hooks written by an older Rafiq give
    * Antigravity 10 s, too short to wait for a click: they must be installed again.
    */
   function agyApprovalsRow(current: AgyApprovalsStatus): HTMLElement {

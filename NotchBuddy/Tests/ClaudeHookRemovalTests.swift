@@ -4,7 +4,7 @@
 // Run from repo root:
 //   swift NotchBuddy/Tests/ClaudeHookRemovalTests.swift
 //
-// Covers #854: install and uninstall must remove only Coucou's own nb-hook
+// Covers #854: install and uninstall must remove only Rafiq's own nb-hook
 // entries, never whole groups that merely mention "coucou"/"NotchBuddy".
 // Keep in sync with HookServer.swift (removeNbHookEntries + the per-event
 // cleanup in buildHooksData / uninstallClaudeHooks).
@@ -47,7 +47,7 @@ func removeNbHookEntries(from groups: [[String: Any]]) -> [[String: Any]] {
 }
 
 // ── Mirror of the per-event cleanup the Claude paths run ──────────────────────
-// buildHooksData removes Coucou's own previous entries, then appends a fresh one.
+// buildHooksData removes Rafiq's own previous entries, then appends a fresh one.
 let nbCmd = "\"$HOME/Library/Application Support/NotchBuddy/nb-hook\""
 
 func installEvent(_ existing: [[String: Any]], timeout: Int) -> [[String: Any]] {
@@ -64,7 +64,7 @@ check("1. install keeps the user's ~/dev/coucou lint group",
       installEvent([userLint, coucouGroup], timeout: 10),
       contains: ["~/dev/coucou/scripts/lint.sh", "Bash"])
 
-// 2. Install replaces Coucou's own previous group without duplicating it
+// 2. Install replaces Rafiq's own previous group without duplicating it
 let installedTwice = installEvent(installEvent([coucouGroup], timeout: 10), timeout: 10)
 let nbPlainCount = installedTwice.flatMap { ($0["hooks"] as? [[String: Any]]) ?? [] }
     .filter { ($0["command"] as? String) == nbCmd }.count
@@ -80,7 +80,7 @@ check("3. uninstall keeps \"echo coucou\", drops only the nb-hook entry",
       contains: ["echo coucou"],
       notContains: ["nb-hook"])
 
-// 4. Uninstall drops a group that held only Coucou's hook
+// 4. Uninstall drops a group that held only Rafiq's hook
 check("4. uninstall drops coucou-only groups entirely",
       removeNbHookEntries(from: [coucouGroup]),
       expectEmpty: true)

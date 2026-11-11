@@ -64,7 +64,7 @@ for name in ("idle", "working", "done", "waiting"):
     s = open(p).read()
     s = s.replace(OLD_BODY, body).replace("#EDEDEF", "#FBF6EC").replace("#C4C5CA", "#DECDB0")
     s = s.replace("#59FF7896", "#73E8B64A").replace("#1A1412", "#13213F")
-    s = s.replace("pink cheeks", "golden cheeks").replace("Mochi's face", "Rafiq's face")
+    s = s.replace("pink cheeks", "golden cheeks").replace("Rafiq's face", "Rafiq's face")
     if 'android:fillColor="#E8B64A"' not in s:
         s = s.replace("</vector>", finial + "</vector>")
     open(p, "w").write(s)

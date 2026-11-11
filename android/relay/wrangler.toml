@@ -1,4 +1,4 @@
-# Coucou link relay (docs/RELAY_LINK.md). Deploy: see README.md.
+# Rafiq link relay (docs/RELAY_LINK.md). Deploy: see README.md.
 # No secret belongs in this file. The one secret, ACCESS_KEY, is set with:  npx wrangler secret put ACCESS_KEY
 name = "coucou-link"
 main = "src/index.ts"

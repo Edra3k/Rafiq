@@ -2,7 +2,7 @@ import Foundation
 
 /// The key logic of Flow dictation, with nothing from AppKit in it (tests/FlowKeyLogicTests.swift).
 ///
-/// - Hold the key: Coucou listens. Release it: the words are pasted where you type.
+/// - Hold the key: Rafiq listens. Release it: the words are pasted where you type.
 /// - Two quick taps: hands-free, until the next tap.
 ///   With `oneTap` (a Flow setting), one short press is enough.
 /// - Esc, or another key pressed while the key is held (a shortcut such as ⌥E), cancels.
@@ -129,7 +129,7 @@ struct FlowChord: Equatable {
     }
 
     /// Keys that are no longer down although their release never came (a password field hides
-    /// the keys from Coucou): forgotten, and the chord goes up if one of them was in it.
+    /// the keys from Rafiq): forgotten, and the chord goes up if one of them was in it.
     mutating func forget(where gone: (UInt16) -> Bool) -> Edge {
         let lost = held.filter(gone)
         guard !lost.isEmpty else { return .none }

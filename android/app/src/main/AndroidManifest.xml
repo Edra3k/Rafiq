@@ -29,7 +29,7 @@
         android:enableOnBackInvokedCallback="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:theme="@style/Theme.Coucou">
+        android:theme="@style/Theme.Rafiq">
 
         <activity
             android:name=".MainActivity"
@@ -79,7 +79,7 @@
             <meta-data android:name="android.appwidget.provider" android:resource="@xml/coucou_widget_info" />
         </receiver>
 
-        <!-- The Solo and List widgets: Mochi and the agents, pushed by the app when something changes (no timer). -->
+        <!-- The Solo and List widgets: Rafiq and the agents, pushed by the app when something changes (no timer). -->
         <receiver android:name=".app.SoloWidget" android:exported="true" android:label="@string/widget_solo_label">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -93,7 +93,7 @@
             <meta-data android:name="android.appwidget.provider" android:resource="@xml/coucou_list_widget_info" />
         </receiver>
 
-        <!-- More Widgets: Mochi Big, Status Pill, Waiting Alert, Usage Ring, Today and Mochi Mood. Pushed by the app when something changes (no timer). -->
+        <!-- More Widgets: Rafiq Big, Status Pill, Waiting Alert, Usage Ring, Today and Rafiq Mood. Pushed by the app when something changes (no timer). -->
         <receiver android:name=".app.MochiBigWidget" android:exported="true" android:label="@string/widget_big_label">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -147,7 +147,7 @@
             </intent-filter>
         </activity>
 
-        <!-- "Share to Coucou": text/plain from another app goes into the chat box as a draft, never sent. Exported for the share sheet; it takes one
+        <!-- "Share to Rafiq": text/plain from another app goes into the chat box as a draft, never sent. Exported for the share sheet; it takes one
              string, cleaned and cut, and nothing else. -->
         <activity
             android:name=".app.ShareActivity"
@@ -163,7 +163,7 @@
             </intent-filter>
         </activity>
 
-        <!-- The quick-settings tile: on while the computer is connected; a tap opens Coucou. -->
+        <!-- The quick-settings tile: on while the computer is connected; a tap opens Rafiq. -->
         <service
             android:name=".app.GlanceTile"
             android:exported="true"

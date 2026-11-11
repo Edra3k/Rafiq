@@ -26,9 +26,9 @@ export interface ShortcutHost {
   takeKeyboard(): void;
   /** The wardrobe from any state, or back if it is open (Island.wardrobeAnywhere). */
   wardrobeAnywhere(): void;
-  /** False where Mochi can't leave the island (GNOME on Wayland). */
+  /** False where Rafiq can't leave the island (GNOME on Wayland). */
   canLeaveIsland(): boolean;
-  /** Mochi out to the desktop, or home (DesktopMochiController.flyOutOrHome). */
+  /** Rafiq out to the desktop, or home (DesktopMochiController.flyOutOrHome). */
   flyOutOrHome(): void;
   /** Hands Ctrl+O / Ctrl+E to the view on screen (the Mac posts notifications). */
   viewCommand(command: ViewCommand): void;
@@ -81,7 +81,7 @@ export function runGlobalShortcut(host: ShortcutHost, action: string, resume: ()
         host.alert("question");
         host.takeKeyboard();
       } else {
-        // Nothing is waiting: Mochi says so.
+        // Nothing is waiting: Rafiq says so.
         host.emote("annoyed");
         Sound.play("error");
       }
@@ -121,7 +121,7 @@ export function runGlobalShortcut(host: ShortcutHost, action: string, resume: ()
     }
 
     // The Mac's ⌃⌥D. Sending him out lifts Pause, as the other shortcuts do;
-    // where he can't leave the island, Mochi says so.
+    // where he can't leave the island, Rafiq says so.
     case "desktopToggle":
       if (!host.canLeaveIsland()) {
         host.emote("annoyed");

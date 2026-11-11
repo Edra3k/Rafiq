@@ -37,11 +37,11 @@ impl Kind {
     }
 }
 
-/// What one webhook delivery holds for Coucou.
+/// What one webhook delivery holds for Rafiq.
 #[derive(Debug, PartialEq)]
 pub enum WebhookEvent {
     Message(Message),
-    /// A valid delivery Coucou has no use for (receipts, reactions, a test ping…).
+    /// A valid delivery Rafiq has no use for (receipts, reactions, a test ping…).
     Ignored,
 }
 
@@ -99,7 +99,7 @@ fn parse_gowa(json: &Value, me: Option<&str>) -> WebhookEvent {
     WebhookEvent::Message(m)
 }
 
-/// GOWA puts each media under its own key; only the label matters to Coucou.
+/// GOWA puts each media under its own key; only the label matters to Rafiq.
 pub fn gowa_media(p: &Value) -> Media {
     let has = |k: &str| p.get(k).is_some_and(|v| !v.is_null());
     if has("image") {
@@ -200,7 +200,7 @@ pub mod gowa {
     }
 
     /// `GET /devices` → `results: [{id, phone_number, display_name, state, jid, created_at}]`.
-    /// The device Coucou uses: a logged-in one first, else the first one.
+    /// The device Rafiq uses: a logged-in one first, else the first one.
     pub fn device(data: &[u8]) -> Option<(String, Status)> {
         let list = results(data)?;
         let list = list.as_array()?;
@@ -229,7 +229,7 @@ pub mod gowa {
     }
 
     /// `whatsapp rest` for "Start GOWA automatically": on this computer only, on the URL's port,
-    /// and media never downloaded (Coucou shows a label), so GOWA keeps no photo or voice note.
+    /// and media never downloaded (Rafiq shows a label), so GOWA keeps no photo or voice note.
     pub fn launch_arguments(port: u16) -> Vec<String> {
         vec![
             "rest".into(),
@@ -396,7 +396,7 @@ pub mod openwa {
         }
     }
 
-    /// OpenWA names people `<number>@c.us` (Coucou keeps the @s.whatsapp.net form inside).
+    /// OpenWA names people `<number>@c.us` (Rafiq keeps the @s.whatsapp.net form inside).
     pub fn chat_id(jid: &str) -> String {
         match jid.strip_suffix("@s.whatsapp.net") {
             Some(user) => format!("{user}@c.us"),

@@ -1,7 +1,7 @@
 // The key logic of Flow dictation, with nothing from the OS in it. Port of
 // FlowKeyLogic.swift.
 //
-// - Hold the key: Coucou listens. Release it: the words are pasted where you type.
+// - Hold the key: Rafiq listens. Release it: the words are pasted where you type.
 // - Two quick taps: hands-free, until the next tap. With `one_tap` (a Flow
 //   setting), one short press is enough.
 // - Esc, or another key pressed while the key is held (a shortcut such as

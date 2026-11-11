@@ -196,17 +196,17 @@ private struct RecapSharePanelView: View {
 // MARK: - Share image (1080×1920)
 
 struct RecapShareImageView: View {
-    /// Where people can find Coucou, printed under the shared image.
+    /// Where people can find Rafiq, printed under the shared image.
     #if APPSTORE
-    static let footer = "Coucou · louis-cfm.github.io/coucou"
+    static let footer = "Rafiq · edra3k.github.io/Rafiq"
     #else
-    static let footer = "Coucou · github.com/Louis-CFM/coucou"
+    static let footer = "Rafiq · github.com/Edra3k/Rafiq"
     #endif
 
     let summary: WeeklySummary
     let hideProjects: Bool
 
-    // Static BotEngine for the Mochi snapshot — idle state, no animation needed.
+    // Static BotEngine for the Rafiq snapshot — idle state, no animation needed.
     @StateObject private var mochiEngine = BotEngine()
 
     var body: some View {
@@ -224,14 +224,14 @@ struct RecapShareImageView: View {
             VStack(spacing: 0) {
                 Spacer()
 
-                // Mochi character
+                // Rafiq character
                 Canvas { context, size in
                     mochiEngine.draw(context: context, size: size)
                 }
                 .frame(width: 200, height: 200)
                 .padding(.bottom, 20)
 
-                Text("Coucou")
+                Text("Rafiq")
                     .font(.system(size: 52, weight: .black, design: .rounded))
                     .foregroundColor(Color(hex: "#F1F2F4"))
                 Text(String(localized: "recap.title"))

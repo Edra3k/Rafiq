@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run the nb-hook relay that HookServer.swift installs against a stand-in Coucou socket.
+"""Run the nb-hook relay that HookServer.swift installs against a stand-in Rafiq socket.
 
 Covers the shell wrapper on this OS (macOS: python3 behind xcode-select; elsewhere: the
 python3 in PATH, as on a server reached over SSH), the default socket path and the
@@ -23,7 +23,7 @@ ROOT = Path(__file__).resolve().parent.parent
 SOURCE = ROOT / "NotchBuddy/Sources/App/HookServer.swift"
 DEFAULT_SOCKETS = {
     "nbHookPythonGitHub": "Library/Application Support/NotchBuddy/nb.sock",
-    "nbHookPythonAppStore": "Library/Containers/fr.louisraille.Coucou/Data/nb.sock",
+    "nbHookPythonAppStore": "Library/Containers/com.edra3k.rafiq.ios/Data/nb.sock",
 }
 
 
@@ -162,7 +162,7 @@ def main():
             coucou.close()
 
             out, took = run(hook_dir, request, env=dict(env, COUCOU_SOCKET=str(work / "none.sock")))
-            check(out == "" and took < 5, f"no Coucou: the permission request goes back at once ({took:.2f} s)")
+            check(out == "" and took < 5, f"no Rafiq: the permission request goes back at once ({took:.2f} s)")
 
             # No python3 (Linux) or no xcode-select (macOS) in PATH: the wrapper stays quiet.
             bare = work / f"bin-{variant}"

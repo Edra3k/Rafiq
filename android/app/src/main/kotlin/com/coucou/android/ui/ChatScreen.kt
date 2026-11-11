@@ -117,7 +117,7 @@ internal fun chatStateBody(state: ChatTabState): Int = when (state) {
     ChatTabState.READY -> R.string.chat_title
 }
 
-/** The Chat tab with nothing to chat with: a sleeping Mochi, what is wrong in plain words, and the one button that helps (if any). */
+/** The Chat tab with nothing to chat with: a sleeping Rafiq, what is wrong in plain words, and the one button that helps (if any). */
 @Composable
 private fun ChatEmpty(state: ChatTabState, onHome: () -> Unit, onSettings: () -> Unit) {
     val t = tokens()

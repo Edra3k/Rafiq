@@ -1,5 +1,5 @@
 {
-  "about": "What's new, shown once in the island after Coucou updates itself (src/whats-new/). Every Windows and Linux release adds its entry here, in the 14 languages: 1 to 4 items, a short title and one line each, an icon from scripts/test-whats-new.py. python3 scripts/test-whats-new.py checks it.",
+  "about": "What's new, shown once in the island after Rafiq updates itself (src/whats-new/). Every Windows and Linux release adds its entry here, in the 14 languages: 1 to 4 items, a short title and one line each, an icon from scripts/test-whats-new.py. python3 scripts/test-whats-new.py checks it.",
   "releases": [
     {
       "version": "0.6.0",
@@ -112,20 +112,20 @@
         {
           "icon": "mic",
           "title": {
-            "en": "« OK Coucou » with your accent",
-            "zh-Hans": "带口音也能说« OK Coucou »",
-            "hi": "अपने लहजे में « OK Coucou »",
-            "es": "« OK Coucou » con tu acento",
-            "ar": "« OK Coucou » بلكنتك",
-            "fr": "« OK Coucou » avec ton accent",
-            "bn": "আপনার উচ্চারণে « OK Coucou »",
-            "pt-BR": "« OK Coucou » com seu sotaque",
-            "ru": "« OK Coucou » с вашим акцентом",
-            "id": "« OK Coucou » dengan logatmu",
-            "de": "« OK Coucou » mit deinem Akzent",
-            "tr": "Kendi aksanınla « OK Coucou »",
-            "ko": "내 억양으로 « OK Coucou »",
-            "ja": "なまりのある « OK Coucou » も"
+            "en": "« OK Rafiq » with your accent",
+            "zh-Hans": "带口音也能说« OK Rafiq »",
+            "hi": "अपने लहजे में « OK Rafiq »",
+            "es": "« OK Rafiq » con tu acento",
+            "ar": "« OK Rafiq » بلكنتك",
+            "fr": "« OK Rafiq » avec ton accent",
+            "bn": "আপনার উচ্চারণে « OK Rafiq »",
+            "pt-BR": "« OK Rafiq » com seu sotaque",
+            "ru": "« OK Rafiq » с вашим акцентом",
+            "id": "« OK Rafiq » dengan logatmu",
+            "de": "« OK Rafiq » mit deinem Akzent",
+            "tr": "Kendi aksanınla « OK Rafiq »",
+            "ko": "내 억양으로 « OK Rafiq »",
+            "ja": "なまりのある « OK Rafiq » も"
           },
           "detail": {
             "en": "Brazilian and Spanish accents wake it now, and one press of the key starts hands-free.",
@@ -168,20 +168,20 @@
             "ja": "アイランドが画面に残る"
           },
           "detail": {
-            "en": "Closed, it keeps Mochi or the time at the top of the screen. Hover it to bring Coucou back.",
-            "zh-Hans": "关闭后，屏幕顶部仍显示 Mochi 或时间。将指针移上去即可唤回 Coucou。",
-            "hi": "बंद होने पर ऊपर Mochi या समय दिखता रहता है। Coucou लौटाने के लिए पॉइंटर रखें।",
-            "es": "Cerrada, muestra a Mochi o la hora arriba. Pasa el puntero para recuperar Coucou.",
-            "ar": "عند الإغلاق يبقى Mochi أو الوقت أعلى الشاشة. مرّر المؤشر لإعادة Coucou.",
-            "fr": "Fermée, elle garde Mochi ou l'heure en haut de l'écran. Survolez-la pour retrouver Coucou.",
-            "bn": "বন্ধ হলেও উপরে Mochi বা সময় থাকে। Coucou ফেরাতে পয়েন্টার রাখুন।",
-            "pt-BR": "Fechada, mostra o Mochi ou a hora no topo. Passe o ponteiro para trazer o Coucou.",
-            "ru": "Закрытый, он показывает Mochi или время вверху. Наведите указатель, чтобы вернуть Coucou.",
-            "id": "Saat ditutup, Mochi atau jam tetap di atas. Arahkan penunjuk untuk memunculkan Coucou.",
-            "de": "Geschlossen zeigt sie oben Mochi oder die Uhrzeit. Zeiger darüber holt Coucou zurück.",
-            "tr": "Kapalıyken üstte Mochi ya da saat kalır. Coucou'yu geri getirmek için üzerine gelin.",
-            "ko": "닫혀도 화면 위에 Mochi나 시간이 남아요. 포인터를 올리면 Coucou가 돌아와요.",
-            "ja": "閉じても上部に Mochi か時刻が残ります。ポインタを乗せると Coucou が戻ります。"
+            "en": "Closed, it keeps Rafiq or the time at the top of the screen. Hover it to bring Rafiq back.",
+            "zh-Hans": "关闭后，屏幕顶部仍显示 Rafiq 或时间。将指针移上去即可唤回 Rafiq。",
+            "hi": "बंद होने पर ऊपर Rafiq या समय दिखता रहता है। Rafiq लौटाने के लिए पॉइंटर रखें।",
+            "es": "Cerrada, muestra a Rafiq o la hora arriba. Pasa el puntero para recuperar Rafiq.",
+            "ar": "عند الإغلاق يبقى Rafiq أو الوقت أعلى الشاشة. مرّر المؤشر لإعادة Rafiq.",
+            "fr": "Fermée, elle garde Rafiq ou l'heure en haut de l'écran. Survolez-la pour retrouver Rafiq.",
+            "bn": "বন্ধ হলেও উপরে Rafiq বা সময় থাকে। Rafiq ফেরাতে পয়েন্টার রাখুন।",
+            "pt-BR": "Fechada, mostra o Rafiq ou a hora no topo. Passe o ponteiro para trazer o Rafiq.",
+            "ru": "Закрытый, он показывает Rafiq или время вверху. Наведите указатель, чтобы вернуть Rafiq.",
+            "id": "Saat ditutup, Rafiq atau jam tetap di atas. Arahkan penunjuk untuk memunculkan Rafiq.",
+            "de": "Geschlossen zeigt sie oben Rafiq oder die Uhrzeit. Zeiger darüber holt Rafiq zurück.",
+            "tr": "Kapalıyken üstte Rafiq ya da saat kalır. Rafiq'i geri getirmek için üzerine gelin.",
+            "ko": "닫혀도 화면 위에 Rafiq나 시간이 남아요. 포인터를 올리면 Rafiq가 돌아와요.",
+            "ja": "閉じても上部に Rafiq か時刻が残ります。ポインタを乗せると Rafiq が戻ります。"
           }
         },
         {
@@ -273,20 +273,20 @@
             "ja": "話している間は静かに"
           },
           "detail": {
-            "en": "On Windows, videos, music and calls go quiet while Coucou listens, then come back.",
-            "zh-Hans": "在 Windows 上，Coucou 聆听时视频、音乐和通话会静音，之后恢复。",
-            "hi": "Windows पर Coucou के सुनते समय वीडियो, संगीत और कॉल शांत होकर फिर लौट आते हैं।",
-            "es": "En Windows, vídeos, música y llamadas se callan mientras Coucou escucha y luego vuelven.",
-            "ar": "على Windows تصمت الفيديوهات والموسيقى والمكالمات أثناء استماع Coucou ثم تعود.",
-            "fr": "Sur Windows, vidéos, musique et appels se taisent pendant que Coucou écoute, puis reviennent.",
-            "bn": "Windows-এ Coucou শোনার সময় ভিডিও, গান ও কল চুপ থাকে, পরে ফিরে আসে।",
-            "pt-BR": "No Windows, vídeos, música e chamadas silenciam enquanto o Coucou ouve e depois voltam.",
-            "ru": "В Windows видео, музыка и звонки затихают, пока Coucou слушает, а потом возвращаются.",
-            "id": "Di Windows, video, musik, dan panggilan senyap saat Coucou mendengar, lalu kembali.",
-            "de": "Unter Windows verstummen Videos, Musik und Anrufe, während Coucou zuhört.",
-            "tr": "Windows'ta Coucou dinlerken videolar, müzik ve aramalar susar, sonra geri gelir.",
-            "ko": "Windows에서 Coucou가 듣는 동안 영상·음악·통화가 조용해졌다가 돌아와요.",
-            "ja": "Windows では Coucou が聞く間、動画・音楽・通話が静かになり、その後戻ります。"
+            "en": "On Windows, videos, music and calls go quiet while Rafiq listens, then come back.",
+            "zh-Hans": "在 Windows 上，Rafiq 聆听时视频、音乐和通话会静音，之后恢复。",
+            "hi": "Windows पर Rafiq के सुनते समय वीडियो, संगीत और कॉल शांत होकर फिर लौट आते हैं।",
+            "es": "En Windows, vídeos, música y llamadas se callan mientras Rafiq escucha y luego vuelven.",
+            "ar": "على Windows تصمت الفيديوهات والموسيقى والمكالمات أثناء استماع Rafiq ثم تعود.",
+            "fr": "Sur Windows, vidéos, musique et appels se taisent pendant que Rafiq écoute, puis reviennent.",
+            "bn": "Windows-এ Rafiq শোনার সময় ভিডিও, গান ও কল চুপ থাকে, পরে ফিরে আসে।",
+            "pt-BR": "No Windows, vídeos, música e chamadas silenciam enquanto o Rafiq ouve e depois voltam.",
+            "ru": "В Windows видео, музыка и звонки затихают, пока Rafiq слушает, а потом возвращаются.",
+            "id": "Di Windows, video, musik, dan panggilan senyap saat Rafiq mendengar, lalu kembali.",
+            "de": "Unter Windows verstummen Videos, Musik und Anrufe, während Rafiq zuhört.",
+            "tr": "Windows'ta Rafiq dinlerken videolar, müzik ve aramalar susar, sonra geri gelir.",
+            "ko": "Windows에서 Rafiq가 듣는 동안 영상·음악·통화가 조용해졌다가 돌아와요.",
+            "ja": "Windows では Rafiq が聞く間、動画・音楽・通話が静かになり、その後戻ります。"
           }
         }
       ]
@@ -493,20 +493,20 @@
             "ja": "設定を検索"
           },
           "detail": {
-            "en": "Type in the Coucou window's sidebar to find any setting.",
-            "zh-Hans": "在 Coucou 窗口的侧边栏输入，即可找到任何设置。",
-            "hi": "कोई भी सेटिंग ढूँढने के लिए Coucou विंडो की साइडबार में टाइप करें।",
-            "es": "Escribe en la barra lateral de la ventana de Coucou para encontrar cualquier ajuste.",
-            "ar": "اكتب في الشريط الجانبي لنافذة Coucou لتجد أي إعداد.",
-            "fr": "Tape dans la barre latérale de la fenêtre Coucou pour trouver n'importe quel réglage.",
-            "bn": "যেকোনো সেটিং খুঁজতে Coucou উইন্ডোর সাইডবারে টাইপ করুন।",
-            "pt-BR": "Digite na barra lateral da janela do Coucou para achar qualquer ajuste.",
-            "ru": "Начните печатать в боковой панели окна Coucou, чтобы найти любую настройку.",
-            "id": "Ketik di bilah samping jendela Coucou untuk menemukan pengaturan apa pun.",
-            "de": "Tippe in der Seitenleiste des Coucou-Fensters, um jede Einstellung zu finden.",
-            "tr": "Herhangi bir ayarı bulmak için Coucou penceresinin kenar çubuğuna yazın.",
-            "ko": "Coucou 창의 사이드바에 입력해 원하는 설정을 찾으세요.",
-            "ja": "Coucou ウインドウのサイドバーに入力して、どの設定もすぐ見つかります。"
+            "en": "Type in the Rafiq window's sidebar to find any setting.",
+            "zh-Hans": "在 Rafiq 窗口的侧边栏输入，即可找到任何设置。",
+            "hi": "कोई भी सेटिंग ढूँढने के लिए Rafiq विंडो की साइडबार में टाइप करें।",
+            "es": "Escribe en la barra lateral de la ventana de Rafiq para encontrar cualquier ajuste.",
+            "ar": "اكتب في الشريط الجانبي لنافذة Rafiq لتجد أي إعداد.",
+            "fr": "Tape dans la barre latérale de la fenêtre Rafiq pour trouver n'importe quel réglage.",
+            "bn": "যেকোনো সেটিং খুঁজতে Rafiq উইন্ডোর সাইডবারে টাইপ করুন।",
+            "pt-BR": "Digite na barra lateral da janela do Rafiq para achar qualquer ajuste.",
+            "ru": "Начните печатать в боковой панели окна Rafiq, чтобы найти любую настройку.",
+            "id": "Ketik di bilah samping jendela Rafiq untuk menemukan pengaturan apa pun.",
+            "de": "Tippe in der Seitenleiste des Rafiq-Fensters, um jede Einstellung zu finden.",
+            "tr": "Herhangi bir ayarı bulmak için Rafiq penceresinin kenar çubuğuna yazın.",
+            "ko": "Rafiq 창의 사이드바에 입력해 원하는 설정을 찾으세요.",
+            "ja": "Rafiq ウインドウのサイドバーに入力して、どの設定もすぐ見つかります。"
           }
         }
       ]
@@ -568,20 +568,20 @@
             "ja": "韓国語と日本語"
           },
           "detail": {
-            "en": "Coucou now speaks 14 languages. Korean thanks to @lovyestar.",
-            "zh-Hans": "Coucou 现在支持 14 种语言。韩语由 @lovyestar 贡献。",
-            "hi": "Coucou अब 14 भाषाएँ बोलता है। कोरियाई @lovyestar की बदौलत।",
-            "es": "Coucou ya habla 14 idiomas. El coreano gracias a @lovyestar.",
-            "ar": "يتحدث Coucou الآن 14 لغة. الكورية بفضل @lovyestar.",
-            "fr": "Coucou parle maintenant 14 langues. Le coréen grâce à @lovyestar.",
-            "bn": "Coucou এখন 14টি ভাষায় কথা বলে। কোরিয়ান @lovyestar-এর সৌজন্যে।",
-            "pt-BR": "O Coucou agora fala 14 idiomas. O coreano graças a @lovyestar.",
-            "ru": "Coucou теперь говорит на 14 языках. Корейский — благодаря @lovyestar.",
-            "id": "Coucou kini berbicara 14 bahasa. Bahasa Korea berkat @lovyestar.",
-            "de": "Coucou spricht jetzt 14 Sprachen. Koreanisch dank @lovyestar.",
-            "tr": "Coucou artık 14 dil konuşuyor. Korece @lovyestar sayesinde.",
-            "ko": "Coucou가 이제 14개 언어를 지원합니다. 한국어는 @lovyestar 덕분이에요.",
-            "ja": "Coucou は 14 言語に対応しました。韓国語は @lovyestar のおかげです。"
+            "en": "Rafiq now speaks 14 languages. Korean thanks to @lovyestar.",
+            "zh-Hans": "Rafiq 现在支持 14 种语言。韩语由 @lovyestar 贡献。",
+            "hi": "Rafiq अब 14 भाषाएँ बोलता है। कोरियाई @lovyestar की बदौलत।",
+            "es": "Rafiq ya habla 14 idiomas. El coreano gracias a @lovyestar.",
+            "ar": "يتحدث Rafiq الآن 14 لغة. الكورية بفضل @lovyestar.",
+            "fr": "Rafiq parle maintenant 14 langues. Le coréen grâce à @lovyestar.",
+            "bn": "Rafiq এখন 14টি ভাষায় কথা বলে। কোরিয়ান @lovyestar-এর সৌজন্যে।",
+            "pt-BR": "O Rafiq agora fala 14 idiomas. O coreano graças a @lovyestar.",
+            "ru": "Rafiq теперь говорит на 14 языках. Корейский — благодаря @lovyestar.",
+            "id": "Rafiq kini berbicara 14 bahasa. Bahasa Korea berkat @lovyestar.",
+            "de": "Rafiq spricht jetzt 14 Sprachen. Koreanisch dank @lovyestar.",
+            "tr": "Rafiq artık 14 dil konuşuyor. Korece @lovyestar sayesinde.",
+            "ko": "Rafiq가 이제 14개 언어를 지원합니다. 한국어는 @lovyestar 덕분이에요.",
+            "ja": "Rafiq は 14 言語に対応しました。韓国語は @lovyestar のおかげです。"
           }
         }
       ]
@@ -632,19 +632,19 @@
         {
           "icon": "shield",
           "title": {
-            "en": "Coucou keeps listening",
-            "zh-Hans": "Coucou 始终在线",
-            "hi": "Coucou हमेशा सुनता रहे",
-            "es": "Coucou sigue escuchando",
-            "ar": "Coucou يبقى منصتًا",
-            "fr": "Coucou reste à l’écoute",
-            "bn": "Coucou সবসময় শোনে",
-            "pt-BR": "O Coucou continua ouvindo",
-            "ru": "Coucou всегда на связи",
-            "id": "Coucou terus mendengarkan",
-            "de": "Coucou hört weiter zu",
-            "tr": "Coucou dinlemeye devam eder",
-            "ja": "Coucou は聞き続けます"
+            "en": "Rafiq keeps listening",
+            "zh-Hans": "Rafiq 始终在线",
+            "hi": "Rafiq हमेशा सुनता रहे",
+            "es": "Rafiq sigue escuchando",
+            "ar": "Rafiq يبقى منصتًا",
+            "fr": "Rafiq reste à l’écoute",
+            "bn": "Rafiq সবসময় শোনে",
+            "pt-BR": "O Rafiq continua ouvindo",
+            "ru": "Rafiq всегда на связи",
+            "id": "Rafiq terus mendengarkan",
+            "de": "Rafiq hört weiter zu",
+            "tr": "Rafiq dinlemeye devam eder",
+            "ja": "Rafiq は聞き続けます"
           },
           "detail": {
             "en": "One failed connection no longer cuts Claude Code off, and a card goes once the terminal takes over.",
@@ -754,20 +754,20 @@
             "ja": "1 クリックで設定"
           },
           "detail": {
-            "en": "Coucou installs the gateway, checks it and shows the QR code to scan.",
-            "zh-Hans": "Coucou 安装网关、进行校验，并显示要扫描的二维码。",
-            "hi": "Coucou गेटवे इंस्टॉल करता है, जाँचता है और स्कैन के लिए QR कोड दिखाता है।",
-            "es": "Coucou instala la pasarela, la comprueba y muestra el código QR.",
-            "ar": "يثبّت Coucou البوابة ويتحقق منها ويعرض رمز QR للمسح.",
-            "fr": "Coucou installe la passerelle, la vérifie et affiche le QR code à scanner.",
-            "bn": "Coucou গেটওয়ে ইনস্টল করে, যাচাই করে, তারপর স্ক্যানের QR কোড দেখায়।",
-            "pt-BR": "O Coucou instala o gateway, verifica e mostra o QR code para escanear.",
-            "ru": "Coucou ставит шлюз, проверяет его и показывает QR-код.",
-            "id": "Coucou memasang gateway, memeriksanya, dan menampilkan kode QR.",
-            "de": "Coucou installiert das Gateway, prüft es und zeigt den QR-Code.",
-            "tr": "Coucou ağ geçidini kurar, doğrular ve taranacak QR kodunu gösterir.",
-            "ko": "Coucou가 게이트웨이를 설치하고 확인한 다음, 스캔할 QR 코드까지 보여 줘요.",
-            "ja": "Coucou がゲートウェイをインストールして確認し、読み取る QR コードを表示します。"
+            "en": "Rafiq installs the gateway, checks it and shows the QR code to scan.",
+            "zh-Hans": "Rafiq 安装网关、进行校验，并显示要扫描的二维码。",
+            "hi": "Rafiq गेटवे इंस्टॉल करता है, जाँचता है और स्कैन के लिए QR कोड दिखाता है।",
+            "es": "Rafiq instala la pasarela, la comprueba y muestra el código QR.",
+            "ar": "يثبّت Rafiq البوابة ويتحقق منها ويعرض رمز QR للمسح.",
+            "fr": "Rafiq installe la passerelle, la vérifie et affiche le QR code à scanner.",
+            "bn": "Rafiq গেটওয়ে ইনস্টল করে, যাচাই করে, তারপর স্ক্যানের QR কোড দেখায়।",
+            "pt-BR": "O Rafiq instala o gateway, verifica e mostra o QR code para escanear.",
+            "ru": "Rafiq ставит шлюз, проверяет его и показывает QR-код.",
+            "id": "Rafiq memasang gateway, memeriksanya, dan menampilkan kode QR.",
+            "de": "Rafiq installiert das Gateway, prüft es und zeigt den QR-Code.",
+            "tr": "Rafiq ağ geçidini kurar, doğrular ve taranacak QR kodunu gösterir.",
+            "ko": "Rafiq가 게이트웨이를 설치하고 확인한 다음, 스캔할 QR 코드까지 보여 줘요.",
+            "ja": "Rafiq がゲートウェイをインストールして確認し、読み取る QR コードを表示します。"
           }
         },
         {
@@ -789,20 +789,20 @@
             "ja": "何もパソコンの外に出ません"
           },
           "detail": {
-            "en": "Messages stay in memory and are gone when Coucou quits.",
-            "zh-Hans": "消息只保存在内存中，退出 Coucou 后即消失。",
-            "hi": "संदेश सिर्फ़ मेमोरी में रहते हैं और Coucou बंद होते ही मिट जाते हैं।",
-            "es": "Los mensajes quedan en memoria y se borran al cerrar Coucou.",
-            "ar": "تبقى الرسائل في الذاكرة وتُمحى عند إغلاق Coucou.",
-            "fr": "Les messages restent en mémoire et disparaissent quand Coucou quitte.",
-            "bn": "বার্তা শুধু মেমোরিতে থাকে, Coucou বন্ধ হলেই মুছে যায়।",
-            "pt-BR": "As mensagens ficam na memória e somem quando o Coucou fecha.",
-            "ru": "Сообщения хранятся только в памяти и исчезают при выходе из Coucou.",
-            "id": "Pesan hanya di memori dan hilang saat Coucou ditutup.",
-            "de": "Nachrichten bleiben im Speicher und sind weg, wenn Coucou beendet wird.",
-            "tr": "Mesajlar bellekte kalır, Coucou kapanınca silinir.",
-            "ko": "메시지는 메모리에만 남고, Coucou를 끄면 사라져요.",
-            "ja": "メッセージはメモリ上にだけあり、Coucou を終了すると消えます。"
+            "en": "Messages stay in memory and are gone when Rafiq quits.",
+            "zh-Hans": "消息只保存在内存中，退出 Rafiq 后即消失。",
+            "hi": "संदेश सिर्फ़ मेमोरी में रहते हैं और Rafiq बंद होते ही मिट जाते हैं।",
+            "es": "Los mensajes quedan en memoria y se borran al cerrar Rafiq.",
+            "ar": "تبقى الرسائل في الذاكرة وتُمحى عند إغلاق Rafiq.",
+            "fr": "Les messages restent en mémoire et disparaissent quand Rafiq quitte.",
+            "bn": "বার্তা শুধু মেমোরিতে থাকে, Rafiq বন্ধ হলেই মুছে যায়।",
+            "pt-BR": "As mensagens ficam na memória e somem quando o Rafiq fecha.",
+            "ru": "Сообщения хранятся только в памяти и исчезают при выходе из Rafiq.",
+            "id": "Pesan hanya di memori dan hilang saat Rafiq ditutup.",
+            "de": "Nachrichten bleiben im Speicher und sind weg, wenn Rafiq beendet wird.",
+            "tr": "Mesajlar bellekte kalır, Rafiq kapanınca silinir.",
+            "ko": "메시지는 메모리에만 남고, Rafiq를 끄면 사라져요.",
+            "ja": "メッセージはメモリ上にだけあり、Rafiq を終了すると消えます。"
           }
         }
       ]
@@ -813,20 +813,20 @@
         {
           "icon": "update",
           "title": {
-            "en": "Mochi turns blue for updates",
-            "fr": "Mochi bleu pour les mises à jour",
-            "es": "Mochi azul cuando hay versión nueva",
-            "pt-BR": "Mochi azul quando há versão nova",
-            "ru": "Синий Mochi — есть обновление",
-            "zh-Hans": "有更新时 Mochi 变蓝",
-            "hi": "अपडेट पर Mochi नीला",
-            "ar": "Mochi يتحول للأزرق عند التحديث",
-            "bn": "আপডেটে Mochi নীল",
-            "id": "Mochi biru saat ada pembaruan",
-            "de": "Mochi wird blau bei Updates",
-            "tr": "Güncellemede Mochi maviye döner",
-            "ko": "업데이트가 있으면 모찌가 파랗게 돼요",
-            "ja": "アップデートで Mochi が青に"
+            "en": "Rafiq turns blue for updates",
+            "fr": "Rafiq bleu pour les mises à jour",
+            "es": "Rafiq azul cuando hay versión nueva",
+            "pt-BR": "Rafiq azul quando há versão nova",
+            "ru": "Синий Rafiq — есть обновление",
+            "zh-Hans": "有更新时 Rafiq 变蓝",
+            "hi": "अपडेट पर Rafiq नीला",
+            "ar": "Rafiq يتحول للأزرق عند التحديث",
+            "bn": "আপডেটে Rafiq নীল",
+            "id": "Rafiq biru saat ada pembaruan",
+            "de": "Rafiq wird blau bei Updates",
+            "tr": "Güncellemede Rafiq maviye döner",
+            "ko": "업데이트가 있으면 라피크가 파랗게 돼요",
+            "ja": "アップデートで Rafiq が青に"
           },
           "detail": {
             "en": "A new version turns him blue, in the island and the tray. On Windows, one click installs it.",
@@ -841,7 +841,7 @@
             "id": "Versi baru membuatnya biru, di pulau dan baki sistem. Di Windows, sekali klik untuk memasang.",
             "de": "Eine neue Version macht ihn blau, in der Insel und im Infobereich. Unter Windows reicht ein Klick.",
             "tr": "Yeni sürüm onu adada ve sistem tepsisinde maviye çevirir. Windows’ta tek tıkla kurulur.",
-            "ko": "새 버전이 나오면 모찌가 아일랜드와 트레이에서 파랗게 변해요. Windows에서는 클릭 한 번이면 설치돼요.",
+            "ko": "새 버전이 나오면 라피크가 아일랜드와 트레이에서 파랗게 변해요. Windows에서는 클릭 한 번이면 설치돼요.",
             "ja": "新しいバージョンが出るとアイランドとトレイで青くなります。Windows では 1 クリックでインストール。"
           }
         },
@@ -864,20 +864,20 @@
             "ja": "新機能をここで"
           },
           "detail": {
-            "en": "After each update: what it brings, then your Coucou so far.",
-            "fr": "Après chaque mise à jour : ce qu’elle apporte, puis ton Coucou jusqu’ici.",
-            "es": "Tras cada actualización: lo que trae y luego tu Coucou hasta ahora.",
-            "pt-BR": "Após cada atualização: o que ela traz e depois seu Coucou até agora.",
-            "ru": "После каждого обновления — что нового, а затем ваш Coucou на сегодня.",
-            "zh-Hans": "每次更新后：先看新内容，再看你的 Coucou 至今。",
-            "hi": "हर अपडेट के बाद: उसमें क्या नया है, फिर अब तक आपका Coucou।",
-            "ar": "بعد كل تحديث: ما الجديد فيه، ثم Coucou الخاص بك حتى الآن.",
-            "bn": "প্রতিটি আপডেটের পর: কী নতুন, তারপর এ পর্যন্ত আপনার Coucou।",
-            "id": "Setelah tiap pembaruan: isinya, lalu Coucou-mu sejauh ini.",
-            "de": "Nach jedem Update: was es bringt, dann dein Coucou bisher.",
-            "tr": "Her güncellemeden sonra: getirdikleri, ardından şimdiye kadar Coucou’n.",
-            "ko": "업데이트할 때마다 새로 뭐가 생겼는지 보여 주고, 지금까지의 Coucou도 알려 줘요.",
-            "ja": "アップデートのたびに、新しい内容とこれまでのあなたの Coucou を表示します。"
+            "en": "After each update: what it brings, then your Rafiq so far.",
+            "fr": "Après chaque mise à jour : ce qu’elle apporte, puis ton Rafiq jusqu’ici.",
+            "es": "Tras cada actualización: lo que trae y luego tu Rafiq hasta ahora.",
+            "pt-BR": "Após cada atualização: o que ela traz e depois seu Rafiq até agora.",
+            "ru": "После каждого обновления — что нового, а затем ваш Rafiq на сегодня.",
+            "zh-Hans": "每次更新后：先看新内容，再看你的 Rafiq 至今。",
+            "hi": "हर अपडेट के बाद: उसमें क्या नया है, फिर अब तक आपका Rafiq।",
+            "ar": "بعد كل تحديث: ما الجديد فيه، ثم Rafiq الخاص بك حتى الآن.",
+            "bn": "প্রতিটি আপডেটের পর: কী নতুন, তারপর এ পর্যন্ত আপনার Rafiq।",
+            "id": "Setelah tiap pembaruan: isinya, lalu Rafiq-mu sejauh ini.",
+            "de": "Nach jedem Update: was es bringt, dann dein Rafiq bisher.",
+            "tr": "Her güncellemeden sonra: getirdikleri, ardından şimdiye kadar Rafiq’n.",
+            "ko": "업데이트할 때마다 새로 뭐가 생겼는지 보여 주고, 지금까지의 Rafiq도 알려 줘요.",
+            "ja": "アップデートのたびに、新しい内容とこれまでのあなたの Rafiq を表示します。"
           }
         },
         {
@@ -911,7 +911,7 @@
             "id": "Dua pil baru berisi aktivitas proyekmu, seperti pil GitHub.",
             "de": "Zwei neue Pills mit der Aktivität deiner Projekte, wie bei GitHub.",
             "tr": "Projelerinin etkinliğini gösteren iki yeni araç, GitHub’ınki gibi.",
-            "ko": "GitHub처럼 프로젝트 활동을 보여 주는 모찌가 두 개 더 생겼어요.",
+            "ko": "GitHub처럼 프로젝트 활동을 보여 주는 라피크가 두 개 더 생겼어요.",
             "ja": "プロジェクトのアクティビティを表示する 2 つの新しいピル。GitHub と同じように。"
           }
         },
@@ -973,19 +973,19 @@
             "ja": "アイランドに新バージョン"
           },
           "detail": {
-            "en": "Coucou tells you when a new version is out. On Windows, one click installs it.",
-            "zh-Hans": "有新版本时 Coucou 会告诉你。在 Windows 上一键即可安装。",
-            "hi": "नया वर्ज़न आने पर Coucou बताता है। Windows पर एक क्लिक में इंस्टॉल।",
-            "es": "Coucou te avisa cuando sale una versión nueva. En Windows, un clic la instala.",
-            "ar": "يخبرك Coucou بصدور إصدار جديد. على Windows تثبّته نقرة واحدة.",
-            "fr": "Coucou te prévient quand une nouvelle version sort. Sur Windows, un clic l'installe.",
-            "bn": "নতুন ভার্সন এলে Coucou জানায়। Windows-এ এক ক্লিকে ইনস্টল।",
-            "pt-BR": "O Coucou avisa quando sai uma nova versão. No Windows, um clique instala.",
-            "ru": "Coucou сообщит о новой версии. В Windows она ставится одним кликом.",
-            "id": "Coucou memberi tahu saat versi baru keluar. Di Windows, sekali klik untuk memasang.",
-            "de": "Coucou sagt dir, wenn eine neue Version da ist. Unter Windows installiert sie ein Klick.",
-            "tr": "Yeni sürüm çıkınca Coucou haber verir. Windows'ta tek tıkla kurulur.",
-            "ja": "新しいバージョンが出ると Coucou が知らせます。Windows では 1 クリックでインストール。"
+            "en": "Rafiq tells you when a new version is out. On Windows, one click installs it.",
+            "zh-Hans": "有新版本时 Rafiq 会告诉你。在 Windows 上一键即可安装。",
+            "hi": "नया वर्ज़न आने पर Rafiq बताता है। Windows पर एक क्लिक में इंस्टॉल।",
+            "es": "Rafiq te avisa cuando sale una versión nueva. En Windows, un clic la instala.",
+            "ar": "يخبرك Rafiq بصدور إصدار جديد. على Windows تثبّته نقرة واحدة.",
+            "fr": "Rafiq te prévient quand une nouvelle version sort. Sur Windows, un clic l'installe.",
+            "bn": "নতুন ভার্সন এলে Rafiq জানায়। Windows-এ এক ক্লিকে ইনস্টল।",
+            "pt-BR": "O Rafiq avisa quando sai uma nova versão. No Windows, um clique instala.",
+            "ru": "Rafiq сообщит о новой версии. В Windows она ставится одним кликом.",
+            "id": "Rafiq memberi tahu saat versi baru keluar. Di Windows, sekali klik untuk memasang.",
+            "de": "Rafiq sagt dir, wenn eine neue Version da ist. Unter Windows installiert sie ein Klick.",
+            "tr": "Yeni sürüm çıkınca Rafiq haber verir. Windows'ta tek tıkla kurulur.",
+            "ja": "新しいバージョンが出ると Rafiq が知らせます。Windows では 1 クリックでインストール。"
           }
         },
         {
@@ -1006,19 +1006,19 @@
             "ja": "ドイツ語とトルコ語"
           },
           "detail": {
-            "en": "Coucou now speaks 12 languages.",
-            "zh-Hans": "Coucou 现在支持 12 种语言。",
-            "hi": "Coucou अब 12 भाषाएँ बोलता है।",
-            "es": "Coucou ya habla 12 idiomas.",
-            "ar": "يتحدث Coucou الآن 12 لغة.",
-            "fr": "Coucou parle maintenant 12 langues.",
-            "bn": "Coucou এখন ১২টি ভাষায় কথা বলে।",
-            "pt-BR": "O Coucou agora fala 12 idiomas.",
-            "ru": "Теперь Coucou говорит на 12 языках.",
-            "id": "Coucou kini berbicara 12 bahasa.",
-            "de": "Coucou spricht jetzt 12 Sprachen.",
-            "tr": "Coucou artık 12 dil konuşuyor.",
-            "ja": "Coucou は 12 言語を話せるようになりました。"
+            "en": "Rafiq now speaks 12 languages.",
+            "zh-Hans": "Rafiq 现在支持 12 种语言。",
+            "hi": "Rafiq अब 12 भाषाएँ बोलता है।",
+            "es": "Rafiq ya habla 12 idiomas.",
+            "ar": "يتحدث Rafiq الآن 12 لغة.",
+            "fr": "Rafiq parle maintenant 12 langues.",
+            "bn": "Rafiq এখন ১২টি ভাষায় কথা বলে।",
+            "pt-BR": "O Rafiq agora fala 12 idiomas.",
+            "ru": "Теперь Rafiq говорит на 12 языках.",
+            "id": "Rafiq kini berbicara 12 bahasa.",
+            "de": "Rafiq spricht jetzt 12 Sprachen.",
+            "tr": "Rafiq artık 12 dil konuşuyor.",
+            "ja": "Rafiq は 12 言語を話せるようになりました。"
           }
         },
         {

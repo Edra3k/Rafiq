@@ -6,7 +6,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
-/** Mirrors windows/tests/wardrobe.test.mjs so the phone and the PC dress Mochi alike. */
+/** Mirrors windows/tests/wardrobe.test.mjs so the phone and the PC dress Rafiq alike. */
 class WardrobeTest {
     private fun season(y: Int, m: Int, d: Int) = Wardrobe.seasonal(LocalDate.of(y, m, d))
 

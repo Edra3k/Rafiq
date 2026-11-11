@@ -305,7 +305,7 @@ internal fun bunnyEars(ctx: Ctx2D, h: Head) {
 
 // ── Layers and transitions ────────────────────────────────────────────────────
 
-/** What Mochi can wear. The raw values are the Mac's and the PC's (stored in the preferences), keep them stable. */
+/** What Rafiq can wear. The raw values are the Mac's and the PC's (stored in the preferences), keep them stable. */
 enum class Outfit(val id: String) {
     NONE("none"), PARTY_HAT("partyHat"), BEANIE("beanie"), CROWN("crown"), SUNGLASSES("sunglasses"),
     ROUND_GLASSES("roundGlasses"), BOW("bow"), SCARF("scarf"), WITCH_HAT("witchHat"), PUMPKIN("pumpkin"),
@@ -316,5 +316,5 @@ enum class Outfit(val id: String) {
 internal val ON_FACE = setOf(Outfit.SUNGLASSES, Outfit.ROUND_GLASSES, Outfit.BOW, Outfit.SCARF, Outfit.PUMPKIN)
 internal val HATS = setOf(Outfit.BEANIE, Outfit.SANTA_HAT, Outfit.PARTY_HAT, Outfit.CROWN, Outfit.WITCH_HAT)
 
-/** [presence] 0 = gone, 1 = fully on (animated by the engine); [morph] is Mochi's mailbox morph: outfits fade as he turns into a box. */
+/** [presence] 0 = gone, 1 = fully on (animated by the engine); [morph] is Rafiq's mailbox morph: outfits fade as he turns into a box. */
 data class OutfitState(val presence: Double, val morph: Double)

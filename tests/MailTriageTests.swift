@@ -105,6 +105,6 @@ enum MailTriageTests {
         precondition(u.contains("set junk mail status of m to false") && u.contains("move m to mailbox \"INBOX\" of acc"))
         let uf = MailScript.undoScript(account: "Pro", fromMailbox: "INBOX", rfcId: "<x@y>", action: .important)
         precondition(uf.contains("set flagged status of m to false"))
-        precondition(!a.contains("delete"), "Coucou never deletes a message")
+        precondition(!a.contains("delete"), "Rafiq never deletes a message")
     }
 }

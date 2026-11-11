@@ -17,7 +17,7 @@ struct IslandRootView: View {
                 IslandContainer(state: state)
                     .padding(.horizontal, IslandPlacement.side)
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: placement.alignment)
-                // Mochi over it, in a box fixed at the same corner of the panel: nothing around
+                // Rafiq over it, in a box fixed at the same corner of the panel: nothing around
                 // him moves while the island grows, so he only follows his own spring (inside the
                 // growing island, its frame and his box were each rounded to the pixel on their
                 // own and he shook on his way).
@@ -33,7 +33,7 @@ struct IslandRootView: View {
     }
 }
 
-/// Mochi when the island lives in a corner: in a box held by the panel's corner (no animated
+/// Rafiq when the island lives in a corner: in a box held by the panel's corner (no animated
 /// frame around him), placed from the island's final size like BotPlacement does inside it.
 struct CornerBot: View {
     @ObservedObject var state: AppState
@@ -174,7 +174,7 @@ struct IslandContainer: View {
                     .transition(.opacity)
             }
 
-            // Open in a corner: the other pills' Mochis on a quarter circle around Mochi.
+            // Open in a corner: the other pills' Rafiqs on a quarter circle around Rafiq.
             if state.mode == .expanded && state.view == .overview && state.islandPlacement.isCorner
                 && !uploadActive && !greetingActive {
                 CornerArcView(state: state, islandW: islandWidth, islandH: islandHeight)
@@ -185,8 +185,8 @@ struct IslandContainer: View {
 
             // Single BotPlacement — always alive in the view tree so spring animations
             // fire from the current position (e.g. choose at 60,101) when canvas deactivates.
-            // Hidden during upload canvas or greeting (both draw their own Mochi).
-            // In a corner, Mochi is drawn by IslandRootView (CornerBot), over the island.
+            // Hidden during upload canvas or greeting (both draw their own Rafiq).
+            // In a corner, Rafiq is drawn by IslandRootView (CornerBot), over the island.
             if !state.islandPlacement.isCorner {
             BotPlacement(state: state, islandW: islandWidth, islandH: islandHeight)
                 // Keep idle animations inside the resting strip. Expanded views
@@ -201,7 +201,7 @@ struct IslandContainer: View {
 
             CountdownBar(state: state, islandW: islandWidth)
 
-            // Under the island while the pointer is on Mochi: how the Mac is doing.
+            // Under the island while the pointer is on Rafiq: how the Mac is doing.
             VitalsHoverLine(islandW: islandWidth, islandH: islandHeight)
 
             if demoEngine.isActive {
@@ -218,7 +218,7 @@ struct IslandContainer: View {
             }
 
             Group {
-                // In a corner the tile holds Mochi alone: no room for the mini Mochis.
+                // In a corner the tile holds Rafiq alone: no room for the mini Rafiqs.
                 if state.mode == .compact && !state.islandPlacement.isCorner {
                     CompactMiniGrid(state: state)
                         .scaleEffect(IslandRestingLayout(width: islandWidth, height: islandHeight).miniGridScale)
@@ -397,7 +397,7 @@ struct BotPlacement: View {
     let islandW: CGFloat
     let islandH: CGFloat
     /// Drawn in a box held by the island's corner (corner placements): the island's
-    /// coordinates minus this, so Mochi doesn't drift while the island grows from its corner.
+    /// coordinates minus this, so Rafiq doesn't drift while the island grows from its corner.
     var shift: CGSize = .zero
     /// How he springs between his places (in a corner: no bounce, he goes straight there).
     var damping: Double = 0.72
@@ -428,7 +428,7 @@ struct BotPlacement: View {
                     .blur(radius: 6)
                     .opacity(botGlowOpacity(state.effectiveState))
                     .position(x: cx, y: cy)
-                    // The same spring as Mochi: the halo stays on him while he moves.
+                    // The same spring as Rafiq: the halo stays on him while he moves.
                     .animation(.spring(response: 0.5, dampingFraction: damping), value: cx)
                     .animation(.spring(response: 0.5, dampingFraction: damping), value: cy)
                     .animation(.easeInOut(duration: 0.4), value: state.effectiveState)
@@ -456,7 +456,7 @@ struct BotPlacement: View {
                 }
                 .transition(.scale(scale: 0.01, anchor: .center).combined(with: .opacity))
             } else {
-                // Invisible while Mochi lives on the desktop: no drawing either.
+                // Invisible while Rafiq lives on the desktop: no drawing either.
                 BotCanvasView(state: state, particleOverhang: overhang, paused: state.mochiOnDesktop)
                     .frame(width: canvasSize, height: canvasSize + overhang)
                     .opacity(state.isDraggingBot || state.mochiOnDesktop ? 0 : opacity)
@@ -502,7 +502,7 @@ func botPosition(mode: IslandMode, view: IslandView, islandW: CGFloat, islandH: 
     let placement = IslandPlacement.current
     if placement.isCorner {
         switch mode {
-        // The corner tile: Mochi alone, big, in its middle.
+        // The corner tile: Rafiq alone, big, in its middle.
         case .hidden, .compact:
             // Measured from the island's corner, not its middle: right after a mode change the
             // size is still the open one, and the middle of that would send him across it.
@@ -511,7 +511,7 @@ func botPosition(mode: IslandMode, view: IslandView, islandW: CGFloat, islandH: 
                     (placement.isBottom ? islandH - t / 2 : t / 2) - 2,
                     min(38, max(0, t - 22)), 1)
         case .expanded where view == .overview:
-            // Open: Mochi in the island's corner, the other pills around him (CornerArcView).
+            // Open: Rafiq in the island's corner, the other pills around him (CornerArcView).
             let c = placement.cornerBotCenter(in: CGSize(width: islandW, height: islandH))
             return (c.x, c.y, 58, 1)
         default: break
@@ -525,7 +525,7 @@ func botPosition(mode: IslandMode, view: IslandView, islandW: CGFloat, islandH: 
     case .expanded:
         let layout = IslandConst.viewLayouts[view]!
         let diameter = layout.botDiameter
-        // Uploading: Mochi dot rides the leading edge of the progress fill.
+        // Uploading: Rafiq dot rides the leading edge of the progress fill.
         // Bar in island coords: left=36, width=526. cx = 36 + progress*526 (dot center at fill right edge).
         // cy comes from ViewLayout.botY (bar center in island coords).
         if view == .uploading {
@@ -631,7 +631,7 @@ struct IslandContentView: View {
 
     var body: some View {
         let placement = state.islandPlacement
-        // Home open in a top corner: Mochi and his circle take the corner, the header the rest.
+        // Home open in a top corner: Rafiq and his circle take the corner, the header the rest.
         let cornerHome = placement.isCorner && state.view == .overview
         let headerGap: CGFloat = cornerHome ? IslandPlacement.cornerColumn : 0
         VStack(spacing: 0) {

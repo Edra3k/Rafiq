@@ -7,7 +7,7 @@ import com.coucou.android.R
 import com.coucou.android.mochi.SoundSink
 
 /**
- * Plays Mochi's sounds (the .wav files in res/raw, (c) Louis Raillé, used with permission) through a
+ * Plays Rafiq's sounds (the .wav files in res/raw, (c) Louis Raillé, used with permission) through a
  * SoundPool. Short clips, no streaming; a sound that is not found is silently ignored.
  */
 class SoundPlayer(private val context: Context) : SoundSink {

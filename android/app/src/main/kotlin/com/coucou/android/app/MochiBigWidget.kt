@@ -16,7 +16,7 @@ import com.coucou.android.core.WidgetSpoken
 import com.coucou.android.core.WidgetTone
 
 /**
- * The Mochi Big widget (4x4). The top is in two sides. On the left, Mochi with his glow and his badge, then the agent's name and
+ * The Rafiq Big widget (4x4). The top is in two sides. On the left, Rafiq with his glow and his badge, then the agent's name and
  * state word, so the state reads without a sentence. On the right, the plan usage: up to two rows (Claude and Codex), each with a thin
  * bar that is teal, yellow from 75% and red from 90%. Under the red line the percentage is small and normal; from 90% it is big and
  * bold with "Near limit" and, when known, when it resets. When plan usage is off or the computer is not there, one calm message.
@@ -53,7 +53,7 @@ class MochiBigWidget : AppWidgetProvider() {
             val large = size == WidgetHub.Size.LARGE
             val small = size == WidgetHub.Size.SMALL
 
-            // Left: Mochi with his glow, then the agent and its state word.
+            // Left: Rafiq with his glow, then the agent and its state word.
             v.setImageViewBitmap(R.id.big_mochi, MochiBitmap.of(c.mood, WidgetHub.px(context, if (large) 170 else if (small) 120 else 140), glow = true, tone = c.look))
             v.setContentDescription(R.id.big_mochi, context.getString(R.string.widget_mochi_description, (top?.stateWord ?: c.headline).lowercase()))
             // Not connected: the "not connected" icon instead of the dot, and the headline instead of an agent.

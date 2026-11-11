@@ -21,7 +21,7 @@ ROOT = Path(__file__).resolve().parent.parent
 SOURCE = ROOT / "NotchBuddy/Sources/App/HookServer.swift"
 SOCKETS = {
     "nbHookPythonGitHub": "Library/Application Support/NotchBuddy/nb.sock",
-    "nbHookPythonAppStore": "Library/Containers/fr.louisraille.Coucou/Data/nb.sock",
+    "nbHookPythonAppStore": "Library/Containers/com.edra3k.rafiq.ios/Data/nb.sock",
 }
 
 

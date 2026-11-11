@@ -4,7 +4,7 @@
 //! The one rule that matters: **nothing that allows anything is ever printed
 //! without a decision a human clicked.** With no decision the reply is silence,
 //! an empty `{}`, or Copilot's explicit "ask", and every agent then asks in its
-//! own terminal exactly as if Coucou were not installed.
+//! own terminal exactly as if Rafiq were not installed.
 
 use serde_json::{json, Map, Value};
 
@@ -16,8 +16,8 @@ pub fn takes_decisions(agent: &str) -> bool {
 }
 
 /// Antigravity's PreToolUse: Antigravity has no permission request and waits for
-/// this hook's decision instead, so the relay waits for Coucou's line (main.rs).
-/// Coucou only shows a card when Settings → Agents → Antigravity → Approve
+/// this hook's decision instead, so the relay waits for Rafiq's line (main.rs).
+/// Rafiq only shows a card when Settings → Agents → Antigravity → Approve
 /// commands from the notch is on (src-tauri/src/agy_approvals.rs).
 pub fn waits_on_pre_tool(agent: &str, event: &str) -> bool {
     agent.eq_ignore_ascii_case("antigravity") && event == "PreToolUse"
@@ -35,12 +35,12 @@ fn wants_json(agent: &str) -> bool {
 pub fn stdout(agent: &str, event: &str, decision: Option<&str>, question: Option<&Value>) -> Option<String> {
     if event != "PermissionRequest" {
         // Antigravity reads "{}" on PreToolUse as a denial. "ask" keeps its own prompt
-        // (and the user's Always Allow): Coucou never allows a tool by itself, only a
+        // (and the user's Always Allow): Rafiq never allows a tool by itself, only a
         // click on the island's Allow does. The Mac relay's replies, key for key.
         if waits_on_pre_tool(agent, event) {
             let reply = match decision.map(str::trim) {
                 Some("allow" | "always") => r#"{"decision":"allow"}"#,
-                Some("deny") => r#"{"decision":"deny","reason":"Denied from Coucou"}"#,
+                Some("deny") => r#"{"decision":"deny","reason":"Denied from Rafiq"}"#,
                 _ => r#"{"decision":"ask"}"#,
             };
             return Some(reply.to_string());
@@ -102,7 +102,7 @@ pub fn decision_json(decision: &str, question: Option<&Value>) -> Option<String>
         // "always" still answers a plain allow; remembering it is the island's
         // business, not the agent's.
         "allow" | "always" => r#"{"behavior":"allow"}"#.to_string(),
-        "deny" => r#"{"behavior":"deny","message":"Denied from Coucou"}"#.to_string(),
+        "deny" => r#"{"behavior":"deny","message":"Denied from Rafiq"}"#.to_string(),
         _ => return None,
     };
     Some(format!(
@@ -200,7 +200,7 @@ mod tests {
     #[test]
     fn each_agent_gets_its_own_reply_shape() {
         let allow = r#"{"hookSpecificOutput":{"hookEventName":"PermissionRequest","decision":{"behavior":"allow"}}}"#;
-        let deny = r#"{"hookSpecificOutput":{"hookEventName":"PermissionRequest","decision":{"behavior":"deny","message":"Denied from Coucou"}}}"#;
+        let deny = r#"{"hookSpecificOutput":{"hookEventName":"PermissionRequest","decision":{"behavior":"deny","message":"Denied from Rafiq"}}}"#;
         for agent in ["", "codex", "claude-desktop", "opencode"] {
             assert_eq!(stdout(agent, "PermissionRequest", Some("allow"), None).unwrap(), allow);
             assert_eq!(stdout(agent, "PermissionRequest", Some("always"), None).unwrap(), allow);
@@ -229,7 +229,7 @@ mod tests {
         assert_eq!(stdout("antigravity", "PreToolUse", Some("allow"), None).unwrap(), r#"{"decision":"allow"}"#);
         assert_eq!(
             stdout("antigravity", "PreToolUse", Some("deny"), None).unwrap(),
-            r#"{"decision":"deny","reason":"Denied from Coucou"}"#
+            r#"{"decision":"deny","reason":"Denied from Rafiq"}"#
         );
         for not_a_click in ["ask", "pending", "", "maybe", r#"{"permissionDecision":"allow"}"#] {
             assert_eq!(stdout("antigravity", "PreToolUse", Some(not_a_click), None).unwrap(), r#"{"decision":"ask"}"#);

@@ -19,7 +19,7 @@ android {
     namespace = "com.coucou.android"
     compileSdk = 35
     defaultConfig {
-        applicationId = "com.coucou.android"
+        applicationId = "com.edra3k.rafiq.android"
         minSdk = 30
         targetSdk = 35
         versionCode = 4

@@ -365,7 +365,7 @@ struct PrayerSettingsSection: View {
             }
             if playAdhan {
                 Text(PrayerController.adhanFile == nil
-                     ? String(localized: "prayer.adhan.missing", defaultValue: "Put a file named adhan.mp3 (or .m4a, .wav) in the sounds folder. Until then Mochi greets you.")
+                     ? String(localized: "prayer.adhan.missing", defaultValue: "Put a file named adhan.mp3 (or .m4a, .wav) in the sounds folder. Until then Rafiq greets you.")
                      : String(localized: "prayer.adhan.found", defaultValue: "Your adhan file is ready. Stop it from the card."))
                     .font(.system(size: 10))
                     .foregroundColor(hint)

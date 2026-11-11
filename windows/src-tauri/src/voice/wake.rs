@@ -1,4 +1,4 @@
-// « OK Coucou »: hearing the wake phrase in what Parakeet wrote, and telling
+// « OK Rafiq »: hearing the wake phrase in what Parakeet wrote, and telling
 // speech from silence on the microphone. Nothing here touches the OS.
 
 /// Lower case, accents gone, everything but letters and digits a space.
@@ -27,41 +27,32 @@ fn is_ok(word: &str) -> bool {
     matches!(word, "ok" | "okay" | "oke" | "okey" | "hey")
 }
 
-/// How Parakeet may write "coucou", in one word. Said with a Brazilian
-/// Portuguese accent it comes out as "cocku" (#813), with a Spanish accent as
-/// "coco" (the Mac's spotter takes "coco" too); the others are the close spellings
-/// of those accents. Not "cool": "okay, cool" is too common to wake on, nor
-/// "gogo": "okay, go go" is something people say.
-fn is_coucou(word: &str) -> bool {
+/// How Parakeet may write "Rafiq", in one word: French, English and Arabic
+/// accents, with or without the final q. Not "rafale" or "rapid": too close to
+/// what people say.
+fn is_rafiq(word: &str) -> bool {
     matches!(
         word,
-        "coucou"
-            | "coucous"
-            | "cuckoo"
-            | "cucu"
-            | "kuku"
-            | "koukou"
-            | "cookoo"
-            | "coocoo"
-            | "cocou"
-            | "kukuu"
-            | "couscous"
-            | "cocku"
-            | "cocu"
-            | "cuco"
-            | "cuku"
-            | "coku"
-            | "kuko"
-            | "coco"
+        "rafiq"
+            | "rafik"
+            | "rafique"
+            | "rafic"
+            | "rafeeq"
+            | "rafeek"
+            | "rafiik"
+            | "raffik"
+            | "raffiq"
+            | "raphik"
+            | "raphique"
+            | "rafiqs"
+            | "rafiks"
+            | "rafiki"
     )
 }
 
 /// …or in two.
-fn is_coucou_pair(a: &str, b: &str) -> bool {
-    matches!(
-        (a, b),
-        ("cou", "cou") | ("coo", "coo") | ("ku", "ku") | ("cu", "cu") | ("koo", "koo") | ("cuck", "oo") | ("co", "co")
-    )
+fn is_rafiq_pair(a: &str, b: &str) -> bool {
+    matches!(a, "ra" | "rah" | "raf") && matches!(b, "fiq" | "fik" | "fique" | "feek" | "feeq" | "ik" | "iq")
 }
 
 /// When `text` holds the wake phrase, what was said after it (maybe nothing).
@@ -79,22 +70,22 @@ pub fn after_wake(text: &str) -> Option<String> {
             ok_end = Some(if norm[i] == "o" { i + 2 } else { i + 1 });
         }
         if let Some(j) = ok_end {
-            // A word made of two ("ok coucou" written as one token is rare but happens).
+            // A word made of two ("ok rafiq" written as one token is rare but happens).
             if let Some(w) = norm.get(j) {
                 let parts: Vec<&str> = w.split(' ').collect();
-                if parts.len() == 1 && is_coucou(parts[0]) {
+                if parts.len() == 1 && is_rafiq(parts[0]) {
                     return Some(words[j + 1..].join(" ").trim_start_matches([',', '.', '!', ' ']).trim().to_string());
                 }
                 if let Some(next) = norm.get(j + 1) {
-                    if is_coucou_pair(w, next) {
+                    if is_rafiq_pair(w, next) {
                         return Some(words[j + 2..].join(" ").trim_start_matches([',', '.', '!', ' ']).trim().to_string());
                     }
                 }
             }
         }
-        // "okcoucou" in one piece.
+        // "okrafiq" in one piece.
         if let Some(rest) = norm[i].strip_prefix("okay").or_else(|| norm[i].strip_prefix("ok")) {
-            if is_coucou(rest.trim()) {
+            if is_rafiq(rest.trim()) {
                 return Some(words[i + 1..].join(" ").trim().to_string());
             }
         }
@@ -193,7 +184,7 @@ impl Vad {
         done
     }
 
-    /// Forgets what is being heard (Coucou speaks, or dictation starts).
+    /// Forgets what is being heard (Rafiq speaks, or dictation starts).
     pub fn reset(&mut self) {
         self.in_speech = false;
         self.speech_frames = 0;
@@ -219,26 +210,21 @@ mod tests {
 
     #[test]
     fn the_wake_phrase_however_parakeet_writes_it() {
-        assert_eq!(after_wake("OK Coucou, play some music.").as_deref(), Some("play some music."));
-        assert_eq!(after_wake("Okay, coucou! Quelle heure est-il ?").as_deref(), Some("Quelle heure est-il ?"));
-        assert_eq!(after_wake("O.K. Cuckoo what's the weather").as_deref(), Some("what's the weather"));
-        assert_eq!(after_wake("ok cou cou ajoute Stripe").as_deref(), Some("ajoute Stripe"));
-        assert_eq!(after_wake("OK Coucou.").as_deref(), Some(""));
-        assert_eq!(after_wake("Hey coucou, ça va ?").as_deref(), Some("ça va ?"));
-        // A Brazilian speaker's « OK Coucou », as Parakeet wrote it (#813).
-        assert_eq!(after_wake("Okay, cocku.").as_deref(), Some(""));
-        assert_eq!(after_wake("Ok, cocku, que horas são?").as_deref(), Some("que horas são?"));
-        assert_eq!(after_wake("Okay, cuco.").as_deref(), Some(""));
-        // "cool" stays out: it is what people say, not the wake phrase.
-        assert_eq!(after_wake("Okay, cool."), None);
-        assert_eq!(after_wake("Okay, cool cool."), None);
-        // A Spanish speaker's « OK Coucou », as Parakeet wrote it.
-        assert_eq!(after_wake("Okay, coco.").as_deref(), Some(""));
-        assert_eq!(after_wake("Okay, Co Co, ¿qué hora es?").as_deref(), Some("¿qué hora es?"));
-        // "go go" stays out, and another assistant's wake phrase never wakes Coucou.
-        assert_eq!(after_wake("Okay, go go."), None);
+        assert_eq!(after_wake("OK Rafiq, play some music.").as_deref(), Some("play some music."));
+        assert_eq!(after_wake("Okay, Rafik! Quelle heure est-il ?").as_deref(), Some("Quelle heure est-il ?"));
+        assert_eq!(after_wake("O.K. Rafique what's the weather").as_deref(), Some("what's the weather"));
+        assert_eq!(after_wake("ok ra fiq ajoute Stripe").as_deref(), Some("ajoute Stripe"));
+        assert_eq!(after_wake("OK Rafiq.").as_deref(), Some(""));
+        assert_eq!(after_wake("Hey Rafiq, ça va ?").as_deref(), Some("ça va ?"));
+        // An Arabic or English speaker's « OK Rafiq », as Parakeet may write it.
+        assert_eq!(after_wake("Okay, Rafeeq.").as_deref(), Some(""));
+        assert_eq!(after_wake("Ok, rafeek, que horas são?").as_deref(), Some("que horas são?"));
+        // "rafale" and "rapid" stay out: they are what people say, not the wake phrase.
+        assert_eq!(after_wake("Okay, rafale."), None);
+        assert_eq!(after_wake("Okay, rapid."), None);
+        // Another assistant's wake phrase never wakes Rafiq.
         assert_eq!(after_wake("Okay, Google."), None);
-        assert_eq!(after_wake("on a dit coucou à Paul"), None);
+        assert_eq!(after_wake("on a dit rafiq à Paul"), None);
         assert_eq!(after_wake("ok let's go"), None);
         assert_eq!(normalize("Ça VA, Élodie ?"), "ca va elodie");
     }

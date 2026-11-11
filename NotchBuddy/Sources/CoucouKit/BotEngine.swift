@@ -70,11 +70,11 @@ enum BadgeType {
     case bang(CGColor)
     case question(CGColor)
     case dot(CGColor)
-    /// A new Coucou is waiting (Mac GitHub build): a white up arrow.
+    /// A new Rafiq is waiting (Mac GitHub build): a white up arrow.
     case arrow(CGColor)
 }
 
-// MARK: - Mochi track constants (from PISTES.mochi)
+// MARK: - Rafiq track constants (from PISTES.mochi)
 
 enum MochiConst {
     static let eyeW: CGFloat  = 0.25
@@ -175,10 +175,10 @@ let BotStates: [BotState: BotStateCfg] = [
 final class BotEngine: ObservableObject {
     var isMini: Bool = false
     var bodyColor: CGColor? = nil    // override for mini bots
-    /// A new version waits (BotCanvasView sets it while Mochi has nothing else to say):
+    /// A new version waits (BotCanvasView sets it while Rafiq has nothing else to say):
     /// the blue up-arrow badge instead of the state's own.
     private(set) var updateHint = false
-    /// #3B82F6: Mochi's colour while an update waits.
+    /// #3B82F6: Rafiq's colour while an update waits.
     static let updateBlue = CGColor(red: 0.231, green: 0.510, blue: 0.965, alpha: 1)
 
     // Animation state (mirrors prototype 's' object)
@@ -261,7 +261,7 @@ final class BotEngine: ObservableObject {
 
     // Timing
     var lastTime: Double = CACurrentMediaTime()
-    /// Fractional engine steps owed when drawing slower than the display (Mac mini Mochis).
+    /// Fractional engine steps owed when drawing slower than the display (Mac mini Rafiqs).
     var stepDebt: Double = 0
     var t0: Double = CACurrentMediaTime() - Double.random(in: 0...5)
     var nextBlink: Double = CACurrentMediaTime() + 1.5 + Double.random(in: 0...2)
@@ -348,7 +348,7 @@ final class BotEngine: ObservableObject {
         }
     }
 
-    /// The caller decides when (an update waits, Mochi idle or asleep); the badge follows.
+    /// The caller decides when (an update waits, Rafiq idle or asleep); the badge follows.
     func setUpdateHint(_ on: Bool) {
         guard on != updateHint else { return }
         updateHint = on
@@ -1216,13 +1216,13 @@ final class BotEngine: ObservableObject {
         // (We'll pass world-space cx/cy to these helpers)
     }
 
-    // MARK: - Draw hands behind body (called before draw() so hands appear under Mochi)
+    // MARK: - Draw hands behind body (called before draw() so hands appear under Rafiq)
 
     func drawHandsBehind(context: GraphicsContext, size: CGSize) {
         guard hands > 0.01, !isMini else { return }
         let W = size.width, H = size.height
         let R = W * 0.3
-        // Only draw hands when Mochi is large enough to be meaningful (not compact/peek)
+        // Only draw hands when Rafiq is large enough to be meaningful (not compact/peek)
         guard R > 14 else { return }
         let rx = R * 1.14
         let ry = R * 0.88
@@ -1370,7 +1370,7 @@ final class BotEngine: ObservableObject {
                               presence: outfitPresence, rollTurns: rollTurns)
     }
 
-    /// World-space center of Mochi's body (used by BotCanvasView for rigid-roll transform)
+    /// World-space center of Rafiq's body (used by BotCanvasView for rigid-roll transform)
     func bodyCenter(size: CGSize) -> CGPoint {
         let W = size.width, R = W * 0.3
         let cx = W / 2 + ox * R

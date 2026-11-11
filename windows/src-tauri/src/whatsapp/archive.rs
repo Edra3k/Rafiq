@@ -3,7 +3,7 @@
 // The zip's SHA-256 has already been checked against GOWA's own when this runs; the reader is
 // still strict, because it is the only parser here that faces a downloaded file.
 
-/// No binary Coucou unpacks is bigger than this (GOWA's are about 40 MB).
+/// No binary Rafiq unpacks is bigger than this (GOWA's are about 40 MB).
 pub const MAX_ENTRY: usize = 200 * 1024 * 1024;
 
 #[derive(Clone, Debug, PartialEq, Eq)]

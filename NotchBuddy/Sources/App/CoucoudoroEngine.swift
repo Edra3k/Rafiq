@@ -1,6 +1,6 @@
 import Foundation
 
-// MARK: - Coucoudoro clock
+// MARK: - Pomodoro clock
 
 /// Work and rest lengths, in seconds. A phase runs until its deadline, then the next one starts.
 struct CoucoudoroConfig: Equatable, Sendable {

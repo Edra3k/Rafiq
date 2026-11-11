@@ -4,7 +4,7 @@ import Foundation
 
 // MARK: - Android link: the bridge to the island (GitHub build)
 //
-// Lets Coucou for Android pair with this Mac (docs/ANDROID_LINK.md, protocol v1), the same way it
+// Lets Rafiq for Android pair with this Mac (docs/ANDROID_LINK.md, protocol v1), the same way it
 // pairs with a PC. Off by default and opt-in in Settings → Android phone. While it is off nothing
 // listens, nothing is announced on the network and no timer runs. While it is on, the work is event
 // driven: AppState changes (debounced) are published to the hub, and phones' lines are handled as

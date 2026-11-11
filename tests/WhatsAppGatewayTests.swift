@@ -1,7 +1,7 @@
 import Foundation
 
 // The gateways' payloads, copied verbatim from their own docs (see each fixture's source),
-// through Coucou's parsers.
+// through Rafiq's parsers.
 
 extension WhatsAppTests {
     // GOWA docs/webhook-payload.md — text message

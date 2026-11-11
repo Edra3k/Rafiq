@@ -10,7 +10,7 @@ import com.coucou.android.core.WidgetContent
 import com.coucou.android.core.WidgetSpoken
 
 /**
- * The Mochi Mood widget: only Mochi's face in the current state, with his glow. Drawn by [WidgetHub] when something changes
+ * The Rafiq Mood widget: only Rafiq's face in the current state, with his glow. Drawn by [WidgetHub] when something changes
  * (updatePeriodMillis = 0). A tap opens the top agent, or the app. It only opens things.
  */
 class MoodWidget : AppWidgetProvider() {

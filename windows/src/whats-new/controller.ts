@@ -1,10 +1,10 @@
 // What's new after an update — when the card opens. Once per version, a few
-// seconds after Coucou starts (after the greeting), and only when nothing
+// seconds after Rafiq starts (after the greeting), and only when nothing
 // waits in the island: a permission or a question always comes first, and
 // another card the user is reading is never replaced. The rules are in
 // whats-new.ts; the card is views/whatsnew.ts.
 //
-// The numbers of "Your Coucou so far" are read from this computer (the
+// The numbers of "Your Rafiq so far" are read from this computer (the
 // recap, Flow, the Notetaker) at that moment; nothing goes out.
 
 import { Bridge, IS_TAURI } from "../core/bridge";
@@ -56,14 +56,14 @@ class WhatsNewController {
   /** The release the card shows (null: no card). */
   release: WhatsNewRelease | null = null;
   stats: Stat[] = [];
-  /** 1: what's new; 2: your Coucou so far. */
+  /** 1: what's new; 2: your Rafiq so far. */
   step: 1 | 2 = 1;
   /** Bumped when the card opens, so the view rebuilds. */
   generation = 0;
   private host: WhatsNewHost | null = null;
   private started = false;
 
-  /** At launch, once: show the card if Coucou was just updated. */
+  /** At launch, once: show the card if Rafiq was just updated. */
   async launch(host: WhatsNewHost) {
     if (this.started) return;
     this.started = true;

@@ -3,11 +3,11 @@
 //!
 //! Reads the hook JSON on stdin, maps the agent's event and field names onto
 //! Claude Code's (normalize.rs), adds a little terminal context, and hands it to
-//! Coucou over the named pipe `\\.\pipe\coucou-<sid>` (Windows) or the Unix
+//! Rafiq over the named pipe `\\.\pipe\coucou-<sid>` (Windows) or the Unix
 //! socket `$XDG_RUNTIME_DIR/coucou.sock` (Linux).
 //!
 //! Hard rule (docs/CLAUDE.md): **never block the agent.**
-//! * If the pipe does not exist — Coucou is closed — we exit 0 immediately, with
+//! * If the pipe does not exist — Rafiq is closed — we exit 0 immediately, with
 //!   only the "no opinion" reply the agent expects (reply.rs), and the session
 //!   carries on untouched.
 //! * Every step runs under a deadline enforced by the main thread, so a pipe that
@@ -15,9 +15,9 @@
 //!   either: we abandon the worker and exit.
 //! * Only `PermissionRequest` waits for an answer, because approving from the
 //!   island is the whole point. No answer means no decision, and the agent asks
-//!   in its terminal exactly as if Coucou were not installed.
+//!   in its terminal exactly as if Rafiq were not installed.
 //! * Antigravity's `PreToolUse` is the one exception: Antigravity has no
-//!   permission request and waits for this hook's decision instead. Coucou
+//!   permission request and waits for this hook's decision instead. Rafiq
 //!   answers `ask` at once, or `pending` when the island shows the command
 //!   (Approve commands from the notch) and then the click. 3 s for the first
 //!   line, 115 s for the click; anything else prints "ask" (reply.rs).
@@ -43,12 +43,12 @@ const CONNECT_TIMEOUT: Duration = Duration::from_millis(300);
 const FIRE_AND_FORGET_BUDGET: Duration = Duration::from_secs(2);
 /// How long a permission prompt may stay on screen before the terminal takes over.
 const DECISION_BUDGET: Duration = Duration::from_secs(110);
-/// Antigravity's PreToolUse: how long Coucou has to say `ask` or `pending`, and how
-/// long a card may then wait for a click (Coucou gives up first, at 110 s; the hook
+/// Antigravity's PreToolUse: how long Rafiq has to say `ask` or `pending`, and how
+/// long a card may then wait for a click (Rafiq gives up first, at 110 s; the hook
 /// is installed with 120 s). The Mac relay's numbers.
 const AGY_FIRST_LINE_BUDGET: Duration = Duration::from_secs(3);
 const AGY_DECISION_BUDGET: Duration = Duration::from_secs(115);
-/// What Coucou writes once the card is up.
+/// What Rafiq writes once the card is up.
 const PENDING: &str = "pending";
 /// How often a waiting relay checks that the process that ran it is still there.
 const PARENT_POLL: Duration = Duration::from_millis(100);
@@ -171,9 +171,9 @@ fn main() {
 
 /// What the worker tells the main thread.
 enum Msg {
-    /// Coucou shows a card: wait for the click (Antigravity).
+    /// Rafiq shows a card: wait for the click (Antigravity).
     Pending,
-    /// The worker is done: Coucou's answer, if any.
+    /// The worker is done: Rafiq's answer, if any.
     Answer(Option<String>),
 }
 
@@ -247,7 +247,7 @@ fn prepare(raw: &[u8], args: &Args, env: &dyn Fn(&str) -> Option<String>, cwd: &
 
     add_terminal_context(map, env);
 
-    // Antigravity's PreToolUse waits for Coucou (reply.rs): tagged so the app knows
+    // Antigravity's PreToolUse waits for Rafiq (reply.rs): tagged so the app knows
     // this relay reads its answer. A command too long to forward whole is flagged,
     // so the island never asks about one nobody could read in full.
     if reply::waits_on_pre_tool(&args.agent, &name) {
@@ -277,7 +277,7 @@ fn prepare(raw: &[u8], args: &Args, env: &dyn Fn(&str) -> Option<String>, cwd: &
     Some(Event { line, name, question })
 }
 
-/// Which terminal the session runs in. Unlike macOS, Coucou here accepts events
+/// Which terminal the session runs in. Unlike macOS, Rafiq here accepts events
 /// from every terminal, so this is context only — never a filter.
 fn add_terminal_context(map: &mut Map<String, Value>, env: &dyn Fn(&str) -> Option<String>) {
     for (key, var) in [
@@ -426,7 +426,7 @@ fn talk(payload: &str, waits_for_answer: bool, pending: &dyn Fn()) -> Option<Str
     read_answer(&mut pipe, pending)
 }
 
-/// The first line from Coucou that is not `pending`, trimmed; None when the
+/// The first line from Rafiq that is not `pending`, trimmed; None when the
 /// connection ends without one.
 fn read_answer(pipe: &mut impl Read, pending: &dyn Fn()) -> Option<String> {
     let mut buf = Vec::new();
@@ -702,7 +702,7 @@ mod tests {
         assert_eq!(read(b"ask\n").as_deref(), Some("ask"));
         assert_eq!(read(b"pending\nallow\n").as_deref(), Some("allow"));
         assert_eq!(count.get(), 1);
-        // The card was up, then Coucou went: no answer, Antigravity asks.
+        // The card was up, then Rafiq went: no answer, Antigravity asks.
         assert_eq!(read(b"pending\n"), None);
         assert_eq!(read(b"pending"), None);
         assert_eq!(read(b""), None);

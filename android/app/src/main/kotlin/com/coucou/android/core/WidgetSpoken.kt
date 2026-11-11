@@ -7,7 +7,7 @@ import com.coucou.android.mochi.BotState
  * names, state words, counts), so the spoken text can never say more than the screen does. Pure.
  */
 object WidgetSpoken {
-    /** Mochi's mood in plain words ("waiting for you"), not the engine's key ("approval"). */
+    /** Rafiq's mood in plain words ("waiting for you"), not the engine's key ("approval"). */
     fun mood(state: BotState): String = when (state) {
         BotState.IDLE -> Texts.t("mood_calm", "calm")
         BotState.WORKING -> Texts.t("mood_working", "working")

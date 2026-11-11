@@ -1,9 +1,9 @@
 import Combine
 import Foundation
 
-/// Coucoudoro: work, then rest, then work again, until the user stops.
+/// Pomodoro: work, then rest, then work again, until the user stops.
 /// The session is a deadline. One timer fires at that deadline (nothing ticks in between, so
-/// Coucou stays at 0 % CPU while hidden); the card and the pill draw the clock from the deadline.
+/// Rafiq stays at 0 % CPU while hidden); the card and the pill draw the clock from the deadline.
 @MainActor
 final class CoucoudoroController: ObservableObject {
     static let shared = CoucoudoroController()
@@ -90,9 +90,9 @@ final class CoucoudoroController: ObservableObject {
         guard let notice, let until = noticeUntil, date < until else { return nil }
         switch notice {
         case .restStarts:
-            return String(localized: "coucoudoro.pill.rest", defaultValue: "Coucoudoro · Rest")
+            return String(localized: "coucoudoro.pill.rest", defaultValue: "Pomodoro · Rest")
         case .workStarts:
-            return String(localized: "coucoudoro.pill.work", defaultValue: "Coucoudoro · Work")
+            return String(localized: "coucoudoro.pill.work", defaultValue: "Pomodoro · Work")
         }
     }
 
@@ -102,13 +102,13 @@ final class CoucoudoroController: ObservableObject {
         if phase != .idle, let left = remaining(at: date) {
             return CoucoudoroEngine.clock(left)
         }
-        return "Coucoudoro"
+        return "Pomodoro"
     }
 
     static func text(for event: CoucoudoroEvent) -> String {
         switch event {
-        case .restStarts: String(localized: "coucoudoro.pill.rest", defaultValue: "Coucoudoro · Rest")
-        case .workStarts: String(localized: "coucoudoro.pill.work", defaultValue: "Coucoudoro · Work")
+        case .restStarts: String(localized: "coucoudoro.pill.rest", defaultValue: "Pomodoro · Rest")
+        case .workStarts: String(localized: "coucoudoro.pill.work", defaultValue: "Pomodoro · Work")
         }
     }
 
@@ -167,7 +167,7 @@ final class CoucoudoroController: ObservableObject {
 
     // MARK: - Pill
 
-    /// The event lands on the Coucoudoro pill. The island opens onto that pill unless a card
+    /// The event lands on the Pomodoro pill. The island opens onto that pill unless a card
     /// the user is in the middle of (an approval, a question, the chat) is already up.
     private func surface(_ event: CoucoudoroEvent) {
         noticeUntil = Date().addingTimeInterval(8)

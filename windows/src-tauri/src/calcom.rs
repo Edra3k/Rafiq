@@ -52,7 +52,7 @@ async fn response(request: reqwest::RequestBuilder) -> Result<Value, String> {
 async fn fetch(app: &AppHandle, key: &str) -> Result<Value, String> {
     let config = config();
     let http = reqwest::Client::builder().redirect(reqwest::redirect::Policy::none())
-        .timeout(Duration::from_secs(config.request_timeout_seconds)).user_agent("Coucou")
+        .timeout(Duration::from_secs(config.request_timeout_seconds)).user_agent("Rafiq")
         .build().map_err(|_| crate::i18n::t("Not available"))?;
     let now = std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH)
         .map_err(|_| invalid())?.as_millis() as i64;

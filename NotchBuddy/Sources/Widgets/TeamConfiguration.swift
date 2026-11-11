@@ -1,8 +1,8 @@
 import AppIntents
 import WidgetKit
 
-// The Team widget's settings: which Mochi sits in each of the four spots.
-// "Automatic" fills a spot with the most urgent Mochi not already shown.
+// The Team widget's settings: which Rafiq sits in each of the four spots.
+// "Automatic" fills a spot with the most urgent Rafiq not already shown.
 
 enum MochiChoice: String, AppEnum {
     case automatic
@@ -19,7 +19,7 @@ enum MochiChoice: String, AppEnum {
     case n8n = "integration_n8n"
     case notion = "integration_notion"
 
-    static let typeDisplayRepresentation: TypeDisplayRepresentation = "Mochi"
+    static let typeDisplayRepresentation: TypeDisplayRepresentation = "Rafiq"
 
     static let caseDisplayRepresentations: [MochiChoice: DisplayRepresentation] = [
         .automatic: "Automatic",
@@ -43,7 +43,7 @@ enum MochiChoice: String, AppEnum {
 
 struct TeamConfiguration: WidgetConfigurationIntent {
     static let title: LocalizedStringResource = "Team"
-    static let description = IntentDescription("Pick the Mochi in each spot.")
+    static let description = IntentDescription("Pick the Rafiq in each spot.")
 
     @Parameter(title: "Top left", default: .automatic) var spot1: MochiChoice
     @Parameter(title: "Top right", default: .automatic) var spot2: MochiChoice

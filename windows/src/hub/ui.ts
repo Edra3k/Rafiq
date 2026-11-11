@@ -1,4 +1,4 @@
-// Small pieces the Coucou window's pages are drawn with: icons, rows, cards,
+// Small pieces the Rafiq window's pages are drawn with: icons, rows, cards,
 // switches, segmented controls. Same look as the Mac's (FlowHub.swift).
 
 import { h } from "../views/dom";
@@ -169,7 +169,7 @@ export function keyLabel(key: FlowKeyId, platform: "windows" | "linux" = "window
     case "left_ctrl_super":
       return platform === "windows" ? "Ctrl + Win" : "Ctrl + Super";
     case "wayland":
-      // Held by the desktop (GlobalShortcuts portal): the keys Coucou suggests.
+      // Held by the desktop (GlobalShortcuts portal): the keys Rafiq suggests.
       return "Ctrl+Alt+V";
     default:
       return t("Right {0}", { 0: "Ctrl" });

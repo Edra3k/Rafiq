@@ -40,9 +40,9 @@ class HistoryExportTest {
     }
 
     @Test fun theTextHasTheHeaderThenOneLinePerDecisionAndNoCommand() {
-        val t = HistoryExport.text(list, "Coucou · recent decisions", zone)
+        val t = HistoryExport.text(list, "Rafiq · recent decisions", zone)
         val lines = t.lines()
-        assertEquals("Coucou · recent decisions", lines[0])
+        assertEquals("Rafiq · recent decisions", lines[0])
         assertEquals("", lines[1])
         assertEquals(5, lines.size)
         assertTrue(lines[2].matches(Regex("""\d{4}-\d{2}-\d{2} \d{2}:\d{2}  You allowed Claude Code to .+""")))

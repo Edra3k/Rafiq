@@ -1,7 +1,7 @@
 // The clean-up of Flow dictation: Claude removes the "um", the repeats and the
 // corrections said on the way ("at 3, no, at 4" → "at 4"), fixes the
 // punctuation and writes in the app's style. Only when it is turned on in the
-// Coucou window and a Claude key is set, or else Claude Code is installed; the
+// Rafiq window and a Claude key is set, or else Claude Code is installed; the
 // text (never the audio) then goes to Anthropic with that key or through the
 // user's own Claude Code, and nowhere else. Any problem (no network, slow
 // answer, odd reply) and the words are pasted as they were heard. Port of

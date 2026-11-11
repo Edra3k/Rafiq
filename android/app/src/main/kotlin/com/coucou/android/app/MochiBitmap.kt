@@ -18,7 +18,7 @@ import com.coucou.android.mochi.MochiPainter.drawMochi
 import kotlin.random.Random
 
 /**
- * One still picture of Mochi for a widget (a widget cannot animate): the engine is settled for a second of fake time
+ * One still picture of Rafiq for a widget (a widget cannot animate): the engine is settled for a second of fake time
  * with a fixed seed, so the same state always gives the same picture, then drawn once with the app's own painter into an
  * [ImageBitmap]. With [glow] a soft radial light in the state's colour sits behind him. No timer and no frame loop; a few
  * pictures are kept so a push that changes only the text redraws nothing.
@@ -40,8 +40,8 @@ object MochiBitmap {
     }
 
     /**
-     * Mochi in [state], [sizePx] pixels square. The glow is in [tone], the colour of the card he sits on (by default the one of his own
-     * state), so the Widget and its Mochi always share one colour. The same instance comes back while it is kept.
+     * Rafiq in [state], [sizePx] pixels square. The glow is in [tone], the colour of the card he sits on (by default the one of his own
+     * state), so the Widget and its Rafiq always share one colour. The same instance comes back while it is kept.
      */
     @Synchronized
     fun of(state: BotState, sizePx: Int, glow: Boolean = false, tone: WidgetTone = WidgetTone.of(state)): Bitmap {

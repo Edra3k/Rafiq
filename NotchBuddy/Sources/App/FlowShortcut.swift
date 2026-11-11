@@ -213,7 +213,7 @@ final class FlowShortcutRecording: ObservableObject {
     @Published private(set) var captured = false
     @Published private(set) var problem: FlowShortcutRules.Problem?
 
-    /// true: saved; false: cancelled (Esc, Coucou left the front).
+    /// true: saved; false: cancelled (Esc, Rafiq left the front).
     var onFinish: ((Bool) -> Void)?
 
     private var held: Set<UInt16> = []
@@ -237,14 +237,14 @@ final class FlowShortcutRecording: ObservableObject {
             MainActor.assumeIsolated { self?.take(type: info.0, code: info.1, flags: info.2, isRepeat: info.3) }
             return nil
         }
-        // Coucou in the background no longer gets the keys: the recording stops.
+        // Rafiq in the background no longer gets the keys: the recording stops.
         resignObserver = NotificationCenter.default.addObserver(forName: NSApplication.didResignActiveNotification,
                                                                 object: nil, queue: .main) { [weak self] _ in
             MainActor.assumeIsolated { self?.cancel() }
         }
     }
 
-    /// Esc, or Coucou left the front: nothing saved.
+    /// Esc, or Rafiq left the front: nothing saved.
     func cancel() {
         guard isRecording else { return }
         stop()

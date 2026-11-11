@@ -28,7 +28,7 @@ fn valid_name(value: &str) -> bool {
         && value.chars().all(|c| c.is_ascii_alphanumeric() || matches!(c, ':' | '.' | '_' | '-'))
 }
 
-/// An absolute path to a program named herdr: Coucou runs it, so nothing else.
+/// An absolute path to a program named herdr: Rafiq runs it, so nothing else.
 fn valid_bin(value: &str) -> bool {
     value.starts_with('/')
         && value.len() <= 512

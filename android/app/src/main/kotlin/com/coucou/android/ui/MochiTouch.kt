@@ -11,7 +11,7 @@ import com.coucou.android.mochi.MochiEngine
 import com.coucou.android.mochi.SoundSink
 
 /**
- * What a finger does to Mochi, as on the computer: a tap is a slap (three quick ones make him dizzy
+ * What a finger does to Rafiq, as on the computer: a tap is a slap (three quick ones make him dizzy
  * for a few seconds), a long press is a pet (hearts). The sounds go through [sound], so the sound
  * switch in Settings silences them too.
  */
@@ -22,7 +22,7 @@ class MochiTouch(
 ) {
     private val main = Handler(Looper.getMainLooper())
 
-    /** While true the screen must not reset Mochi's state: he is dizzy on purpose. */
+    /** While true the screen must not reset Rafiq's state: he is dizzy on purpose. */
     var dizzy = false
         private set
 

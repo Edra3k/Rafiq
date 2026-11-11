@@ -56,7 +56,7 @@ class IslandTimeline(private val clockMs: () -> Double) {
         refresh()
     }
 
-    /** Close at once (Coucou came to the front, the switch went off, the link dropped). */
+    /** Close at once (Rafiq came to the front, the switch went off, the link dropped). */
     fun dismiss() {
         active = null
         flash = null

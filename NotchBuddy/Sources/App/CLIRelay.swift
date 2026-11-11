@@ -5,12 +5,12 @@ import Foundation
 // With "Use my subscription" on in Settings → Chat, the chat is answered by the
 // official terminal tool of the user's AI, signed in with their own account: Claude
 // Code (Claude plan), Antigravity CLI or Gemini CLI (Google AI plan), Codex CLI
-// (ChatGPT plan), Cursor CLI and GitHub Copilot CLI. Coucou reads no credential and
+// (ChatGPT plan), Cursor CLI and GitHub Copilot CLI. Rafiq reads no credential and
 // makes no network call of its own: the tool answers exactly as it does in a terminal.
 //
 // Each run is kept apart from the user's own sessions: nothing saved to resume, no
 // user hooks, MCP servers, extensions or plugins where the tool lets us turn them off,
-// and it runs in an empty folder of Coucou's, so no project instructions are picked up.
+// and it runs in an empty folder of Rafiq's, so no project instructions are picked up.
 // It may search the web for the chat and nothing else: no shell, no edits. A dropped
 // file is read with no web at all (a file written to steer the model could otherwise
 // send what it reads to a website): Claude Code reads a copy of that one file, the
@@ -115,7 +115,7 @@ enum CLIRelay {
     toolName = ["google_web_search", "web_fetch"]
     decision = "deny"
     priority = 900
-    denyMessage = "No web while Coucou reads a file."
+    denyMessage = "No web while Rafiq reads a file."
 
     """
 

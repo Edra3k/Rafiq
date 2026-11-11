@@ -3,7 +3,7 @@ import AppKit
 import SwiftUI
 
 /// A file (a ⌘⇧2 thumbnail, a capture, anything from Finder) dropped on a session in the island
-/// goes into that session's prompt: Coucou brings its terminal forward and types the path, as a
+/// goes into that session's prompt: Rafiq brings its terminal forward and types the path, as a
 /// drag onto the terminal would. Claude Code takes it as a file, an image path as the image.
 /// GitHub build: typing into another app needs the Accessibility permission.
 @MainActor

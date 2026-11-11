@@ -171,7 +171,7 @@ class MochiEngineTest {
         val clock = Clock()
         val e = engine(clock)
         e.run(clock, 10_000)
-        assertFalse("idle Mochi should let the frame loop sleep", e.busy)
+        assertFalse("idle Rafiq should let the frame loop sleep", e.busy)
     }
 
     @Test fun gulpOpensThenClosesTheSlot() {

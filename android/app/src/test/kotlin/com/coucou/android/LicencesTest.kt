@@ -34,11 +34,11 @@ class LicencesTest {
     @Test fun theNoticesNameWhoOwnsWhatAndTheArtworkIsNotMit() {
         val n = asset("NOTICES.txt")
         assertTrue(n.contains("part of Coucou by Louis Raillé"))
-        assertTrue(n.contains("https://github.com/Louis-CFM/coucou"))
+        assertTrue(n.contains("https://github.com/Edra3k/Rafiq"))
         assertTrue(n.contains("released under the MIT License"))
         assertTrue(n.contains("NOT covered by the MIT License"))
         assertTrue(n.contains("LICENSE-ASSETS.md"))
-        assertTrue(n.contains("written permission"))
+        assertTrue(n.contains("None of Coucou's name, character, icon or sounds is used"))
         assertTrue(n.contains("ZXing Core 3.5.3") && n.contains("Apache License, Version 2.0"))
         assertTrue(n.contains("Android Open Source Project") && n.contains("JetBrains"))
     }

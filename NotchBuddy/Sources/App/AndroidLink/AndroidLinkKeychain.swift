@@ -19,7 +19,7 @@ final class AndroidLinkKeychainStore: AndroidLinkSecretStore {
 /// identity from the Keychain, so the key and the certificate are added there while the link runs
 /// and taken out again when it stops (`remove`). Nothing is written to a file.
 enum AndroidLinkSecIdentity {
-    private static let label = "Coucou Android link"
+    private static let label = "Rafiq Android link"
 
     static func make(for identity: AndroidLinkIdentity) -> SecIdentity? {
         remove()

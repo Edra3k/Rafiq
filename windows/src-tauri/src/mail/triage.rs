@@ -21,7 +21,7 @@ pub struct Condition {
     pub value: String,
 }
 
-/// What a rule does to a message. Coucou never deletes a message.
+/// What a rule does to a message. Rafiq never deletes a message.
 #[derive(Serialize, Deserialize, Clone, PartialEq, Eq, Hash, Debug)]
 #[serde(tag = "kind", content = "mailbox", rename_all = "camelCase")]
 pub enum Action {

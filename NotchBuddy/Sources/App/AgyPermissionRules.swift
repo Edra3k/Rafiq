@@ -5,7 +5,7 @@ import Foundation
 // about the shell commands Antigravity has no rule for (Settings → Antigravity → Approve
 // commands from the notch).
 //
-// This never allows anything. A verdict only decides whether Coucou shows a card:
+// This never allows anything. A verdict only decides whether Rafiq shows a card:
 // - `.allowed` / `.denied`: no card, the hook answers "ask" and Antigravity applies its rule.
 // - `.unknown`: the card shows, and only a click on Allow lets the command run.
 // Both mistakes are safe: a command wrongly read as allowed gets Antigravity's own prompt,

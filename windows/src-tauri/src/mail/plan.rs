@@ -1,5 +1,5 @@
 // The chat's mail actions: the plan the AI writes (a ```coucou-mail JSON block in its
-// answer), what Coucou tells the AI, and the matching of PDF pages to recipients. Port of
+// answer), what Rafiq tells the AI, and the matching of PDF pages to recipients. Port of
 // MailPlan.swift; pure, tested on any machine. Nothing in a plan happens until the user
 // clicks Run on its card (mod.rs).
 
@@ -260,7 +260,7 @@ pub fn valid_address(s: &str) -> bool {
 /// Added to the chat's system prompt while the chat's Mail switch is on (same text as the Mac's).
 pub const INSTRUCTIONS: &str = "
 
-The user turned on Mail: you can act on their Outlook through Coucou. Their latest messages are listed under their request, each with a number [n]; some come with their text and attachments.
+The user turned on Mail: you can act on their Outlook through Rafiq. Their latest messages are listed under their request, each with a number [n]; some come with their text and attachments.
 When they ask you to DO something with their mail, answer in one or two short sentences, then give ONE plan in a fenced code block tagged coucou-mail, holding JSON:
 {\"summary\": \"what the plan does, in the user's language\", \"actions\": [ ... ]}
 Actions:

@@ -1,8 +1,8 @@
 import SwiftUI
 
-// The island open in a corner of the screen (IslandPlacement): Mochi sits in the island's
-// corner, the other pills' Mochis on a quarter circle around him, and the focused pill's card
-// fills the rest. A tap on one of them swaps it with Mochi: it flies to the corner and becomes
+// The island open in a corner of the screen (IslandPlacement): Rafiq sits in the island's
+// corner, the other pills' Rafiqs on a quarter circle around him, and the focused pill's card
+// fills the rest. A tap on one of them swaps it with Rafiq: it flies to the corner and becomes
 // the one in focus, and the one that was in focus takes its place on the circle.
 
 struct CornerArcView: View {
@@ -13,10 +13,10 @@ struct CornerArcView: View {
     /// The circle's order, kept across swaps (the one leaving the corner takes the place of the
     /// one arriving), new pills added at the end.
     @State private var order: [String] = []
-    /// Two Mochis swapping places: the one arriving in the corner and the one leaving it.
+    /// Two Rafiqs swapping places: the one arriving in the corner and the one leaving it.
     @State private var swap: Swap? = nil
     @State private var swapStart = Date.distantPast
-    /// Circles drawn out (ring off): the one a Mochi left, the one a Mochi just reached.
+    /// Circles drawn out (ring off): the one a Rafiq left, the one a Rafiq just reached.
     @State private var ringOff: Set<String> = []
     /// Tapped, its circle drawing itself out before the flight.
     @State private var pendingTap: String? = nil
@@ -29,9 +29,9 @@ struct CornerArcView: View {
         static func == (a: Swap, b: Swap) -> Bool { a.incoming.id == b.incoming.id && a.slot == b.slot }
     }
 
-    /// Room for five around Mochi; the others are a tap on the circle away once one leaves it.
+    /// Room for five around Rafiq; the others are a tap on the circle away once one leaves it.
     static let maxShown = 5
-    /// Mochi's size in the corner, and on the circle (the swap grows one and shrinks the other).
+    /// Rafiq's size in the corner, and on the circle (the swap grows one and shrinks the other).
     static let bigBody: CGFloat = 58
     static let smallBody: CGFloat = 24
     static let swapDuration: Double = 0.5
@@ -54,7 +54,7 @@ struct CornerArcView: View {
         let home = placement.cornerBotCenter(in: size)
 
         ZStack(alignment: .topLeading) {
-            // A faint quarter of the circle the Mochis sit on.
+            // A faint quarter of the circle the Rafiqs sit on.
             Path { p in
                 let pts = placement.arcPoints(count: 9, in: size)
                 guard let first = pts.first else { return }
@@ -66,7 +66,7 @@ struct CornerArcView: View {
 
             ForEach(Array(tasks.enumerated()), id: \.element.id) { i, task in
                 let leaving = swap?.incoming.id == task.id
-                // Its circle draws itself out, then its Mochi flies to the corner (drawn below).
+                // Its circle draws itself out, then its Rafiq flies to the corner (drawn below).
                 CornerMini(task: task, ring: ringOff.contains(task.id) ? 0 : 1, showBot: !leaving) {
                     start(task, at: i, current: tasks)
                 }
@@ -104,7 +104,7 @@ struct CornerArcView: View {
         }
     }
 
-    /// A pill clicked in the compact tile's row: the island has opened, now it swaps with Mochi.
+    /// A pill clicked in the compact tile's row: the island has opened, now it swaps with Rafiq.
     private func swapPending(after delay: Double) {
         guard let id = state.cornerPendingSwap else { return }
         state.cornerPendingSwap = nil
@@ -174,7 +174,7 @@ enum CornerCurve {
     }
 }
 
-/// One pill's Mochi on the circle: a round button in its colour, its name under it. Its circle
+/// One pill's Rafiq on the circle: a round button in its colour, its name under it. Its circle
 /// draws itself in and out from the top, down both sides at once (`ring`, 0 to 1).
 private struct CornerMini: View {
     let task: AgentTask
@@ -231,7 +231,7 @@ private struct CornerMini: View {
     }
 }
 
-/// The circle around a Mochi on the arc, drawn in part: an arc spread evenly on both sides of
+/// The circle around a Rafiq on the arc, drawn in part: an arc spread evenly on both sides of
 /// its top (`fromBottom` false: drawing itself in, down both sides) or of its bottom (true: the
 /// gap opens at the top and runs down both sides as it goes). Whole, a plain circle: no seam.
 private struct RingShape: Shape {
@@ -284,7 +284,7 @@ struct CornerBubbles: View {
             ForEach(Array(tasks.enumerated()), id: \.element.id) { i, task in
                 let out = i < shown
                 let from = i == 0 ? CGPoint(x: t / 2, y: t / 2) : centers[i - 1]
-                // The click opens the island; there it swaps places with Mochi.
+                // The click opens the island; there it swaps places with Rafiq.
                 CornerBubble(task: task) { state.cornerPendingSwap = task.id }
                     .scaleEffect(out ? 1 : 0.3)
                     .opacity(out ? 1 : 0)
@@ -302,7 +302,7 @@ struct CornerBubbles: View {
     }
 }
 
-/// One of them: a small black tile with rounded corners, the pill's mini Mochi inside.
+/// One of them: a small black tile with rounded corners, the pill's mini Rafiq inside.
 private struct CornerBubble: View {
     let task: AgentTask
     let onTap: () -> Void
@@ -341,7 +341,7 @@ private struct CornerBubble: View {
     }
 }
 
-/// While Mochi is dragged near a corner (or back to the top centre): the place he will take,
+/// While Rafiq is dragged near a corner (or back to the top centre): the place he will take,
 /// shown before he is let go.
 struct SnapTargetView: View {
     let corner: Bool

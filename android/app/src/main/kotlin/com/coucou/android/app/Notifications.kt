@@ -71,7 +71,7 @@ class Notifications(private val context: Context) {
     /**
      * The two Settings choices about a request: how it buzzes and whether it lights the screen. A channel's vibration cannot change
      * after it exists, so a new choice means a new channel id and the old channel is deleted. The channel stays IMPORTANCE_HIGH with
-     * Mochi's sound whatever is chosen: a request is never muted or hidden.
+     * Rafiq's sound whatever is chosen: a request is never muted or hidden.
      */
     fun applyApprovalSettings(v: VibrationChoice, screenOff: Boolean) {
         keepScreenOff = screenOff
@@ -89,7 +89,7 @@ class Notifications(private val context: Context) {
                 } else {
                     enableVibration(false)
                 }
-                // Mochi's own approval sound, bundled in res/raw.
+                // Rafiq's own approval sound, bundled in res/raw.
                 setSound(
                     Uri.parse("${ContentResolver.SCHEME_ANDROID_RESOURCE}://${context.packageName}/${R.raw.approval}"),
                     AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_NOTIFICATION).build(),
@@ -204,7 +204,7 @@ class Notifications(private val context: Context) {
 
     fun cancelApproval(fp: String) = nm.cancel(idFor(fp))
 
-    /** An agent finished, failed, hit a limit or asks something. Quiet: Mochi's own sound and the pill are the alerts. */
+    /** An agent finished, failed, hit a limit or asks something. Quiet: Rafiq's own sound and the pill are the alerts. */
     fun showStatus(pillId: String, agentName: String, state: BotState, statusText: String) {
         val what = context.getString(
             when (state) {
@@ -233,7 +233,7 @@ class Notifications(private val context: Context) {
 
     fun cancelStatus(pillId: String) = runCatching { nm.cancel(STATUS_TAG, statusId(pillId)) }
 
-    /** Coucou is on screen: the notices are redundant. */
+    /** Rafiq is on screen: the notices are redundant. */
     fun cancelAllStatus() {
         runCatching { nm.activeNotifications.filter { it.tag == STATUS_TAG }.forEach { nm.cancel(it.tag, it.id) } }
     }

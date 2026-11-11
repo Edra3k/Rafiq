@@ -74,7 +74,7 @@ fun outfitLabelRes(id: String): Int = when (id) {
     else -> R.string.outfit_bunnyEars
 }
 
-/** A little Mochi wearing [outfit], the PC's wardrobe icon (drawn by the same code as the big one). */
+/** A little Rafiq wearing [outfit], the PC's wardrobe icon (drawn by the same code as the big one). */
 @Composable
 fun OutfitIcon(outfit: Outfit, size: Dp, modifier: Modifier = Modifier) {
     Canvas(modifier.size(size)) {
@@ -102,7 +102,7 @@ private fun NoOutfitIcon(size: Dp) {
 }
 
 /**
- * Settings > Mochi's wardrobe: what Mochi wears on this phone. Either the same as on the computer (the default),
+ * Settings > Rafiq's wardrobe: what Rafiq wears on this phone. Either the same as on the computer (the default),
  * or one of the PC's thirteen choices ("Auto" follows the seasons on this phone's calendar). A preview on top.
  */
 @Composable

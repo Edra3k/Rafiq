@@ -1,5 +1,5 @@
-// Copyright (c) 2026 Rhytam Biswas. MIT License, like the rest of Coucou; see android/LICENSE for the text.
-// The phone link: lets the Android app ("Coucou for Android") see the agents'
+// Copyright (c) 2026 Rhytam Biswas. MIT License, like the rest of Rafiq; see android/LICENSE for the text.
+// The phone link: lets the Android app ("Rafiq for Android") see the agents'
 // sessions and answer permission requests from the phone.
 // Protocol: docs/ANDROID_LINK.md.
 //
@@ -863,7 +863,7 @@ pub fn phone_link_publish_question(window: WebviewWindow, link: State<PhoneLink>
     Ok(())
 }
 
-/// What Mochi wears on the computer, for phones that asked for `prefs`.
+/// What Rafiq wears on the computer, for phones that asked for `prefs`.
 #[tauri::command]
 pub fn phone_link_publish_prefs(window: WebviewWindow, link: State<PhoneLink>, outfit: String) -> Result<(), String> {
     only_island(&window)?;

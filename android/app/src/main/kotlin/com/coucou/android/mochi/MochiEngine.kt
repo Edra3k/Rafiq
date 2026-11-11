@@ -12,7 +12,7 @@ import kotlin.math.sin
 import kotlin.random.Random
 
 /**
- * Mochi's animation state machine: a port of windows/src/mochi/engine.ts (itself a port of
+ * Rafiq's animation state machine: a port of windows/src/mochi/engine.ts (itself a port of
  * BotEngine.swift). Same constants, tweens, easings and particles. Drawing lives in
  * MochiPainter; this class has no Android dependency so it runs in plain JVM unit tests.
  *
@@ -50,7 +50,7 @@ class MochiEngine(
     private val sound: SoundSink = SoundSink { },
 ) {
     var isMini = false
-    /** Solid body colour for mini bots (null = Mochi gradient). */
+    /** Solid body colour for mini bots (null = Rafiq gradient). */
     var bodyColor: Rgb? = null
 
     // Animated state (BotEngine `s`)
@@ -58,7 +58,7 @@ class MochiEngine(
     var sx = 1.0; var sy = 1.0; var oy = 0.0; var ox = 0.0
     var tint = 0.0; var morph = 0.0; var hands = 0.0; var blush = 0.0; var es = 1.0; var badgeS = 0.0
 
-    // Outfit (the main Mochi only: minis never wear one). `outfit` is what is drawn; it changes only once the previous one has left.
+    // Outfit (the main Rafiq only: minis never wear one). `outfit` is what is drawn; it changes only once the previous one has left.
     var outfit: Outfit = Outfit.NONE
         private set
     /** 0 = gone, 1 = fully on. */
@@ -364,7 +364,7 @@ class MochiEngine(
     }
 
     /**
-     * Dresses Mochi. Animated: the old outfit leaves (180 ms), the new one drops in (350 ms) and Mochi does a
+     * Dresses Rafiq. Animated: the old outfit leaves (180 ms), the new one drops in (350 ms) and Rafiq does a
      * little squash (BotEngine.setOutfit on the Mac, setOutfit in windows/src/mochi/engine.ts).
      */
     fun setOutfit(next: Outfit, animated: Boolean = true) {

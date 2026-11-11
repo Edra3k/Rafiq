@@ -1,6 +1,6 @@
 name: Android release
 
-# A signed APK of Coucou for Android, built here so a release never depends on one machine.
+# A signed APK of Rafiq for Android, built here so a release never depends on one machine.
 #
 # - Run it by hand (Actions → Android release → Run workflow) to get the signed APK as an artifact, without publishing.
 # - Push an `android-v*` tag (for example android-v0.1.0) to publish it in a GitHub release.
@@ -98,17 +98,17 @@ jobs:
             --ks-key-alias coucou \
             --ks-pass env:KEYSTORE_PASSWORD \
             --key-pass env:KEYSTORE_PASSWORD \
-            --out "Coucou-Android-$v.apk" \
+            --out "Rafiq-Android-$v.apk" \
             aligned.apk
           rm -f "$RUNNER_TEMP/release.jks" aligned.apk
-          "$bt/apksigner" verify --print-certs "Coucou-Android-$v.apk"
-          sha256sum "Coucou-Android-$v.apk" > SHA256SUMS
+          "$bt/apksigner" verify --print-certs "Rafiq-Android-$v.apk"
+          sha256sum "Rafiq-Android-$v.apk" > SHA256SUMS
 
       - uses: actions/upload-artifact@v7
         with:
-          name: Coucou-Android-${{ needs.apk.outputs.version }}
+          name: Rafiq-Android-${{ needs.apk.outputs.version }}
           path: |
-            Coucou-Android-*.apk
+            Rafiq-Android-*.apk
             SHA256SUMS
             mapping.txt
 
@@ -121,7 +121,7 @@ jobs:
     steps:
       - uses: actions/download-artifact@v8
         with:
-          name: Coucou-Android-${{ needs.apk.outputs.version }}
+          name: Rafiq-Android-${{ needs.apk.outputs.version }}
 
       - name: Publish the release
         env:
@@ -129,18 +129,18 @@ jobs:
           VERSION: ${{ needs.apk.outputs.version }}
         run: |
           v="$VERSION"
-          notes="Coucou for Android $v, by Rhytam Biswas (@Rhytam23): your coding agents on your Android phone.
+          notes="Rafiq for Android $v, by Rhytam Biswas (@Rhytam23): your coding agents on your Android phone.
 
-          1. Download \`Coucou-Android-$v.apk\` on your phone (Android 11 or later) and open it. Android asks once to allow installs from your browser or file manager.
-          2. On your computer, Coucou 0.4.0 or later for Windows or Linux: Settings → Android phone, turn on Phone link, then Show pairing code.
+          1. Download \`Rafiq-Android-$v.apk\` on your phone (Android 11 or later) and open it. Android asks once to allow installs from your browser or file manager.
+          2. On your computer, Rafiq 0.4.0 or later for Windows or Linux: Settings → Android phone, turn on Phone link, then Show pairing code.
           3. Scan the code with the app. The phone and the computer must be on the same Wi-Fi.
 
-          Check the download with \`sha256sum -c SHA256SUMS\`. Guide and troubleshooting: https://github.com/Louis-CFM/coucou/blob/main/android/README.md"
+          Check the download with \`sha256sum -c SHA256SUMS\`. Guide and troubleshooting: https://github.com/Edra3k/Rafiq/blob/main/android/README.md"
           # --latest=false: the macOS v* releases own the Latest slot, which the site's Download for Mac button points at.
           gh release create "$GITHUB_REF_NAME" \
-            "Coucou-Android-$v.apk" \
+            "Rafiq-Android-$v.apk" \
             "SHA256SUMS" \
             --repo "$GITHUB_REPOSITORY" \
-            --title "Coucou for Android $v" \
+            --title "Rafiq for Android $v" \
             --notes "$notes" \
             --latest=false

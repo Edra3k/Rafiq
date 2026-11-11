@@ -28,7 +28,7 @@ export const KNOWN_AGENTS: Record<string, KnownAgent> = {
 export const APPROVAL_AGENTS = new Set(["codex", "copilot", "muse", "claude-desktop", "opencode"]);
 
 /**
- * Antigravity has no permission request: Coucou itself turns a command it is about
+ * Antigravity has no permission request: Rafiq itself turns a command it is about
  * to run into one, tagged with this kind, when Settings → Agents → Antigravity →
  * Approve commands from the notch is on (src-tauri/src/agy_approvals.rs). Its card
  * has Deny, Allow and Reply in terminal, as on the Mac.
@@ -61,7 +61,7 @@ export function agentColor(id: string): string {
   return FALLBACK_COLORS[Math.abs(h) % FALLBACK_COLORS.length];
 }
 
-/** The pill label: the agent's own name when Coucou knows it, else its id. */
+/** The pill label: the agent's own name when Rafiq knows it, else its id. */
 export function agentName(id: string): string {
   return KNOWN_AGENTS[id]?.name ?? id;
 }

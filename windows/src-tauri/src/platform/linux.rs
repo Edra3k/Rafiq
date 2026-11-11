@@ -8,7 +8,7 @@
 //   * click-through is the window's input region, set to the island shape, so
 //     the compositor itself sends every other click to whatever is underneath;
 //   * the cursor comes from the page's own mouse events, which only fire over
-//     the island — Mochi's eyes follow the pointer there, not across the screen.
+//     the island — Rafiq's eyes follow the pointer there, not across the screen.
 
 use std::os::unix::fs::PermissionsExt;
 use std::path::{Path, PathBuf};
@@ -90,7 +90,7 @@ fn xdg_user_dir(text: &str, key: &str, home: &Path) -> Option<PathBuf> {
 /// keeps its plugin registry in ~/.cache/gstreamer-1.0 by default — the same
 /// file the system's GStreamer uses. The AppImage is mounted somewhere new on
 /// every launch, so each launch would rewrite the system's registry with
-/// plugin paths that vanish once Coucou quits. Give ours its own file.
+/// plugin paths that vanish once Rafiq quits. Give ours its own file.
 pub fn prepare_environment() {
     let _ = INHERITED.set(OWN_OVERRIDES.iter().map(|k| (*k, std::env::var_os(k))).collect());
     prefer_x11_on_gnome();
@@ -240,7 +240,7 @@ pub fn process_running(_exe: &str) -> bool {
     false
 }
 
-/// What the variables Coucou sets for itself (prepare_environment) were when it
+/// What the variables Rafiq sets for itself (prepare_environment) were when it
 /// started, so its children get the user's own values back.
 static INHERITED: std::sync::OnceLock<Vec<(&'static str, Option<std::ffi::OsString>)>> = std::sync::OnceLock::new();
 /// Set or changed by prepare_environment for this process only.
@@ -250,7 +250,7 @@ const OWN_OVERRIDES: [&str; 3] = ["GDK_BACKEND", "GDK_DPI_SCALE", "GST_REGISTRY"
 const APPIMAGE_GST: [&str; 3] = ["GST_REGISTRY_1_0", "GST_PLUGIN_SYSTEM_PATH", "GST_PLUGIN_SYSTEM_PATH_1_0"];
 
 /// The changes a child's environment needs: `Some` sets the value back, `None`
-/// removes the variable. Nothing for a variable Coucou left as it found it.
+/// removes the variable. Nothing for a variable Rafiq left as it found it.
 fn child_env(
     inherited: &[(&str, Option<std::ffi::OsString>)],
     current: impl Fn(&str) -> Option<std::ffi::OsString>,
@@ -272,7 +272,7 @@ fn child_env(
     out
 }
 
-/// Prepares a command to launch a child process: Coucou's own GDK and
+/// Prepares a command to launch a child process: Rafiq's own GDK and
 /// GStreamer settings (GDK_BACKEND=x11 on GNOME, GDK_DPI_SCALE, the AppImage's
 /// GStreamer paths) go back to what the user had, so they do not leak into the
 /// browser, the editor or the apps it opens (#859).
@@ -732,7 +732,7 @@ pub fn ctrl_alt_types(_vk: u16, _shift: bool) -> Option<String> {
     None
 }
 
-// ── Desktop Mochi window ──────────────────────────────────────────────────────
+// ── Desktop Rafiq window ──────────────────────────────────────────────────────
 //
 // Where the window may go decides everything here:
 //   * X11 places any window where it is asked: an ordinary always-on-top
@@ -740,7 +740,7 @@ pub fn ctrl_alt_types(_vk: u16, _shift: bool) -> Option<String> {
 //   * a layer-shell compositor won't move a toplevel, but anchors a layer
 //     surface wherever its margins say, on the island's display;
 //   * GNOME on Wayland has neither, so the feature is off there.
-// In every case the input region is Mochi's body, so clicks anywhere else go
+// In every case the input region is Rafiq's body, so clicks anywhere else go
 // to the desktop underneath without any cursor polling.
 
 /// Which of the three applies. Must run on the GTK main thread.
@@ -759,7 +759,7 @@ pub fn desktop_mode() -> super::DesktopMode {
     }
 }
 
-/// The input shape last asked for the desktop Mochi, re-applied on every map.
+/// The input shape last asked for the desktop Rafiq, re-applied on every map.
 static MOCHI_SHAPE: Mutex<super::MouseShape> = Mutex::new(super::MouseShape::Empty);
 
 /// Sets the window up for `mode` before it is ever shown. False means it can't
@@ -770,7 +770,7 @@ pub fn prepare_desktop_window(win: &WebviewWindow, mode: super::DesktopMode) -> 
     match mode {
         super::DesktopMode::Layer => {
             if gw.is_realized() {
-                crate::log::line("desktop Mochi: window already shown, no layer surface");
+                crate::log::line("desktop Rafiq: window already shown, no layer surface");
                 return false;
             }
             gw.set_titlebar(None::<&gtk::Widget>);
@@ -814,7 +814,7 @@ pub fn prepare_desktop_window(win: &WebviewWindow, mode: super::DesktopMode) -> 
     }
 }
 
-/// Which part of the desktop Mochi takes the mouse. Main thread.
+/// Which part of the desktop Rafiq takes the mouse. Main thread.
 pub fn set_desktop_shape(win: &WebviewWindow, shape: super::MouseShape) {
     *MOCHI_SHAPE.lock().unwrap() = shape;
     let Ok(gw) = win.gtk_window() else { return };
@@ -868,7 +868,7 @@ pub fn set_layer_margins(win: &WebviewWindow, x: f64, y: f64) {
 
 /// Layer surface only: `on` stretches it over the whole display — how a drag
 /// gets exact pointer positions on Wayland, where a surface that moves under
-/// the pointer can't tell where it is — and `off` folds it back to Mochi's
+/// the pointer can't tell where it is — and `off` folds it back to Rafiq's
 /// size in the corner. Main thread.
 pub fn set_layer_overlay(win: &WebviewWindow, on: bool) {
     let Ok(gw) = win.gtk_window() else { return };
@@ -883,7 +883,7 @@ pub fn set_layer_overlay(win: &WebviewWindow, on: bool) {
     }
 }
 
-/// Layer surface only: puts the desktop Mochi on the island's display and
+/// Layer surface only: puts the desktop Rafiq on the island's display and
 /// returns that display's logical size. Main thread.
 pub fn layer_display(island: &WebviewWindow, mochi: &WebviewWindow) -> Option<(f64, f64)> {
     let island_gw = island.gtk_window().ok()?;
@@ -996,7 +996,7 @@ mod tests {
                 _ => None,
             }
         };
-        // Coucou forced x11 over the user's wayland, and set the other two itself.
+        // Rafiq forced x11 over the user's wayland, and set the other two itself.
         let inherited = [("GDK_BACKEND", Some(OsString::from("wayland"))), ("GDK_DPI_SCALE", None), ("GST_REGISTRY", None)];
         let fixes = child_env(&inherited, current, Some(OsStr::new("/tmp/.mount_CoucouX")));
         assert_eq!(fixes, vec![
@@ -1005,7 +1005,7 @@ mod tests {
             ("GST_REGISTRY".to_string(), None),
             ("GST_PLUGIN_SYSTEM_PATH_1_0".to_string(), None),
         ]);
-        // Values the user set and Coucou kept (an explicit GDK_DPI_SCALE) stay.
+        // Values the user set and Rafiq kept (an explicit GDK_DPI_SCALE) stay.
         let kept = [("GDK_BACKEND", Some(OsString::from("x11"))), ("GDK_DPI_SCALE", Some(OsString::from("0.8")))];
         assert!(child_env(&kept, current, None).is_empty());
     }

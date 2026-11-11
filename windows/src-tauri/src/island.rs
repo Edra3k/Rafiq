@@ -25,7 +25,7 @@ pub const STRIP_H: f64 = 6.0;
 pub const WINDOW_LABEL: &str = "island";
 
 /// Around the window, how far the cursor is still worth telling the page
-/// about (Mochi's eyes follow it), in logical px. Past it the page hears once
+/// about (Rafiq's eyes follow it), in logical px. Past it the page hears once
 /// that the cursor left, then nothing until it comes back: a cursor working in
 /// another app costs neither messages nor island frames.
 const NEAR_ZONE: f64 = 420.0;

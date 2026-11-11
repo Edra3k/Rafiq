@@ -1,7 +1,7 @@
 import Foundation
 
 // The chat's mail actions: the plan the AI writes (a ```coucou-mail JSON block in its answer),
-// what Coucou tells the AI, the matching of PDF pages to recipients and the scripts that send.
+// what Rafiq tells the AI, the matching of PDF pages to recipients and the scripts that send.
 // Pure Foundation, tested on any machine (scripts/test-mail-triage.sh). Nothing in a plan
 // happens until the user clicks Run on its card (MailAgent.swift).
 
@@ -240,7 +240,7 @@ enum MailAgentPrompt {
     static let instructions = """
 
 
-    The user turned on Mail: you can act on their Apple Mail through Coucou. Their latest messages are listed under their request, each with a number [n]; some come with their text and attachments.
+    The user turned on Mail: you can act on their Apple Mail through Rafiq. Their latest messages are listed under their request, each with a number [n]; some come with their text and attachments.
     When they ask you to DO something with their mail, answer in one or two short sentences, then give ONE plan in a fenced code block tagged coucou-mail, holding JSON:
     {"summary": "what the plan does, in the user's language", "actions": [ ... ]}
     Actions:

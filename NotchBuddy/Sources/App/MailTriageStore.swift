@@ -1,7 +1,7 @@
 #if !APPSTORE
 import Foundation
 
-/// One thing Coucou did to a message: shown in the Mail section, with its Undo.
+/// One thing Rafiq did to a message: shown in the Mail section, with its Undo.
 struct MailJournalEntry: Codable, Identifiable, Equatable, Sendable {
     var id = UUID()
     var date: Date
@@ -16,7 +16,7 @@ struct MailJournalEntry: Codable, Identifiable, Equatable, Sendable {
     var undone = false
 }
 
-/// A mail Coucou sent for the chat (a plan the user ran).
+/// A mail Rafiq sent for the chat (a plan the user ran).
 struct MailSentEntry: Codable, Identifiable, Equatable, Sendable {
     var id = UUID()
     var date: Date
@@ -26,7 +26,7 @@ struct MailSentEntry: Codable, Identifiable, Equatable, Sendable {
 }
 
 /// The Mail section's settings (rules, banned words, VIPs, automatic sorting) and the journal of
-/// what Coucou sorted. JSON files in Application Support/NotchBuddy/Mail, on this Mac only.
+/// what Rafiq sorted. JSON files in Application Support/NotchBuddy/Mail, on this Mac only.
 @MainActor
 final class MailTriageStore: ObservableObject {
     static let shared = MailTriageStore()
@@ -40,7 +40,7 @@ final class MailTriageStore: ObservableObject {
     }
     /// Newest first, the last 500.
     @Published private(set) var journal: [MailJournalEntry] = []
-    /// What Coucou sent for the chat, newest first, the last 500.
+    /// What Rafiq sent for the chat, newest first, the last 500.
     @Published private(set) var sent: [MailSentEntry] = []
 
     /// Messages already looked at by the automatic sorting (Mail's ids), so each one is
@@ -66,7 +66,7 @@ final class MailTriageStore: ObservableObject {
     func setAutoSort(_ on: Bool) {
         var s = settings
         s.autoSort = on
-        // Only what arrives from now on: Coucou never goes through the old messages.
+        // Only what arrives from now on: Rafiq never goes through the old messages.
         if on { s.autoSortSince = Date() }
         settings = s
     }

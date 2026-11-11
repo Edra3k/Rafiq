@@ -1,6 +1,6 @@
 import Foundation
 
-/// How the search of the Coucou window matches a box (pure, tested by scripts/test-settings-search.sh).
+/// How the search of the Rafiq window matches a box (pure, tested by scripts/test-settings-search.sh).
 ///
 /// Every word typed must be somewhere in the box: its title, its page or one of its labels,
 /// whatever the case and the accents ("reglage" finds "Réglage"), and a piece of a word is
