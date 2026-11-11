@@ -285,6 +285,14 @@ final class CommandRiskLog: ObservableObject {
     static let shared = CommandRiskLog()
     @Published private(set) var last: [String: CommandRisk] = [:]
     @Published private(set) var history: [String: [CommandRisk]] = [:]
+    /// The same steps with what they said ("Runs · git status"), for the details view.
+    @Published private(set) var entries: [String: [StepEntry]] = [:]
+
+    struct StepEntry: Equatable, Identifiable {
+        let id = UUID()
+        var label: String
+        var risk: CommandRisk
+    }
     @Published private(set) var started: [String: Date] = [:]
 
     static let historyLength = 16
@@ -292,11 +300,12 @@ final class CommandRiskLog: ObservableObject {
     /// A new prompt: a new turn, a fresh strip.
     func beginTurn(pill: String) {
         history[pill] = []
+        entries[pill] = []
         started[pill] = Date()
         last[pill] = nil
     }
 
-    func record(pill: String, tool: String, input: [String: Any]) {
+    func record(pill: String, tool: String, input: [String: Any], label: String = "") {
         let command = input["command"] as? String ?? tool
         let risk = CommandRisk.assess(tool: tool, command: command)
         if last[pill] != risk { last[pill] = risk }
@@ -305,6 +314,10 @@ final class CommandRiskLog: ObservableObject {
         h.append(risk)
         if h.count > Self.historyLength { h.removeFirst(h.count - Self.historyLength) }
         history[pill] = h
+        var e = entries[pill] ?? []
+        e.append(StepEntry(label: label.isEmpty ? tool : label, risk: risk))
+        if e.count > 200 { e.removeFirst(e.count - 200) }
+        entries[pill] = e
     }
 
     func clear(pill: String) {
@@ -313,6 +326,7 @@ final class CommandRiskLog: ObservableObject {
 
     func risk(for task: AgentTask) -> CommandRisk? { last[task.id] ?? last[task.pill] }
     func steps(for task: AgentTask) -> [CommandRisk] { history[task.id] ?? history[task.pill] ?? [] }
+    func entries(for task: AgentTask) -> [StepEntry] { entries[task.id] ?? entries[task.pill] ?? [] }
     func start(for task: AgentTask) -> Date? { started[task.id] ?? started[task.pill] }
 }
 
@@ -509,11 +523,7 @@ struct SessionDetailsView: View {
 
     var body: some View {
         let diffs = state.sessionDiffs[task.pill] ?? []
-        let added = diffs.reduce(0) { $0 + $1.added }
-        let removed = diffs.reduce(0) { $0 + $1.removed }
-        let files = Set(diffs.map(\.path)).count
         let steps = riskLog.steps(for: task)
-        let summary = git.summary(for: task.sessionCwd)
         VStack(alignment: .leading, spacing: 5) {
             TimelineView(.everyMinute) { tl in
                 Text(verbatim: placeLine(at: tl.date))
@@ -533,31 +543,18 @@ struct SessionDetailsView: View {
                 }
                 .frame(height: 8)
             }
-            HStack(spacing: 5) {
-                if task.state == .working, let risk = riskLog.risk(for: task) {
-                    RiskBadge(risk: risk)
-                }
-                if added + removed > 0 {
-                    chip {
-                        Text(verbatim: "+\(added)").foregroundColor(Color(hex: "#34D399"))
-                        Text(verbatim: "−\(removed)").foregroundColor(Color(hex: "#F4505E"))
-                    }
-                }
-                if files > 0 {
-                    chip { Text(verbatim: String(format: String(localized: "session.files %lld", defaultValue: "%lld files"), Int64(files))) }
-                }
-                if let g = summary {
-                    chip {
-                        Image(systemName: "arrow.triangle.branch").font(.system(size: 8, weight: .semibold))
-                        Text(verbatim: g.branch).lineLimit(1)
-                        if g.ahead > 0 { Text(verbatim: "↑\(g.ahead)").foregroundColor(Color(hex: "#F5A524")) }
-                        if g.changed > 0 { Text(verbatim: "●\(g.changed)") }
-                    }
-                    .help(gitHelp(g))
-                }
+            // One line whatever the width: the longest version that fits.
+            ViewThatFits(in: .horizontal) {
+                chips(badge: true, lines: true, files: true, git: true)
+                chips(badge: true, lines: true, files: false, git: false)
+                chips(badge: true, lines: false, files: false, git: false)
+                chips(badge: false, lines: true, files: false, git: false)
             }
             HStack(spacing: 5) {
                 shortcut("terminal", String(localized: "session.open-terminal", defaultValue: "Terminal"), action: openTarget)
+                shortcut("arrow.up.left.and.arrow.down.right", String(localized: "session.details", defaultValue: "Details")) {
+                    withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) { state.view = .session }
+                }
                 if !diffs.isEmpty {
                     shortcut("plusminus", String(localized: "session.last-diff", defaultValue: "Last diff")) {
                         NotificationCenter.default.post(name: .islandToggleDiff, object: nil)
@@ -576,6 +573,45 @@ struct SessionDetailsView: View {
             }
         }
         .onAppear { git.refresh(task.sessionCwd) }
+    }
+
+    @ViewBuilder
+    private func chips(badge: Bool, lines: Bool, files: Bool, git: Bool) -> some View {
+        let diffs = state.sessionDiffs[task.pill] ?? []
+        let added = diffs.reduce(0) { $0 + $1.added }
+        let removed = diffs.reduce(0) { $0 + $1.removed }
+        let fileCount = Set(diffs.map(\.path)).count
+        let summary = self.git.summary(for: task.sessionCwd)
+        HStack(spacing: 5) {
+            if badge, task.state == .working, let risk = riskLog.risk(for: task) {
+                RiskBadge(risk: risk)
+            }
+            if lines, added + removed > 0 {
+                chip {
+                    Text(verbatim: "+\(added)").foregroundColor(Color(hex: "#34D399"))
+                    Text(verbatim: "−\(removed)").foregroundColor(Color(hex: "#F4505E"))
+                }
+            }
+            if files, fileCount > 0 {
+                chip { Text(verbatim: Self.filesLabel(fileCount)) }
+            }
+            if git, let g = summary {
+                chip {
+                    Image(systemName: "arrow.triangle.branch").font(.system(size: 8, weight: .semibold))
+                    Text(verbatim: g.branch)
+                    if g.ahead > 0 { Text(verbatim: "↑\(g.ahead)").foregroundColor(Color(hex: "#F5A524")) }
+                    if g.changed > 0 { Text(verbatim: "●\(g.changed)") }
+                }
+                .help(gitHelp(g))
+            }
+        }
+        .fixedSize()
+    }
+
+    /// "1 file", "12 files".
+    static func filesLabel(_ n: Int) -> String {
+        n == 1 ? String(localized: "session.file-one", defaultValue: "1 file")
+               : String(format: String(localized: "session.files %lld", defaultValue: "%lld files"), Int64(n))
     }
 
     /// "Desktop · ~/Rafiq · 2 h 14 min".
@@ -599,6 +635,8 @@ struct SessionDetailsView: View {
 
     private func chip<C: View>(@ViewBuilder _ content: () -> C) -> some View {
         HStack(spacing: 3) { content() }
+            .lineLimit(1)
+            .fixedSize()
             .font(.system(size: 10, weight: .semibold))
             .monospacedDigit()
             .foregroundColor(Color(hex: "#C0C4CC"))

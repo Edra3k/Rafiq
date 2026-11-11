@@ -29,6 +29,7 @@ struct IslandViewContent: View {
         case .recap:     WeeklyRecapCardView(state: state)
         case .digest:    DigestCardView(state: state)
         case .tasbih:    TasbihView(state: state)
+        case .session:   SessionFullView(state: state)
         case .homelab:
             #if !APPSTORE
             HomelabView(state: state)
@@ -2461,10 +2462,13 @@ struct IntegrationCardView: View {
                         .foregroundColor(Color(hex: "#F5F6F8"))
                         .lineLimit(1).truncationMode(.tail)
                         .layoutPriority(1)
-                    Text(PillCatalog.definition(for: task.id)?.sessionSubtitle ?? "Agent")
-                        .font(.system(size: 11))
-                        .foregroundColor(Color(hex: "#8E939C"))
-                        .lineLimit(1).truncationMode(.tail)
+                    // The details line under the steps says where it runs: no squeezed label here.
+                    if !PrayerStripLayout.showsSession(state: appState) {
+                        Text(PillCatalog.definition(for: task.id)?.sessionSubtitle ?? "Agent")
+                            .font(.system(size: 11))
+                            .foregroundColor(Color(hex: "#8E939C"))
+                            .lineLimit(1).truncationMode(.tail)
+                    }
                     Spacer(minLength: 2)
                     if task.steps.count > 1 && task.sessionLines.isEmpty {
                         Text("\(min(task.stepIndex + 1, task.steps.count))/\(task.steps.count)")

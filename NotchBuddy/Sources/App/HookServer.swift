@@ -791,7 +791,7 @@ final class HookServer: @unchecked Sendable {
             let input = payload["tool_input"] as? [String: Any] ?? [:]
             let label = localizedStep(tool: tool, input: input)
             // The agent guard rates it for the open card's badge (information only).
-            CommandRiskLog.shared.record(pill: agentId, tool: tool, input: input)
+            CommandRiskLog.shared.record(pill: agentId, tool: tool, input: input, label: label)
             AgentShield.shared.checkCanary(tool: tool, input: input)
             // A secret in what the agent is about to write: a card (the write still happens).
             if let written = SecretScanner.writtenText(tool: tool, input: input) {
