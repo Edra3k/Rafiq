@@ -19,6 +19,15 @@ final class PrayerController: ObservableObject {
     /// The prayers checked off today.
     @Published private(set) var prayed: Set<Prayer> = []
     @Published private(set) var adhanPlaying = false
+    /// A prayer inside its reminder window, or one whose time just came (the "now" window):
+    /// the notch's halo and ear show it. Changes only on the controller's own timer.
+    @Published private(set) var soon: PrayerSoon?
+
+    struct PrayerSoon: Equatable {
+        let prayer: Prayer
+        let at: Date
+        let isNow: Bool
+    }
 
     private var timer: Timer?
     /// Events up to this instant have been handled. Starts now: nothing is replayed at launch.
@@ -299,6 +308,7 @@ final class PrayerController: ObservableObject {
 
     /// The idle card header of the pill reads the next prayer.
     private func paintSchedule() {
+        updateSoon()
         let state = AppState.shared
         guard let idx = state.tasks.firstIndex(where: { $0.id == Self.pillId }) else { return }
         state.tasks[idx].state = .idle
@@ -309,7 +319,27 @@ final class PrayerController: ObservableObject {
         }
     }
 
+    /// The reminder window and the "now" window start and end on the timer's own events
+    /// (scheduleNext wakes for each), so this stays right without ticking in between.
+    private func updateSoon() {
+        let now = Date()
+        var value: PrayerSoon?
+        if isPillActive, location != nil {
+            if let current = current(at: now), current.prayer.isObligatory,
+               now.timeIntervalSince(current.at) < Self.nowWindow {
+                value = PrayerSoon(prayer: current.prayer, at: current.at, isNow: true)
+            } else if let next = next(at: now), next.prayer.isObligatory {
+                let reminder = TimeInterval(max(PrayerSettings.reminderMinutes, 0) * 60)
+                if reminder > 0, next.at.timeIntervalSince(now) <= reminder + 1 {
+                    value = PrayerSoon(prayer: next.prayer, at: next.at, isNow: false)
+                }
+            }
+        }
+        if soon != value { soon = value }
+    }
+
     private func paintIdle() {
+        if soon != nil { soon = nil }
         let state = AppState.shared
         guard let idx = state.tasks.firstIndex(where: { $0.id == Self.pillId }) else { return }
         state.tasks[idx].state = .idle

@@ -433,6 +433,10 @@ struct ApprovalView: View {
                             .foregroundColor(Color(hex: "#8E939C"))
                             .monospacedDigit()
                     }
+                    // The agent guard's rating: information only, the buttons still decide.
+                    if let approval, !isPlan {
+                        RiskBadge(risk: CommandRisk.assess(tool: approval.tool, command: approval.command))
+                    }
                 }
                 CodeBlock(text: approval?.command ?? approval?.tool ?? "…")
                 if isPlan {

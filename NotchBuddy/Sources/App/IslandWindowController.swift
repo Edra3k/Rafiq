@@ -2248,7 +2248,8 @@ func islandSize(mode: IslandMode, view: IslandView,
     switch mode {
     // In a corner, resting or compact: a square tile with Rafiq alone.
     case .hidden:   return corner ? (IslandPlacement.tile, IslandPlacement.tile) : (nw, nh)
-    case .compact:  return corner ? (IslandPlacement.tile, IslandPlacement.tile) : (nw + 160, nh)
+    // The ears (NotchLive) widen it while they have something to say.
+    case .compact:  return corner ? (IslandPlacement.tile, IslandPlacement.tile) : (nw + 160 + NotchEars.extra, nh)
     case .expanded:
         if corner && view == .overview {
             let s = MailLayout.detailHeight != nil ? IslandPlacement.homeReadingSize : IslandPlacement.homeSize

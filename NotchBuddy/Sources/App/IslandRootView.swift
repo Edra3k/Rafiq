@@ -77,6 +77,7 @@ extension IslandPlacement {
 struct IslandContainer: View {
     @ObservedObject var state: AppState
     @ObservedObject private var demoEngine = DemoEngine.shared
+    @ObservedObject private var prayer = PrayerController.shared
     @State private var islandWidth:  CGFloat = IslandConst.notchWidth
     @State private var islandHeight: CGFloat = IslandConst.notchHeight
     @State private var cornerRadius: CGFloat = IslandConst.roundedCorner
@@ -201,6 +202,12 @@ struct IslandContainer: View {
 
             CountdownBar(state: state, islandW: islandWidth)
 
+            // Under the resting island: the most urgent thing, as a colour (NotchLive).
+            NotchHalo(state: state, islandW: islandWidth, islandH: islandHeight)
+
+            // Compact: a word on each side of the notch (the next prayer, the agents' news).
+            NotchEarsView(state: state, islandW: islandWidth, islandH: islandHeight)
+
             // Under the island while the pointer is on Rafiq: how the Mac is doing.
             VitalsHoverLine(islandW: islandWidth, islandH: islandHeight)
 
@@ -264,7 +271,16 @@ struct IslandContainer: View {
             guard state.mode == .expanded, state.view == .prompt else { return }
             withAnimation(openSpring) { islandHeight = chatPromptHeight }
         }
+        // The ears start or stop speaking: the compact island widens or narrows for them.
+        .onChange(of: NotchLive.earsActive(state: state, prayer: prayer)) { _, _ in
+            NotchLive.refreshEars(state: state, prayer: prayer)
+            guard state.mode == .compact else { return }
+            let (w, _) = islandSize(mode: .compact, view: state.view,
+                                    nw: state.notchWidth, nh: state.notchHeight)
+            withAnimation(w > islandWidth ? openSpring : closeEase) { islandWidth = w }
+        }
         .onAppear {
+            NotchLive.refreshEars(state: state, prayer: prayer)
             let (w, h) = islandSize(mode: state.mode, view: state.view,
                                     progress: state.uploadProgress,
                                     nw: state.notchWidth, nh: state.notchHeight)
@@ -288,6 +304,7 @@ struct IslandContainer: View {
         }
         .onReceive(NotificationCenter.default.publisher(for: .islandScreenChanged)) { _ in
             // New screen, new resting size (notch ↔ bar): snap without animation.
+            NotchLive.refreshEars(state: state, prayer: prayer)
             let (w, h) = islandSize(mode: state.mode, view: state.view,
                                     progress: state.uploadProgress,
                                     nw: state.notchWidth, nh: state.notchHeight)
@@ -693,6 +710,13 @@ struct IslandHeader: View {
     /// close cross is not shown.
     private var heldOpen: Bool { state.pendingApproval != nil || state.voiceMailDraft != nil }
 
+    /// Width left of the notch for the tabs (and the prayer chip): the header must not run
+    /// under the camera housing. In a corner or on a screen without a notch, no limit.
+    private var leftRoom: CGFloat {
+        guard state.hasNotch, !state.islandPlacement.isCorner else { return .infinity }
+        return max(0, (IslandConst.expandedWidth - state.notchWidth) / 2 - 6)
+    }
+
     var body: some View {
         HStack(spacing: 0) {
             // Left: tab capsules
@@ -710,8 +734,12 @@ struct IslandHeader: View {
                 // A new Claude Code session, in a project, from here.
                 TabButton(icon: "terminal", view: .launch, state: state)
                 #endif
+                // The next prayer, when it clears the notch (HeaderPrayerChip shortens or hides).
+                HeaderPrayerChip(state: state)
+                    .padding(.leading, 3)
             }
             .padding(.leading, 14)
+            .frame(maxWidth: leftRoom, alignment: .leading)
 
             Spacer()
 
@@ -727,6 +755,8 @@ struct IslandHeader: View {
                 }
                 #endif
                 HStack(spacing: 14) {
+                    HeaderGuardShield(state: state)
+
                     Button(action: {
                         withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
                             state.view = .settings

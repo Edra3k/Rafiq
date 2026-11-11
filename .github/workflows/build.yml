@@ -42,6 +42,9 @@ jobs:
       - name: Test question queue
         run: bash scripts/test-question-queue.sh
 
+      - name: Test the agent guard (command risk)
+        run: bash scripts/test-command-risk.sh
+
       - name: Test the session board (sessions behind a pill, popping out, places)
         run: bash scripts/test-session-board.sh
 
