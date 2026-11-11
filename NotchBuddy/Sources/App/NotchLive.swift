@@ -457,60 +457,13 @@ struct RiskBadge: View {
         .help(String(localized: "guard.help", defaultValue: "Agent guard: rates the risk of every action an agent asks for. It never answers for you."))
     }
 
-    /// One line saying what the action can do, under the command on the approval card.
-    static func explanation(_ reason: CommandRisk.Reason) -> String {
-        switch reason {
-        case .readOnly:        return String(localized: "guard.why.read-only", defaultValue: "Changes nothing")
-        case .writesFiles:     return String(localized: "guard.why.writes", defaultValue: "Changes files in the project")
-        case .network:         return String(localized: "guard.why.network", defaultValue: "Talks to a server")
-        case .installs:        return String(localized: "guard.why.installs", defaultValue: "Adds packages to the machine")
-        case .runsCode:        return String(localized: "guard.why.runs-code", defaultValue: "Starts a program")
-        case .publishes:       return String(localized: "guard.why.publishes", defaultValue: "Sends your work outside")
-        case .unknown:         return String(localized: "guard.why.unknown", defaultValue: "A command the guard does not know")
-        case .deletes:         return String(localized: "guard.why.deletes", defaultValue: "Can erase files for good")
-        case .forcePush:       return String(localized: "guard.why.force-push", defaultValue: "Rewrites the remote history")
-        case .rewritesHistory: return String(localized: "guard.why.history", defaultValue: "Rewrites the Git history")
-        case .pipeToShell:     return String(localized: "guard.why.pipe", defaultValue: "Runs a script straight from the internet")
-        case .privilege:       return String(localized: "guard.why.admin", defaultValue: "Asks for administrator rights")
-        case .secrets:         return String(localized: "guard.why.secrets", defaultValue: "Touches keys, tokens or passwords")
-        case .systemConfig:    return String(localized: "guard.why.system", defaultValue: "Changes how the Mac works")
-        }
-    }
+    static func explanation(_ reason: CommandRisk.Reason) -> String { reason.explanation }
 
-    static func color(_ level: CommandRisk.Level) -> Color {
-        switch level {
-        case .safe:    return Color(hex: "#34D399")
-        case .caution: return Color(hex: "#F5A524")
-        case .high:    return Color(hex: "#F4505E")
-        }
-    }
+    static func color(_ level: CommandRisk.Level) -> Color { Color(hex: level.hex) }
 
-    static func icon(_ level: CommandRisk.Level) -> String {
-        switch level {
-        case .safe:    return "checkmark.shield.fill"
-        case .caution: return "eye.fill"
-        case .high:    return "exclamationmark.triangle.fill"
-        }
-    }
+    static func icon(_ level: CommandRisk.Level) -> String { level.symbol }
 
-    static func label(_ reason: CommandRisk.Reason) -> String {
-        switch reason {
-        case .readOnly:        return String(localized: "guard.reason.read-only", defaultValue: "Read only")
-        case .writesFiles:     return String(localized: "guard.reason.writes", defaultValue: "Edits files")
-        case .network:         return String(localized: "guard.reason.network", defaultValue: "Network")
-        case .installs:        return String(localized: "guard.reason.installs", defaultValue: "Installs")
-        case .runsCode:        return String(localized: "guard.reason.runs-code", defaultValue: "Runs code")
-        case .publishes:       return String(localized: "guard.reason.publishes", defaultValue: "Publishes")
-        case .unknown:         return String(localized: "guard.reason.unknown", defaultValue: "Check it")
-        case .deletes:         return String(localized: "guard.reason.deletes", defaultValue: "Deletes")
-        case .forcePush:       return String(localized: "guard.reason.force-push", defaultValue: "Force push")
-        case .rewritesHistory: return String(localized: "guard.reason.history", defaultValue: "Rewrites history")
-        case .pipeToShell:     return String(localized: "guard.reason.pipe", defaultValue: "Runs downloaded code")
-        case .privilege:       return String(localized: "guard.reason.admin", defaultValue: "Admin rights")
-        case .secrets:         return String(localized: "guard.reason.secrets", defaultValue: "Secrets")
-        case .systemConfig:    return String(localized: "guard.reason.system", defaultValue: "System settings")
-        }
-    }
+    static func label(_ reason: CommandRisk.Reason) -> String { reason.label }
 }
 
 // MARK: - Session details (open card, home view)

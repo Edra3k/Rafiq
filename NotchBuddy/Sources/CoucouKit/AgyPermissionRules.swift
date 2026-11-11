@@ -166,6 +166,8 @@ struct AgyPermissionRules: Equatable, Sendable {
     }
 
     // MARK: Loading Antigravity's files
+    // Mac only: the iPhone and the Watch use the shell parser above (the agent guard).
+    #if os(macOS)
 
     /// The rules that apply to a session working in `cwd`: the CLI's settings, the shared
     /// global grants, and the grants of the Antigravity project(s) holding `cwd` (or of
@@ -200,6 +202,8 @@ struct AgyPermissionRules: Equatable, Sendable {
     }
 
     /// Folder paths of an Antigravity project file (`projectResources.resources[]`).
+    #endif
+
     static func projectFolders(_ project: [String: Any]) -> [String] {
         let resources = (project["projectResources"] as? [String: Any])?["resources"] as? [[String: Any]] ?? []
         return resources.compactMap { resource in

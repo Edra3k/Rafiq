@@ -2748,7 +2748,7 @@ struct RafiqWatchSettings: View {
                     Toggle(String(localized: "watch.verse", defaultValue: "Verse of the day"), isOn: $verse)
                     Spacer()
                     Button(String(localized: "watch.verse.now", defaultValue: "Show today's verse")) {
-                        VerseOfTheDay.show(VerseOfTheDay.verse(on: Date()))
+                        VerseOfTheDay.show(Verses.verse(on: Date()))
                     }
                 }
                 Toggle(String(localized: "watch.canary", defaultValue: "Trap file for agents"), isOn: $canary)

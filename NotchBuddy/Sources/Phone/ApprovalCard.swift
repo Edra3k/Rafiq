@@ -19,6 +19,10 @@ struct ApprovalCard: View {
                 .padding(12)
                 .background(Color.white.opacity(0.07), in: RoundedRectangle(cornerRadius: 12))
                 .textSelection(.enabled)
+            // The agent guard's rating, as on the Mac: information only, your tap decides.
+            if !session.approvalCommand.isEmpty {
+                RiskRow(risk: CommandRisk.assess(tool: "Bash", command: session.approvalCommand))
+            }
             if let sent {
                 HStack(spacing: 12) {
                     if sent == .allow {
@@ -214,5 +218,25 @@ struct HistoryView: View {
         if calendar.isDateInToday(day) { return "Today" }
         if calendar.isDateInYesterday(day) { return "Yesterday" }
         return day.formatted(.dateTime.weekday(.wide).day().month(.wide))
+    }
+}
+
+
+/// "Deletes · Can erase files for good", in the guard's colour.
+struct RiskRow: View {
+    let risk: CommandRisk
+
+    var body: some View {
+        let color = Color(hex: risk.level.hex)
+        HStack(spacing: 8) {
+            Label(risk.reason.label, systemImage: risk.level.symbol)
+                .font(.caption.weight(.semibold))
+                .foregroundStyle(color)
+                .padding(.horizontal, 8).padding(.vertical, 4)
+                .background(color.opacity(0.14), in: Capsule())
+            Text(risk.reason.explanation)
+                .font(.caption)
+                .foregroundStyle(.secondary)
+        }
     }
 }

@@ -86,7 +86,10 @@ final class PhoneLink {
     /// The first look at iCloud is over (whatever came of it): the intro can end.
     var firstSyncDone = false
     var pings: [PingItem] = []
-    var sessions: [SessionItem] = []
+    var sessions: [SessionItem] = [] {
+        // The Watch shows the same sessions (WatchBridge).
+        didSet { WatchBridge.shared.push(sessions) }
+    }
     /// Service Rafiq (GitHub, Stripe…) the Mac publishes, by pill ID.
     var services: [String: ServiceSnapshot] = [:]
     /// A service up close (figures, lists, actions), fetched by the Mac when its screen opens.

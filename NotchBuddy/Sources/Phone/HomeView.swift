@@ -110,6 +110,7 @@ struct AgentsTab: View {
                                 .opacity(max(0, 1 + pull / 160))
                         }
                     TodayCard(link: link)
+                    VerseCard()
                 }
                 .listRowBackground(Color.clear)
                 .listRowInsets(EdgeInsets(top: 6, leading: 0, bottom: 6, trailing: 0))
@@ -575,5 +576,30 @@ struct TodayCard: View {
             Text(label).font(.caption2).foregroundStyle(.secondary)
         }
         .frame(maxWidth: .infinity)
+    }
+}
+
+
+/// The verse of the day, the same as in the Mac's notch.
+struct VerseCard: View {
+    var body: some View {
+        let verse = Verses.verse(on: Date())
+        VStack(alignment: .trailing, spacing: 6) {
+            Text(verse.arabic)
+                .font(.title3.weight(.semibold))
+                .foregroundStyle(Color(hex: "#E8B64A"))
+                .multilineTextAlignment(.trailing)
+                .frame(maxWidth: .infinity, alignment: .trailing)
+            Text(verse.meaning)
+                .font(.callout)
+                .foregroundStyle(.secondary)
+                .frame(maxWidth: .infinity, alignment: .leading)
+            Text(verse.reference)
+                .font(.caption2)
+                .foregroundStyle(.tertiary)
+                .frame(maxWidth: .infinity, alignment: .leading)
+        }
+        .padding(16)
+        .glassCard()
     }
 }
