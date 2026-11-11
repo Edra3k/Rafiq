@@ -71,6 +71,8 @@ struct IslandViewContent: View {
 
 struct OverviewView: View {
     @ObservedObject var state: AppState
+    @ObservedObject private var riskLog = CommandRiskLog.shared
+    @ObservedObject private var prayer = PrayerController.shared
     @State private var showingN8nDetail = false
     @State private var activeDiffId: Int? = nil
 
@@ -136,6 +138,15 @@ struct OverviewView: View {
                             .padding(.top, 6)
                             .padding(.leading, 108)
                             .padding(.trailing, 12)
+
+                        // The guard's rating of what the session is running now.
+                        if agent.state == .working, agent.sessionLines.isEmpty,
+                           let risk = riskLog.risk(for: agent) {
+                            RiskBadge(risk: risk)
+                                .padding(.top, 2)
+                                .padding(.leading, 108)
+                                .transition(.opacity)
+                        }
                     }
                     .frame(maxWidth: .infinity, alignment: .topLeading)
                     .padding(.top, 4)
@@ -236,11 +247,19 @@ struct OverviewView: View {
                     leftCard
                         .frame(width: 322)
 
-                    // Right card: agent pills
+                    // Right card: the day's prayers (Prayer pill on), then the agent pills.
+                    let strip = PrayerStripLayout.isOn(state: state, prayer: prayer)
                     CardBackground(wash: nil) {
-                        AgentPillsView(state: state)
+                        VStack(spacing: 0) {
+                            if strip {
+                                PrayerStripView(state: state)
+                                    .frame(height: PrayerStripLayout.height, alignment: .top)
+                            }
+                            AgentPillsView(state: state)
+                                .frame(height: 98)
+                        }
                     }
-                    .frame(height: 98)
+                    .frame(height: 98 + (strip ? PrayerStripLayout.height : 0))
                 }
             }
         }
@@ -438,7 +457,19 @@ struct ApprovalView: View {
                         RiskBadge(risk: CommandRisk.assess(tool: approval.tool, command: approval.command))
                     }
                 }
-                CodeBlock(text: approval?.command ?? approval?.tool ?? "…")
+                HStack(spacing: 8) {
+                    CodeBlock(text: approval?.command ?? approval?.tool ?? "…")
+                        .layoutPriority(1)
+                    // What the action can do, in plain words (the guard's reason).
+                    if let approval, !isPlan {
+                        Text(verbatim: RiskBadge.explanation(
+                            CommandRisk.assess(tool: approval.tool, command: approval.command).reason))
+                            .font(.system(size: 10))
+                            .foregroundColor(Color(hex: "#8E939C"))
+                            .lineLimit(2)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                }
                 if isPlan {
                     // The terminal's plan dialog choices, not a tool permission.
                     HStack(spacing: 8) {

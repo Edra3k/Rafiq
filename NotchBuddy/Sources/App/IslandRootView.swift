@@ -279,8 +279,14 @@ struct IslandContainer: View {
                                     nw: state.notchWidth, nh: state.notchHeight)
             withAnimation(w > islandWidth ? openSpring : closeEase) { islandWidth = w }
         }
+        // The prayer strip comes or goes: the home view grows or shrinks (islandResize).
+        .onChange(of: PrayerStripLayout.isOn(state: state, prayer: prayer)) { _, _ in
+            PrayerStripLayout.refresh(state: state, prayer: prayer)
+            NotificationCenter.default.post(name: .islandResize, object: nil)
+        }
         .onAppear {
             NotchLive.refreshEars(state: state, prayer: prayer)
+            PrayerStripLayout.refresh(state: state, prayer: prayer)
             let (w, h) = islandSize(mode: state.mode, view: state.view,
                                     progress: state.uploadProgress,
                                     nw: state.notchWidth, nh: state.notchHeight)
@@ -305,6 +311,7 @@ struct IslandContainer: View {
         .onReceive(NotificationCenter.default.publisher(for: .islandScreenChanged)) { _ in
             // New screen, new resting size (notch ↔ bar): snap without animation.
             NotchLive.refreshEars(state: state, prayer: prayer)
+            PrayerStripLayout.refresh(state: state, prayer: prayer)
             let (w, h) = islandSize(mode: state.mode, view: state.view,
                                     progress: state.uploadProgress,
                                     nw: state.notchWidth, nh: state.notchHeight)
@@ -645,6 +652,8 @@ struct IslandContentView: View {
     /// A mail open in the Mail card: the home view grows by this much, downwards only
     /// (the header and the pills stay where they are).
     @State private var mailExtra: CGFloat = 0
+    /// The prayer strip on the right card (PrayerStripLayout): the home view grows by this much.
+    @State private var stripExtra: CGFloat = PrayerStripLayout.extra
 
     var body: some View {
         let placement = state.islandPlacement
@@ -675,7 +684,9 @@ struct IslandContentView: View {
                         // but stop their endless animations: nobody sees them.
                         .environment(\.islandViewActive, active)
                         .frame(maxWidth: .infinity)
-                        .frame(height: isTall ? nil : (v == .overview ? 98 + (placement.isCorner ? 0 : mailExtra) : 98),
+                        // The prayer strip's extra height only while home is shown: mounted behind
+                        // another view, a taller home would push the header up out of the island.
+                        .frame(height: isTall ? nil : (v == .overview ? 98 + (placement.isCorner ? 0 : mailExtra + (active ? stripExtra : 0)) : 98),
                                alignment: v == .overview ? .top : .center)
                         .frame(minHeight: (isTall && !active) ? 0 : nil, maxHeight: isTall ? .infinity : nil)
                         .opacity(active ? 1 : 0)
@@ -693,7 +704,10 @@ struct IslandContentView: View {
         .onReceive(NotificationCenter.default.publisher(for: .islandResize)) { _ in
             let extra = max(0, (MailLayout.detailHeight ?? 160) - 160)
             // The island's own spring (IslandContainer.openSpring): the card and the island move together.
-            withAnimation(.spring(response: 0.5, dampingFraction: 0.72)) { mailExtra = extra }
+            withAnimation(.spring(response: 0.5, dampingFraction: 0.72)) {
+                mailExtra = extra
+                stripExtra = PrayerStripLayout.extra
+            }
         }
     }
 }
@@ -709,6 +723,16 @@ struct IslandHeader: View {
     /// Pending approval or mail draft: the island refuses to fold (fsm.isHeldOpen), so the
     /// close cross is not shown.
     private var heldOpen: Bool { state.pendingApproval != nil || state.voiceMailDraft != nil }
+
+    /// A plan pill takes the room right of the notch: the guard shows its icon alone then.
+    private var planPillShown: Bool {
+        #if !APPSTORE
+        return state.view == .overview
+            && ((state.showPlanInNotch && state.planRelayInstalled) || state.showCodexPlanInNotch)
+        #else
+        return false
+        #endif
+    }
 
     /// Width left of the notch for the tabs (and the prayer chip): the header must not run
     /// under the camera housing. In a corner or on a screen without a notch, no limit.
@@ -755,7 +779,7 @@ struct IslandHeader: View {
                 }
                 #endif
                 HStack(spacing: 14) {
-                    HeaderGuardShield(state: state)
+                    HeaderGuardShield(state: state, showLabel: !planPillShown)
 
                     Button(action: {
                         withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {

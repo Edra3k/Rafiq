@@ -76,7 +76,7 @@ enum NotchEars {
 
 // MARK: - Halo
 
-/// The coloured line under the resting island.
+/// The coloured line under the island (resting or open; not in a corner, where the tile floats).
 struct NotchHalo: View {
     @ObservedObject var state: AppState
     @ObservedObject private var prayer = PrayerController.shared
@@ -84,9 +84,9 @@ struct NotchHalo: View {
     let islandH: CGFloat
 
     var body: some View {
-        let resting = state.mode != .expanded && !state.islandPlacement.isCorner
-        let signal = resting ? NotchLive.signal(state: state, prayer: prayer) : nil
-        let width = min(120, max(60, islandW * 0.5))
+        let shown = !state.islandPlacement.isCorner
+        let signal = shown ? NotchLive.signal(state: state, prayer: prayer) : nil
+        let width = state.mode == .expanded ? 160 : min(120, max(60, islandW * 0.5))
         ZStack {
             if let signal {
                 Capsule()
@@ -209,19 +209,125 @@ struct HeaderPrayerChip: View {
 }
 
 /// The agent guard in the header: green while nothing risky waits, the risk's colour when
-/// an approval waits.
+/// an approval waits. With room (no plan pill beside it), its name too.
 struct HeaderGuardShield: View {
     @ObservedObject var state: AppState
+    var showLabel: Bool = false
 
     var body: some View {
         let risk = state.pendingApproval.flatMap { a in
             a.tool == "ExitPlanMode" ? nil : CommandRisk.assess(tool: a.tool, command: a.command)
         }
         let color = risk.map { RiskBadge.color($0.level) } ?? Color(hex: "#34D399")
-        Image(systemName: risk?.level == .high ? "exclamationmark.shield.fill" : "checkmark.shield")
-            .font(.system(size: 14))
-            .foregroundColor(color.opacity(risk == nil ? 0.75 : 1))
-            .help(String(localized: "guard.help", defaultValue: "Agent guard: rates the risk of every action an agent asks for. It never answers for you."))
+        HStack(spacing: 4) {
+            Image(systemName: risk?.level == .high ? "exclamationmark.shield.fill" : "checkmark.shield")
+                .font(.system(size: 14))
+            if showLabel {
+                Text(String(localized: "guard.title", defaultValue: "Guard"))
+                    .font(.system(size: 11, weight: .semibold))
+                    .lineLimit(1)
+                    .fixedSize()
+            }
+        }
+        .foregroundColor(color.opacity(risk == nil ? 0.8 : 1))
+        .help(String(localized: "guard.help", defaultValue: "Agent guard: rates the risk of every action an agent asks for. It never answers for you."))
+    }
+}
+
+// MARK: - The last action of each session, rated
+
+/// The guard's rating of the last tool each pill's session ran (PreToolUse), for the badge on
+/// the open card. Cleared when the turn stops. Written by HookServer on the main actor.
+@MainActor
+final class CommandRiskLog: ObservableObject {
+    static let shared = CommandRiskLog()
+    @Published private(set) var last: [String: CommandRisk] = [:]
+
+    func record(pill: String, tool: String, input: [String: Any]) {
+        let command = input["command"] as? String ?? tool
+        let risk = CommandRisk.assess(tool: tool, command: command)
+        if last[pill] != risk { last[pill] = risk }
+    }
+
+    func clear(pill: String) {
+        if last[pill] != nil { last[pill] = nil }
+    }
+
+    func risk(for task: AgentTask) -> CommandRisk? {
+        last[task.id] ?? last[task.pill]
+    }
+}
+
+// MARK: - Prayer strip (open island, home view)
+
+/// How much taller the home view is for the prayer strip at the top of its right card.
+enum PrayerStripLayout {
+    nonisolated(unsafe) static var extra: CGFloat = 0
+    static let height: CGFloat = 52
+
+    /// On while the Prayer pill is on and knows where the user is (not in a corner).
+    @MainActor static func isOn(state: AppState, prayer: PrayerController) -> Bool {
+        !state.islandPlacement.isCorner
+            && state.activeIntegrations.contains(PrayerController.pillId)
+            && prayer.location != nil && prayer.today != nil
+    }
+
+    @MainActor static func refresh(state: AppState, prayer: PrayerController) {
+        extra = isOn(state: state, prayer: prayer) ? height : 0
+    }
+}
+
+/// The day's prayers above the pills: the next one, the Hijri date, the sun on its arc.
+/// Tap: the Prayer card.
+struct PrayerStripView: View {
+    @ObservedObject var state: AppState
+    @ObservedObject private var prayer = PrayerController.shared
+
+    var body: some View {
+        TimelineView(.everyMinute) { tl in
+            Button(action: {
+                withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+                    state.focusId = PrayerController.pillId
+                }
+            }) {
+                VStack(alignment: .leading, spacing: 4) {
+                    HStack(spacing: 5) {
+                        Image(systemName: "moon.fill")
+                            .font(.system(size: 9))
+                            .foregroundColor(RafiqLook.gold)
+                        Text(verbatim: prayer.pillLabel(at: tl.date))
+                            .font(.system(size: 11, weight: .semibold))
+                            .foregroundColor(RafiqLook.gold)
+                            .lineLimit(1)
+                        Spacer(minLength: 4)
+                        Text(verbatim: prayer.hijriDate(at: tl.date))
+                            .font(.system(size: 10))
+                            .foregroundColor(Color(hex: "#8E939C"))
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.8)
+                    }
+                    if let today = prayer.today {
+                        PrayerSunArc(day: today, date: tl.date, accent: RafiqLook.gold)
+                            .frame(height: 16)
+                        HStack(spacing: 0) {
+                            ForEach(Prayer.obligatory, id: \.self) { p in
+                                let next = prayer.next(at: tl.date)?.prayer == p
+                                Text(verbatim: PrayerController.name(p))
+                                    .font(.system(size: 8, weight: next ? .semibold : .regular))
+                                    .foregroundColor(next ? RafiqLook.gold : Color(hex: "#6B7079"))
+                                    .lineLimit(1)
+                                    .minimumScaleFactor(0.7)
+                                    .frame(maxWidth: .infinity)
+                            }
+                        }
+                    }
+                }
+                .padding(.horizontal, 12)
+                .padding(.top, 7)
+                .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+        }
     }
 }
 
@@ -247,6 +353,26 @@ struct RiskBadge: View {
         .background(Capsule().fill(color.opacity(0.14)))
         .overlay(Capsule().stroke(color.opacity(0.35), lineWidth: 1))
         .help(String(localized: "guard.help", defaultValue: "Agent guard: rates the risk of every action an agent asks for. It never answers for you."))
+    }
+
+    /// One line saying what the action can do, under the command on the approval card.
+    static func explanation(_ reason: CommandRisk.Reason) -> String {
+        switch reason {
+        case .readOnly:        return String(localized: "guard.why.read-only", defaultValue: "Changes nothing")
+        case .writesFiles:     return String(localized: "guard.why.writes", defaultValue: "Changes files in the project")
+        case .network:         return String(localized: "guard.why.network", defaultValue: "Talks to a server")
+        case .installs:        return String(localized: "guard.why.installs", defaultValue: "Adds packages to the machine")
+        case .runsCode:        return String(localized: "guard.why.runs-code", defaultValue: "Starts a program")
+        case .publishes:       return String(localized: "guard.why.publishes", defaultValue: "Sends your work outside")
+        case .unknown:         return String(localized: "guard.why.unknown", defaultValue: "A command the guard does not know")
+        case .deletes:         return String(localized: "guard.why.deletes", defaultValue: "Can erase files for good")
+        case .forcePush:       return String(localized: "guard.why.force-push", defaultValue: "Rewrites the remote history")
+        case .rewritesHistory: return String(localized: "guard.why.history", defaultValue: "Rewrites the Git history")
+        case .pipeToShell:     return String(localized: "guard.why.pipe", defaultValue: "Runs a script straight from the internet")
+        case .privilege:       return String(localized: "guard.why.admin", defaultValue: "Asks for administrator rights")
+        case .secrets:         return String(localized: "guard.why.secrets", defaultValue: "Touches keys, tokens or passwords")
+        case .systemConfig:    return String(localized: "guard.why.system", defaultValue: "Changes how the Mac works")
+        }
     }
 
     static func color(_ level: CommandRisk.Level) -> Color {

@@ -2259,8 +2259,12 @@ func islandSize(mode: IslandMode, view: IslandView,
         if view == .question, let h = QuestionLayout.height {
             return (IslandConst.expandedWidth, h)
         }
+        // The prayer strip (NotchLive) makes the home view taller, mail open or not.
         if view == .overview, let h = MailLayout.detailHeight {
-            return (IslandConst.expandedWidth, h)
+            return (IslandConst.expandedWidth, h + PrayerStripLayout.extra)
+        }
+        if view == .overview {
+            return (IslandConst.expandedWidth, layout.height + PrayerStripLayout.extra)
         }
         return (IslandConst.expandedWidth, layout.height)
     }

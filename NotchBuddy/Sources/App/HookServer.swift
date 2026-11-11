@@ -787,6 +787,8 @@ final class HookServer: @unchecked Sendable {
             let isQuestion = tool == "ask_question" || tool.hasSuffix(":ask_question")
             let input = payload["tool_input"] as? [String: Any] ?? [:]
             let label = localizedStep(tool: tool, input: input)
+            // The agent guard rates it for the open card's badge (information only).
+            CommandRiskLog.shared.record(pill: agentId, tool: tool, input: input)
             note {
                 $0.state = isQuestion ? .question : .working
                 $0.endedAt = nil
@@ -836,6 +838,7 @@ final class HookServer: @unchecked Sendable {
             // even while a sibling behind the same pill is still working. For a moment the pill
             // shows the session that finished (SessionBoard.finishMoment), then the busy one again.
             _ = sessions.endTurn(pill: agentId, session: sessionId)
+            CommandRiskLog.shared.clear(pill: agentId)
             let rawFinal = (payload["last_assistant_message"] as? String)
                 ?? (payload["message"] as? String) ?? ""
             let finalText = DiffEngine.toOneLine(rawFinal)
