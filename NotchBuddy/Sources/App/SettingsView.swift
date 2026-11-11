@@ -1538,6 +1538,10 @@ struct SettingsView: View {
                 .onChange(of: coucoudoroWork) { _, _ in applyCoucoudoroSettings() }
                 .onChange(of: coucoudoroRest) { _, _ in applyCoucoudoroSettings() }
 
+                // Prayer times: the place, the method, the reminders. Calculated on the Mac.
+                PrayerSettingsSection()
+                    .padding(.top, 4)
+
                 #if !APPSTORE
                 // Portfolio: exchange accounts + wallets (GitHub build, like its pill).
                 PortfolioSettingsSection()

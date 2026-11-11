@@ -182,9 +182,11 @@ struct OverviewView: View {
             #if !APPSTORE
             let hideJumpButton = showingN8nDetail || state.showingPlanDetail || activeDiffId != nil
                 || agent?.id == CoucoudoroController.pillId
+                || agent?.id == PrayerController.pillId
             #else
             let hideJumpButton = showingN8nDetail || activeDiffId != nil
                 || agent?.id == CoucoudoroController.pillId
+                || agent?.id == PrayerController.pillId
             #endif
             if !hideJumpButton {
                 Button(action: { openAgentTarget(agent) }) {
@@ -295,7 +297,7 @@ struct OverviewView: View {
                 NSWorkspace.shared.openApplication(at: url, configuration: .init(), completionHandler: nil)
             }
             #endif
-        case "integration_coucoudoro":
+        case "integration_coucoudoro", "integration_prayer":
             break
         case "integration_crypto":
             let exchange = CryptoSettings.exchange
@@ -2068,6 +2070,8 @@ struct IntegrationCardView: View {
             return true  // public market data: no key, nothing to set up
         case "integration_coucoudoro":
             return true  // a local countdown: nothing to connect
+        case "integration_prayer":
+            return true  // calculated on the Mac: the city defaults to the Mac's time zone
         case "integration_portfolio":
             return PortfolioSettings.hasAnyAccount
         case "ai_anthropic":  return KeychainStore.shared.get("anthropic-api-key") != nil || AppState.shared.subscriptionReady(.anthropic)
@@ -2327,6 +2331,9 @@ struct IntegrationCardView: View {
                 .transition(.opacity)
         } else if task.id == CoucoudoroController.pillId {
             CoucoudoroCardView()
+                .transition(.opacity)
+        } else if task.id == PrayerController.pillId {
+            PrayerCardView()
                 .transition(.opacity)
         } else if task.id == "integration_portfolio" {
             PortfolioCardView()
@@ -4294,6 +4301,13 @@ struct AgentPillsView: View {
                 SoundEngine.shared.play("blip")
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { swapping = false }
             }
+        } else if task.id == PrayerController.pillId {
+            PrayerPill(task: task, state: state, swapping: $swapping) {
+                swapping = true
+                state.setFocus(task.id)
+                SoundEngine.shared.play("blip")
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { swapping = false }
+            }
         } else if task.id == "integration_music" {
             MusicPill(task: task, state: state, swapping: $swapping) {
                 swapping = true
@@ -4319,6 +4333,13 @@ struct AgentPillsView: View {
         #else
         if task.id == CoucoudoroController.pillId {
             CoucoudoroPill(task: task, state: state, swapping: $swapping) {
+                swapping = true
+                state.setFocus(task.id)
+                SoundEngine.shared.play("blip")
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { swapping = false }
+            }
+        } else if task.id == PrayerController.pillId {
+            PrayerPill(task: task, state: state, swapping: $swapping) {
                 swapping = true
                 state.setFocus(task.id)
                 SoundEngine.shared.play("blip")

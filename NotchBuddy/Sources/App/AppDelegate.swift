@@ -376,6 +376,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         #endif
         CryptoController.shared.start()
         CoucoudoroController.shared.start()
+        PrayerController.shared.start()
         PortfolioController.shared.start()
     }
 }
