@@ -188,6 +188,11 @@ struct IslandContainer: View {
             // fire from the current position (e.g. choose at 60,101) when canvas deactivates.
             // Hidden during upload canvas or greeting (both draw their own Rafiq).
             // In a corner, Rafiq is drawn by IslandRootView (CornerBot), over the island.
+            #if !APPSTORE
+            // The Claude plan, as a ring around Rafiq on the home view (under him).
+            PlanRingView(state: state, islandW: islandWidth, islandH: islandHeight)
+            #endif
+
             if !state.islandPlacement.isCorner {
             BotPlacement(state: state, islandW: islandWidth, islandH: islandHeight)
                 // Keep idle animations inside the resting strip. Expanded views
@@ -237,6 +242,12 @@ struct IslandContainer: View {
         }
         .frame(width: islandWidth, height: islandHeight, alignment: .topLeading)
         .onChange(of: state.mode) { oldMode, newMode in
+            if newMode == .expanded {
+                // The first home view of the day: the verse of the day, once.
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+                    MainActor.assumeIsolated { VerseOfTheDay.maybeShow(state: state) }
+                }
+            }
             let shrinking = modeOrder(newMode) < modeOrder(oldMode)
             let anim = shrinking ? closeEase : openSpring
             let (w, h) = islandSize(mode: newMode, view: state.view,
@@ -280,7 +291,7 @@ struct IslandContainer: View {
             withAnimation(w > islandWidth ? openSpring : closeEase) { islandWidth = w }
         }
         // The prayer strip comes or goes: the home view grows or shrinks (islandResize).
-        .onChange(of: PrayerStripLayout.isOn(state: state, prayer: prayer)) { _, _ in
+        .onChange(of: PrayerStripLayout.isTall(state: state, prayer: prayer)) { _, _ in
             PrayerStripLayout.refresh(state: state, prayer: prayer)
             NotificationCenter.default.post(name: .islandResize, object: nil)
         }
@@ -630,17 +641,21 @@ struct CountdownBar: View {
             if barWidth != 0 { barWidth = 0 }
             return
         }
-        let autoClose = state.autoCloseInterval
-        let window = min(10.0, autoClose * 0.6)
-        let elapsed = Date.now.timeIntervalSince(state.lastActivity)
-        let remaining = autoClose - elapsed
+        // Only while a fold is scheduled (the pointer left): it empties until the island closes.
+        // Up to 10 s it shows the whole delay, past that the last 10 s.
+        guard let deadline = state.closeDeadline else {
+            if barWidth != 0 { withAnimation(.easeOut(duration: 0.15)) { barWidth = 0 } }
+            return
+        }
+        let window = min(10.0, max(0.5, state.autoCloseInterval))
+        let remaining = deadline.timeIntervalSinceNow
         let target: CGFloat = remaining < window ? max(0, CGFloat(remaining / window) * 160) : 0
         // The timer ticks at 10 Hz; a linear animation over the same 0.1 s glides between ticks,
         // so the bar shrinks on every display frame instead of in 10 steps a second.
         if target < barWidth && barWidth - target < 40 {
             withAnimation(.linear(duration: 0.1)) { barWidth = target }
         } else if target != barWidth {
-            barWidth = target
+            withAnimation(.easeOut(duration: 0.2)) { barWidth = target }
         }
     }
 }
@@ -674,7 +689,7 @@ struct IslandContentView: View {
                     // Views that fill available height instead of the fixed 98pt content frame:
                     // chat (prompt) is always flexible; mail is flexible only when active so
                     // it doesn't push the ZStack taller when inactive.
-                    let isTall = v == .prompt || ((v == .mail || v == .whatsNew) && active)
+                    let isTall = v == .prompt || ((v == .mail || v == .whatsNew || v == .digest || v == .tasbih) && active)
                         || (v == .overview && active && cornerHome)
                     let anim: Animation = active
                         ? .spring(response: 0.4, dampingFraction: 0.8).delay(0.16)

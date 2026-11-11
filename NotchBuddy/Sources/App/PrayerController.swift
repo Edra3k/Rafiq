@@ -27,6 +27,37 @@ final class PrayerController: ObservableObject {
         let prayer: Prayer
         let at: Date
         let isNow: Bool
+        /// Ramadan: Maghrib is the iftar and Fajr the end of the suhur, announced earlier.
+        var ramadan: Bool = false
+    }
+
+    // MARK: - Ramadan
+
+    /// How long before the iftar (Maghrib) and the end of the suhur (Fajr) the notch counts down.
+    static let ramadanWindow: TimeInterval = 2 * 3600
+
+    /// The Hijri month and day at `date` where the location is (Umm al-Qura).
+    func hijriMonthDay(at date: Date) -> (month: Int, day: Int) {
+        var calendar = Calendar(identifier: .islamicUmmAlQura)
+        calendar.timeZone = location?.timeZone ?? .current
+        let c = calendar.dateComponents([.month, .day], from: date)
+        return (c.month ?? 0, c.day ?? 0)
+    }
+
+    func isRamadan(at date: Date) -> Bool { hijriMonthDay(at: date).month == 9 }
+
+    /// The left ear: "Iftar · 42 min", "Suhur · 1 h 10 min" in Ramadan, else the pill's label.
+    func earLabel(at date: Date) -> String {
+        if let soon, soon.ramadan, !soon.isNow {
+            let left = Self.countdown(soon.at.timeIntervalSince(date))
+            if soon.prayer == .maghrib {
+                return String(format: String(localized: "ramadan.iftar %@", defaultValue: "Iftar · %@"), left)
+            }
+            if soon.prayer == .fajr {
+                return String(format: String(localized: "ramadan.suhur %@", defaultValue: "Suhur · %@"), left)
+            }
+        }
+        return pillLabel(at: date)
     }
 
     private var timer: Timer?
@@ -62,7 +93,11 @@ final class PrayerController: ObservableObject {
         }
     }
 
-    func start() { updatePolling() }
+    func start() {
+        updatePolling()
+        _ = PrayerQuiet.shared
+        EveningBrief.shared.start()
+    }
 
     /// A setting changed: new times (also for the preview in Settings while the pill is off),
     /// same announcements already made.
@@ -129,6 +164,18 @@ final class PrayerController: ObservableObject {
         f.timeZone = calendar.timeZone
         f.dateStyle = .long
         f.timeStyle = .none
+        return f.string(from: date)
+    }
+
+    /// "١ جمادى الآخرة": the Hijri day and month, in Arabic, for the notch.
+    func hijriShortArabic(at date: Date) -> String {
+        var calendar = Calendar(identifier: .islamicUmmAlQura)
+        calendar.timeZone = location?.timeZone ?? .current
+        let f = DateFormatter()
+        f.calendar = calendar
+        f.locale = Locale(identifier: "ar")
+        f.timeZone = calendar.timeZone
+        f.dateFormat = "d MMMM"
         return f.string(from: date)
     }
 
@@ -219,7 +266,12 @@ final class PrayerController: ObservableObject {
         let midnight = calendar.date(byAdding: .day, value: 1, to: calendar.startOfDay(for: now))
         // The "now" label on the pill ends a few minutes after a prayer: wake for it too.
         let nowEnds = current(at: now).map { $0.at.addingTimeInterval(Self.nowWindow) }.flatMap { $0 > now ? $0 : nil }
-        guard let fire = [upcoming, midnight, nowEnds].compactMap({ $0 }).min() else { return }
+        // Ramadan: wake when the iftar and suhur countdowns start too.
+        let ramadanStart = isRamadan(at: now)
+            ? days.flatMap { [$0.time(.maghrib), $0.time(.fajr)] }.compactMap { $0 }
+                .map { $0.addingTimeInterval(-Self.ramadanWindow) }.filter { $0 > now }.min()
+            : nil
+        guard let fire = [upcoming, midnight, nowEnds, ramadanStart].compactMap({ $0 }).min() else { return }
         let t = Timer(fire: fire.addingTimeInterval(0.5), interval: 0, repeats: false) { _ in
             MainActor.assumeIsolated {
                 PrayerController.shared.timer = nil
@@ -329,9 +381,11 @@ final class PrayerController: ObservableObject {
                now.timeIntervalSince(current.at) < Self.nowWindow {
                 value = PrayerSoon(prayer: current.prayer, at: current.at, isNow: true)
             } else if let next = next(at: now), next.prayer.isObligatory {
-                let reminder = TimeInterval(max(PrayerSettings.reminderMinutes, 0) * 60)
+                var reminder = TimeInterval(max(PrayerSettings.reminderMinutes, 0) * 60)
+                let ramadan = isRamadan(at: now) && (next.prayer == .maghrib || next.prayer == .fajr)
+                if ramadan { reminder = max(reminder, Self.ramadanWindow) }
                 if reminder > 0, next.at.timeIntervalSince(now) <= reminder + 1 {
-                    value = PrayerSoon(prayer: next.prayer, at: next.at, isNow: false)
+                    value = PrayerSoon(prayer: next.prayer, at: next.at, isNow: false, ramadan: ramadan)
                 }
             }
         }

@@ -748,6 +748,7 @@ final class HookServer: @unchecked Sendable {
             upsertTask(pill: agentId, display: display, working: false,
                        externalAgent: isExternalAgent ? validAgent : nil)
             note { $0.finalLine = nil }
+            OSVWatch.shared.sessionStarted(cwd: cwd)
             nbLog("SessionStart \(isExternalAgent ? agentId : projectName) (\(sessionId.prefix(8)))")
             NotificationCenter.default.post(name: .checkMondayRecap, object: nil)
             if state.isPresent { expandIfNeeded(to: .overview) }
@@ -769,6 +770,8 @@ final class HookServer: @unchecked Sendable {
                 if let prompt = payload["prompt"] as? String, !prompt.isEmpty { $0.appendStep(String(prompt.prefix(60))) }
             }
             RecapStore.shared.userPromptSubmit(sessionId: recapSessionId, pillId: agentId, project: projectName)
+            CommandRiskLog.shared.beginTurn(pill: agentId)
+            GitStatusStore.shared.refresh(cwd)
             NotificationCenter.default.post(name: .checkMondayRecap, object: nil)
             // A new turn: the finished card would show the prompt as if it were the answer.
             if state.mode == .expanded && state.view == .finished && state.focusId == agentId { state.view = .overview }
@@ -789,6 +792,14 @@ final class HookServer: @unchecked Sendable {
             let label = localizedStep(tool: tool, input: input)
             // The agent guard rates it for the open card's badge (information only).
             CommandRiskLog.shared.record(pill: agentId, tool: tool, input: input)
+            // A secret in what the agent is about to write: a card (the write still happens).
+            if let written = SecretScanner.writtenText(tool: tool, input: input) {
+                let hits = SecretScanner.scan(written)
+                if !hits.isEmpty {
+                    let path = (input["file_path"] as? String) ?? ""
+                    SecretAlert.show(hits, path: path, pill: agentId)
+                }
+            }
             note {
                 $0.state = isQuestion ? .question : .working
                 $0.endedAt = nil
@@ -839,6 +850,7 @@ final class HookServer: @unchecked Sendable {
             // shows the session that finished (SessionBoard.finishMoment), then the busy one again.
             _ = sessions.endTurn(pill: agentId, session: sessionId)
             CommandRiskLog.shared.clear(pill: agentId)
+            GitStatusStore.shared.refresh(cwd, force: true)
             let rawFinal = (payload["last_assistant_message"] as? String)
                 ?? (payload["message"] as? String) ?? ""
             let finalText = DiffEngine.toOneLine(rawFinal)
@@ -1017,6 +1029,11 @@ final class HookServer: @unchecked Sendable {
         switch view {
         case .approval, .question, .finished, .error, .confused: isAlert = true
         default: isAlert = false
+        }
+        // While you pray, alerts are counted for the card after the prayer, not shown.
+        if isAlert, state.mode != .expanded, PrayerQuiet.shared.isActive {
+            PrayerQuiet.shared.note(view, pill: state.focusId)
+            return
         }
         if state.mode == .expanded {
             // Approval and question always win; other alerts are blocked while a card is showing

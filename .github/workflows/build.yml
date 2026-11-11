@@ -45,6 +45,15 @@ jobs:
       - name: Test the agent guard (command risk)
         run: bash scripts/test-command-risk.sh
 
+      - name: Test the secret scanner
+        run: bash scripts/test-secret-scanner.sh
+
+      - name: Test lockfile reading and OSV answers
+        run: bash scripts/test-osv-watch.sh
+
+      - name: Test the Git status reading
+        run: bash scripts/test-git-status.sh
+
       - name: Test the session board (sessions behind a pill, popping out, places)
         run: bash scripts/test-session-board.sh
 

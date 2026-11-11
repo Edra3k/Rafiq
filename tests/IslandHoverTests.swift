@@ -62,7 +62,7 @@ enum IslandHoverTests {
     private static func machine() -> IslandStateMachine {
         let m = IslandStateMachine()
         m.openOnHover = true
-        m.hoverCloseDelay = 0.3
+        m.homeToPetitDelay = 0.3
         return m
     }
 

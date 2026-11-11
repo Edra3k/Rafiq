@@ -42,11 +42,11 @@ final class IslandStateMachine {
     /// coucou → petit delay when mouse is hovering over the greeting.
     var greetHoverCollapseDelay: TimeInterval = 10
 
-    /// Opt-in (Settings → General → Behavior): hovering the island opens it, and an island
-    /// opened that way folds shortly after the pointer leaves. Off: hover only peeks (petit).
+    /// Settings → General → Behavior: hovering the island opens it. Off: hover only peeks (petit).
+    /// However it was opened, the island folds `homeToPetitDelay` after the pointer leaves.
     var openOnHover = false
-    /// Grace period after the pointer leaves a hover-opened island (no flicker at the edge).
-    var hoverCloseDelay: TimeInterval = 0.6
+    /// Told when a fold is scheduled (its moment) or called off (nil): the countdown bar.
+    var onCloseScheduled: ((Date?) -> Void)?
     /// True while the island is open because of a hover, until the user clicks inside it.
     private(set) var openedByHover = false
 
@@ -86,6 +86,7 @@ final class IslandStateMachine {
         case .home:
             homeCollapseWork?.cancel()
             homeCollapseWork = nil
+            onCloseScheduled?(nil)
         case .coucou:
             // Mouse hovering during greeting — cancel short auto-collapse, extend to hover delay
             scheduleGreetCollapse(delay: greetHoverCollapseDelay)
@@ -222,12 +223,17 @@ final class IslandStateMachine {
     private func scheduleHomeCollapse() {
         homeCollapseWork?.cancel()
         let item = DispatchWorkItem { [weak self] in
-            guard let self, self.state == .home, !(self.isHeldOpen?() ?? false) else { return }
+            guard let self else { return }
+            self.homeCollapseWork = nil
+            self.onCloseScheduled?(nil)
+            guard self.state == .home, !(self.isHeldOpen?() ?? false) else { return }
             self.openedByHover = false
             self.transition(to: .petit)
         }
         homeCollapseWork = item
-        let delay = openedByHover ? hoverCloseDelay : homeToPetitDelay
+        // The same delay whether a hover or a click opened it: the user's "close after".
+        let delay = homeToPetitDelay
+        onCloseScheduled?(Date().addingTimeInterval(delay))
         DispatchQueue.main.asyncAfter(deadline: .now() + delay, execute: item)
     }
 
@@ -239,6 +245,7 @@ final class IslandStateMachine {
 
     func cancelTimers() {
         petitHideWork?.cancel();    petitHideWork = nil
+        if homeCollapseWork != nil { onCloseScheduled?(nil) }
         homeCollapseWork?.cancel(); homeCollapseWork = nil
         greetCollapseWork?.cancel(); greetCollapseWork = nil
     }

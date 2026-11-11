@@ -325,18 +325,21 @@ final class AppState: ObservableObject {
     // Short note message (shown in NoteView)
     @Published var noteMessage: String? = nil
 
-    // Auto-close delay — persisted
-    // Hovering the island opens it (folds shortly after the pointer leaves) — persisted, off by default
-    @Published var openOnHover: Bool = false {
+    // Hovering the island opens it — persisted, on by default (Rafiq opens like an island should)
+    @Published var openOnHover: Bool = true {
         didSet { UserDefaults.standard.set(openOnHover, forKey: "openOnHover") }
     }
     /// A pill other than the one shown finishes or fails: show its card for a moment (#683).
     @Published var alertsFromAllPills: Bool = false {
         didSet { UserDefaults.standard.set(alertsFromAllPills, forKey: "alertsFromAllPills") }
     }
-    @Published var autoCloseInterval: TimeInterval = 15 {
+    // Close delay after the pointer leaves the open island — persisted
+    @Published var autoCloseInterval: TimeInterval = 3 {
         didSet { UserDefaults.standard.set(autoCloseInterval, forKey: "autoCloseInterval") }
     }
+    /// When the open island folds by itself (pointer gone), for the countdown bar; nil while
+    /// nothing is scheduled. Set by IslandWindowController from the state machine.
+    var closeDeadline: Date?
 
     // Absence interval — persisted
     @Published var absenceInterval: TimeInterval = 3 * 60 {
@@ -451,11 +454,23 @@ final class AppState: ObservableObject {
     @Published var chatHistory: [ChatMessage] = []
 
     // Pending approval request from Claude Code hook
-    @Published var pendingApproval: ApprovalInfo? = nil
+    @Published var pendingApproval: ApprovalInfo? = nil {
+        didSet {
+            // A Digest card waiting behind the approval comes up once it is answered.
+            if pendingApproval == nil, oldValue != nil {
+                Task { @MainActor in DigestCenter.shared.resumeIfWaiting() }
+            }
+        }
+    }
 
     // Pending AskUserQuestion from Claude Code hook
     @Published var pendingQuestion: AskQuestion? = nil {
-        didSet { QuestionLayout.height = pendingQuestion?.estimatedIslandHeight }
+        didSet {
+            QuestionLayout.height = pendingQuestion?.estimatedIslandHeight
+            if pendingQuestion == nil, oldValue != nil {
+                Task { @MainActor in DigestCenter.shared.resumeIfWaiting() }
+            }
+        }
     }
 
     /// Every AskUserQuestion waiting for an answer, oldest first: the first one is on the
@@ -611,7 +626,7 @@ final class AppState: ObservableObject {
         if let d = ud.data(forKey: "activeIntegrations"),
            let a = try? JSONDecoder().decode([String].self, from: d) { activeIntegrations = Set(a) }
         if let v = ud.string(forKey: "mainPill"), !v.isEmpty,
-           PillCatalog.available.contains(where: { $0.id == v && $0.category == .workspace && !$0.comingSoon }) {
+           PillCatalog.canBeMain(v) {
             mainPillId = v
         }
         if let d = ud.data(forKey: "claudePlanUsage"),
@@ -638,8 +653,12 @@ final class AppState: ObservableObject {
     /// The places beside the focused pill (4, SessionBoard.slots): the pills as they come, a
     /// waiting one (a session popped out of its client's pill, or a pill waiting itself) in the
     /// place of an idle or finished pill, and "+N" for the waiting ones left over.
-    var gridSlots: [SessionBoard.Slot] {
-        SessionBoard.slots(tasks.filter { $0.id != focusId }.map {
+    var gridSlots: [SessionBoard.Slot] { gridSlots(hiding: []) }
+
+    /// The grid without some pills (the open home view hides the Prayer pill while the
+    /// prayer strip above it already shows the day's prayers).
+    func gridSlots(hiding hidden: Set<String>) -> [SessionBoard.Slot] {
+        SessionBoard.slots(tasks.filter { $0.id != focusId && !hidden.contains($0.id) }.map {
             SessionBoard.Cell(id: $0.id, state: $0.state, poppedOut: $0.id != $0.pill)
         })
     }
@@ -740,8 +759,8 @@ final class AppState: ObservableObject {
         // Sanitize: remove saved IDs not in catalog
         let catalogIds = Set(catalog.map { $0.id })
         activeIntegrations = activeIntegrations.filter { catalogIds.contains($0) }
-        // Validate mainPillId: must be a non-comingSoon workspace pill in the catalog
-        if !PillCatalog.available.contains(where: { $0.id == mainPillId && $0.category == .workspace && !$0.comingSoon }) {
+        // Validate mainPillId: a pill that can be the main one (PillCatalog.canBeMain)
+        if !PillCatalog.canBeMain(mainPillId) {
             mainPillId = PillCatalog.defaultMainPillId
         }
         // mainPillId must never be in activeIntegrations (migration + invariant)
@@ -769,9 +788,7 @@ final class AppState: ObservableObject {
     /// Max 4 non-main pills active at once.
     /// Switch the always-on workspace pill. Mirrors what the Settings Picker does.
     func setMainPill(_ id: String) {
-        guard PillCatalog.available.contains(where: {
-            $0.id == id && $0.category == .workspace && !$0.comingSoon
-        }) else { return }
+        guard PillCatalog.canBeMain(id) else { return }
         mainPillId = id
         activeIntegrations.remove(id)
         loadIntegrationTasks()

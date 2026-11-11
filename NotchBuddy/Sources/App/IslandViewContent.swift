@@ -27,6 +27,8 @@ struct IslandViewContent: View {
         case .greeting:  EmptyView()  // GreetingCanvasView overlaid in IslandRootView
         case .wardrobe:  WardrobeView(state: state)
         case .recap:     WeeklyRecapCardView(state: state)
+        case .digest:    DigestCardView(state: state)
+        case .tasbih:    TasbihView(state: state)
         case .listening:
             #if !APPSTORE
             VoiceListeningView(isActive: state.view == .listening)
@@ -101,17 +103,21 @@ struct OverviewView: View {
                                 .lineLimit(1)
                                 .truncationMode(.tail)
                                 .layoutPriority(1)
-                            Text({ () -> String in
-                                switch agent.source {
-                                case .claudeCode: return "Claude Code"
-                                case .agent:      return "Agent"
-                                case .n8n:        return "n8n"
-                                }
-                            }())
-                                .font(.system(size: 11))
-                                .foregroundColor(Color(hex: "#8E939C"))
-                                .lineLimit(1)
-                                .truncationMode(.tail)
+                            // The details line under the steps says where the session runs:
+                            // no squeezed source label next to a long title then.
+                            if !PrayerStripLayout.showsSession(state: state) {
+                                Text({ () -> String in
+                                    switch agent.source {
+                                    case .claudeCode: return "Claude Code"
+                                    case .agent:      return "Agent"
+                                    case .n8n:        return "n8n"
+                                    }
+                                }())
+                                    .font(.system(size: 11))
+                                    .foregroundColor(Color(hex: "#8E939C"))
+                                    .lineLimit(1)
+                                    .truncationMode(.tail)
+                            }
                             Spacer(minLength: 2)
                             if agent.steps.count > 1 && agent.sessionLines.isEmpty {
                                 Text("\(min(agent.stepIndex + 1, agent.steps.count))/\(agent.steps.count)")
@@ -139,18 +145,20 @@ struct OverviewView: View {
                             .padding(.leading, 108)
                             .padding(.trailing, 12)
 
-                        // The guard's rating of what the session is running now.
-                        if agent.state == .working, agent.sessionLines.isEmpty,
-                           let risk = riskLog.risk(for: agent) {
-                            RiskBadge(risk: risk)
-                                .padding(.top, 2)
-                                .padding(.leading, 108)
-                                .transition(.opacity)
-                        }
                     }
                     .frame(maxWidth: .infinity, alignment: .topLeading)
                     .padding(.top, 4)
                 }
+            }
+
+            // Under the steps: time, place, the guard's strip, changes, Git, shortcuts.
+            if let agent = agent, PrayerStripLayout.showsSession(state: state) {
+                SessionDetailsView(task: agent, state: state, openTarget: { openAgentTarget(agent) })
+                    .padding(.leading, 108)
+                    .padding(.trailing, 12)
+                    .padding(.bottom, 10)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
+                    .transition(.opacity)
             }
 
             // Plan detail overlays on top of normal content (GitHub build, home view only)
@@ -256,10 +264,10 @@ struct OverviewView: View {
                                     .frame(height: PrayerStripLayout.height, alignment: .top)
                             }
                             AgentPillsView(state: state)
-                                .frame(height: 98)
+                                .frame(maxHeight: strip ? 98 : .infinity)
                         }
                     }
-                    .frame(height: 98 + (strip ? PrayerStripLayout.height : 0))
+                    .frame(height: 98 + (PrayerStripLayout.isTall(state: state, prayer: prayer) ? PrayerStripLayout.height : 0))
                 }
             }
         }
@@ -4295,7 +4303,14 @@ struct TickerShimmerText: View {
 
 struct AgentPillsView: View {
     @ObservedObject var state: AppState
+    @ObservedObject private var prayer = PrayerController.shared
     @State private var swapping = false
+
+    /// The prayer strip shows the prayers: their pill leaves the grid meanwhile.
+    private var slots: [SessionBoard.Slot] {
+        PrayerStripLayout.isOn(state: state, prayer: prayer)
+            ? state.gridSlots(hiding: [PrayerController.pillId]) : state.gridSlots
+    }
 
     private let columns = [
         GridItem(.flexible(), spacing: 4),
@@ -4306,7 +4321,7 @@ struct AgentPillsView: View {
         VStack(spacing: 0) {
             Spacer(minLength: 0)
             LazyVGrid(columns: columns, spacing: 4) {
-                ForEach(state.gridSlots, id: \.id) { slot in
+                ForEach(slots, id: \.id) { slot in
                     switch slot {
                     case .pill(let id):
                         if let task = state.tasks.first(where: { $0.id == id }) { pill(task) }
@@ -5386,7 +5401,7 @@ struct SettingsIslandView: View {
                         .foregroundColor(Color(hex: "#C5C8CD"))
                     Spacer()
                     HStack(spacing: 6) {
-                        ForEach([10, 15, 30], id: \.self) { s in
+                        ForEach([2, 3, 5, 10, 15], id: \.self) { s in
                             Button("\(s)s") {
                                 state.autoCloseInterval = Double(s)
                             }

@@ -28,6 +28,7 @@
 		065FCE817315454DE3F85F25 /* IslandViewContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA02B08886939FF6FE0475DD /* IslandViewContent.swift */; };
 		0685C3D47D27D06FCB6E4AD1 /* IslandTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0365DDE3C554F5E8570055F4 /* IslandTypes.swift */; };
 		06BF5FD95E03010CAFDBF2D0 /* NotchBuddyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BD8F3CAA60CF37640759E1 /* NotchBuddyApp.swift */; };
+		071CBF1BEAE3008E2667A540 /* OSVWatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2D996CC1E5E7391054373A0 /* OSVWatch.swift */; };
 		077ECE0906D8E820BD5FA764 /* DiffEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B32FB972D02162720E566674 /* DiffEngine.swift */; };
 		077F2D815859C061E9C5E08A /* MochiMood.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE096F3D7C3CD989EEBA55C4 /* MochiMood.swift */; };
 		07B49D6825179DAA18DFF4D3 /* PillCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C64C4C5D705CE486221B74 /* PillCatalog.swift */; };
@@ -36,8 +37,10 @@
 		091EC3B2F1060D7EE1317E4E /* IslandWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D710BD7834228045869D0184 /* IslandWindowController.swift */; };
 		093D0CE7216B235875634549 /* RafiqLook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736005266D495A51C9B0E890 /* RafiqLook.swift */; };
 		0A267EE2955C7AD8E02A296C /* N8nPoller.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89DA1A0C21AE3535A1760BB /* N8nPoller.swift */; };
+		0AEA824B8F8E003FCCA048EF /* Tasbih.swift in Sources */ = {isa = PBXBuildFile; fileRef = 950A3A5B9273F65A9F5EBE9F /* Tasbih.swift */; };
 		0BD9756F8AD5C1ECA6B604FB /* FlowDictation.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD4A635006365A493A57B18 /* FlowDictation.swift */; };
 		0D1AD905638B2B021B684A09 /* ServiceDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F64746B2740D5FE26B7E5A /* ServiceDetail.swift */; };
+		0DA240533346EABC8C736413 /* SecretScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55728FDF3A762C5A46CEB34F /* SecretScanner.swift */; };
 		0E83C1DD4D20E7FB7A904450 /* VercelPoller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71718D1B87A39A4879DD2A9D /* VercelPoller.swift */; };
 		0EB57943A58F60AF72906BB1 /* FlowHubSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B249C39EA29E941BC52A6126 /* FlowHubSettings.swift */; };
 		0ED933B63712EC7A8AB2F525 /* ReviewPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EBFF7097973CC22F3893694 /* ReviewPolicy.swift */; };
@@ -52,6 +55,7 @@
 		13663D98590927AF71C17628 /* PillCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C64C4C5D705CE486221B74 /* PillCatalog.swift */; };
 		14869F429444B31D072A75B8 /* FlowHubNotes.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2669CBBE5BDF9C775132D1 /* FlowHubNotes.swift */; };
 		14CE4E2E6A764B3D9356FEB3 /* RafiqLook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736005266D495A51C9B0E890 /* RafiqLook.swift */; };
+		15454DB2BBBD4B811D77BDF7 /* Tasbih.swift in Sources */ = {isa = PBXBuildFile; fileRef = 950A3A5B9273F65A9F5EBE9F /* Tasbih.swift */; };
 		1558BB00C530B721172F6E65 /* StripePoller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF78999D68D56ADE4CEFBE2 /* StripePoller.swift */; };
 		15D69752806E1D1D589B20A7 /* VoiceIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A7C62058BB0C9D0DF58DCB /* VoiceIntent.swift */; };
 		160EDB9D06275E2607DA5151 /* N8nPoller.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89DA1A0C21AE3535A1760BB /* N8nPoller.swift */; };
@@ -108,6 +112,7 @@
 		3188EB0EE0E168EF3FA2174D /* FlowShortcut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 645CF912A29A1CEAB6D28A01 /* FlowShortcut.swift */; };
 		326971DDA23F331116E5A628 /* VoiceBrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = C563E55884A7750B40EC9A01 /* VoiceBrain.swift */; };
 		33B9DA9569E0974DB6CB8D62 /* AndroidLinkHub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7087F43788D83540965DB00F /* AndroidLinkHub.swift */; };
+		33BD9C1885F514D822C9A126 /* Digest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8BBB4B54AE3E8796AAB3F84 /* Digest.swift */; };
 		340B7400747875DB18FEEFEC /* PrayerTimesEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72F50B4C36553785795FA985 /* PrayerTimesEngine.swift */; };
 		3451DB0668FAEEF09503D808 /* WakePhrase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12EC8F605BBC37F8223D7AA /* WakePhrase.swift */; };
 		352CD4E146AE486013366EC9 /* VoiceQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654AF6918593586EFF1989C6 /* VoiceQuery.swift */; };
@@ -138,6 +143,7 @@
 		4755AAC633DCE5DAA6D54A3C /* ServiceDetailRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6AAC67875F84A862BC2A9AF /* ServiceDetailRunner.swift */; };
 		4778852A12726803BCF8B357 /* SessionDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A27178AA6007F7B56901750 /* SessionDetailView.swift */; };
 		4804DA9B3008C5C477E2818C /* FlowHubSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B249C39EA29E941BC52A6126 /* FlowHubSettings.swift */; };
+		48388D07E6535FA409E6D54E /* OSVWatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2D996CC1E5E7391054373A0 /* OSVWatch.swift */; };
 		485EF08DEE9EA88DA565EC7D /* FlowText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324FEF6CF23F9D4A95799431 /* FlowText.swift */; };
 		48FA5A0DE13526F6C2A6B836 /* MailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2F18663F42A246DACCD639 /* MailController.swift */; };
 		4976F8BF814D6F817370F1D8 /* ChatMarkdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE88A53AEAA637F866D479D /* ChatMarkdownView.swift */; };
@@ -241,6 +247,7 @@
 		78FCEDC8F78B683AB10E6529 /* NotionPoller.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE03E03D1804B0B92C5C2DAD /* NotionPoller.swift */; };
 		79BD23BDFE42A929764635E7 /* MailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2F18663F42A246DACCD639 /* MailController.swift */; };
 		7A449E237CAAB62758508C7C /* RecapStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FB882D49084DEA6A10DB4D /* RecapStore.swift */; };
+		7A95E710DEF4BB9A348B4338 /* GitStatusStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8F1078D126453922E5BB93 /* GitStatusStore.swift */; };
 		7AEED9FBB924F0DD1D07E1A5 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = B2AA83D80260660475FAB052 /* Localizable.xcstrings */; };
 		7B7CBFAADFF687004012609D /* FlowHubWords.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A1A34DE2886E394C879CF64 /* FlowHubWords.swift */; };
 		7BB6BE4E2F247849662B663C /* ChatSubscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4A3A030C5163D3418C87221 /* ChatSubscription.swift */; };
@@ -248,6 +255,7 @@
 		7CF0E28C3C049624200FFB36 /* WhatsAppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A7538E542C7A0696EB3FF2 /* WhatsAppController.swift */; };
 		7CF3242DAD44B442297116E5 /* Decisions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369F5AFDE37A03A1C25EB262 /* Decisions.swift */; };
 		7D50086C2D8B6AEA0BD138FC /* QuestionPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C6993B34A0FFF8E3D454ADC /* QuestionPayload.swift */; };
+		7E40C01A1EB81E4741013A06 /* PrayerQuiet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE7672169F5132630351945 /* PrayerQuiet.swift */; };
 		7E88EF468EC99A679751AB6C /* CoucoudoroViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81C753771364CDA6E8A992B /* CoucoudoroViews.swift */; };
 		7E99FD5D8E88EC7FC10E91EF /* WhatsAppWebhook.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E5DF01F97CBDED4D54508F /* WhatsAppWebhook.swift */; };
 		80B0B3C777A9DC8C82952FD2 /* VoiceEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B328028D18F590D6680B8A2B /* VoiceEngine.swift */; };
@@ -263,6 +271,7 @@
 		868E3EB4A275AA2394EA20BF /* CoucouWidgets.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 5C3E2269A202B640E7F3B5E0 /* CoucouWidgets.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		875FB3F71BD34B53B0524063 /* CoucouWidgets.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6723392BE01AF210E484316 /* CoucouWidgets.swift */; };
 		878924960FC0F2B3524D48AC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192844E7299DEED5C2372067 /* AppDelegate.swift */; };
+		87C66EEC10A725F229956D7A /* VerseOfTheDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC729ACC8BAD7F86F03208F3 /* VerseOfTheDay.swift */; };
 		884AEF9BAB1C54809C573BB4 /* PortfolioSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0793C2DA3333A385E075A04E /* PortfolioSettingsView.swift */; };
 		8881BC510155DEC038F3B552 /* ServiceSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84ECC59BE7CDDEE348FC7096 /* ServiceSnapshot.swift */; };
 		88A88E8704759E7F1F9D52BA /* ClaudeHost.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F0D0F67E7C56B9E37E7648 /* ClaudeHost.swift */; };
@@ -274,6 +283,7 @@
 		8A6B3688D6B3BF728D106D8B /* UserIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A13AEE6E06F46CEC9D908C /* UserIdentity.swift */; };
 		8AC19BAF88822CB31519D447 /* CoucouIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708E1FD9894461B4AD727DB1 /* CoucouIntents.swift */; };
 		8C32A0C3EAF536D3836F61D5 /* GreetingCanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C581F7B1A9F14B281B60063E /* GreetingCanvasView.swift */; };
+		8C48C4B288CF3DB776ACD774 /* VerseOfTheDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC729ACC8BAD7F86F03208F3 /* VerseOfTheDay.swift */; };
 		8C5CF7C82640DD6A0685A0D5 /* ApprovalQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BAE224C1C435C9FFD05BF65 /* ApprovalQueue.swift */; };
 		8C785917FD0740DAE56420A4 /* ServiceSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84ECC59BE7CDDEE348FC7096 /* ServiceSnapshot.swift */; };
 		8C7D7B6556456DCD3CC41C68 /* CLIRelayRun.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1196E6DE4CA77C7D9B5851CD /* CLIRelayRun.swift */; };
@@ -284,6 +294,7 @@
 		8E01F2BD38F55EEC9AF834C0 /* SettingsSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C57EA9BF72452EE9425662 /* SettingsSearch.swift */; };
 		8E9A18333EE821A3CF9F7E34 /* DiffEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B32FB972D02162720E566674 /* DiffEngine.swift */; };
 		8FC5907E9506DC79EB1DDC3C /* ChatMarkdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = D797CC384B5BC70D34F121BC /* ChatMarkdown.swift */; };
+		90088C1A36B3A66304F9D2C3 /* PrayerQuiet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE7672169F5132630351945 /* PrayerQuiet.swift */; };
 		908043F62E2C31F5FBC0A0C4 /* ShortcutsSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62CF42AE7611EF212CA0458F /* ShortcutsSettingsView.swift */; };
 		9088C7BADF166685E471D248 /* VoiceIslandView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E03C8E267399FA25C75877 /* VoiceIslandView.swift */; };
 		90BCB081131C60CDE7BF0D6D /* AndroidLinkServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196392ADB84D6B58731A3594 /* AndroidLinkServer.swift */; };
@@ -328,6 +339,7 @@
 		A471A7E4D1184BA4AB83D87B /* MailAgentViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83860BCF966BD341140F415 /* MailAgentViews.swift */; };
 		A50FF47A189A49FDE5494369 /* SettingsSearchMatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DFD657366DCCC47D6C0FEAB /* SettingsSearchMatch.swift */; };
 		A5AC7A40E65A47174367DBC9 /* NoteModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74146BD3F4B9884F6A43936F /* NoteModels.swift */; };
+		A67FF97DDB864E532568740D /* SecretScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55728FDF3A762C5A46CEB34F /* SecretScanner.swift */; };
 		A69A5528EB17A674A4124EB6 /* MailTriageStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB06C175FF10385FD8E8C80 /* MailTriageStore.swift */; };
 		A7733EE60694EA3E2A86C37A /* IslandTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0365DDE3C554F5E8570055F4 /* IslandTypes.swift */; };
 		A7A6C8D9CA6B0340F4D18CF3 /* MailAgentViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83860BCF966BD341140F415 /* MailAgentViews.swift */; };
@@ -413,6 +425,7 @@
 		CAC1A12153A798730E5FA835 /* MochiStill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045E7300878138F0AC385920 /* MochiStill.swift */; };
 		CC81DAE27417672CB93349A5 /* PillCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C64C4C5D705CE486221B74 /* PillCatalog.swift */; };
 		CD05A497A7D0B3D723D92C06 /* QuestionPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C6993B34A0FFF8E3D454ADC /* QuestionPayload.swift */; };
+		CD2857B861847F7C09E57872 /* GitStatusStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8F1078D126453922E5BB93 /* GitStatusStore.swift */; };
 		CD8DECA66B9E09C97E469DB9 /* BotCanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29F4C0B02BE91654D02AA0C /* BotCanvasView.swift */; };
 		CDD36B01BF50F64A2A3180EF /* IslandScreenGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9466FDE02C9B3FB4EF01DFF8 /* IslandScreenGeometry.swift */; };
 		CDF3E5390F9D8E28EAC128F6 /* SessionLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 344E876933F4FCF67912CD86 /* SessionLauncher.swift */; };
@@ -515,6 +528,7 @@
 		F9445A71BBF9E4D20224238E /* QuestionPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C6993B34A0FFF8E3D454ADC /* QuestionPayload.swift */; };
 		F9685A58729FE64B23FCCFC5 /* VoiceResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C432FE1286945E42D3E11D7 /* VoiceResultView.swift */; };
 		FA24FC6B89DE57E764293D50 /* WhatsNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9FD7D3FF0430C30379D580F /* WhatsNew.swift */; };
+		FA34B80205B65DD824FA8F1E /* Digest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8BBB4B54AE3E8796AAB3F84 /* Digest.swift */; };
 		FAD78D74C6906D4EC8AA4101 /* UploadSequenceEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FD65943C32E150F1CD65C31 /* UploadSequenceEngine.swift */; };
 		FB063FE6B8A4BB8FBAAF56CB /* LiveActivityLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FA2D136C81C6D930C5357BD /* LiveActivityLink.swift */; };
 		FB4E9143139138567993D601 /* MacUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D4A343F2C25DBD9A401ECAD /* MacUpdate.swift */; };
@@ -638,6 +652,7 @@
 		506824380E9C80B9BC6DCE72 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5108F622EF0C553F053716C2 /* SessionStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionStatus.swift; sourceTree = "<group>"; };
 		54E47E39D2D52584FA219FA1 /* LiveVoiceControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveVoiceControls.swift; sourceTree = "<group>"; };
+		55728FDF3A762C5A46CEB34F /* SecretScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecretScanner.swift; sourceTree = "<group>"; };
 		56A2317343D062ACCAF4E5BD /* DictationTranscript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictationTranscript.swift; sourceTree = "<group>"; };
 		5A5CB029F97C5F050CCF9A79 /* ClaudeDesktopChat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaudeDesktopChat.swift; sourceTree = "<group>"; };
 		5AB018AF9066C1A083DEABFD /* CommandRisk.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandRisk.swift; sourceTree = "<group>"; };
@@ -645,6 +660,7 @@
 		5C406C508A86E215B3CBE3FC /* CoucouControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoucouControl.swift; sourceTree = "<group>"; };
 		5CB06C175FF10385FD8E8C80 /* MailTriageStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailTriageStore.swift; sourceTree = "<group>"; };
 		5EBFF7097973CC22F3893694 /* ReviewPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewPolicy.swift; sourceTree = "<group>"; };
+		5EE7672169F5132630351945 /* PrayerQuiet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrayerQuiet.swift; sourceTree = "<group>"; };
 		60401D1023D17C3FD30D7113 /* PhoneAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = PhoneAssets.xcassets; sourceTree = "<group>"; };
 		61B5FDDE03F5F711146937E2 /* ResendPoller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResendPoller.swift; sourceTree = "<group>"; };
 		62CF42AE7611EF212CA0458F /* ShortcutsSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutsSettingsView.swift; sourceTree = "<group>"; };
@@ -701,6 +717,7 @@
 		914A792788D403F836BEB570 /* SpotifyViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyViews.swift; sourceTree = "<group>"; };
 		9466FDE02C9B3FB4EF01DFF8 /* IslandScreenGeometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IslandScreenGeometry.swift; sourceTree = "<group>"; };
 		94AA2388D0E7690653E62BBB /* WhatsAppGOWAProcess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsAppGOWAProcess.swift; sourceTree = "<group>"; };
+		950A3A5B9273F65A9F5EBE9F /* Tasbih.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tasbih.swift; sourceTree = "<group>"; };
 		95FF987AE2A4E9EFB6A15519 /* ClaudeDesktopChatWatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaudeDesktopChatWatcher.swift; sourceTree = "<group>"; };
 		96C64C4C5D705CE486221B74 /* PillCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PillCatalog.swift; sourceTree = "<group>"; };
 		982CBB722685931BB8958162 /* FlowHubHome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowHubHome.swift; sourceTree = "<group>"; };
@@ -723,6 +740,7 @@
 		A83D5410BD030B243ADDCFF4 /* ClaudeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaudeService.swift; sourceTree = "<group>"; };
 		A869C1D5C97B68BC04E49FF6 /* SessionBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionBoard.swift; sourceTree = "<group>"; };
 		A87F39805C78722F614295B4 /* VoiceAudio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceAudio.swift; sourceTree = "<group>"; };
+		A8BBB4B54AE3E8796AAB3F84 /* Digest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Digest.swift; sourceTree = "<group>"; };
 		AB78996E9F9A2E8A80D45E54 /* QuestionRelay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionRelay.swift; sourceTree = "<group>"; };
 		ABD7A2C29B15EFFAF67FF2DE /* VoiceWakeFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceWakeFilter.swift; sourceTree = "<group>"; };
 		AD88FB0222D3F8893AF1D33D /* FlowPill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowPill.swift; sourceTree = "<group>"; };
@@ -759,6 +777,7 @@
 		C581F7B1A9F14B281B60063E /* GreetingCanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreetingCanvasView.swift; sourceTree = "<group>"; };
 		C81C753771364CDA6E8A992B /* CoucoudoroViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoucoudoroViews.swift; sourceTree = "<group>"; };
 		CC2669CBBE5BDF9C775132D1 /* FlowHubNotes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowHubNotes.swift; sourceTree = "<group>"; };
+		CC729ACC8BAD7F86F03208F3 /* VerseOfTheDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerseOfTheDay.swift; sourceTree = "<group>"; };
 		CCF7FA8DEA10FA889A60447B /* FlowCleanup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowCleanup.swift; sourceTree = "<group>"; };
 		CD11C7925B0A7831BFC2199C /* VoiceSpeaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceSpeaker.swift; sourceTree = "<group>"; };
 		CDF3767C4B8573D0788982D2 /* PrayerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrayerController.swift; sourceTree = "<group>"; };
@@ -766,6 +785,7 @@
 		D0F0D0F67E7C56B9E37E7648 /* ClaudeHost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaudeHost.swift; sourceTree = "<group>"; };
 		D1A7C62058BB0C9D0DF58DCB /* VoiceIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceIntent.swift; sourceTree = "<group>"; };
 		D1D96E57E8DADE6B82628E3E /* OpenLeadMochiIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenLeadMochiIntent.swift; sourceTree = "<group>"; };
+		D2D996CC1E5E7391054373A0 /* OSVWatch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSVWatch.swift; sourceTree = "<group>"; };
 		D4543CB771E0B723783F529E /* VoiceSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceSettings.swift; sourceTree = "<group>"; };
 		D59FE9B117259A7B1E44FC75 /* WhatsAppProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsAppProvider.swift; sourceTree = "<group>"; };
 		D6DF93125491729E14636AD8 /* CoucouNotificationContent.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = CoucouNotificationContent.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -785,6 +805,7 @@
 		E6AAC67875F84A862BC2A9AF /* ServiceDetailRunner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceDetailRunner.swift; sourceTree = "<group>"; };
 		E84E5D91129352E8A1D32AA4 /* MochiOutfitDrawing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MochiOutfitDrawing.swift; sourceTree = "<group>"; };
 		E91B733ADC638E14E9BB6EFA /* WindowContextCapture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowContextCapture.swift; sourceTree = "<group>"; };
+		EA8F1078D126453922E5BB93 /* GitStatusStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitStatusStore.swift; sourceTree = "<group>"; };
 		EADD0D8C37F00BF1877153D8 /* WhatsAppModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsAppModels.swift; sourceTree = "<group>"; };
 		EBB761EA15EABCD584DD012B /* FlowLanguages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowLanguages.swift; sourceTree = "<group>"; };
 		EBB84A66045EB20CAC93A8A6 /* AskQuestion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AskQuestion.swift; sourceTree = "<group>"; };
@@ -902,6 +923,7 @@
 				B1DDC96E7967032F5D0BD585 /* DesktopMochi.swift */,
 				C086E1932F86B9C2B559BE03 /* DesktopMochiLogic.swift */,
 				56A2317343D062ACCAF4E5BD /* DictationTranscript.swift */,
+				A8BBB4B54AE3E8796AAB3F84 /* Digest.swift */,
 				3232F258523DD8D09B670363 /* FileDropView.swift */,
 				0596FD03875A10BD2CCBE332 /* FlowAudioBands.swift */,
 				CCF7FA8DEA10FA889A60447B /* FlowCleanup.swift */,
@@ -923,6 +945,7 @@
 				168A9A73B519018FAB0AA465 /* GitHubActivity.swift */,
 				8CB8B6E5E9DA6164F979E88F /* GithubPoller.swift */,
 				F8D3AD61802A32C4833F3EDA /* GitHubPulse.swift */,
+				EA8F1078D126453922E5BB93 /* GitStatusStore.swift */,
 				C581F7B1A9F14B281B60063E /* GreetingCanvasView.swift */,
 				79D8DD79C3DD9BBC584B3CB2 /* HookServer.swift */,
 				1218B86E249691AF44F819AC /* HotKeyCenter.swift */,
@@ -957,12 +980,14 @@
 				7A666A5E3F809301028F0DF8 /* NoteTaker.swift */,
 				BE03E03D1804B0B92C5C2DAD /* NotionPoller.swift */,
 				F56C7E1EBC74664A7F1689CF /* NowPlayingViews.swift */,
+				D2D996CC1E5E7391054373A0 /* OSVWatch.swift */,
 				7C8178EB447DDE9C03427B36 /* ParakeetEngine.swift */,
 				9EF1D0C0784ED873065DD8C0 /* PillSessionRegistry.swift */,
 				0364C7995680F9FA9F85F905 /* PortfolioController.swift */,
 				0793C2DA3333A385E075A04E /* PortfolioSettingsView.swift */,
 				6A9F0D1E310731155BCB3D89 /* PortfolioViews.swift */,
 				CDF3767C4B8573D0788982D2 /* PrayerController.swift */,
+				5EE7672169F5132630351945 /* PrayerQuiet.swift */,
 				72F50B4C36553785795FA985 /* PrayerTimesEngine.swift */,
 				3AFFF1C75C5AB2C30A441DBC /* PrayerViews.swift */,
 				E4162B4B5D5776EC9FD0866F /* QuestionQueue.swift */,
@@ -971,6 +996,7 @@
 				61B5FDDE03F5F711146937E2 /* ResendPoller.swift */,
 				B2FDED98F7F6C755A72C97A3 /* SafeWebURL.swift */,
 				26CBF0D968BFB1AB0E36B18F /* ScreenCapture.swift */,
+				55728FDF3A762C5A46CEB34F /* SecretScanner.swift */,
 				A869C1D5C97B68BC04E49FF6 /* SessionBoard.swift */,
 				363E14E2DF8A6FC629E1C89E /* SessionDrop.swift */,
 				344E876933F4FCF67912CD86 /* SessionLauncher.swift */,
@@ -984,12 +1010,14 @@
 				914A792788D403F836BEB570 /* SpotifyViews.swift */,
 				2EF78999D68D56ADE4CEFBE2 /* StripePoller.swift */,
 				14EA4F18C69EE1F181408CF0 /* SystemMute.swift */,
+				950A3A5B9273F65A9F5EBE9F /* Tasbih.swift */,
 				87AF6F7A027AB1D46309DD49 /* TerminalTarget.swift */,
 				244A7909EEDA4BFF4C2EA9B5 /* TerminalTarget+AppKit.swift */,
 				B241B043223AFBBFB7418A5E /* UploadCanvasView.swift */,
 				6FD65943C32E150F1CD65C31 /* UploadSequenceEngine.swift */,
 				F4A13AEE6E06F46CEC9D908C /* UserIdentity.swift */,
 				71718D1B87A39A4879DD2A9D /* VercelPoller.swift */,
+				CC729ACC8BAD7F86F03208F3 /* VerseOfTheDay.swift */,
 				7889BA1980AB9D261DDE8A25 /* VitalsHoverLine.swift */,
 				888B3E1420BCB6292BDC8117 /* WeeklyRecapView.swift */,
 				77A7538E542C7A0696EB3FF2 /* WhatsAppController.swift */,
@@ -1491,6 +1519,7 @@
 				BA65FC4A40F7227837C26214 /* DesktopMochiLogic.swift in Sources */,
 				FD4B5673A5427128DE1910F3 /* DictationTranscript.swift in Sources */,
 				077ECE0906D8E820BD5FA764 /* DiffEngine.swift in Sources */,
+				33BD9C1885F514D822C9A126 /* Digest.swift in Sources */,
 				541AF30CF808CC0FC1B8D97D /* ElevenLabsTTS.swift in Sources */,
 				B4F12F8F978FCA7E5309DE28 /* EnergyVAD.swift in Sources */,
 				9B0A1CABB8FB8209E20D9B06 /* EntityResolver.swift in Sources */,
@@ -1514,6 +1543,7 @@
 				D1C243401794E8BB087D8B10 /* FlowText.swift in Sources */,
 				D9FF132804EB458F6FA69116 /* GitHubActivity.swift in Sources */,
 				862CE6CB220D55E46F646DA9 /* GitHubPulse.swift in Sources */,
+				7A95E710DEF4BB9A348B4338 /* GitStatusStore.swift in Sources */,
 				C808B654C84D9F71DBF8493A /* GithubPoller.swift in Sources */,
 				8C32A0C3EAF536D3836F61D5 /* GreetingCanvasView.swift in Sources */,
 				2C798C3837A63B9BB561A1A0 /* HookServer.swift in Sources */,
@@ -1560,6 +1590,7 @@
 				A7B04680036A2443AC6162CD /* NoteTaker.swift in Sources */,
 				2F36E3C6C073E968A682AFA4 /* NotionPoller.swift in Sources */,
 				03FDC0AA0CEDE913B59D0F4D /* NowPlayingViews.swift in Sources */,
+				071CBF1BEAE3008E2667A540 /* OSVWatch.swift in Sources */,
 				C47046BF30AC3E2350DABFDC /* ParakeetEngine.swift in Sources */,
 				BDD8A210DD6D9DA2D15BC5EE /* PillCatalog.swift in Sources */,
 				07EC91820A69E8BF11EC778D /* PillColors.swift in Sources */,
@@ -1568,6 +1599,7 @@
 				44C7DD4E6F3527820DE1E4EA /* PortfolioSettingsView.swift in Sources */,
 				DD89FAA8EE64C5FCBBFD9960 /* PortfolioViews.swift in Sources */,
 				E39BE82F53BB08E8E4755D16 /* PrayerController.swift in Sources */,
+				90088C1A36B3A66304F9D2C3 /* PrayerQuiet.swift in Sources */,
 				4C9299F82F3F4E12AB335927 /* PrayerTimesEngine.swift in Sources */,
 				3E6B68F0BBB88C318997E2C5 /* PrayerViews.swift in Sources */,
 				CD05A497A7D0B3D723D92C06 /* QuestionPayload.swift in Sources */,
@@ -1580,6 +1612,7 @@
 				FBDC1679522F378187862EA3 /* ReviewPolicy.swift in Sources */,
 				6FC65C190ED614C664C9BC17 /* SafeWebURL.swift in Sources */,
 				6B0B39207A8DA88EA35E785A /* ScreenCapture.swift in Sources */,
+				0DA240533346EABC8C736413 /* SecretScanner.swift in Sources */,
 				2A30FA2F046492E22A1C5719 /* ServiceDetail.swift in Sources */,
 				9F43BE6E77E371FCEB7FE8BA /* ServiceDetailRunner.swift in Sources */,
 				694AB4504CD65662E1681E5C /* ServicePublisher.swift in Sources */,
@@ -1599,6 +1632,7 @@
 				6BB32D6B5E627555994DC3CB /* SpotterGeneration.swift in Sources */,
 				1558BB00C530B721172F6E65 /* StripePoller.swift in Sources */,
 				F6730E5412B9D7CA7F654503 /* SystemMute.swift in Sources */,
+				0AEA824B8F8E003FCCA048EF /* Tasbih.swift in Sources */,
 				9EA178EA395B116336C1FA10 /* TerminalTarget+AppKit.swift in Sources */,
 				1D4CE0CCD2B5A0FFE50C7F06 /* TerminalTarget.swift in Sources */,
 				8551E592C5FFC6A0A7458A26 /* TurnEndPolicy.swift in Sources */,
@@ -1608,6 +1642,7 @@
 				FAD78D74C6906D4EC8AA4101 /* UploadSequenceEngine.swift in Sources */,
 				8A6B3688D6B3BF728D106D8B /* UserIdentity.swift in Sources */,
 				118FC4AE0AC74D84B4A134D8 /* VercelPoller.swift in Sources */,
+				87C66EEC10A725F229956D7A /* VerseOfTheDay.swift in Sources */,
 				C7C4953290E7C198E2918E14 /* VitalsHoverLine.swift in Sources */,
 				390486F7CDC01C1BCDBB27F9 /* VoiceActionRunner.swift in Sources */,
 				88A8F2E4E754FAFABF6B1960 /* VoiceAudio.swift in Sources */,
@@ -1783,6 +1818,7 @@
 				C93BA975D35B8CD7473CF995 /* DesktopMochiLogic.swift in Sources */,
 				2768A639F60C4B4C6EC98436 /* DictationTranscript.swift in Sources */,
 				4D958F2DDCE9504490FDA357 /* DiffEngine.swift in Sources */,
+				FA34B80205B65DD824FA8F1E /* Digest.swift in Sources */,
 				D7FD1948C7F97D6A2904CDBE /* ElevenLabsTTS.swift in Sources */,
 				A94F75489794D9C95E584B56 /* EnergyVAD.swift in Sources */,
 				118D3ABA767EE8A7E55B0F8E /* EntityResolver.swift in Sources */,
@@ -1806,6 +1842,7 @@
 				485EF08DEE9EA88DA565EC7D /* FlowText.swift in Sources */,
 				63093DC288B68F7F17249517 /* GitHubActivity.swift in Sources */,
 				38EEB2D3A6EC538958D92575 /* GitHubPulse.swift in Sources */,
+				CD2857B861847F7C09E57872 /* GitStatusStore.swift in Sources */,
 				C18227D148D99FE6EE3CC51A /* GithubPoller.swift in Sources */,
 				C0E18D0F6F5F6D131E6066B8 /* GreetingCanvasView.swift in Sources */,
 				9DD56C95ECABDDCE23652D50 /* HookServer.swift in Sources */,
@@ -1852,6 +1889,7 @@
 				DCD9F5ECAFDBC52F388976C2 /* NoteTaker.swift in Sources */,
 				78FCEDC8F78B683AB10E6529 /* NotionPoller.swift in Sources */,
 				3E84EA0AE7C450941ED943CF /* NowPlayingViews.swift in Sources */,
+				48388D07E6535FA409E6D54E /* OSVWatch.swift in Sources */,
 				C7DCF18B4588088307E49FAD /* ParakeetEngine.swift in Sources */,
 				13663D98590927AF71C17628 /* PillCatalog.swift in Sources */,
 				40F7576FC56ED7BC1D2B717E /* PillColors.swift in Sources */,
@@ -1860,6 +1898,7 @@
 				884AEF9BAB1C54809C573BB4 /* PortfolioSettingsView.swift in Sources */,
 				C61E45A1B325BEFBE854AB53 /* PortfolioViews.swift in Sources */,
 				9846877767F5F82A916F9017 /* PrayerController.swift in Sources */,
+				7E40C01A1EB81E4741013A06 /* PrayerQuiet.swift in Sources */,
 				340B7400747875DB18FEEFEC /* PrayerTimesEngine.swift in Sources */,
 				F4B371022C61DADE3E76CC38 /* PrayerViews.swift in Sources */,
 				535EC818E1DAF0FA588545D8 /* QuestionPayload.swift in Sources */,
@@ -1872,6 +1911,7 @@
 				60AAAA2CC93483A175CEE986 /* ReviewPolicy.swift in Sources */,
 				FEFEF1EBAB0E6CA74A33C10B /* SafeWebURL.swift in Sources */,
 				E4B93DC2345688488FEAE078 /* ScreenCapture.swift in Sources */,
+				A67FF97DDB864E532568740D /* SecretScanner.swift in Sources */,
 				8C9AF392DAE8F2098A7BE7B6 /* ServiceDetail.swift in Sources */,
 				4755AAC633DCE5DAA6D54A3C /* ServiceDetailRunner.swift in Sources */,
 				D092D0D597D1CBCE6B775B5E /* ServicePublisher.swift in Sources */,
@@ -1891,6 +1931,7 @@
 				B555DFF3451AFB22CAF8E594 /* SpotterGeneration.swift in Sources */,
 				E4B9986674F4D425826F15A8 /* StripePoller.swift in Sources */,
 				741A9CD54117F819C044449C /* SystemMute.swift in Sources */,
+				15454DB2BBBD4B811D77BDF7 /* Tasbih.swift in Sources */,
 				11F14DB97C93CF84DF9D5C43 /* TerminalTarget+AppKit.swift in Sources */,
 				6726F74966EDE7F82BFE89B2 /* TerminalTarget.swift in Sources */,
 				ABE0CEF17018F1BAD8F7DBFA /* TurnEndPolicy.swift in Sources */,
@@ -1900,6 +1941,7 @@
 				ECECA2F225E82B7C951658D7 /* UploadSequenceEngine.swift in Sources */,
 				63F9F3AAC881D3EDDDD8AED9 /* UserIdentity.swift in Sources */,
 				0E83C1DD4D20E7FB7A904450 /* VercelPoller.swift in Sources */,
+				8C48C4B288CF3DB776ACD774 /* VerseOfTheDay.swift in Sources */,
 				B54AE47279E534DCE812BF9A /* VitalsHoverLine.swift in Sources */,
 				BF3F437B1FE9C246E9014F76 /* VoiceActionRunner.swift in Sources */,
 				64FE8055CCAD30B44FE398E7 /* VoiceAudio.swift in Sources */,

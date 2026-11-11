@@ -218,6 +218,20 @@ final class RecapStore {
         )
     }
 
+    /// One day of agent work (the evening brief); nil when no turn started that day.
+    func daySummary(on day: Date) -> (sessions: Int, minutes: Int, files: Int, linesAdded: Int, topProject: String?)? {
+        let cal = Calendar.current
+        let turns = data.turns.filter { cal.isDate($0.start, inSameDayAs: day) }
+        guard !turns.isEmpty else { return nil }
+        var byProject: [String: Int] = [:]
+        for t in turns where !t.project.isEmpty { byProject[t.project, default: 0] += 1 }
+        return (sessions: turns.count,
+                minutes: Int(mergedTotalSeconds(turns) / 60),
+                files: turns.reduce(0) { $0 + $1.filesChanged },
+                linesAdded: turns.reduce(0) { $0 + $1.linesAdded },
+                topProject: byProject.max { $0.value < $1.value }?.key)
+    }
+
     /// Everything the recap still keeps (its last 12 weeks), for "What's new" after an update.
     func keptTotals() -> (sessions: Int, minutes: Int, linesAdded: Int, approvals: Int, since: Date?) {
         let turns = data.turns

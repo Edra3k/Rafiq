@@ -301,6 +301,9 @@ final class IslandWindowController: NSWindowController {
         openOnHoverSubscription = state.$openOnHover.sink { [weak self] on in
             self?.fsm.openOnHover = on
         }
+        fsm.onCloseScheduled = { [weak self] at in
+            self?.state.closeDeadline = at
+        }
 
         fsm.onTransition = { [weak self] from, to in
             guard let self else { return }
@@ -363,9 +366,10 @@ final class IslandWindowController: NSWindowController {
         #if !APPSTORE
         // A WhatsApp reply being typed holds the island open, like a voice mail draft.
         fsm.isHeldOpen = { AppState.shared.pendingApproval != nil || AppState.shared.voiceMailDraft != nil
-                           || WhatsAppController.shared.composing }
+                           || WhatsAppController.shared.composing || DigestCenter.shared.holdsIsland }
         #else
-        fsm.isHeldOpen = { AppState.shared.pendingApproval != nil || AppState.shared.voiceMailDraft != nil }
+        fsm.isHeldOpen = { AppState.shared.pendingApproval != nil || AppState.shared.voiceMailDraft != nil
+                           || DigestCenter.shared.holdsIsland }
         #endif
 
         // Voice: wake phrase detected → open listening island

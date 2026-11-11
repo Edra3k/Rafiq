@@ -69,7 +69,9 @@ enum PillCatalog {
     // All declared pills in display order.
     static let all: [PillDefinition] = [
         // ── Where you code ───────────────────────────────────────────────────
-        .init(id: "integration_claude",  name: "VS Code",     color: "#F5F6F8",
+        // Claude Code, wherever it runs (VS Code, a terminal): the pill every Claude Code hook
+        // reaches. Its ID stays "integration_claude" (a stable contract value).
+        .init(id: "integration_claude",  name: "Claude Code", color: "#F5F6F8",
               category: .workspace, subtitle: String(localized: "Integration"),  source: .claudeCode),
         .init(id: "agent_cursor",        name: "Cursor",      color: "#C0C4CC",
               category: .workspace, subtitle: String(localized: "Integration"),  source: .agent),
@@ -153,6 +155,16 @@ enum PillCatalog {
 
     /// Default ID for the always-on main workspace pill.
     static let defaultMainPillId = "integration_claude"
+
+    /// Pills that can be the main one (always shown): where you code, and Claude Desktop,
+    /// whose Code sessions are a whole workspace of their own.
+    static func canBeMain(_ def: PillDefinition) -> Bool {
+        (def.category == .workspace || def.id == "agent_claude-desktop") && !def.comingSoon
+    }
+
+    static func canBeMain(_ id: String) -> Bool {
+        available.contains { $0.id == id && canBeMain($0) }
+    }
 
     /// The catalog pill an ID stands for. A second session's own pill ("integration_claude#2",
     /// SessionPillMap) and the iPhone record of a second question behind a pill

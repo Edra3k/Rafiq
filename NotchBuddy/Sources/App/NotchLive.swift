@@ -122,7 +122,7 @@ struct NotchEarsView: View {
                 // Left: Rafiq stays at x 40; the word sits between him and the notch.
                 if let soon = prayer.soon {
                     TimelineView(.everyMinute) { tl in
-                        Text(verbatim: prayer.pillLabel(at: tl.date))
+                        Text(verbatim: prayer.earLabel(at: tl.date))
                             .font(.system(size: fontSize, weight: .semibold))
                             .foregroundColor(soon.isNow ? Color(hex: "#F5F6F8") : RafiqLook.gold)
                             .lineLimit(1)
@@ -132,7 +132,18 @@ struct NotchEarsView: View {
                     .position(x: 56 + max(0, side - 62) / 2, y: islandH / 2)
                     .transition(.opacity)
                 }
-                // Right: between the notch and the mini Rafiqs.
+                // Right: between the notch and the mini Rafiqs. In Ramadan, with nothing from the
+                // agents, the day of the month.
+                if NotchLive.agentWord(state: state) == nil, let soon = prayer.soon, soon.ramadan {
+                    let day = prayer.hijriMonthDay(at: Date()).day
+                    Text(verbatim: String(format: String(localized: "ramadan.day %lld", defaultValue: "Day %lld / 30"), day))
+                        .font(.system(size: fontSize, weight: .semibold))
+                        .foregroundColor(Color(hex: "#8E939C"))
+                        .lineLimit(1)
+                        .frame(width: max(0, side - 66), alignment: .leading)
+                        .position(x: islandW - side + 8 + max(0, side - 66) / 2, y: islandH / 2)
+                        .transition(.opacity)
+                }
                 if let word = NotchLive.agentWord(state: state) {
                     HStack(spacing: 5) {
                         Circle().fill(word.color).frame(width: 6, height: 6)
@@ -163,7 +174,9 @@ struct HeaderPrayerChip: View {
     @State private var hovered = false
 
     var body: some View {
-        if state.activeIntegrations.contains(PrayerController.pillId), prayer.location != nil {
+        // On the home view the prayer strip already says it: the chip shows on the other views.
+        if state.activeIntegrations.contains(PrayerController.pillId), prayer.location != nil,
+           !(state.view == .overview && PrayerStripLayout.isOn(state: state, prayer: prayer)) {
             TimelineView(.everyMinute) { tl in
                 // Longest first: "☾ Fajr 05:26", "Fajr 05:26", "☾ 05:26", nothing.
                 ViewThatFits(in: .horizontal) {
@@ -236,34 +249,52 @@ struct HeaderGuardShield: View {
 
 // MARK: - The last action of each session, rated
 
-/// The guard's rating of the last tool each pill's session ran (PreToolUse), for the badge on
-/// the open card. Cleared when the turn stops. Written by HookServer on the main actor.
+/// The guard's rating of each tool a pill's session ran this turn (PreToolUse): the last one
+/// for the badge, the last 16 for the card's step strip, and when the turn began.
+/// A new prompt starts a new turn; Stop clears the badge only. Written by HookServer.
 @MainActor
 final class CommandRiskLog: ObservableObject {
     static let shared = CommandRiskLog()
     @Published private(set) var last: [String: CommandRisk] = [:]
+    @Published private(set) var history: [String: [CommandRisk]] = [:]
+    @Published private(set) var started: [String: Date] = [:]
+
+    static let historyLength = 16
+
+    /// A new prompt: a new turn, a fresh strip.
+    func beginTurn(pill: String) {
+        history[pill] = []
+        started[pill] = Date()
+        last[pill] = nil
+    }
 
     func record(pill: String, tool: String, input: [String: Any]) {
         let command = input["command"] as? String ?? tool
         let risk = CommandRisk.assess(tool: tool, command: command)
         if last[pill] != risk { last[pill] = risk }
+        if started[pill] == nil { started[pill] = Date() }
+        var h = history[pill] ?? []
+        h.append(risk)
+        if h.count > Self.historyLength { h.removeFirst(h.count - Self.historyLength) }
+        history[pill] = h
     }
 
     func clear(pill: String) {
         if last[pill] != nil { last[pill] = nil }
     }
 
-    func risk(for task: AgentTask) -> CommandRisk? {
-        last[task.id] ?? last[task.pill]
-    }
+    func risk(for task: AgentTask) -> CommandRisk? { last[task.id] ?? last[task.pill] }
+    func steps(for task: AgentTask) -> [CommandRisk] { history[task.id] ?? history[task.pill] ?? [] }
+    func start(for task: AgentTask) -> Date? { started[task.id] ?? started[task.pill] }
 }
 
 // MARK: - Prayer strip (open island, home view)
 
-/// How much taller the home view is for the prayer strip at the top of its right card.
+/// How much taller the home view is: for the prayer strip at the top of its right card, and
+/// for the session card's details (time, place, steps, Git, shortcuts) when an agent is shown.
 enum PrayerStripLayout {
     nonisolated(unsafe) static var extra: CGFloat = 0
-    static let height: CGFloat = 52
+    static let height: CGFloat = 70
 
     /// On while the Prayer pill is on and knows where the user is (not in a corner).
     @MainActor static func isOn(state: AppState, prayer: PrayerController) -> Bool {
@@ -272,61 +303,132 @@ enum PrayerStripLayout {
             && prayer.location != nil && prayer.today != nil
     }
 
+    /// The focused pill is an agent session (not an integration): its card shows details.
+    @MainActor static func showsSession(state: AppState) -> Bool {
+        guard !state.islandPlacement.isCorner, let t = state.focusTask,
+              let category = PillCatalog.definition(for: t.pill)?.category,
+              category == .workspace || category == .agent else { return false }
+        // Same test as the card's session layout: something ran or is running.
+        return t.state != .idle || !t.steps.isEmpty
+    }
+
+    /// The home view is taller: prayer strip or session details.
+    @MainActor static func isTall(state: AppState, prayer: PrayerController) -> Bool {
+        isOn(state: state, prayer: prayer) || showsSession(state: state)
+    }
+
     @MainActor static func refresh(state: AppState, prayer: PrayerController) {
-        extra = isOn(state: state, prayer: prayer) ? height : 0
+        extra = isTall(state: state, prayer: prayer) ? height : 0
     }
 }
 
-/// The day's prayers above the pills: the next one, the Hijri date, the sun on its arc.
-/// Tap: the Prayer card.
+/// The day's prayers above the pills: the next one (a countdown at night), the short Hijri
+/// date in Arabic, the qibla, the sun on its arc, then the five times, checked once prayed.
+/// Tap the header: the Prayer card. Tap the beads: the tasbih.
 struct PrayerStripView: View {
     @ObservedObject var state: AppState
     @ObservedObject private var prayer = PrayerController.shared
 
     var body: some View {
         TimelineView(.everyMinute) { tl in
-            Button(action: {
-                withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
-                    state.focusId = PrayerController.pillId
-                }
-            }) {
-                VStack(alignment: .leading, spacing: 4) {
-                    HStack(spacing: 5) {
-                        Image(systemName: "moon.fill")
-                            .font(.system(size: 9))
-                            .foregroundColor(RafiqLook.gold)
-                        Text(verbatim: prayer.pillLabel(at: tl.date))
-                            .font(.system(size: 11, weight: .semibold))
-                            .foregroundColor(RafiqLook.gold)
-                            .lineLimit(1)
-                        Spacer(minLength: 4)
-                        Text(verbatim: prayer.hijriDate(at: tl.date))
-                            .font(.system(size: 10))
-                            .foregroundColor(Color(hex: "#8E939C"))
-                            .lineLimit(1)
-                            .minimumScaleFactor(0.8)
-                    }
-                    if let today = prayer.today {
-                        PrayerSunArc(day: today, date: tl.date, accent: RafiqLook.gold)
-                            .frame(height: 16)
-                        HStack(spacing: 0) {
-                            ForEach(Prayer.obligatory, id: \.self) { p in
-                                let next = prayer.next(at: tl.date)?.prayer == p
-                                Text(verbatim: PrayerController.name(p))
-                                    .font(.system(size: 8, weight: next ? .semibold : .regular))
-                                    .foregroundColor(next ? RafiqLook.gold : Color(hex: "#6B7079"))
-                                    .lineLimit(1)
-                                    .minimumScaleFactor(0.7)
-                                    .frame(maxWidth: .infinity)
-                            }
+            VStack(alignment: .leading, spacing: 3) {
+                HStack(spacing: 6) {
+                    Button(action: {
+                        withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+                            state.focusId = PrayerController.pillId
+                        }
+                    }) {
+                        HStack(spacing: 5) {
+                            Image(systemName: "moon.fill")
+                                .font(.system(size: 9))
+                                .foregroundColor(RafiqLook.gold)
+                            Text(verbatim: headline(at: tl.date))
+                                .font(.system(size: 11, weight: .semibold))
+                                .foregroundColor(RafiqLook.gold)
+                                .lineLimit(1)
                         }
                     }
+                    .buttonStyle(.plain)
+                    Spacer(minLength: 4)
+                    Text(verbatim: prayer.hijriShortArabic(at: tl.date))
+                        .font(.system(size: 11))
+                        .foregroundColor(Color(hex: "#8E939C"))
+                        .lineLimit(1)
+                    if let qibla = prayer.qibla {
+                        HStack(spacing: 2) {
+                            Image(systemName: "location.north.fill")
+                                .font(.system(size: 8))
+                                .rotationEffect(.degrees(qibla))
+                                .foregroundColor(RafiqLook.gold)
+                            Text(verbatim: "\(Int(qibla.rounded()))°")
+                                .font(.system(size: 10, weight: .semibold))
+                                .monospacedDigit()
+                                .foregroundColor(Color(hex: "#8E939C"))
+                        }
+                        .help(String(format: String(localized: "qibla.help %lld", defaultValue: "Qibla: %lld° from north"),
+                                     Int64(qibla.rounded())))
+                    }
+                    Button(action: { TasbihCounter.shared.open() }) {
+                        Image(systemName: "circle.hexagonpath")
+                            .font(.system(size: 10, weight: .semibold))
+                            .foregroundColor(RafiqLook.gold)
+                            .frame(width: 18, height: 18)
+                            .background(Circle().fill(RafiqLook.gold.opacity(0.12)))
+                    }
+                    .buttonStyle(.plain)
+                    .help(String(localized: "tasbih.open", defaultValue: "Tasbih"))
                 }
-                .padding(.horizontal, 12)
-                .padding(.top, 7)
-                .contentShape(Rectangle())
+                if let today = prayer.today {
+                    PrayerSunArc(day: today, date: tl.date, accent: RafiqLook.gold)
+                        .frame(height: 12)
+                    times(today, at: tl.date)
+                }
             }
-            .buttonStyle(.plain)
+            .padding(.horizontal, 12)
+            .padding(.top, 7)
+        }
+    }
+
+    /// Day: "Asr 15:42" (or the pill's countdown). Night: "Fajr · in 6 h 12 min".
+    private func headline(at date: Date) -> String {
+        guard let today = prayer.today, let next = prayer.next(at: date) else { return prayer.pillLabel(at: date) }
+        if PrayerTimesEngine.sunProgress(at: date, day: today) == nil {
+            return "\(PrayerController.name(next.prayer)) · "
+                + String(format: String(localized: "prayer.in %@", defaultValue: "in %@"),
+                         PrayerController.countdown(next.at.timeIntervalSince(date)))
+        }
+        return prayer.pillLabel(at: date)
+    }
+
+    /// The five times, the next one in gold, the ones prayed with a tick (tap to tick).
+    private func times(_ day: PrayerDay, at date: Date) -> some View {
+        let next = prayer.next(at: date)?.prayer
+        return HStack(spacing: 0) {
+            ForEach(Prayer.obligatory, id: \.self) { p in
+                let isNext = p == next
+                let done = prayer.prayed.contains(p)
+                Button(action: { prayer.togglePrayed(p) }) {
+                    VStack(spacing: 0) {
+                        HStack(spacing: 2) {
+                            Text(verbatim: PrayerController.name(p))
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.7)
+                            if done {
+                                Image(systemName: "checkmark")
+                                    .font(.system(size: 6, weight: .bold))
+                            }
+                        }
+                        .font(.system(size: 8.5, weight: isNext ? .semibold : .regular))
+                        Text(verbatim: day.time(p).map { prayer.clock($0) } ?? "—")
+                            .font(.system(size: 9.5, weight: isNext ? .semibold : .regular))
+                            .monospacedDigit()
+                    }
+                    .foregroundColor(isNext ? RafiqLook.gold : (done ? Color(hex: "#8E939C") : Color(hex: "#6B7079")))
+                    .frame(maxWidth: .infinity)
+                    .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+            }
         }
     }
 }
@@ -410,3 +512,164 @@ struct RiskBadge: View {
         }
     }
 }
+
+// MARK: - Session details (open card, home view)
+
+/// Under the session's steps: where and for how long it runs, the guard's strip of this turn,
+/// what it changed, the project's Git state, and three shortcuts. Shown while the home view is
+/// tall for it (PrayerStripLayout.showsSession).
+struct SessionDetailsView: View {
+    let task: AgentTask
+    @ObservedObject var state: AppState
+    let openTarget: () -> Void
+    @ObservedObject private var riskLog = CommandRiskLog.shared
+    @ObservedObject private var git = GitStatusStore.shared
+
+    var body: some View {
+        let diffs = state.sessionDiffs[task.pill] ?? []
+        let added = diffs.reduce(0) { $0 + $1.added }
+        let removed = diffs.reduce(0) { $0 + $1.removed }
+        let files = Set(diffs.map(\.path)).count
+        let steps = riskLog.steps(for: task)
+        let summary = git.summary(for: task.sessionCwd)
+        VStack(alignment: .leading, spacing: 5) {
+            TimelineView(.everyMinute) { tl in
+                Text(verbatim: placeLine(at: tl.date))
+                    .font(.system(size: 10.5))
+                    .foregroundColor(Color(hex: "#6B7079"))
+                    .lineLimit(1)
+                    .truncationMode(.middle)
+            }
+            if !steps.isEmpty {
+                HStack(spacing: 3) {
+                    ForEach(Array(steps.enumerated()), id: \.offset) { i, r in
+                        Circle()
+                            .fill(RiskBadge.color(r.level))
+                            .frame(width: i == steps.count - 1 ? 7 : 5, height: i == steps.count - 1 ? 7 : 5)
+                            .help(RiskBadge.label(r.reason))
+                    }
+                }
+                .frame(height: 8)
+            }
+            HStack(spacing: 5) {
+                if task.state == .working, let risk = riskLog.risk(for: task) {
+                    RiskBadge(risk: risk)
+                }
+                if added + removed > 0 {
+                    chip {
+                        Text(verbatim: "+\(added)").foregroundColor(Color(hex: "#34D399"))
+                        Text(verbatim: "−\(removed)").foregroundColor(Color(hex: "#F4505E"))
+                    }
+                }
+                if files > 0 {
+                    chip { Text(verbatim: String(format: String(localized: "session.files %lld", defaultValue: "%lld files"), Int64(files))) }
+                }
+                if let g = summary {
+                    chip {
+                        Image(systemName: "arrow.triangle.branch").font(.system(size: 8, weight: .semibold))
+                        Text(verbatim: g.branch).lineLimit(1)
+                        if g.ahead > 0 { Text(verbatim: "↑\(g.ahead)").foregroundColor(Color(hex: "#F5A524")) }
+                        if g.changed > 0 { Text(verbatim: "●\(g.changed)") }
+                    }
+                    .help(gitHelp(g))
+                }
+            }
+            HStack(spacing: 5) {
+                shortcut("terminal", String(localized: "session.open-terminal", defaultValue: "Terminal"), action: openTarget)
+                if !diffs.isEmpty {
+                    shortcut("plusminus", String(localized: "session.last-diff", defaultValue: "Last diff")) {
+                        NotificationCenter.default.post(name: .islandToggleDiff, object: nil)
+                    }
+                }
+                if let cwd = task.sessionCwd, !cwd.isEmpty {
+                    shortcut("folder", String(localized: "session.folder", defaultValue: "Folder")) {
+                        NSWorkspace.shared.open(URL(fileURLWithPath: cwd))
+                    }
+                }
+            }
+        }
+        .onAppear { git.refresh(task.sessionCwd) }
+    }
+
+    /// "Desktop · ~/Rafiq · 2 h 14 min".
+    private func placeLine(at date: Date) -> String {
+        var parts: [String] = []
+        parts.append(task.pill == "agent_claude-desktop" ? "Claude Desktop" : ClaudeHost.name(for: task.hostApp))
+        if let cwd = task.sessionCwd, !cwd.isEmpty {
+            let home = FileManager.default.homeDirectoryForCurrentUser.path
+            parts.append(cwd.hasPrefix(home) ? "~" + cwd.dropFirst(home.count) : cwd)
+        }
+        if let start = riskLog.start(for: task) {
+            parts.append(PrayerController.countdown(date.timeIntervalSince(start)))
+        }
+        return parts.joined(separator: " · ")
+    }
+
+    private func gitHelp(_ g: GitSummary) -> String {
+        String(format: String(localized: "session.git-help %@ %lld %lld", defaultValue: "Branch %@ · %lld commits not pushed · %lld files changed"),
+               g.branch, Int64(g.ahead), Int64(g.changed))
+    }
+
+    private func chip<C: View>(@ViewBuilder _ content: () -> C) -> some View {
+        HStack(spacing: 3) { content() }
+            .font(.system(size: 10, weight: .semibold))
+            .monospacedDigit()
+            .foregroundColor(Color(hex: "#C0C4CC"))
+            .padding(.horizontal, 6)
+            .padding(.vertical, 2)
+            .background(Capsule().fill(Color(hex: "#1D1F23")))
+    }
+
+    private func shortcut(_ icon: String, _ title: String, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            HStack(spacing: 3) {
+                Image(systemName: icon).font(.system(size: 8.5, weight: .semibold))
+                Text(verbatim: title).font(.system(size: 10, weight: .semibold))
+            }
+            .foregroundColor(Color(hex: "#9CA1AA"))
+            .padding(.horizontal, 7)
+            .padding(.vertical, 3)
+            .background(Capsule().stroke(Color.white.opacity(0.1), lineWidth: 1))
+            .contentShape(Capsule())
+        }
+        .buttonStyle(.plain)
+    }
+}
+
+// MARK: - Claude plan ring around Rafiq (open island, home view)
+
+#if !APPSTORE
+/// The share of the Claude plan used, as a ring around Rafiq on the home view (the header
+/// pill stays, and opens the details). Shown only with the plan gauge on.
+struct PlanRingView: View {
+    @ObservedObject var state: AppState
+    let islandW: CGFloat
+    let islandH: CGFloat
+
+    var body: some View {
+        let on = state.mode == .expanded && state.view == .overview && !state.islandPlacement.isCorner
+            && state.showPlanInNotch && state.planRelayInstalled
+        let usage = state.demoPlanUsageOverride ?? state.claudePlanUsage
+        let pct = usage.flatMap { ClaudePlanGauge.dominantPct($0) }
+        let (cx, cy, d, _) = botPosition(mode: .expanded, view: .overview, islandW: islandW, islandH: islandH,
+                                         uploadProgress: 0, hasNotch: state.hasNotch)
+        let size = d + 30
+        ZStack {
+            if on, let pct {
+                Circle().stroke(Color.white.opacity(0.07), lineWidth: 3)
+                Circle()
+                    .trim(from: 0, to: min(1, max(0.02, pct / 100)))
+                    .stroke(Color(hex: ClaudePlanGauge.color(for: pct)),
+                            style: StrokeStyle(lineWidth: 3, lineCap: .round))
+                    .rotationEffect(.degrees(-90))
+                    .animation(.spring(response: 0.5, dampingFraction: 0.8), value: pct)
+            }
+        }
+        .frame(width: size, height: size)
+        .position(x: cx, y: cy + 2)
+        .opacity(on ? 1 : 0)
+        .animation(.easeInOut(duration: 0.25), value: on)
+        .allowsHitTesting(false)
+    }
+}
+#endif

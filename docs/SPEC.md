@@ -41,10 +41,10 @@ Grille compact : pastilles Ø 9,5 autour du point (largeur − 27, hN/2), écart
 ## 3. Règles de comportement (validées par Louis)
 
 1. **Rien ne tourne** → `hidden`. Totalement invisible.
-2. **Souris sur le notch** alors que `hidden` → `peek` immédiatement, le bonhomme sort en faisant coucou (mains + son `peek` + son `greet`). Si la souris reste 650 ms → `expanded` (vue `overview`, ou `empty` s'il n'y a aucune tâche). Si elle part pendant le peek → retour `hidden` après 600 ms.
+2. **Souris sur le notch** alors que `hidden` → avec « Ouvrir au survol » (activé par défaut) l'île s'ouvre tout de suite ; sinon `peek` immédiatement, le bonhomme sort en faisant coucou (mains + son `peek` + son `greet`). Si la souris reste 650 ms → `expanded` (vue `overview`, ou `empty` s'il n'y a aucune tâche). Si elle part pendant le peek → retour `hidden` après 600 ms.
 3. **Des tâches tournent et Louis est actif** → `compact` : très fin, le bonhomme visible, il suit la souris des yeux partout sur l'écran.
 4. **Survol en compact** → `expanded` après 200 ms. Clic sur le bonhomme en compact → `expanded` tout de suite.
-5. **Fermeture auto** : une fois ouverte, l'island se replie après **60 s sans activité** (mouvement de souris sur l'island, clic, frappe). Quitter l'island ne la ferme pas. Pendant les 10 dernières secondes, un trait de 2 pt en bas au centre (160 pt → 0, blanc 35 %) montre le compte à rebours. `Échap` ferme.
+5. **Fermeture auto** : une fois ouverte (au survol, au clic ou par une alerte), l'island se replie **quelques secondes après le départ de la souris** (réglage « Fermer après », 3 s par défaut, boutons 2 / 3 / 5 / 10 / 15 s dans l'île). Revenir dessus avant la fin annule la fermeture. Pendant ce décompte, un trait de 2 pt en bas au centre (160 pt → 0, blanc 35 %) se vide jusqu'au repli (au-delà de 10 s, seulement les 10 dernières). Une alerte en attente garde l'île ouverte. `Échap` ferme.
 6. **Louis absent** (aucun mouvement de souris depuis 3 min, réglable) → `hidden`, même avec des tâches. Au premier mouvement → retour `compact` si des tâches tournent.
 7. **Alertes** (permission, question, erreur) : l'island s'ouvre seule sur la vue de l'alerte, **même si Louis est absent**, et reste ouverte (pas de fermeture auto) jusqu'à sa réponse.
 8. **Terminé** : l'island s'ouvre sur la vue `finished` pendant 5,2 s, puis retire la tâche et se replie.
@@ -475,3 +475,25 @@ Constaté sur un vrai appel sans casque : la voix de l'autre revenait dans le mi
 - **Mots mal entendus.** Quand Claude écrit les résumés (clé de Réglages → Chat), il corrige d'abord la transcription : mots mal reconnus, hésitations retirées, sans reformuler ni traduire, sans inventer de nom, de numéro ni de lien, `[?]` sur ce qui reste incompréhensible. Chaque correction est vérifiée (une ligne corrigée doit rester proche de l'originale) et ce qui avait été entendu est gardé (`raw`). Il nomme aussi un intervenant quand l'appel dit qui il est ; un nom donné par l'utilisateur n'est jamais remplacé.
 - **Au fil des appels.** Menu ⋯ d'une ligne (ou clic droit) : Corriger la ligne, Dit par…, Supprimer la ligne. Les mots apportés en corrigeant (noms, marques, sigles, mots techniques) et les noms donnés aux intervenants sont retenus (`Notes/vocabulary.json`, 300 max) et envoyés à Claude avec chaque transcription, avec le dictionnaire de Flow. Renommer un intervenant avec le nom d'un autre fusionne les deux.
 - Menu ⋯ de la note : « Corriger à nouveau la transcription ».
+
+
+## 19. Rafiq veille : garde, halo, oreilles, cartes
+
+- **Garde des agents** (`CommandRisk.swift`) : chaque action demandée par un agent reçoit une note (sûr, à surveiller, risque élevé) et une raison. Affichée sur la carte d'autorisation (badge + une phrase), sur la carte de session (dernière commande, `CommandRiskLog`) et dans l'en-tête (bouclier « Garde »). Elle n'autorise ni ne refuse jamais rien.
+- **Halo** (`NotchLive.swift`) : un trait de 3 pt sous l'île (120 pt au repos, 160 pt ouverte). Priorité : agent en attente (orange), erreur (rouge), prière proche (or), tâche finie (vert). Aucun timer : dessiné à partir de l'état publié.
+- **Oreilles** : en compact, l'île s'élargit de 150 pt (`NotchEars.extra`) pour un mot de chaque côté : la prière proche à gauche (en Ramadan « Iftar · 42 min », « Suhur · … »), à droite les nouvelles des agents (« 3 en attente », « Erreur », « Terminé ») ou le jour du Ramadan.
+- **Accueil** : la prochaine prière dans l'en-tête après les onglets (elle se raccourcit puis disparaît si elle ne passe pas à côté de l'encoche) ; l'arc des prières en haut de la carte de droite quand la pastille Prière est active (+52 pt, `PrayerStripLayout`).
+- **Carte `.digest`** (`Digest.swift`, 206 pt) : une carte à la fois, les suivantes attendent. Elle tient l'île ouverte jusqu'à « Compris » et attend derrière une autorisation ou une question. Quatre sortes :
+  - après la prière (`PrayerQuiet`) : de l'heure de la prière à la fin de sa fenêtre « maintenant » (15 min), pas de son, les alertes n'ouvrent pas l'île, puis la carte compte les tâches finies, en attente et en erreur ;
+  - brief du soir (`EveningBrief`) : une fois par jour, 45 min après Isha (21 h sans la pastille Prière), à partir de `RecapStore.daySummary` ;
+  - secret repéré (`SecretScanner`) : dans ce qu'un agent écrit (Write, Edit, MultiEdit), valeur masquée, un prompt à copier pour Claude ;
+  - failles connues (`OSVWatch`, désactivé par défaut) : au démarrage d'une session, les lockfiles du projet (npm, Cargo, pip) sont vérifiés sur OSV.dev au plus une fois par jour ; seuls noms et versions sont envoyés.
+- Réglages → Général → « Rafiq veille » : calme pendant la prière (oui), brief du soir (oui, avec « Afficher celui du jour »), veille des failles (non).
+
+### 19 bis. Accueil, tasbih, verset
+- **Accueil** : la prière n'apparaît qu'une fois. Tant que la bande des prières est affichée, la puce de l'en-tête et la pastille Prière de la grille se retirent. La bande montre la prochaine prière (compte à rebours la nuit), la date de l'Hégire courte en arabe, la qibla, l'arc, puis les cinq heures (cochées une fois faites, un clic coche), et le chapelet qui ouvre le tasbih. L'accueil grandit de 70 pt pour elle ou pour une session d'agent (`PrayerStripLayout.isTall`).
+- **Carte de session** (`SessionDetailsView`) : lieu (Claude Desktop, VS Code, le terminal), dossier, durée du tour ; la frise des étapes du tour notées par le garde (16 au plus, `CommandRiskLog`) ; la note de la dernière action ; lignes et fichiers modifiés ; branche Git, commits non poussés, fichiers modifiés (`GitStatusStore`, `git status` local toutes les 5 s au plus) ; raccourcis Terminal, Dernier diff, Dossier.
+- **Tasbih** (`.tasbih`, `Tasbih.swift`) : 33 + 33 + 34, un clic sur la carte compte, un son à chaque série.
+- **Anneau du forfait** (`PlanRingView`) : la part utilisée du forfait Claude autour de Rafiq sur l'accueil, si la jauge est activée.
+- **Verset du jour** (`VerseOfTheDay`) : 20 versets embarqués, un par jour, à la première ouverture de l'accueil après 4 h ; carte `.digest` qui ne retient pas l'île.
+- **Pastille principale** : Claude Code (`integration_claude`) ou Claude Desktop (`PillCatalog.canBeMain`).

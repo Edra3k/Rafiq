@@ -18,6 +18,8 @@ enum IslandView: String, CaseIterable {
     case update       // a new Rafiq is out on GitHub: one click to install it (GitHub build)
     case whatsNew     // Rafiq just updated itself: what the version brings, then your Rafiq so far (GitHub build)
     case launch       // a new Claude Code session: a prompt, a project, and the terminal opens (GitHub build)
+    case digest       // what Rafiq kept or noticed: after a prayer, the evening brief, a CVE, a secret
+    case tasbih       // the adhkar after the prayer, counted with a click
 }
 
 // MARK: - Bot State
@@ -275,6 +277,9 @@ enum IslandConst {
         // Screen capture: Rafiq on the left (he just swallowed it), the image and what to do with it
         .capture:      ViewLayout(height: 160, botX: 58,  botY: nil, botDiameter: 52, agentMode: .none),
         .launch:       ViewLayout(height: 160, botX: 58,  botY: nil, botDiameter: 52, agentMode: .none),
+        // Digest: Rafiq on the left, the card (title, tiles, buttons) on the right
+        .digest:       ViewLayout(height: 206, botX: 62,  botY: nil, botDiameter: 58, agentMode: .none),
+        .tasbih:       ViewLayout(height: 180, botX: 62,  botY: nil, botDiameter: 58, agentMode: .none),
         // New version: Rafiq on the left, the version and Update now
         .update:       ViewLayout(height: 160, botX: 62,  botY: nil, botDiameter: 58, agentMode: .none),
         // After an update: taller, four items then the stats (like mail, it fills the height)

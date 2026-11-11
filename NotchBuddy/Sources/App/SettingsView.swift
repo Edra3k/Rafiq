@@ -360,7 +360,7 @@ struct SettingsView: View {
                     TextField("60", value: $state.autoCloseInterval, format: .number)
                         .textFieldStyle(.roundedBorder)
                         .frame(width: 64)
-                    Text("s inactive")
+                    Text(String(localized: "behavior.close-after-leave", defaultValue: "s after the pointer leaves"))
                 }
                 HStack(spacing: 8) {
                     Text("Hide after")
@@ -373,6 +373,9 @@ struct SettingsView: View {
             .padding(6)
         }
             .settingsAnchor("general.behavior")
+
+        RafiqWatchSettings()
+            .settingsAnchor("general.watch")
 
         GroupBox("Display") {
             VStack(alignment: .leading, spacing: 10) {
@@ -607,7 +610,7 @@ struct SettingsView: View {
                     .foregroundColor(state.activeIntegrations.count >= 4 ? .orange : .secondary)
 
                 Picker(String(localized: "settings.main-pill"), selection: $state.mainPillId) {
-                    ForEach(PillCatalog.available.filter { $0.category == .workspace && !$0.comingSoon }, id: \.id) { def in
+                    ForEach(PillCatalog.available.filter { PillCatalog.canBeMain($0) }, id: \.id) { def in
                         Text(def.name).tag(def.id)
                     }
                 }
@@ -2708,5 +2711,48 @@ extension SettingsView {
     init(embeddedSection: String) {
         self.init()
         self.embeddedSection = embeddedSection
+    }
+}
+
+
+// MARK: - Rafiq watches (prayer quiet, evening brief, vulnerability watch)
+
+struct RafiqWatchSettings: View {
+    @AppStorage(PrayerQuiet.enabledKey) private var prayerQuiet = true
+    @AppStorage(EveningBrief.enabledKey) private var eveningBrief = true
+    @AppStorage(OSVWatch.enabledKey) private var osvWatch = false
+    @AppStorage(VerseOfTheDay.enabledKey) private var verse = true
+
+    var body: some View {
+        GroupBox(String(localized: "watch.title", defaultValue: "Rafiq watches")) {
+            VStack(alignment: .leading, spacing: 10) {
+                Toggle(String(localized: "watch.prayer-quiet", defaultValue: "Keep alerts while I pray"), isOn: $prayerQuiet)
+                    .onChange(of: prayerQuiet) { _, _ in PrayerQuiet.shared.settingsChanged() }
+                Text(String(localized: "watch.prayer-quiet.help", defaultValue: "From the time of a prayer, for 15 minutes: no sound, the island stays closed, then a card says what came in. Nothing is answered for you."))
+                    .font(.system(size: 11)).foregroundColor(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+                HStack {
+                    Toggle(String(localized: "watch.brief", defaultValue: "Evening brief"), isOn: $eveningBrief)
+                        .onChange(of: eveningBrief) { _, _ in EveningBrief.shared.schedule() }
+                    Spacer()
+                    Button(String(localized: "watch.brief.now", defaultValue: "Show today's")) { EveningBrief.shared.fire(force: true) }
+                }
+                Text(String(localized: "watch.brief.help", defaultValue: "Once a day, 45 minutes after Isha (21:00 without the Prayer pill): what your agents did today."))
+                    .font(.system(size: 11)).foregroundColor(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+                HStack {
+                    Toggle(String(localized: "watch.verse", defaultValue: "Verse of the day"), isOn: $verse)
+                    Spacer()
+                    Button(String(localized: "watch.verse.now", defaultValue: "Show today's verse")) {
+                        VerseOfTheDay.show(VerseOfTheDay.verse(on: Date()))
+                    }
+                }
+                Toggle(String(localized: "watch.osv", defaultValue: "Vulnerability watch (OSV.dev)"), isOn: $osvWatch)
+                Text(String(localized: "watch.osv.help", defaultValue: "When a session starts in a project, Rafiq sends the names and versions in its lockfiles to OSV.dev, at most once a day, and warns you about known vulnerabilities. Nothing else leaves your Mac."))
+                    .font(.system(size: 11)).foregroundColor(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            .padding(6)
+        }
     }
 }
