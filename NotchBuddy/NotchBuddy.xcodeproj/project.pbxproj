@@ -151,6 +151,7 @@
 		3DC64F42A011D2EA0C359100 /* TurnHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CD51DD30DC4D25A011831B /* TurnHistory.swift */; };
 		3E6B68F0BBB88C318997E2C5 /* PrayerViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFFF1C75C5AB2C30A441DBC /* PrayerViews.swift */; };
 		3E84EA0AE7C450941ED943CF /* NowPlayingViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = F56C7E1EBC74664A7F1689CF /* NowPlayingViews.swift */; };
+		403A84329CC78A628A05FB71 /* SoundTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040EFB8E69B9025E4B21BBB2 /* SoundTools.swift */; };
 		40453F38D747561C5F1E1B29 /* ServerLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51C7F3A1FC673EFB8135B8C5 /* ServerLink.swift */; };
 		40473EEC3029D466B2769672 /* AppleStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681E15F99FCF1E60C2553004 /* AppleStyle.swift */; };
 		40BABFE8C9F161AD6C66DD4E /* AndroidLinkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE4ACBA2B2368760EEAF457 /* AndroidLinkService.swift */; };
@@ -507,6 +508,7 @@
 		CAC1A12153A798730E5FA835 /* MochiStill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045E7300878138F0AC385920 /* MochiStill.swift */; };
 		CAD8B9EF53E3E69FEDEC13C1 /* AskRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E173E76A9B04BF0CB8E3DA4 /* AskRunner.swift */; };
 		CB72C3517DF9A4A3FA575867 /* FlowHubToday.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1370B381DB75E34358B0428 /* FlowHubToday.swift */; };
+		CC2883B9DB17CA5FBF39E59A /* SoundTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040EFB8E69B9025E4B21BBB2 /* SoundTools.swift */; };
 		CC81DAE27417672CB93349A5 /* PillCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C64C4C5D705CE486221B74 /* PillCatalog.swift */; };
 		CC8E0ADAA825699DD39D0AC6 /* CommandRisk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255A7FE1B86EA4EAF6F295D9 /* CommandRisk.swift */; };
 		CD05A497A7D0B3D723D92C06 /* QuestionPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C6993B34A0FFF8E3D454ADC /* QuestionPayload.swift */; };
@@ -727,6 +729,7 @@
 		035AB385F9F874A767F36D9E /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		0364C7995680F9FA9F85F905 /* PortfolioController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioController.swift; sourceTree = "<group>"; };
 		0365DDE3C554F5E8570055F4 /* IslandTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IslandTypes.swift; sourceTree = "<group>"; };
+		040EFB8E69B9025E4B21BBB2 /* SoundTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundTools.swift; sourceTree = "<group>"; };
 		045E7300878138F0AC385920 /* MochiStill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MochiStill.swift; sourceTree = "<group>"; };
 		046F9CD91704C34AE5BE9393 /* ElevenLabsTTS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElevenLabsTTS.swift; sourceTree = "<group>"; };
 		047257909800DC0D5A7DBEE1 /* WhatsAppViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsAppViews.swift; sourceTree = "<group>"; };
@@ -1306,6 +1309,7 @@
 				6D17C2A18D62D90786F9D78F /* FeatureHub.swift */,
 				F590B1A58A369A17F3001773 /* MacMonitor.swift */,
 				C2FAA36E6DD3E44182E57A11 /* QuickActions.swift */,
+				040EFB8E69B9025E4B21BBB2 /* SoundTools.swift */,
 				002B2F0A4998EAA6F4D1FF7C /* ToolsView.swift */,
 			);
 			path = Toolbox;
@@ -1986,6 +1990,7 @@
 				C07E9A04E827284FDF33DB16 /* ShortcutLogic.swift in Sources */,
 				1EAFEE80A8066B77F9410025 /* ShortcutsSettingsView.swift in Sources */,
 				60E361FFE84C387E5E3ED1AA /* SoundEngine.swift in Sources */,
+				CC2883B9DB17CA5FBF39E59A /* SoundTools.swift in Sources */,
 				E2414533EDC7565286141198 /* SpotifyController.swift in Sources */,
 				4B99E2AD54926078AB087B43 /* SpotifyViews.swift in Sources */,
 				6BB32D6B5E627555994DC3CB /* SpotterGeneration.swift in Sources */,
@@ -2337,6 +2342,7 @@
 				6CCEC73ED68E9F253C22D692 /* ShortcutLogic.swift in Sources */,
 				908043F62E2C31F5FBC0A0C4 /* ShortcutsSettingsView.swift in Sources */,
 				78B3C6814431B2DD9D1F4949 /* SoundEngine.swift in Sources */,
+				403A84329CC78A628A05FB71 /* SoundTools.swift in Sources */,
 				2540E4198492CC2B9237ED99 /* SpotifyController.swift in Sources */,
 				03538CF0E693300A14029EDE /* SpotifyViews.swift in Sources */,
 				B555DFF3451AFB22CAF8E594 /* SpotterGeneration.swift in Sources */,

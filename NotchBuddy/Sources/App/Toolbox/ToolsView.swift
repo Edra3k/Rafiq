@@ -1,5 +1,6 @@
 #if !APPSTORE
 import AppKit
+import CoreAudio
 import SwiftUI
 
 // MARK: - The Tools tab of the island
@@ -620,6 +621,134 @@ struct SmallButton: View {
 // MARK: - Mac page
 
 private struct MacPage: View {
+    let active: Bool
+    @ObservedObject private var hub = FeatureHub.shared
+    @AppStorage("mac.section") private var section = "system"
+
+    private var sections: [(String, String)] {
+        var list = [("system", String(localized: "tools.mac.system", defaultValue: "System"))]
+        if hub.isOn(.outputSwitcher) || hub.isOn(.micTools) { list.append(("sound", String(localized: "feature.family.sound", defaultValue: "Sound"))) }
+        if hub.isOn(.displays) { list.append(("displays", String(localized: "feature.displays", defaultValue: "Displays"))) }
+        return list
+    }
+
+    private var shown: String { sections.contains { $0.0 == section } ? section : "system" }
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            if sections.count > 1 {
+                HStack(spacing: 4) {
+                    ForEach(sections, id: \.0) { s in
+                        Button { section = s.0 } label: {
+                            Text(verbatim: s.1).font(.system(size: 10.5, weight: .medium))
+                                .foregroundColor(shown == s.0 ? Color(hex: "#F5F6F8") : Color(hex: "#8E939C"))
+                                .padding(.horizontal, 8).padding(.vertical, 3)
+                                .background(shown == s.0 ? Color.white.opacity(0.1) : Color.clear).clipShape(Capsule())
+                        }
+                        .buttonStyle(.plain)
+                    }
+                }
+            }
+            switch shown {
+            case "sound": SoundSection()
+            case "displays": DisplaysSection()
+            default: MacSystem(active: active)
+            }
+        }
+    }
+}
+
+private struct SoundSection: View {
+    @ObservedObject private var sound = SoundCenter.shared
+    @ObservedObject private var hub = FeatureHub.shared
+    @AppStorage(SoundCenter.headphonesKey) private var lowerOnUnplug = true
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            if hub.isOn(.outputSwitcher) {
+                HStack(spacing: 8) {
+                    Image(systemName: "speaker.wave.2").font(.system(size: 11)).foregroundColor(Color(hex: "#8E939C"))
+                    Slider(value: Binding(get: { Double(sound.outputVolume) }, set: { sound.setOutputVolume(Float($0)) }), in: 0...1)
+                        .controlSize(.mini)
+                    Text(verbatim: "\(Int((sound.outputVolume * 100).rounded()))").font(.system(size: 10)).foregroundColor(Color(hex: "#8E939C")).frame(width: 24)
+                }
+                deviceRow(sound.outputs, selected: sound.output)
+                Toggle(isOn: $lowerOnUnplug) {
+                    Text(String(localized: "tools.sound.unplug", defaultValue: "Speakers start low when headphones leave"))
+                        .font(.system(size: 10.5)).foregroundColor(Color(hex: "#8E939C"))
+                }
+                .toggleStyle(.switch).controlSize(.mini)
+            }
+            if hub.isOn(.micTools) {
+                HStack(spacing: 8) {
+                    Button { sound.toggleMic() } label: {
+                        Image(systemName: sound.micMuted ? "mic.slash.fill" : "mic.fill").font(.system(size: 11))
+                            .foregroundColor(sound.micMuted ? Color(hex: "#F4505E") : Color(hex: "#34D399"))
+                            .frame(width: 22, height: 22).background(Color.white.opacity(0.06)).clipShape(Circle())
+                    }
+                    .buttonStyle(.plain)
+                    .help(String(localized: "tools.sound.mute-mic", defaultValue: "Mute the microphone"))
+                    Slider(value: Binding(get: { Double(sound.inputVolume) }, set: { sound.setInputVolume(Float($0)) }), in: 0...1)
+                        .controlSize(.mini)
+                    Text(verbatim: "\(Int((sound.inputVolume * 100).rounded()))").font(.system(size: 10)).foregroundColor(Color(hex: "#8E939C")).frame(width: 24)
+                }
+                deviceRow(sound.inputs, selected: sound.input)
+            }
+            if hub.isOn(.musicBlocker) {
+                Text(String(localized: "tools.sound.music-blocked", defaultValue: "The Music app is closed as soon as something opens it."))
+                    .font(.system(size: 10)).foregroundColor(Color(hex: "#6B7079"))
+            }
+        }
+        .onAppear { sound.refresh() }
+    }
+
+    private func deviceRow(_ devices: [AudioDevice], selected: AudioDeviceID) -> some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 4) {
+                ForEach(devices) { d in
+                    Button { sound.choose(d) } label: {
+                        Label(d.name, systemImage: d.isHeadphones ? "headphones" : d.isOutput ? "hifispeaker" : "mic")
+                            .font(.system(size: 10, weight: .medium)).lineLimit(1)
+                            .foregroundColor(d.id == selected ? RafiqLook.gold : Color(hex: "#B0B5BE"))
+                            .padding(.horizontal, 8).padding(.vertical, 4)
+                            .background(d.id == selected ? RafiqLook.gold.opacity(0.12) : Color.white.opacity(0.05)).clipShape(Capsule())
+                    }
+                    .buttonStyle(.plain)
+                }
+            }
+        }
+    }
+}
+
+private struct DisplaysSection: View {
+    @ObservedObject private var center = DisplayCenter.shared
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            ForEach(center.displays) { d in
+                VStack(alignment: .leading, spacing: 2) {
+                    HStack {
+                        Image(systemName: d.builtIn ? "laptopcomputer" : "display").font(.system(size: 11)).foregroundColor(Color(hex: "#8E939C"))
+                        Text(verbatim: d.name).font(.system(size: 11)).foregroundColor(Color(hex: "#E1E3E6"))
+                        if !d.builtIn {
+                            Text(String(localized: "tools.display.software", defaultValue: "dimmed in software")).font(.system(size: 9.5)).foregroundColor(Color(hex: "#6B7079"))
+                        }
+                    }
+                    HStack(spacing: 6) {
+                        Image(systemName: "sun.min").font(.system(size: 10)).foregroundColor(Color(hex: "#6B7079"))
+                        Slider(value: Binding(get: { Double(center.levels[d.id] ?? 1) }, set: { center.set(d, Float($0)) }), in: 0...1)
+                            .controlSize(.mini)
+                        Image(systemName: "sun.max").font(.system(size: 10)).foregroundColor(Color(hex: "#6B7079"))
+                    }
+                }
+            }
+            SmallButton(String(localized: "tools.display.reset", defaultValue: "Reset the colors")) { center.resetSoftware() }
+        }
+        .onAppear { center.refresh() }
+    }
+}
+
+private struct MacSystem: View {
     let active: Bool
     @ObservedObject private var mac = MacMonitor.shared
     @ObservedObject private var ports = PortWatch.shared

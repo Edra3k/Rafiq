@@ -13,16 +13,18 @@ enum RafiqFeature: String, CaseIterable, Identifiable {
     case clipboard, cleanURL, plainPaste, shelf, scratchpad
     case screenshots, recorder, camera, media
     case appUpdates, homebrew, uninstaller, cleaner, diskImages
+    case outputSwitcher, micTools, musicBlocker, displays, bluetoothSleep
 
     var id: String { rawValue }
 
     enum Family: String, CaseIterable, Identifiable {
-        case agents, system, energy, write, capture, apps
+        case agents, system, sound, energy, write, capture, apps
         var id: String { rawValue }
         var title: String {
             switch self {
             case .agents:  return String(localized: "feature.family.agents", defaultValue: "Agents")
             case .system:  return String(localized: "feature.family.system", defaultValue: "Your Mac")
+            case .sound:   return String(localized: "feature.family.sound", defaultValue: "Sound")
             case .energy:  return String(localized: "feature.family.energy", defaultValue: "Energy")
             case .write:   return String(localized: "feature.family.write", defaultValue: "Write and paste")
             case .capture: return String(localized: "feature.family.capture", defaultValue: "Capture")
@@ -48,7 +50,8 @@ enum RafiqFeature: String, CaseIterable, Identifiable {
         switch self {
         case .claudeUsage: return .agents
         case .macMonitor, .speedTest, .ports: return .system
-        case .keepAwake, .quickToggles: return .energy
+        case .keepAwake, .quickToggles, .displays, .bluetoothSleep: return .energy
+        case .outputSwitcher, .micTools, .musicBlocker: return .sound
         case .colorPicker, .screenText, .screenshots, .recorder, .camera, .media: return .capture
         case .quitApps, .appUpdates, .homebrew, .uninstaller, .cleaner, .diskImages: return .apps
         case .clipboard, .cleanURL, .plainPaste, .shelf, .scratchpad: return .write
@@ -80,6 +83,11 @@ enum RafiqFeature: String, CaseIterable, Identifiable {
         case .uninstaller:  return "trash.square"
         case .cleaner:      return "sparkles"
         case .diskImages:   return "externaldrive"
+        case .outputSwitcher: return "hifispeaker.2"
+        case .micTools:     return "mic"
+        case .musicBlocker: return "music.note.slash"
+        case .displays:     return "sun.max"
+        case .bluetoothSleep: return "bolt.horizontal.circle"
         }
     }
 
@@ -108,6 +116,11 @@ enum RafiqFeature: String, CaseIterable, Identifiable {
         case .uninstaller:  return String(localized: "feature.uninstaller", defaultValue: "Uninstaller")
         case .cleaner:      return String(localized: "feature.cleaner", defaultValue: "Cleaner")
         case .diskImages:   return String(localized: "feature.diskImages", defaultValue: "Disk image installer")
+        case .outputSwitcher: return String(localized: "feature.outputSwitcher", defaultValue: "Sound outputs")
+        case .micTools:     return String(localized: "feature.micTools", defaultValue: "Microphone")
+        case .musicBlocker: return String(localized: "feature.musicBlocker", defaultValue: "Block the Music app")
+        case .displays:     return String(localized: "feature.displays", defaultValue: "Displays")
+        case .bluetoothSleep: return String(localized: "feature.bluetoothSleep", defaultValue: "Bluetooth off in sleep")
         }
     }
 
@@ -136,6 +149,11 @@ enum RafiqFeature: String, CaseIterable, Identifiable {
         case .uninstaller:  return String(localized: "feature.uninstaller.detail", defaultValue: "An app and everything it left behind, to the Trash")
         case .cleaner:      return String(localized: "feature.cleaner.detail", defaultValue: "Caches, logs, build data and old downloads, measured")
         case .diskImages:   return String(localized: "feature.diskImages.detail", defaultValue: "The app of an open disk image, installed and ejected")
+        case .outputSwitcher: return String(localized: "feature.outputSwitcher.detail", defaultValue: "Switch outputs; the speakers start low when headphones leave")
+        case .micTools:     return String(localized: "feature.micTools.detail", defaultValue: "Choose the input, its level, mute it in one click")
+        case .musicBlocker: return String(localized: "feature.musicBlocker.detail", defaultValue: "The play key no longer opens the Music app")
+        case .displays:     return String(localized: "feature.displays.detail", defaultValue: "Each display's brightness, dimmed in software when needed")
+        case .bluetoothSleep: return String(localized: "feature.bluetoothSleep.detail", defaultValue: "Off while the Mac sleeps, back on when it wakes")
         }
     }
 
@@ -147,7 +165,8 @@ enum RafiqFeature: String, CaseIterable, Identifiable {
         }
     }
 
-    var onByDefault: Bool { true }
+    /// The features that change how the Mac itself behaves start off.
+    var onByDefault: Bool { ![.musicBlocker, .bluetoothSleep].contains(self) }
 }
 
 /// The packs that set the features in one click.
@@ -215,6 +234,8 @@ final class FeatureHub: ObservableObject {
         save()
         if feature == .keepAwake { KeepAwake.shared.featureChanged() }
         if feature == .clipboard { ClipboardHistory.shared.featureChanged() }
+        if [.outputSwitcher, .musicBlocker].contains(feature) { SoundCenter.shared.featureChanged() }
+        if feature == .bluetoothSleep { BluetoothSleep.shared.featureChanged() }
     }
 
     func apply(_ pack: FeaturePack) {
@@ -222,6 +243,8 @@ final class FeatureHub: ObservableObject {
         save()
         KeepAwake.shared.featureChanged()
         ClipboardHistory.shared.featureChanged()
+        SoundCenter.shared.featureChanged()
+        BluetoothSleep.shared.featureChanged()
     }
 
     func binding(_ feature: RafiqFeature) -> Binding<Bool> {
