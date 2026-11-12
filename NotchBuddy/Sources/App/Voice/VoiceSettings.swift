@@ -77,6 +77,12 @@ enum VoiceSettings {
         return v == 0 ? fallback : min(1.6, max(0.8, v))
     }
 
+    /// "OK Rafiq" keeps listening in Low Power Mode (default on: the user turned voice on).
+    static let listenOnLowPowerKey = "voiceListenOnLowPower"
+    static var listenOnLowPower: Bool {
+        UserDefaults.standard.object(forKey: listenOnLowPowerKey) as? Bool ?? true
+    }
+
     /// Mac voice speed (Settings → Voice), as a multiple of the system's default rate.
     /// The default keeps Rafiq's usual pace, a little brisker than the Mac's. Range 0.7–1.5.
     static let rateKey     = "voiceRate"

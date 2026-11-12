@@ -1579,6 +1579,7 @@ struct SettingsView: View {
     #if !APPSTORE
     @State private var voicePermissionsGranted: Bool = false
     @ObservedObject private var voiceEngine = VoiceEngine.shared
+    @AppStorage(VoiceSettings.listenOnLowPowerKey) private var listenOnLowPower = true
     @AppStorage("voiceLanguage")       private var voiceLanguage: String = "en"
     @AppStorage("voiceListenLanguage") private var listenLanguage: String = "auto"
     @AppStorage("voiceTTSEngine")      private var ttsEngine: String = "system"
@@ -1618,6 +1619,17 @@ struct SettingsView: View {
                         .fixedSize(horizontal: false, vertical: true)
                 }
                 .onAppear { webKeySaved = !(KeychainStore.shared.get("anthropic-api-key") ?? "").isEmpty }
+
+                Toggle(String(localized: "voice.low-power", defaultValue: "Keep listening in Low Power Mode"), isOn: $listenOnLowPower)
+                    .onChange(of: listenOnLowPower) { _, _ in VoiceEngine.shared.lowPowerSettingChanged() }
+                if voiceEngine.isEnabled && voiceEngine.pausedForLowPower {
+                    HStack(spacing: 6) {
+                        Image(systemName: "battery.25").foregroundColor(.orange)
+                        Text(String(localized: "voice.low-power.paused", defaultValue: "\"OK Rafiq\" is paused: the Mac is in Low Power Mode."))
+                            .font(.system(size: 11)).foregroundColor(.secondary)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                }
 
                 if voiceEngine.recognizerUnavailable {
                     HStack(spacing: 6) {

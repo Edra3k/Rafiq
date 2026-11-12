@@ -141203,6 +141203,206 @@
           }
         }
       }
+    },
+    "voice.low-power" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keep listening in Low Power Mode"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Continuer d'écouter en mode Économie d'énergie"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seguir escuchando en modo de bajo consumo"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Continuar ouvindo no Modo de Pouca Energia"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Слушать и в режиме энергосбережения"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "低电量模式下也继续聆听"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "लो पावर मोड में भी सुनते रहें"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "واصل الاستماع في وضع الطاقة المنخفضة"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "লো পাওয়ার মোডেও শুনতে থাকুন"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tetap mendengarkan dalam Mode Daya Rendah"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Auch im Stromsparmodus zuhören"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Düşük Güç Modunda da dinlemeye devam et"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ฟังต่อแม้ในโหมดพลังงานต่ำ"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "低耗電模式下也繼續聆聽"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "저전력 모드에서도 계속 듣기"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "低電力モードでも聞き取りを続ける"
+          }
+        }
+      }
+    },
+    "voice.low-power.paused" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\"OK Rafiq\" is paused: the Mac is in Low Power Mode."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "« OK Rafiq » est en pause : le Mac est en mode Économie d'énergie."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "«OK Rafiq» está en pausa: el Mac está en modo de bajo consumo."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\"OK Rafiq\" está pausado: o Mac está no Modo de Pouca Energia."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "«OK Rafiq» на паузе: Mac в режиме энергосбережения."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "“OK Rafiq”已暂停：Mac 处于低电量模式。"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\"OK Rafiq\" रुका है: Mac लो पावर मोड में है।"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "«OK Rafiq» متوقف مؤقتًا: الـ Mac في وضع الطاقة المنخفضة."
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\"OK Rafiq\" বিরতিতে: Mac লো পাওয়ার মোডে আছে।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\"OK Rafiq\" dijeda: Mac dalam Mode Daya Rendah."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "„OK Rafiq“ ist pausiert: Der Mac ist im Stromsparmodus."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\"OK Rafiq\" duraklatıldı: Mac Düşük Güç Modunda."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\"OK Rafiq\" หยุดชั่วคราว: Mac อยู่ในโหมดพลังงานต่ำ"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "「OK Rafiq」已暫停：Mac 處於低耗電模式。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\"OK Rafiq\"가 일시 중지됨: Mac이 저전력 모드예요."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "「OK Rafiq」は一時停止中：Mac が低電力モードです。"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

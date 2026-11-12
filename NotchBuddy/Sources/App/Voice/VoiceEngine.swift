@@ -39,10 +39,18 @@ final class VoiceEngine: ObservableObject {
 
     private var screenLocked    = false
     private var screenSleeping  = false
-    private var lowPowerMode    = false
+    @Published private(set) var lowPowerMode = false
     private var dictationActive = 0
 
-    var isPaused: Bool { screenLocked || screenSleeping || lowPowerMode || dictationActive > 0 }
+    /// Low Power Mode pauses listening only if the user asked for it (Settings → Voice).
+    var pausedForLowPower: Bool { lowPowerMode && !VoiceSettings.listenOnLowPower }
+    var isPaused: Bool { screenLocked || screenSleeping || pausedForLowPower || dictationActive > 0 }
+
+    /// Settings → Voice → "Keep listening in Low Power Mode" changed.
+    func lowPowerSettingChanged() {
+        objectWillChange.send()
+        updatePause()
+    }
 
     // MARK: - Audio pipeline (main-thread owned)
 
