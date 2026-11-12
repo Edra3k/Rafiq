@@ -48,6 +48,14 @@ final class TurnHistory: ObservableObject {
         var diffBaseline: Int
         /// Frozen at the end of the turn; computed live while it runs.
         var files: [FileChange]? = nil
+        /// Tokens the turn used (input, output and cache writes), from the transcript.
+        var tokens: Int?
+        /// The Claude plan's usage (the larger window, in %) when the turn began and ended.
+        var planStart: Double?
+        var planEnd: Double?
+        /// Stopped from Rafiq (a reply it ran): no Stop hook will come.
+        var stopped = false
+        var transcript: String?
     }
 
     @Published private(set) var turns: [String: [Turn]] = [:]
@@ -62,14 +70,22 @@ final class TurnHistory: ObservableObject {
         var list = turns[pill] ?? []
         list.append(Turn(pill: pill, sessionId: session, title: title, cwd: cwd,
                          prompt: String(prompt.prefix(Self.maxText)),
-                         startedAt: Date(), diffBaseline: baseline))
+                         startedAt: Date(), diffBaseline: baseline,
+                         planStart: Self.planPct()))
         if list.count > Self.kept { list.removeFirst(list.count - Self.kept) }
         turns[pill] = list
     }
 
-    func step(pill: String, session: String, tool: String, input: [String: Any], label: String, risk: CommandRisk) {
+    func step(pill: String, session: String, tool: String, input: [String: Any], label: String, risk: CommandRisk,
+              transcript: String? = nil) {
         guard var list = turns[pill], let i = list.lastIndex(where: { $0.sessionId == session && $0.endedAt == nil }) else { return }
         guard list[i].steps.count < Self.maxSteps else { return }
+        if let transcript, !transcript.isEmpty { list[i].transcript = transcript }
+        // The tokens so far, at most every 15 s while the turn runs.
+        if let path = list[i].transcript, Date().timeIntervalSince(lastTokenRead[list[i].id] ?? .distantPast) > 15 {
+            lastTokenRead[list[i].id] = Date()
+            readTokens(pill: pill, turnId: list[i].id, transcript: path, since: list[i].startedAt)
+        }
         list[i].steps.append(Step(tool: tool, label: label.isEmpty ? tool : label,
                                   detail: String(Self.detail(tool: tool, input: input).prefix(Self.maxDetail)),
                                   risk: risk, at: Date()))
@@ -81,9 +97,12 @@ final class TurnHistory: ObservableObject {
         list[i].endedAt = Date()
         list[i].answer = String(answer.prefix(Self.maxText))
         list[i].files = files(of: list[i])
+        list[i].planEnd = Self.planPct()
+        if let transcript, !transcript.isEmpty { list[i].transcript = transcript }
         turns[pill] = list
-        guard let transcript, !transcript.isEmpty else { return }
+        guard let transcript = list[i].transcript else { return }
         let turnId = list[i].id
+        readTokens(pill: pill, turnId: turnId, transcript: transcript, since: list[i].startedAt)
         Task.detached(priority: .utility) {
             guard let model = Self.model(inTranscript: transcript) else { return }
             await MainActor.run {
@@ -92,6 +111,42 @@ final class TurnHistory: ObservableObject {
                 TurnHistory.shared.turns[pill] = l
             }
         }
+    }
+
+    /// A reply Rafiq ran was stopped: the turn ends here (its process won't say Stop).
+    func markStopped(session: String) {
+        for (pill, var list) in turns {
+            guard let i = list.lastIndex(where: { $0.sessionId == session && $0.endedAt == nil }) else { continue }
+            list[i].endedAt = Date()
+            list[i].stopped = true
+            list[i].files = files(of: list[i])
+            turns[pill] = list
+        }
+    }
+
+    /// The latest finished Claude Code turn, for "Hey Rafiq, tell Claude…" (within `within`).
+    func latestReplyable(within: TimeInterval, canReply: (String) -> Bool) -> Turn? {
+        turns.values.flatMap { $0 }
+            .filter { canReply($0.pill) && $0.endedAt.map { Date().timeIntervalSince($0) < within } == true }
+            .max { ($0.endedAt ?? .distantPast) < ($1.endedAt ?? .distantPast) }
+    }
+
+    private var lastTokenRead: [UUID: Date] = [:]
+
+    private func readTokens(pill: String, turnId: UUID, transcript: String, since: Date) {
+        Task.detached(priority: .utility) {
+            guard let tokens = Self.tokens(inTranscript: transcript, since: since) else { return }
+            await MainActor.run {
+                guard var l = TurnHistory.shared.turns[pill], let j = l.firstIndex(where: { $0.id == turnId }) else { return }
+                l[j].tokens = tokens
+                TurnHistory.shared.turns[pill] = l
+            }
+        }
+    }
+
+    /// The Claude plan's usage now, the larger of its windows (nil without the plan gauge).
+    static func planPct() -> Double? {
+        AppState.shared.claudePlanUsage.flatMap { ClaudePlanGauge.dominantPct($0) }
     }
 
     /// The turns behind a task's pill (its own session pill first), oldest first.
@@ -144,6 +199,35 @@ final class TurnHistory: ObservableObject {
             if raw != "<synthetic>" { return prettyModel(raw) }
         }
         return nil
+    }
+
+    /// Tokens of the assistant messages written since `since` (each message counted once),
+    /// from the transcript's last 2 MB: input, output and cache writes (cache reads are not
+    /// new work).
+    nonisolated static func tokens(inTranscript path: String, since: Date) -> Int? {
+        guard let handle = FileHandle(forReadingAtPath: path) else { return nil }
+        defer { try? handle.close() }
+        let size = (try? handle.seekToEnd()) ?? 0
+        try? handle.seek(toOffset: size > 2_097_152 ? size - 2_097_152 : 0)
+        guard let data = try? handle.readToEnd() else { return nil }
+        let iso = ISO8601DateFormatter()
+        iso.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+        var seen = Set<String>()
+        var total = 0
+        for line in data.split(separator: UInt8(ascii: "\n")) {
+            guard line.count < 400_000,
+                  let obj = try? JSONSerialization.jsonObject(with: Data(line)) as? [String: Any],
+                  obj["type"] as? String == "assistant",
+                  let stamp = obj["timestamp"] as? String, let at = iso.date(from: stamp), at >= since.addingTimeInterval(-2),
+                  let message = obj["message"] as? [String: Any],
+                  let usage = message["usage"] as? [String: Any] else { continue }
+            let key = message["id"] as? String ?? UUID().uuidString
+            guard seen.insert(key).inserted else { continue }
+            for field in ["input_tokens", "output_tokens", "cache_creation_input_tokens"] {
+                total += (usage[field] as? Int) ?? 0
+            }
+        }
+        return seen.isEmpty ? nil : total
     }
 
     /// "claude-opus-5-5-20261001" → "Opus 5.5"; anything else as it is.

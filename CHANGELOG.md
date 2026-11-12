@@ -4,6 +4,9 @@
 
 - **Details, rebuilt** — the session's Details view shows what you asked and what the agent answered, every step with its tool, its duration and, on a click, the whole command (reads that follow each other folded into one line), the files changed by their short path (a click opens the diff), the guard as one bar, the model and the length of the turn, and Terminal, Last diff, Folder, Copy and Read aloud. ‹ › go back through the last five turns.
 - **Answer the agent from the notch** — a field under Details carries on the same Claude Code conversation in the background (`claude -p --resume`, the session's own folder), for terminal, VS Code, Cursor and Claude app sessions. Its approvals still wait on their card. The iPhone's instructions now use the same path.
+- **More in Details** — while a turn runs: Stop (a reply Rafiq started stops at once; a turn of a terminal or the Claude app opens it, to stop it there), the tokens of the turn, and a request waiting for that session shown right there with its whole command and the same Deny, Allow and Allow with a net (nothing answered without a click). Once done: one-click replies (Continue, Run the tests, Commit and push, Explain what you did; + to add yours, right-click to remove), a microphone in the reply field, and the share of the Claude plan the turn used.
+- **"Hey Rafiq, tell Claude to…"** — with no project named, it carries on the Claude Code conversation that ended last (within two hours) instead of starting a new one.
+- **The Claude app's sessions stay** in the notch after a turn, so their Details and reply stay at hand.
 
 ## 0.7.0 — 2026-11-12
 

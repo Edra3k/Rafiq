@@ -36,6 +36,16 @@ final class SessionReply: ObservableObject {
         ["integration_claude", "agent_cursor", "agent_claude-desktop"].contains(PillCatalog.basePillId(pill))
     }
 
+    /// Stops a reply Rafiq is running for this session (only those: a turn started in a terminal
+    /// or the Claude app belongs to it). The turn ends there in Details.
+    func stop(sessionId: String) {
+        guard let process = processes[sessionId] else { return }
+        stopping.insert(sessionId)
+        process.terminate()
+        TurnHistory.shared.markStopped(session: sessionId)
+    }
+    private var stopping: Set<String> = []
+
     @discardableResult
     func send(_ text: String, sessionId: String, cwd: String, pillId: String,
               log: @escaping @MainActor (String) -> Void = { _ in }) -> Outcome {
@@ -84,7 +94,8 @@ final class SessionReply: ObservableObject {
             Task { @MainActor in
                 SessionReply.shared.running.remove(sessionId)
                 SessionReply.shared.processes[sessionId] = nil
-                if status != 0 {
+                let wasStopped = SessionReply.shared.stopping.remove(sessionId) != nil
+                if status != 0 && !wasStopped {
                     let lower = tail.lowercased()
                     SessionReply.shared.failures[sessionId] = lower.contains("not logged in") || lower.contains("/login")
                         ? .notSignedIn

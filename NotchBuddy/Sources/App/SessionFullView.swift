@@ -14,7 +14,13 @@ struct SessionFullView: View {
     @ObservedObject private var git = GitStatusStore.shared
     #if !APPSTORE
     @ObservedObject private var reply = SessionReply.shared
+    @State private var dictation = MacDictation()
+    @AppStorage(SessionFullView.quickRepliesKey) private var quickRepliesData = ""
+    @State private var addingQuick = false
+    @State private var newQuick = ""
+    @FocusState private var quickFocused: Bool
     #endif
+    @ObservedObject private var shield = AgentShield.shared
 
     /// Which turn is shown, counted from the latest (0).
     @State private var back = 0
@@ -82,6 +88,9 @@ struct SessionFullView: View {
         return VStack(alignment: .leading, spacing: 7) {
             header(task, turn: turn)
             if let turn { exchange(turn, agent: agent) }
+            if let a = state.pendingApproval, PillCatalog.basePillId(a.pillId) == task.pill {
+                approvalCard(a, agent: agent)
+            }
             HStack(alignment: .top, spacing: 14) {
                 stepsColumn(rows, turn: turn)
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -110,7 +119,12 @@ struct SessionFullView: View {
                     .lineLimit(1).truncationMode(.middle)
             }
             Spacer(minLength: 4)
+            if let turn, let usage = usageLine(turn) {
+                Text(verbatim: usage).font(.system(size: 10)).monospacedDigit()
+                    .foregroundColor(Color(hex: "#6B7079")).lineLimit(1).fixedSize()
+            }
             if let turn { stateChip(turn) }
+            if let turn, turn.endedAt == nil { stopButton(turn) }
             Button(action: { withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) { state.view = .overview } }) {
                 Image(systemName: "xmark").font(.system(size: 9, weight: .bold)).foregroundColor(Color(hex: "#6B7079"))
                     .frame(width: 18, height: 18).background(Color.white.opacity(0.06)).clipShape(Circle())
@@ -132,10 +146,92 @@ struct SessionFullView: View {
         return parts.isEmpty ? "" : "· " + parts.joined(separator: " · ")
     }
 
+    /// "14 k tokens · 9 % of the plan"
+    private func usageLine(_ turn: TurnHistory.Turn) -> String? {
+        var parts: [String] = []
+        if let t = turn.tokens, t > 0 {
+            parts.append(String(format: String(localized: "details.tokens %@", defaultValue: "%@ tokens"),
+                                t >= 1000 ? "\(Int((Double(t) / 1000).rounded())) k" : "\(t)"))
+        }
+        if let a = turn.planStart, let b = turn.planEnd, b - a >= 1 {
+            parts.append(String(format: String(localized: "details.plan %lld", defaultValue: "%lld %% of the plan"), Int64((b - a).rounded())))
+        }
+        return parts.isEmpty ? nil : parts.joined(separator: " · ")
+    }
+
+    /// Stop: a reply Rafiq runs stops here; a turn of a terminal or the Claude app is stopped
+    /// where it runs, so the button opens it.
+    private func stopButton(_ turn: TurnHistory.Turn) -> some View {
+        #if !APPSTORE
+        let ours = reply.running.contains(turn.sessionId)
+        #else
+        let ours = false
+        #endif
+        return Button(action: {
+            #if !APPSTORE
+            if ours { SessionReply.shared.stop(sessionId: turn.sessionId); return }
+            #endif
+            openTarget()
+        }) {
+            HStack(spacing: 3) {
+                Image(systemName: "stop.fill").font(.system(size: 7.5, weight: .bold))
+                Text(verbatim: String(localized: "details.stop", defaultValue: "Stop")).font(.system(size: 10, weight: .semibold))
+            }
+            .foregroundColor(Color(hex: "#F4505E"))
+            .padding(.horizontal, 7).padding(.vertical, 2)
+            .background(Capsule().stroke(Color(hex: "#F4505E").opacity(0.35), lineWidth: 1))
+            .contentShape(Capsule())
+        }
+        .buttonStyle(.plain)
+        .help(ours
+              ? String(localized: "details.stop.help", defaultValue: "Stops this reply.")
+              : String(localized: "details.stop.elsewhere", defaultValue: "This turn runs in your terminal or the Claude app: opens it, to stop it there."))
+    }
+
+    /// The request waiting for this session, as on its card: the whole command, the guard,
+    /// and the same choices (nothing is answered without a click).
+    private func approvalCard(_ a: ApprovalInfo, agent: String) -> some View {
+        let shownId = a.id
+        let risk = CommandRisk.assess(tool: a.tool, command: a.command)
+        return VStack(alignment: .leading, spacing: 5) {
+            HStack(spacing: 6) {
+                Image(systemName: "hand.raised.fill").font(.system(size: 10)).foregroundColor(RiskBadge.color(risk.level))
+                Text(verbatim: String(format: String(localized: "details.waits %@", defaultValue: "%@ is waiting for your OK"), agent))
+                    .font(.system(size: 11.5, weight: .semibold))
+                Spacer(minLength: 4)
+                Text(verbatim: risk.reason.label).font(.system(size: 10, weight: .semibold))
+                    .foregroundColor(RiskBadge.color(risk.level)).lineLimit(1)
+            }
+            ScrollView {
+                Text(verbatim: a.command.isEmpty ? a.tool : a.command)
+                    .font(.system(size: 10.5, design: .monospaced)).foregroundColor(Color(hex: "#C0C4CC"))
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .textSelection(.enabled)
+            }
+            .frame(maxHeight: 40)
+            HStack(spacing: 6) {
+                SecondaryButton("Deny") { HookServer.shared.sendApprovalDecision("deny", for: shownId) }
+                PrimaryButton("Allow") { HookServer.shared.sendApprovalDecision("allow", for: shownId) }
+                if !a.cwd.isEmpty, git.summary(for: a.cwd) != nil, risk.level == .high {
+                    SecondaryButton(verbatim: shield.savingNet
+                        ? String(localized: "net.saving", defaultValue: "Saving…")
+                        : String(localized: "net.allow", defaultValue: "Allow with a net")) {
+                        shield.allowWithNet(approvalId: shownId, cwd: a.cwd)
+                    }
+                }
+            }
+        }
+        .padding(.horizontal, 10).padding(.vertical, 7)
+        .background(RoundedRectangle(cornerRadius: 8).fill(RiskBadge.color(risk.level).opacity(0.08)))
+        .overlay(RoundedRectangle(cornerRadius: 8).stroke(RiskBadge.color(risk.level).opacity(0.35), lineWidth: 1))
+    }
+
     private func stateChip(_ turn: TurnHistory.Turn) -> some View {
         let running = turn.endedAt == nil
         return Text(verbatim: running
                     ? String(localized: "details.running", defaultValue: "Working")
+                    : turn.stopped
+                    ? String(localized: "details.stopped", defaultValue: "Stopped")
                     : String(localized: "details.done", defaultValue: "Done"))
             .font(.system(size: 10, weight: .semibold))
             .foregroundColor(Color(hex: running ? "#F5A524" : "#34D399"))
@@ -396,6 +492,7 @@ struct SessionFullView: View {
         let busy = turn.endedAt == nil || reply.running.contains(turn.sessionId)
         let empty = replyText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
         return VStack(alignment: .leading, spacing: 3) {
+            if !busy { quickReplies(turn) }
             HStack(spacing: 6) {
                 TextField(String(format: String(localized: "details.reply.placeholder %@", defaultValue: "Reply to %@…"), agent),
                           text: $replyText, axis: .vertical)
@@ -405,6 +502,25 @@ struct SessionFullView: View {
                     .focused($replyFocused)
                     .onSubmit { send(turn) }
                     .disabled(busy)
+                    .onChange(of: dictation.transcript) { _, _ in
+                        if dictation.isRecording { replyText = dictation.text }
+                    }
+                Button {
+                    Task {
+                        if dictation.isRecording { replyText = await dictation.finish() }
+                        else { await dictation.start(from: replyText) }
+                    }
+                } label: {
+                    Image(systemName: dictation.isRecording ? "mic.fill" : "mic")
+                        .font(.system(size: 11, weight: .semibold))
+                        .foregroundColor(dictation.isRecording ? Color(hex: "#F4505E") : RafiqLook.gold)
+                        .frame(width: 18, height: 18)
+                        .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+                .disabled(busy)
+                .help(dictation.isRecording ? String(localized: "Stop dictation") : String(localized: "Dictate (right-click to choose the language)"))
+                .contextMenu { DictationLanguageMenu(dictation: dictation) }
                 Button(action: { send(turn) }) {
                     Image(systemName: busy ? "ellipsis" : "arrow.up")
                         .font(.system(size: 10, weight: .bold))
@@ -435,11 +551,88 @@ struct SessionFullView: View {
         }
     }
 
-    private func send(_ turn: TurnHistory.Turn) {
+    // MARK: Quick replies
+
+    static let quickRepliesKey = "detailsQuickReplies"
+
+    /// Yours if you changed them (Settings is this row: + to add, right-click to remove).
+    private var quickReplies: [String] {
+        if let data = quickRepliesData.data(using: .utf8),
+           let list = try? JSONDecoder().decode([String].self, from: data) { return list }
+        return [
+            String(localized: "details.quick.continue", defaultValue: "Continue"),
+            String(localized: "details.quick.tests", defaultValue: "Run the tests"),
+            String(localized: "details.quick.commit", defaultValue: "Commit and push"),
+            String(localized: "details.quick.explain", defaultValue: "Explain what you did"),
+        ]
+    }
+
+    private func saveQuickReplies(_ list: [String]) {
+        if let data = try? JSONEncoder().encode(list) { quickRepliesData = String(decoding: data, as: UTF8.self) }
+    }
+
+    @ViewBuilder
+    private func quickReplies(_ turn: TurnHistory.Turn) -> some View {
+        if addingQuick {
+            // A new reply takes the whole row, ready to type.
+            HStack(spacing: 6) {
+                TextField(String(localized: "details.quick.new", defaultValue: "A reply you use often"), text: $newQuick)
+                    .textFieldStyle(.plain).font(.system(size: 11))
+                    .focused($quickFocused)
+                    .onAppear { quickFocused = true }
+                    .onSubmit {
+                        let t = newQuick.trimmingCharacters(in: .whitespacesAndNewlines)
+                        if !t.isEmpty, !quickReplies.contains(t) { saveQuickReplies(quickReplies + [String(t.prefix(80))]) }
+                        newQuick = ""; addingQuick = false
+                    }
+                    .onExitCommand { newQuick = ""; addingQuick = false }
+                Button(action: { newQuick = ""; addingQuick = false }) {
+                    Image(systemName: "xmark").font(.system(size: 8.5, weight: .bold)).foregroundColor(Color(hex: "#8E939C"))
+                        .frame(width: 18, height: 18).contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+            }
+            .padding(.horizontal, 10).padding(.vertical, 3)
+            .background(Capsule().stroke(RafiqLook.gold.opacity(0.4), lineWidth: 1))
+        } else {
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 5) {
+                    ForEach(quickReplies, id: \.self) { text in
+                        Button(action: { send(turn, text: text) }) {
+                            Text(verbatim: text).font(.system(size: 10.5, weight: .semibold))
+                                .foregroundColor(RafiqLook.gold)
+                                .padding(.horizontal, 9).padding(.vertical, 3)
+                                .background(Capsule().fill(RafiqLook.gold.opacity(0.1)))
+                                .overlay(Capsule().stroke(RafiqLook.gold.opacity(0.3), lineWidth: 1))
+                                .contentShape(Capsule())
+                        }
+                        .buttonStyle(.plain)
+                        .contextMenu {
+                            Button(String(localized: "details.quick.remove", defaultValue: "Remove")) {
+                                saveQuickReplies(quickReplies.filter { $0 != text })
+                            }
+                        }
+                    }
+                    Button(action: { addingQuick = true }) {
+                        Image(systemName: "plus").font(.system(size: 9, weight: .bold))
+                            .foregroundColor(Color(hex: "#8E939C"))
+                            .frame(width: 22, height: 20)
+                            .background(Capsule().stroke(Color.white.opacity(0.12), lineWidth: 1))
+                            .contentShape(Capsule())
+                    }
+                    .buttonStyle(.plain)
+                    .help(String(localized: "details.quick.add", defaultValue: "Add a reply you use often (right-click one to remove it)"))
+                }
+            }
+        }
+    }
+
+    private func send(_ turn: TurnHistory.Turn, text: String? = nil) {
         guard turn.endedAt != nil else { return }
-        switch reply.send(replyText, sessionId: turn.sessionId, cwd: turn.cwd, pillId: turn.pill) {
+        if dictation.isRecording { dictation.stop() }
+        switch reply.send(text ?? replyText, sessionId: turn.sessionId, cwd: turn.cwd, pillId: turn.pill) {
         case .started:
-            replyText = ""
+            if text == nil { replyText = "" }
             replyFocused = false
             back = 0
             replyNote = String(localized: "details.reply.sent", defaultValue: "Sent. The new turn shows here.")

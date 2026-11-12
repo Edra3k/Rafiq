@@ -798,7 +798,8 @@ final class HookServer: @unchecked Sendable {
             // The agent guard rates it for the open card's badge (information only).
             CommandRiskLog.shared.record(pill: agentId, tool: tool, input: input, label: label)
             TurnHistory.shared.step(pill: agentId, session: sessionId, tool: tool, input: input, label: label,
-                                    risk: CommandRisk.assess(tool: tool, command: input["command"] as? String ?? tool))
+                                    risk: CommandRisk.assess(tool: tool, command: input["command"] as? String ?? tool),
+                                    transcript: payload["transcript_path"] as? String)
             AgentShield.shared.checkCanary(tool: tool, input: input)
             #if !APPSTORE
             AskRunner.shared.noteStep(session: sessionId, cwd: cwd, label: label)
@@ -898,7 +899,10 @@ final class HookServer: @unchecked Sendable {
                 self.board.amend(pill: agentId, session: key) { if $0.state == .finished && $0.endedAt == now { $0.state = .idle } }
                 self.syncPill(agentId)
                 guard self.sessions.workingCount(pill: agentId) == 0 else { return }
-                if isExternalAgent {
+                // The Claude app's sessions stay (Details and the reply live on their pill), and
+                // so does any pill whose Details is open.
+                let detailsOpen = AppState.shared.view == .session && AppState.shared.focusTask?.pill == agentId
+                if isExternalAgent && agentId != "agent_claude-desktop" && !detailsOpen {
                     AppState.shared.removeTask(id: agentId)
                 } else {
                     self.clearPillBadge(id: agentId)
@@ -1058,7 +1062,11 @@ final class HookServer: @unchecked Sendable {
         }
         if state.mode == .expanded {
             // Approval and question always win; other alerts are blocked while a card is showing
-            if view == .approval || view == .question {
+            if view == .approval, state.view == .session,
+               let asking = state.pendingApproval?.pillId,
+               state.focusTask?.pill == PillCatalog.basePillId(asking) {
+                // Details of that very session is open: the request shows there.
+            } else if view == .approval || view == .question {
                 state.view = view
             } else if isAlert && state.pendingApproval == nil
                         && !(state.view == .digest && DigestCenter.shared.holdsIsland) {

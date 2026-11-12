@@ -190,6 +190,19 @@ final class LiveVoiceInfo: VoiceInfoProviding {
 
     func askAgent(_ target: AskTarget, _ text: String) -> VoiceActionResult {
         let runner = AskRunner.shared
+        // "Hey Rafiq, tell Claude to run the tests": with no project named, it carries on the
+        // Claude Code conversation that ended last (within two hours), as Details' reply does.
+        if target == .claude,
+           AskRouter.project(in: text, among: SessionLauncher.shared.projects) == nil,
+           let turn = TurnHistory.shared.latestReplyable(within: 7200, canReply: SessionReply.canReply(pill:)),
+           !SessionReply.shared.running.contains(turn.sessionId) {
+            let route = AskRouter.route(text, chosen: .claude, hasHermes: runner.hasHermes)
+            if SessionReply.shared.send(route.text, sessionId: turn.sessionId, cwd: turn.cwd, pillId: turn.pill) == .started {
+                let place = turn.title.isEmpty ? URL(fileURLWithPath: turn.cwd).lastPathComponent : turn.title
+                return .init(outcome: .success,
+                             message: String(format: String(localized: "voice.reply.sent %@", defaultValue: "Sent to Claude, in %@"), place))
+            }
+        }
         let routed = AskRouter.route(text, chosen: target, hasHermes: runner.hasHermes).target
         let name = routed == .hermes ? "Hermes" : "Claude"
         switch runner.ask(text, chosen: target, source: "voice") {
