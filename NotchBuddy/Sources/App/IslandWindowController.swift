@@ -794,6 +794,20 @@ final class IslandWindowController: NSWindowController {
             appendAppLog("nb.log", "[Screenshot] shortcut pressed")
             QuickScreenshot.shared.take()
             #endif
+
+        case .clipboardHistory:
+            #if !APPSTORE
+            guard FeatureHub.shared.isOn(.clipboard) else { return }
+            UserDefaults.standard.set("clip", forKey: "tools.page")
+            islandPanel.makeKey()
+            fsm.openedExternally()
+            expand(to: .tools)
+            #endif
+
+        case .pastePlain:
+            #if !APPSTORE
+            if FeatureHub.shared.isOn(.plainPaste) { ClipboardHistory.pastePlain() }
+            #endif
         }
     }
 

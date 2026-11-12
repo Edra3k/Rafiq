@@ -50,6 +50,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         MachineVitals.shared.start()
         #if !APPSTORE
         KeepAwake.shared.featureChanged()
+        ClipboardHistory.shared.featureChanged()
         #endif
         #if !APPSTORE
         // Opened by hand (Finder, Dock, Spotlight): the Rafiq window shows. Not at login.

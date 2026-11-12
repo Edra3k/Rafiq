@@ -25,6 +25,10 @@
 - **The Tools tab** — a new tab in the island (the grid icon), with three pages. Tools: keep awake, dark mode, desktop icons, eject, empty the Trash (two clicks), lock, color picker, text from screen, speed test, quit apps. Mac: processor and its graph, temperature, battery and its health, memory, disk, network, what uses the processor, and the open ports with Stop — read every two seconds and only while the page is shown. Usage: below.
 - **Claude's real usage** — the "Claude —" chip now shows the plan's limits even for sessions from the Claude app: Rafiq asks Claude Code itself, as /usage does (no prompt, no model call, no tool, at most every five minutes). The Usage page shows the session and the week as two rings with their resets, the tokens of today and of 7 days with what they would cost at API prices, the week's days, the projects and the models — read from Claude Code's transcripts on this Mac.
 - **Keep the Mac awake while an agent works** — on by default with Keep awake; or for an hour from the Tools tab.
+- **Clipboard history** — what you copy (text, links, files, images), searchable and pinnable, in the Tools tab or with ⌃⌥⌘V; a click pastes it in the front app. Password managers' items are never kept, a key or token is masked, never written to disk and wiped from the clipboard after 30 s.
+- **Clean links** — a copied link loses its tracking parameters (utm_…, fbclid, gclid and the like) before you paste it.
+- **Paste as plain text** — ⌃⌥⇧V pastes the clipboard without its formatting.
+- **Shelf and Notes** — park files in the island and drag them out later; notes in tabs, saved as you type, copied or sent to Claude in one click.
 
 ## 0.7.0 — 2026-11-12
 

@@ -18,6 +18,9 @@ struct ToolsView: View {
         var list = [("tools", String(localized: "tools.page.tools", defaultValue: "Tools"))]
         if hub.isOn(.macMonitor) { list.append(("mac", String(localized: "tools.page.mac", defaultValue: "Mac"))) }
         if hub.isOn(.claudeUsage) { list.append(("usage", String(localized: "tools.page.usage", defaultValue: "Usage"))) }
+        if hub.isOn(.clipboard) { list.append(("clip", String(localized: "tools.page.clip", defaultValue: "Clipboard"))) }
+        if hub.isOn(.shelf) { list.append(("shelf", String(localized: "feature.shelf", defaultValue: "Shelf"))) }
+        if hub.isOn(.scratchpad) { list.append(("notes", String(localized: "tools.page.notes", defaultValue: "Notes"))) }
         return list
     }
 
@@ -49,6 +52,9 @@ struct ToolsView: View {
                 switch shown {
                 case "mac": MacPage(active: active)
                 case "usage": UsagePage(state: state, active: active)
+                case "clip": ClipboardPage()
+                case "shelf": ShelfPage()
+                case "notes": NotesPage()
                 default: ToolsGrid()
                 }
             }
@@ -62,6 +68,204 @@ struct ToolsView: View {
 enum SettingsOpener {
     @MainActor static func features() {
         FlowHubController.shared.show(.features)
+    }
+}
+
+// MARK: - Clipboard page
+
+private struct ClipboardPage: View {
+    @ObservedObject private var history = ClipboardHistory.shared
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 5) {
+            HStack(spacing: 6) {
+                Image(systemName: "magnifyingglass").font(.system(size: 10)).foregroundColor(Color(hex: "#6B7079"))
+                TextField(String(localized: "tools.clip.search", defaultValue: "Search what you copied"), text: $history.query)
+                    .textFieldStyle(.plain).font(.system(size: 11.5))
+                SmallButton(String(localized: "tools.clip.clear", defaultValue: "Clear")) { history.clearUnpinned() }
+            }
+            .padding(.horizontal, 8).padding(.vertical, 5)
+            .background(Color.white.opacity(0.05)).clipShape(RoundedRectangle(cornerRadius: 8))
+            if history.shown.isEmpty {
+                Text(String(localized: "tools.clip.empty", defaultValue: "Copy something: it shows up here."))
+                    .font(.system(size: 11)).foregroundColor(Color(hex: "#8E939C")).padding(.top, 6)
+            }
+            ScrollView {
+                VStack(spacing: 2) {
+                    ForEach(history.shown) { item in ClipRow(item: item) }
+                }
+            }
+            Text(String(localized: "tools.clip.hint", defaultValue: "Click to paste in the front app · ⌃⌥⌘V opens this page"))
+                .font(.system(size: 9.5)).foregroundColor(Color(hex: "#6B7079"))
+        }
+    }
+}
+
+private struct ClipRow: View {
+    let item: ClipItem
+    @State private var hovered = false
+
+    private var symbol: String {
+        switch item.kind {
+        case .text: return "text.alignleft"
+        case .link: return "link"
+        case .file: return "doc"
+        case .image: return "photo"
+        case .secret: return "key"
+        }
+    }
+
+    var body: some View {
+        HStack(spacing: 7) {
+            Image(systemName: item.pinned ? "pin.fill" : symbol).font(.system(size: 10))
+                .foregroundColor(item.pinned ? RafiqLook.gold : item.kind == .secret ? Color(hex: "#F4505E") : Color(hex: "#8E939C"))
+                .frame(width: 14)
+            if item.kind == .image, let data = item.imageData, let image = NSImage(data: data) {
+                Image(nsImage: image).resizable().scaledToFit().frame(height: 22).clipShape(RoundedRectangle(cornerRadius: 3))
+            }
+            Text(verbatim: item.text.replacingOccurrences(of: "\n", with: " ⏎ "))
+                .font(.system(size: 11, design: item.kind == .secret ? .monospaced : .default))
+                .foregroundColor(Color(hex: item.kind == .secret ? "#8E939C" : "#E1E3E6")).lineLimit(1)
+            if item.cleaned {
+                Text(String(localized: "tools.clip.cleaned", defaultValue: "cleaned")).font(.system(size: 9)).foregroundColor(Color(hex: "#34D399"))
+            }
+            Spacer(minLength: 4)
+            if hovered && item.kind != .secret {
+                Button { ClipboardHistory.shared.togglePin(item) } label: { Image(systemName: item.pinned ? "pin.slash" : "pin") }
+                    .buttonStyle(.plain).font(.system(size: 10)).foregroundColor(Color(hex: "#8E939C"))
+                Button { ClipboardHistory.shared.use(item, paste: false) } label: { Image(systemName: "doc.on.doc") }
+                    .buttonStyle(.plain).font(.system(size: 10)).foregroundColor(Color(hex: "#8E939C"))
+                Button { ClipboardHistory.shared.remove(item) } label: { Image(systemName: "xmark") }
+                    .buttonStyle(.plain).font(.system(size: 10)).foregroundColor(Color(hex: "#8E939C"))
+            } else {
+                Text(verbatim: item.date.formatted(.relative(presentation: .numeric, unitsStyle: .abbreviated)))
+                    .font(.system(size: 9.5)).foregroundColor(Color(hex: "#6B7079"))
+            }
+        }
+        .padding(.horizontal, 6).padding(.vertical, 4)
+        .background(Color.white.opacity(hovered ? 0.06 : 0)).clipShape(RoundedRectangle(cornerRadius: 6))
+        .contentShape(Rectangle())
+        .onHover { hovered = $0 }
+        .onTapGesture {
+            guard item.kind != .secret else { return }
+            NotificationCenter.default.post(name: .islandCollapse, object: nil)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { ClipboardHistory.shared.use(item, paste: true) }
+        }
+    }
+}
+
+// MARK: - Shelf page
+
+private struct ShelfPage: View {
+    @ObservedObject private var shelf = Shelf.shared
+    @State private var targeted = false
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            HStack {
+                Text(String(localized: "tools.shelf.hint", defaultValue: "Drop files here, drag them out when you need them."))
+                    .font(.system(size: 10.5)).foregroundColor(Color(hex: "#8E939C"))
+                Spacer()
+                if !shelf.paths.isEmpty { SmallButton(String(localized: "tools.clip.clear", defaultValue: "Clear")) { shelf.clear() } }
+            }
+            ScrollView {
+                LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 6), count: 5), spacing: 6) {
+                    ForEach(shelf.paths, id: \.self) { path in ShelfTile(path: path) }
+                }
+            }
+            .frame(maxHeight: .infinity)
+            .background(RoundedRectangle(cornerRadius: 12).strokeBorder(style: StrokeStyle(lineWidth: 1, dash: [4, 3]))
+                .foregroundColor(targeted ? RafiqLook.gold : Color.white.opacity(0.12)))
+            .onDrop(of: [.fileURL], isTargeted: $targeted) { providers in
+                for provider in providers {
+                    _ = provider.loadObject(ofClass: URL.self) { url, _ in
+                        guard let url else { return }
+                        Task { @MainActor in Shelf.shared.add([url]) }
+                    }
+                }
+                return true
+            }
+        }
+    }
+}
+
+private struct ShelfTile: View {
+    let path: String
+    @State private var hovered = false
+    var body: some View {
+        VStack(spacing: 3) {
+            Image(nsImage: NSWorkspace.shared.icon(forFile: path)).resizable().frame(width: 30, height: 30)
+            Text(verbatim: (path as NSString).lastPathComponent).font(.system(size: 9)).foregroundColor(Color(hex: "#B0B5BE"))
+                .lineLimit(1).truncationMode(.middle)
+        }
+        .frame(maxWidth: .infinity).padding(6)
+        .background(Color.white.opacity(hovered ? 0.08 : 0.04)).clipShape(RoundedRectangle(cornerRadius: 10))
+        .overlay(alignment: .topTrailing) {
+            if hovered {
+                Button { Shelf.shared.remove(path) } label: {
+                    Image(systemName: "xmark.circle.fill").font(.system(size: 11)).foregroundColor(Color(hex: "#8E939C"))
+                }
+                .buttonStyle(.plain).padding(2)
+            }
+        }
+        .onHover { hovered = $0 }
+        .onDrag { NSItemProvider(contentsOf: URL(fileURLWithPath: path)) ?? NSItemProvider() }
+        .onTapGesture(count: 2) { NSWorkspace.shared.open(URL(fileURLWithPath: path)) }
+    }
+}
+
+// MARK: - Notes page
+
+private struct NotesPage: View {
+    @ObservedObject private var pad = Scratchpad.shared
+    @State private var sent = false
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            HStack(spacing: 4) {
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 4) {
+                        ForEach(pad.notes) { note in
+                            Button { pad.selected = note.id } label: {
+                                Text(verbatim: note.title).font(.system(size: 10.5, weight: .medium))
+                                    .foregroundColor(pad.selected == note.id ? RafiqLook.gold : Color(hex: "#8E939C"))
+                                    .padding(.horizontal, 8).padding(.vertical, 3)
+                                    .background(pad.selected == note.id ? RafiqLook.gold.opacity(0.12) : Color.white.opacity(0.04))
+                                    .clipShape(Capsule())
+                            }
+                            .buttonStyle(.plain)
+                            .contextMenu {
+                                Button(String(localized: "tools.notes.delete", defaultValue: "Delete this note")) { pad.delete(note.id) }
+                            }
+                        }
+                        Button { pad.add() } label: { Image(systemName: "plus").font(.system(size: 10)).foregroundColor(Color(hex: "#8E939C")) }
+                            .buttonStyle(.plain)
+                    }
+                }
+            }
+            if let id = pad.selected {
+                TextEditor(text: pad.binding(for: id))
+                    .font(.system(size: 12))
+                    .scrollContentBackground(.hidden)
+                    .padding(6)
+                    .background(Color.white.opacity(0.04)).clipShape(RoundedRectangle(cornerRadius: 10))
+                HStack(spacing: 6) {
+                    SmallButton(String(localized: "tools.notes.copy", defaultValue: "Copy")) {
+                        ClipboardHistory.shared.write(pad.binding(for: id).wrappedValue)
+                    }
+                    SmallButton(sent ? String(localized: "tools.notes.sent", defaultValue: "Sent to Claude")
+                                     : String(localized: "tools.notes.send", defaultValue: "Send to Claude")) {
+                        let text = pad.binding(for: id).wrappedValue.trimmingCharacters(in: .whitespacesAndNewlines)
+                        guard !text.isEmpty else { return }
+                        _ = AskRunner.shared.ask(text, chosen: .claude, source: "notes")
+                        sent = true
+                    }
+                    Spacer()
+                    Text(String(localized: "tools.notes.saved", defaultValue: "saved as you type")).font(.system(size: 9.5)).foregroundColor(Color(hex: "#6B7079"))
+                }
+            }
+        }
+        .onChange(of: pad.selected) { _, _ in sent = false }
     }
 }
 

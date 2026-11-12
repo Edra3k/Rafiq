@@ -22,6 +22,8 @@ enum ShortcutAction: String, CaseIterable, Sendable {
     case captureScreen     = "captureScreen"      // ⌘⇧S — capture a part of the screen for Claude (non-AppStore)
     case quickScreenshot   = "quickScreenshot"    // ⌘⇧2 — the whole screen: copied, and a thumbnail to drag (non-AppStore)
     case newSession        = "newSession"         // ⌃⌥N — a new Claude Code session in a project (non-AppStore)
+    case clipboardHistory  = "clipboardHistory"   // ⌃⌥⌘V — the clipboard history in the island (non-AppStore)
+    case pastePlain        = "pastePlain"         // ⌃⌥⇧V — paste the clipboard without its formatting (non-AppStore)
 
     // MARK: UserDefaults keys
 
@@ -56,12 +58,15 @@ enum ShortcutAction: String, CaseIterable, Sendable {
         case .captureScreen:     return String(localized: "shortcut.capture")
         case .quickScreenshot:   return String(localized: "shortcut.screenshot")
         case .newSession:        return String(localized: "launch.title")
+        case .clipboardHistory:  return String(localized: "feature.clipboard", defaultValue: "Clipboard history")
+        case .pastePlain:        return String(localized: "feature.plainPaste", defaultValue: "Paste as plain text")
         }
     }
 
     /// Whether this action should be omitted from App Store builds.
     var isAppStoreOnly: Bool { false }
-    var isNonAppStore: Bool  { self == .attachFrontWindow || self == .talkToCoucou || self == .captureScreen || self == .quickScreenshot || self == .newSession }
+    var isNonAppStore: Bool  { self == .attachFrontWindow || self == .talkToCoucou || self == .captureScreen || self == .quickScreenshot || self == .newSession
+        || self == .clipboardHistory || self == .pastePlain }
 
     /// Whether the shortcut is enabled by default.
     /// `toggleIsland` and `talkToCoucou` are off by default; all others are on.
@@ -116,6 +121,8 @@ enum ShortcutLogic {
         .captureScreen:     ShortcutSpec(keyCode: 1,  nsFlags: ShortcutSpec.cmdShift), // ⌘⇧S
         .quickScreenshot:   ShortcutSpec(keyCode: 19, nsFlags: ShortcutSpec.cmdShift), // ⌘⇧2 (next to macOS's ⌘⇧3, free)
         .newSession:        ShortcutSpec(keyCode: 45, nsFlags: ShortcutSpec.ctrlOpt),  // ⌃⌥N
+        .clipboardHistory:  ShortcutSpec(keyCode: 9,  nsFlags: ShortcutSpec.ctrlOpt | ShortcutSpec.cmdBit),   // ⌃⌥⌘V
+        .pastePlain:        ShortcutSpec(keyCode: 9,  nsFlags: ShortcutSpec.ctrlOpt | ShortcutSpec.shiftBit), // ⌃⌥⇧V
     ]
 
     // MARK: - Load / save (UserDefaults)
