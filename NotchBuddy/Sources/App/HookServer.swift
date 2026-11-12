@@ -749,6 +749,9 @@ final class HookServer: @unchecked Sendable {
                        externalAgent: isExternalAgent ? validAgent : nil)
             note { $0.finalLine = nil }
             OSVWatch.shared.sessionStarted(cwd: cwd)
+            #if !APPSTORE
+            AskRunner.shared.noteStart(session: sessionId, agent: rawAgent, cwd: cwd)
+            #endif
             nbLog("SessionStart \(isExternalAgent ? agentId : projectName) (\(sessionId.prefix(8)))")
             NotificationCenter.default.post(name: .checkMondayRecap, object: nil)
             if state.isPresent { expandIfNeeded(to: .overview) }
@@ -793,6 +796,9 @@ final class HookServer: @unchecked Sendable {
             // The agent guard rates it for the open card's badge (information only).
             CommandRiskLog.shared.record(pill: agentId, tool: tool, input: input, label: label)
             AgentShield.shared.checkCanary(tool: tool, input: input)
+            #if !APPSTORE
+            AskRunner.shared.noteStep(session: sessionId, cwd: cwd, label: label)
+            #endif
             // A secret in what the agent is about to write: a card (the write still happens).
             if let written = SecretScanner.writtenText(tool: tool, input: input) {
                 let hits = SecretScanner.scan(written)
@@ -857,6 +863,9 @@ final class HookServer: @unchecked Sendable {
             GitStatusStore.shared.refresh(cwd, force: true)
             let rawFinal = (payload["last_assistant_message"] as? String)
                 ?? (payload["message"] as? String) ?? ""
+            #if !APPSTORE
+            AskRunner.shared.noteStop(session: sessionId, cwd: cwd, answer: rawFinal)
+            #endif
             let finalText = DiffEngine.toOneLine(rawFinal)
             note {
                 $0.state = .finished
@@ -1152,6 +1161,9 @@ final class HookServer: @unchecked Sendable {
         let toolInput = payload["tool_input"] as? [String: Any] ?? [:]
         let inputKey = Self.approvalInputKey(toolInput)
         nbLog("PermissionRequest \(tool) [\(pillId)]")
+        #if !APPSTORE
+        AskRunner.shared.noteApproval(session: sessionId, cwd: cwd)
+        #endif
 
         // AskUserQuestion is now handled via the dedicated --ask PreToolUse hook.
         // If it still arrives here as a PermissionRequest, reply "ask" so Claude Code
@@ -3062,7 +3074,7 @@ export default function (amp: any): void {
     /// Returns true if the installed Hermes version exposes register_approval_transport.
     /// Runs a quick python3 import check; returns false on any error or if hermes is not installed.
     /// Finds the `hermes` executable in PATH and common install locations.
-    private static func hermesExecutablePath() -> String? {
+    static func hermesExecutablePath() -> String? {
         // Try PATH via `which` first
         let which = Process()
         which.executableURL = URL(fileURLWithPath: "/usr/bin/which")

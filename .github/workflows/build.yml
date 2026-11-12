@@ -62,6 +62,8 @@ jobs:
 
       - name: Test the Proxmox answers
         run: bash scripts/test-proxmox.sh
+      - name: Ask router tests
+        run: bash scripts/test-agent-ask.sh
 
       - name: Test the server log reading (SSH logins, open ports)
         run: bash scripts/test-server-log.sh

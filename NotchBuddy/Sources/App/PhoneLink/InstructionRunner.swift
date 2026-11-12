@@ -90,7 +90,7 @@ final class InstructionRunner {
             while more {
                 let changes = try await database.recordZoneChanges(inZoneWith: SessionSnapshot.zoneID, since: changeToken)
                 for (_, result) in changes.modificationResultsByID {
-                    if case .success(let mod) = result, mod.record.recordType == "Instruction" { found.append(mod.record) }
+                    if case .success(let mod) = result, ["Instruction", AskRecord.recordType].contains(mod.record.recordType) { found.append(mod.record) }
                 }
                 changeToken = changes.changeToken
                 more = changes.moreComing
@@ -110,6 +110,7 @@ final class InstructionRunner {
     }
 
     private func handle(_ record: CKRecord) {
+        if record.recordType == AskRecord.recordType { handleAsk(record); return }
         let pillId = record["pillId"] as? String ?? ""
         let createdAt = record["createdAt"] as? Date ?? .distantPast
         let text = (record.encryptedValues["text"] as? String ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
@@ -137,6 +138,23 @@ final class InstructionRunner {
             return
         }
         run(claude: claude, text: text, sessionId: session.sessionId, cwd: session.cwd, pillId: pillId)
+    }
+
+    /// "Ask…" from the iPhone or the Watch: Hermes or Claude, as from the notch. The
+    /// approvals still wait on their card (or Face ID on the phone).
+    private func handleAsk(_ record: CKRecord) {
+        let createdAt = record[AskRecord.createdKey] as? Date ?? .distantPast
+        let text = (record.encryptedValues[AskRecord.textKey] as? String ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
+        let target = AskTarget(rawValue: record[AskRecord.targetKey] as? String ?? "") ?? .auto
+        let device = record[AskRecord.deviceKey] as? String ?? "iPhone"
+        guard Self.isEnabled else { log("ask ignored: instructions are off"); return }
+        guard Date().timeIntervalSince(createdAt) < maxAge else { log("ask ignored: older than 10 min"); return }
+        guard !text.isEmpty, text.count <= AskRecord.maxLength else { log("ask ignored: empty or too long"); return }
+        // A plain question has no chat to land in on the Mac: Auto keeps it for an agent.
+        let route = AskRouter.route(text, chosen: target, hasHermes: AskRunner.shared.hasHermes)
+        let chosen: AskTarget = route.target == .answer ? (AskRunner.shared.hasHermes ? .hermes : .claude) : target
+        let outcome = AskRunner.shared.ask(text, chosen: chosen, source: device)
+        log("ask from \(device): \(outcome)")
     }
 
     // MARK: Running

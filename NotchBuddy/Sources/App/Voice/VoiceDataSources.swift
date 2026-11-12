@@ -186,6 +186,29 @@ final class LiveVoiceInfo: VoiceInfoProviding {
         NotificationCenter.default.post(name: .voiceShowMailCard, object: nil)
     }
 
+    // MARK: Ask Hermes or Claude
+
+    func askAgent(_ target: AskTarget, _ text: String) -> VoiceActionResult {
+        let runner = AskRunner.shared
+        let routed = AskRouter.route(text, chosen: target, hasHermes: runner.hasHermes).target
+        let name = routed == .hermes ? "Hermes" : "Claude"
+        switch runner.ask(text, chosen: target, source: "voice") {
+        case .started:
+            return .init(outcome: .success,
+                         message: String(format: String(localized: "voice.ask.started %@", defaultValue: "%@ is on it"), name))
+        case .chat:
+            return .init(outcome: .success, message: "")
+        case .needsProject:
+            return .init(outcome: .failure, message: String(localized: "ask.needs-project", defaultValue: "Pick a project for Claude"))
+        case .noHermes:
+            return .init(outcome: .failure, message: String(localized: "ask.no-hermes", defaultValue: "Hermes isn't installed here, nor on the server"))
+        case .busy:
+            return .init(outcome: .failure, message: String(localized: "ask.busy", defaultValue: "Three tasks are already running"))
+        case .empty:
+            return .init(outcome: .failure, message: "")
+        }
+    }
+
     // MARK: Web search (opt-in, the user's Anthropic key)
 
     var webSearchEnabled: Bool { VoiceSettings.webSearchEnabled }

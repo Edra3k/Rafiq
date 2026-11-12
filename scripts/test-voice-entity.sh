@@ -4,6 +4,7 @@ echo "Running EntityResolver tests…"
 swiftc -o /tmp/voice-entity-tests \
   tests/VoiceTestStubs.swift \
   tests/PillFixture.swift \
+  NotchBuddy/Sources/CoucouKit/AgentAsk.swift \
   NotchBuddy/Sources/App/Voice/VoiceIntent.swift \
   NotchBuddy/Sources/App/Voice/IntentParser.swift \
   NotchBuddy/Sources/App/Voice/VoiceQuery.swift \

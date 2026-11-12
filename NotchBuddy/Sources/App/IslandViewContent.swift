@@ -30,6 +30,12 @@ struct IslandViewContent: View {
         case .digest:    DigestCardView(state: state)
         case .tasbih:    TasbihView(state: state)
         case .session:   SessionFullView(state: state)
+        case .ask:
+            #if !APPSTORE
+            AskView(state: state)
+            #else
+            EmptyView()
+            #endif
         case .homelab:
             #if !APPSTORE
             HomelabView(state: state)

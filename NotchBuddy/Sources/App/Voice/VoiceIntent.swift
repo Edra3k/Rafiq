@@ -43,6 +43,7 @@ enum VoiceIntent: Equatable {
     case mail(VoiceQuery.MailRequest)                // "envoie le fichier X à Tana" (Mail opens, I click Send)
     case openApp(name: String)                       // "ouvre Figma"
     case webSearch(query: String)                    // "cherche sur internet …" (Claude + web search, opt-in)
+    case askAgent(target: AskTarget, text: String)   // "demande à Hermes de …" (the approvals stay on their card)
 
     // ── Unknown ───────────────────────────────────────────────────────────────
 

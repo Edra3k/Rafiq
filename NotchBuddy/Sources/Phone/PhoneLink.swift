@@ -91,11 +91,19 @@ final class PhoneLink {
         didSet { WatchBridge.shared.push(sessions) }
     }
     /// Service Rafiq (GitHub, Stripe…) the Mac publishes, by pill ID.
-    var services: [String: ServiceSnapshot] = [:]
+    var services: [String: ServiceSnapshot] = [:] {
+        didSet { WatchBridge.shared.pushPrayer(PrayerSchedule.next(in: services[PrayerSchedule.pillId])) }
+    }
     /// A service up close (figures, lists, actions), fetched by the Mac when its screen opens.
     var serviceDetails: [String: ServiceDetail] = [:]
     /// The last turn of each session (prompt, actions, diffs, answer), by pill ID.
     var turns: [String: TurnSnapshot] = [:]
+    /// "Ask…" tasks the Mac runs (Hermes or Claude), by id; the Watch gets the latest.
+    var asks: [String: AskResult] = [:] {
+        didSet { WatchBridge.shared.pushAsks(Array(asks.values)) }
+    }
+    /// The next prayer, from the times the Mac publishes.
+    var nextPrayer: (name: String, at: Date)? { PrayerSchedule.next(in: services[PrayerSchedule.pillId]) }
     /// Turns seen before the latest one, and today's tally (this iPhone only).
     var archive = TurnArchive.load()
     var lastPong: String?
@@ -236,6 +244,9 @@ final class PhoneLink {
                 for deletion in changes.deletions where deletion.recordType == ServiceDetail.recordType {
                     if let id = ServiceDetail.pillId(fromRecordName: deletion.recordID.recordName) { serviceDetails[id] = nil }
                 }
+                for deletion in changes.deletions where deletion.recordType == AskResult.recordType {
+                    if let id = AskResult.id(fromRecordName: deletion.recordID.recordName) { asks[id] = nil }
+                }
                 for deletion in changes.deletions where deletion.recordType == ServiceSnapshot.recordType {
                     if let id = ServiceSnapshot.pillId(fromRecordName: deletion.recordID.recordName) {
                         services[id] = nil
@@ -277,6 +288,14 @@ final class PhoneLink {
             guard let payload = record.encryptedValues["payload"] as? String,
                   let detail = try? JSONDecoder().decode(ServiceDetail.self, from: Data(payload.utf8)) else { return false }
             serviceDetails[detail.pillId] = detail
+            return false
+        }
+        if record.recordType == AskResult.recordType {
+            guard let payload = record.encryptedValues["payload"] as? String,
+                  let result = try? JSONDecoder().decode(AskResult.self, from: Data(payload.utf8)) else { return false }
+            let before = asks[result.id]
+            asks[result.id] = result
+            if before?.state == .running && result.state != .running { AskSpeaker.shared.finished(result) }
             return false
         }
         if record.recordType == ServiceSnapshot.recordType {
@@ -496,6 +515,28 @@ final class PhoneLink {
             return true
         } catch {
             lastPong = "Instruction failed: \(error.localizedDescription)"
+            return false
+        }
+    }
+
+    // MARK: Ask (Hermes or Claude, from here or the Watch)
+
+    /// Hands a task to the Mac's "Ask…": Hermes or Claude runs it there, the approvals
+    /// come here as usual, the answer comes back as an `AskResult`.
+    func sendAsk(_ text: String, target: AskTarget, device: String? = nil) async -> Bool {
+        let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty, trimmed.count <= AskRecord.maxLength else { return false }
+        let record = CKRecord(recordType: AskRecord.recordType,
+                              recordID: CKRecord.ID(recordName: "ask-\(UUID().uuidString)", zoneID: Self.zoneID))
+        record[AskRecord.targetKey] = target.rawValue
+        record[AskRecord.createdKey] = Date()
+        record[AskRecord.deviceKey] = device ?? UIDevice.current.name
+        record.encryptedValues[AskRecord.textKey] = trimmed
+        do {
+            _ = try await database.save(record)
+            return true
+        } catch {
+            lastPong = "Ask failed: \(error.localizedDescription)"
             return false
         }
     }

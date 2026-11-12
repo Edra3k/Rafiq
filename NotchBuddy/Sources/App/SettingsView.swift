@@ -638,6 +638,9 @@ struct SettingsView: View {
     // MARK: - Agents section
 
     @ViewBuilder private var agentsSection: some View {
+        #if !APPSTORE
+        AskSettings()
+        #endif
         GroupBox(String(localized: "hooks.claude-code.title")) {
             VStack(alignment: .leading, spacing: 10) {
                 if hookNeedsUpdate {

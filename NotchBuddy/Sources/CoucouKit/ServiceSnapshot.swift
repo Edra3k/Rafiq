@@ -65,3 +65,22 @@ extension PillCatalog {
         }
     }
 }
+
+// MARK: - Prayer times, as the Mac computed them
+
+/// The Mac publishes today's and tomorrow's prayer times as the `integration_prayer`
+/// service (items: title = the prayer's name, detail = its key, date = its time).
+enum PrayerSchedule {
+    static let pillId = "integration_prayer"
+
+    /// The next prayer after `now` (sunrise left out), from the published times.
+    static func next(in snapshot: ServiceSnapshot?, after now: Date = Date()) -> (name: String, at: Date)? {
+        guard let snapshot else { return nil }
+        let items = snapshot.sections.flatMap(\.items)
+            .filter { $0.detail != "sunrise" }
+            .compactMap { item in item.date.map { (name: item.title, at: $0) } }
+            .filter { $0.at > now }
+            .sorted { $0.at < $1.at }
+        return items.first
+    }
+}

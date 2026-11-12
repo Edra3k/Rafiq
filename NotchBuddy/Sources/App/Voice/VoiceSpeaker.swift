@@ -47,8 +47,8 @@ final class VoiceSpeaker: NSObject, AVSpeechSynthesizerDelegate, AVAudioPlayerDe
     }
 
     /// Adds a sentence to the queue. Starts playing if nothing is playing.
-    func enqueue(_ text: String, locale: Locale?) {
-        guard VoiceSettings.speakEnabled else { return }
+    func enqueue(_ text: String, locale: Locale?, force: Bool = false) {
+        guard force || VoiceSettings.speakEnabled else { return }
         let audio: Task<Data?, Never>? = ElevenLabsTTS.isActive
             ? Task { await ElevenLabsTTS.shared.audio(for: text) }
             : nil
@@ -57,6 +57,13 @@ final class VoiceSpeaker: NSObject, AVSpeechSynthesizerDelegate, AVAudioPlayerDe
     }
 
     func stop() { stopPlayback() }
+
+    /// Says these sentences now, even with spoken answers off: the user asked for it
+    /// ("Read aloud", or "Ask…" set to answer aloud).
+    func say(_ sentences: [String], locale: Locale?) {
+        stopPlayback()
+        for sentence in sentences { enqueue(sentence, locale: locale, force: true) }
+    }
 
     /// What the mic gate uses: what is actually playing or about to play, never a flag
     /// alone, so a missed callback cannot leave Rafiq deaf.

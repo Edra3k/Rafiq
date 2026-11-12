@@ -40,6 +40,12 @@ final class ServicePublisher {
             s.$notionPages.map { _ in () }.eraseToAnyPublisher(),
             s.$notionError.map { _ in () }.eraseToAnyPublisher(),
             s.$n8nRuns.map { _ in () }.eraseToAnyPublisher(),
+            // Today's and tomorrow's prayer times, for the iPhone and the Watch.
+            PrayerController.shared.$today.map { _ in () }.eraseToAnyPublisher(),
+            PrayerController.shared.$tomorrow.map { _ in () }.eraseToAnyPublisher(),
+            // Today's and tomorrow's prayer times, for the iPhone and the Watch.
+            PrayerController.shared.$today.map { _ in () }.eraseToAnyPublisher(),
+            PrayerController.shared.$tomorrow.map { _ in () }.eraseToAnyPublisher(),
         ]
         cancellable = Publishers.MergeMany(changes)
             .debounce(for: .seconds(2), scheduler: RunLoop.main)
@@ -130,8 +136,30 @@ final class ServicePublisher {
 @MainActor
 enum ServiceSnapshots {
     static func all(from s: AppState) -> [String: ServiceSnapshot] {
-        let built = [github(s), stripe(s), vercel(s), resend(s), calcom(s), n8n(s), notion(s)].compactMap { $0 }
+        let built = [github(s), stripe(s), vercel(s), resend(s), calcom(s), n8n(s), notion(s), prayer()].compactMap { $0 }
         return Dictionary(uniqueKeysWithValues: built.map { ($0.pillId, $0) })
+    }
+
+    // MARK: Prayer
+
+    /// Today's and tomorrow's times (the Watch counts down to the next one). No location
+    /// leaves the Mac: only the times it computed.
+    static func prayer() -> ServiceSnapshot? {
+        let p = PrayerController.shared
+        guard let today = p.today else { return nil }
+        func items(_ day: PrayerDay?) -> [ServiceItem] {
+            guard let day else { return [] }
+            return Prayer.allCases.compactMap { prayer in
+                day.time(prayer).map { ServiceItem(title: PrayerController.name(prayer), detail: prayer.rawValue, date: $0) }
+            }
+        }
+        let next = p.next(at: Date())
+        return ServiceSnapshot(pillId: PrayerSchedule.pillId, tone: .info,
+                               headline: next.map { PrayerController.name($0.prayer) } ?? "",
+                               reason: "",
+                               sections: [ServiceSection(title: "today", items: items(today)),
+                                          ServiceSection(title: "tomorrow", items: items(p.tomorrow))],
+                               updatedAt: Date())
     }
 
     // MARK: GitHub

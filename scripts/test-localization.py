@@ -59,7 +59,7 @@ def main():
         if not target or not re.search(r"^          - zh-Hant$", target[1], re.M):
             errors.append(f"{name}: zh-Hant is missing from bundle localizations")
     for path in (ROOT / "NotchBuddy/Sources").rglob("*.swift"):
-        if any(part in {"Phone", "Widgets", "NotificationContent"} for part in path.parts):
+        if any(part in {"Phone", "Widgets", "NotificationContent", "Watch", "WatchWidgets"} for part in path.parts):
             continue
         for literal in re.findall(r'(?:String\(localized:\s*|(?:Text|Button|Toggle|SecureField|TextField|Picker|Label|GroupBox|help|accessibilityLabel|navigationTitle)\(\s*)"((?:\\.|[^"\\])*)"', path.read_text()):
             if "\\(" in literal:  # Xcode generates interpolation keys; format arguments are checked above.

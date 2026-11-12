@@ -695,7 +695,7 @@ struct IslandContentView: View {
                     // Views that fill available height instead of the fixed 98pt content frame:
                     // chat (prompt) is always flexible; mail is flexible only when active so
                     // it doesn't push the ZStack taller when inactive.
-                    let isTall = v == .prompt || ((v == .mail || v == .whatsNew || v == .digest || v == .tasbih || v == .homelab || v == .session) && active)
+                    let isTall = v == .prompt || ((v == .mail || v == .whatsNew || v == .digest || v == .tasbih || v == .homelab || v == .session || v == .ask) && active)
                         || (v == .overview && active && cornerHome)
                     let anim: Animation = active
                         ? .spring(response: 0.4, dampingFraction: 0.8).delay(0.16)
@@ -778,6 +778,8 @@ struct IslandHeader: View {
                 #if !APPSTORE
                 // A new Claude Code session, in a project, from here.
                 TabButton(icon: "terminal", view: .launch, state: state)
+                // Ask Hermes or Claude to do something.
+                TabButton(icon: "sparkles", view: .ask, state: state)
                 #endif
                 // The next prayer, when it clears the notch (HeaderPrayerChip shortens or hides).
                 HeaderPrayerChip(state: state)

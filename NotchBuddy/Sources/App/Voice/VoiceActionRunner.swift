@@ -49,6 +49,12 @@ protocol VoiceInfoProviding {
     var hasWebKey: Bool { get }
     /// A short spoken answer from Claude with web search; nil on any failure.
     func webAnswer(_ question: String, history: [VoiceWebTurn], french: Bool) async -> String?
+    /// Hands a task to Hermes or Claude ("Ask…"); the answer comes on the island's card.
+    func askAgent(_ target: AskTarget, _ text: String) -> VoiceActionResult
+}
+
+extension VoiceInfoProviding {
+    func askAgent(_ target: AskTarget, _ text: String) -> VoiceActionResult { .init(outcome: .failure, message: "") }
 }
 
 /// One earlier exchange of the web conversation, kept in memory only.
@@ -314,8 +320,16 @@ final class VoiceActionRunner {
         case .webSearch(let query):
             return await webSearch(query)
 
+        case .askAgent(let target, let text):
+            return info.askAgent(target, text)
+
         case .unknown:
             if rawTranscript.isEmpty { return fail("voice.unknown") }
+            // A task in its own words ("check the server's disk"): Auto hands it to an agent.
+            if AskRouter.hasTaskWords(rawTranscript) {
+                let handed = info.askAgent(.auto, rawTranscript)
+                if handed.outcome == .success { return handed }
+            }
             let fmt = Self.localizedString("voice.unknown-transcript", locale: commandLocale)
             let msg = fmt.contains("%@") ? String(format: fmt, rawTranscript) : rawTranscript
             return .init(outcome: .failure, message: msg)

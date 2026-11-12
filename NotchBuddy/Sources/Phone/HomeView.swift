@@ -109,12 +109,23 @@ struct AgentsTab: View {
                                 .scaleEffect(max(0.86, 1 + pull / 500), anchor: .top)
                                 .opacity(max(0, 1 + pull / 160))
                         }
+                    AskCard(link: link)
                     TodayCard(link: link)
                     VerseCard()
                 }
                 .listRowBackground(Color.clear)
                 .listRowInsets(EdgeInsets(top: 6, leading: 0, bottom: 6, trailing: 0))
                 .listRowSeparator(.hidden)
+
+                if !link.asks.isEmpty {
+                    Section("Tasks") {
+                        ForEach(link.asks.values.sorted { $0.startedAt > $1.startedAt }.prefix(6)) { result in
+                            NavigationLink(value: result.id) {
+                                AskRow(result: result)
+                            }
+                        }
+                    }
+                }
 
                 Section {
                     if link.sessions.isEmpty {
@@ -160,12 +171,19 @@ struct AgentsTab: View {
             .animation(.spring(duration: 0.5, bounce: 0.2),
                        value: link.sessions.map { "\($0.id)|\($0.statusText)" })
             .refreshable { await link.refresh() }
+            #if DEBUG
+            .task { if UserDefaults.standard.bool(forKey: "askDemo") { AskDemo.fill(link) } }
+            #endif
             .navigationTitle("Rafiq")
             .navigationBarTitleDisplayMode(.inline)
             .navigationDestination(for: String.self) { id in
-                SessionDetailView(link: link, sessionId: id)
-                    // The Rafiq tile grows into the session, and shrinks back.
-                    .navigationTransition(.zoom(sourceID: id, in: zoom))
+                if id.hasPrefix("ask-") {
+                    AskResultView(link: link, id: id)
+                } else {
+                    SessionDetailView(link: link, sessionId: id)
+                        // The Rafiq tile grows into the session, and shrinks back.
+                        .navigationTransition(.zoom(sourceID: id, in: zoom))
+                }
             }
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {

@@ -115,6 +115,7 @@ final class SettingsSearch: ObservableObject {
             e("general.android", .general, "Android phone", ["android.link.toggle", "android.link.details", "android.link.answers", "android.link.usage"]),
             // Notch → Active pills, Agents, Chat, Integrations
             e("pills.main", .pills, "settings.main-pill", ["Active pills"]),
+            e("agents.ask", .agents, "ask.settings.title", ["ask.settings.aloud", "ask.settings.where", "ask.title"]),
             e("agents.claude", .agents, "hooks.claude-code.title",
               ["Answer questions and permissions from terminal sessions in the notch"]),
             e("agents.claude-desktop", .agents, "claude-desktop.chat.title"),

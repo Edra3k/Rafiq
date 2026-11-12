@@ -22,6 +22,10 @@ struct LinkTestView: View {
                     }
                 }
 
+                Section("Ask (test)") {
+                    Button("Add demo tasks") { AskDemo.fill(link) }
+                }
+
                 Section("Sessions on your Mac") {
                     if link.sessions.isEmpty {
                         Text("No session yet. Open Rafiq on your Mac (NotchBuddyCloud).")

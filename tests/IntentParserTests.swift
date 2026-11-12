@@ -13,6 +13,13 @@ enum IntentParserTests {
     static func main() {
 
         // ── Music: pause ──────────────────────────────────────────────────────
+        // "Ask…": a task for Hermes or Claude.
+        check("demande à hermes", parse("demande à Hermes de vérifier le disque du serveur"),
+              .askAgent(target: .hermes, text: "vérifier le disque du serveur"))
+        check("dis à claude", parse("dis à Claude de corriger le build"), .askAgent(target: .claude, text: "corriger le build"))
+        check("ask hermes", parse("ask Hermes to restart jellyfin"), .askAgent(target: .hermes, text: "restart jellyfin"))
+        check("hermes alone", parse("Hermes"), .unknown)
+
         check("pause",                       parse("pause"),                   .musicPause)
         check("stop",                        parse("stop"),                    .musicPause)
         check("stoppe",                      parse("stoppe"),                  .musicPause)

@@ -15,6 +15,12 @@ enum IntentParser {
         let words = norm.split(separator: " ").map(String.init)
         guard !words.isEmpty else { return .unknown }
 
+        // "Ask Hermes to …" / "dis à Claude de …": a task for an agent (AskRunner).
+        let (agent, task) = AskRouter.strippedAgent(raw)
+        if let agent, agent == .hermes || agent == .claude, task.split(separator: " ").count >= 2 {
+            return .askAgent(target: agent, text: task)
+        }
+
         // Email, questions about the services, opening an app (VoiceQuery).
         if let m = VoiceQuery.mail(of: raw) { return .mail(m) }
         if let q = VoiceQuery.webQuery(of: raw) { return .webSearch(query: q) }

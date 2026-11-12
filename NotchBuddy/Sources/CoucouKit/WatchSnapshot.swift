@@ -23,10 +23,33 @@ enum WatchSnapshot {
     static let fingerprintKey = "fingerprint"
     static let pillKey = "pillId"
     static let commandKey = "command"
+    /// "Ask…" from the Watch: the task and who (AskTarget raw value).
+    static let askTextKey = "askText"
+    static let askTargetKey = "askTarget"
+    static let asksKey = "asks"
+    static let prayerNameKey = "prayerName"
+    static let prayerAtKey = "prayerAt"
 
     static func encode(_ sessions: [WatchSession]) -> [String: Any] {
         guard let data = try? JSONEncoder().encode(sessions) else { return [:] }
         return [sessionsKey: data]
+    }
+
+    static func encodeAsks(_ asks: [AskResult]) -> Data? {
+        // The Watch shows the latest three, with a short answer.
+        let latest = asks.sorted { $0.startedAt > $1.startedAt }.prefix(3).map { a -> AskResult in
+            var short = a
+            short.answer = String(a.answer.prefix(600))
+            short.steps = Array(a.steps.suffix(2))
+            return short
+        }
+        return try? JSONEncoder().encode(Array(latest))
+    }
+
+    static func decodeAsks(_ context: [String: Any]) -> [AskResult] {
+        guard let data = context[asksKey] as? Data,
+              let asks = try? JSONDecoder().decode([AskResult].self, from: data) else { return [] }
+        return asks
     }
 
     static func decode(_ context: [String: Any]) -> [WatchSession] {
