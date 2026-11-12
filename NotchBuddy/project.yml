@@ -151,8 +151,8 @@ targets:
         CFBundleName: Rafiq
         CFBundleDisplayName: Rafiq
         CFBundleIdentifier: com.edra3k.rafiq
-        CFBundleVersion: "26"
-        CFBundleShortVersionString: "0.7.0"
+        CFBundleVersion: "27"
+        CFBundleShortVersionString: "0.8.0"
         CFBundlePackageType: APPL
         LSUIElement: YES
         NSHighResolutionCapable: YES

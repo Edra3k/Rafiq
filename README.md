@@ -124,6 +124,7 @@ If Rafiq isn't running, the hook exits immediately: **Claude Code is never block
 
 | Version | Date | Ce qui change |
 |---|---|---|
+| [0.8.0](https://github.com/Edra3k/Rafiq/releases/tag/v0.8.0) | 13 novembre 2026 | L'onglet Outils et le hub des fonctionnalités : l'usage réel de Claude, le Mac (moniteur, son, volume par app, écrans), le presse-papiers, l'étagère, les notes, la capture et l'enregistrement, les apps (mises à jour, désinstalleur, nettoyeur), les fenêtres, la barre de commande, la souris et le clavier. Voir [CHANGELOG.md](CHANGELOG.md). |
 | [0.7.0](https://github.com/Edra3k/Rafiq/releases/tag/v0.7.0) | 12 novembre 2026 | Première version de Rafiq : le nouveau compagnon, les heures de prière, « Demande à Hermes ou Claude » avec la réponse à voix haute, le garde des agents, le serveur maison, l'app iPhone et l'app Apple Watch. Voir [CHANGELOG.md](CHANGELOG.md). |
 
 ## D'où vient Rafiq

@@ -1,6 +1,8 @@
 # Changelog
 
-## Unreleased
+## 0.8.0 — 2026-11-13
+
+Rafiq takes in what a Mac utility belt does, tool by tool, each one switched on or off in Settings → Features.
 
 - **Details, rebuilt** — the session's Details view shows what you asked and what the agent answered, every step with its tool, its duration and, on a click, the whole command (reads that follow each other folded into one line), the files changed by their short path (a click opens the diff), the guard as one bar, the model and the length of the turn, and Terminal, Last diff, Folder, Copy and Read aloud. ‹ › go back through the last five turns.
 - **Answer the agent from the notch** — a field under Details carries on the same Claude Code conversation in the background (`claude -p --resume`, the session's own folder), for terminal, VS Code, Cursor and Claude app sessions. Its approvals still wait on their card. The iPhone's instructions now use the same path.

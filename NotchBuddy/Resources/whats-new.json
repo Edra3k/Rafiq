@@ -2,6 +2,167 @@
   "about": "What's new, shown once in the notch after Rafiq updates itself (WhatsNew.swift). Every Mac release adds its entry here, in the 16 languages, before release.sh: 1 to 4 items, a short title and one line each, an icon from scripts/test-whats-new.py. python3 scripts/test-whats-new.py checks it.",
   "releases": [
     {
+      "version": "0.8.0",
+      "items": [
+        {
+          "icon": "puzzle",
+          "title": {
+            "en": "The Tools tab",
+            "fr": "L'onglet Outils",
+            "es": "La pestaña Herramientas",
+            "pt-BR": "A aba Ferramentas",
+            "ru": "Вкладка «Инструменты»",
+            "zh-Hans": "“工具”标签",
+            "hi": "टूल्स टैब",
+            "ar": "تبويب الأدوات",
+            "bn": "টুলস ট্যাব",
+            "id": "Tab Alat",
+            "de": "Der Werkzeuge-Tab",
+            "tr": "Araçlar sekmesi",
+            "th": "แท็บเครื่องมือ",
+            "zh-Hant": "「工具」分頁",
+            "ko": "도구 탭",
+            "ja": "ツールタブ"
+          },
+          "detail": {
+            "en": "Your Mac, the clipboard, notes, apps: turn on only what you use in Settings → Features.",
+            "fr": "Mac, presse-papiers, notes, apps : n'active que ce qui te sert (Réglages → Fonctionnalités).",
+            "es": "Tu Mac, el portapapeles, notas, apps: activa solo lo que usas en Ajustes → Funciones.",
+            "pt-BR": "Seu Mac, a transferência, notas, apps: ative só o que usa em Ajustes → Recursos.",
+            "ru": "Mac, буфер, заметки, приложения: включайте нужное в Настройки → Функции.",
+            "zh-Hans": "Mac、剪贴板、笔记、应用：在“设置 → 功能”中只开你用的。",
+            "hi": "आपका Mac, क्लिपबोर्ड, नोट्स, ऐप्स: सेटिंग्स → सुविधाएँ में सिर्फ़ ज़रूरी चालू करें।",
+            "ar": "جهازك والحافظة والملاحظات والتطبيقات: فعّل ما تستخدمه فقط في الإعدادات ← الميزات.",
+            "bn": "আপনার Mac, ক্লিপবোর্ড, নোট, অ্যাপ: সেটিংস → ফিচারে শুধু দরকারিটা চালু করুন।",
+            "id": "Mac, papan klip, catatan, aplikasi: aktifkan yang kamu pakai di Pengaturan → Fitur.",
+            "de": "Mac, Ablage, Notizen, Apps: schalte unter Einstellungen → Funktionen nur ein, was du nutzt.",
+            "tr": "Mac, pano, notlar, uygulamalar: Ayarlar → Özellikler'de yalnızca kullandığını aç.",
+            "th": "Mac คลิปบอร์ด โน้ต แอป: เปิดเฉพาะที่ใช้ในการตั้งค่า → ฟีเจอร์",
+            "zh-Hant": "Mac、剪貼板、筆記、App：在「設定 → 功能」只開你用的。",
+            "ko": "Mac, 클립보드, 메모, 앱: 설정 → 기능에서 쓰는 것만 켜세요.",
+            "ja": "Mac、クリップボード、メモ、アプリ：設定 → 機能で使うものだけオンに。"
+          }
+        },
+        {
+          "icon": "bolt",
+          "title": {
+            "en": "Claude's real usage",
+            "fr": "L'usage réel de Claude",
+            "es": "El uso real de Claude",
+            "pt-BR": "O uso real do Claude",
+            "ru": "Реальный расход Claude",
+            "zh-Hans": "Claude 的真实用量",
+            "hi": "Claude का असली उपयोग",
+            "ar": "استخدام Claude الحقيقي",
+            "bn": "Claude-এর আসল ব্যবহার",
+            "id": "Pemakaian Claude yang nyata",
+            "de": "Claudes echte Nutzung",
+            "tr": "Claude'un gerçek kullanımı",
+            "th": "การใช้งาน Claude จริง",
+            "zh-Hant": "Claude 的真實用量",
+            "ko": "Claude 실제 사용량",
+            "ja": "Claude の実際の使用量"
+          },
+          "detail": {
+            "en": "The session and the week, their resets, your tokens and their API value, even from the Claude app.",
+            "fr": "La session et la semaine, quand elles repartent, tes tokens et leur valeur API, même depuis l'app Claude.",
+            "es": "La sesión y la semana, sus reinicios, tus tokens y su valor en API, incluso desde la app Claude.",
+            "pt-BR": "A sessão e a semana, quando renovam, seus tokens e o valor em API, até no app Claude.",
+            "ru": "Сессия и неделя, их сброс, токены и цена в API — даже из приложения Claude.",
+            "zh-Hans": "会话和本周额度、重置时间、token 及其 API 价值，Claude 应用里的也算。",
+            "hi": "सत्र और सप्ताह, उनका रीसेट, आपके टोकन और API मूल्य, Claude ऐप से भी।",
+            "ar": "الجلسة والأسبوع وموعد تجددهما، ورموزك وقيمتها في API، حتى من تطبيق Claude.",
+            "bn": "সেশন ও সপ্তাহ, রিসেট, আপনার টোকেন ও API মূল্য, Claude অ্যাপ থেকেও।",
+            "id": "Sesi dan minggu, kapan diatur ulang, token dan nilai API-nya, juga dari app Claude.",
+            "de": "Sitzung und Woche, ihr Reset, deine Tokens und ihr API-Wert, auch aus der Claude-App.",
+            "tr": "Oturum ve hafta, sıfırlanmaları, tokenlerin ve API değeri, Claude uygulamasından bile.",
+            "th": "เซสชันและสัปดาห์ เวลารีเซ็ต โทเค็นและมูลค่า API แม้จากแอป Claude",
+            "zh-Hant": "工作階段和本週額度、重設時間、token 及其 API 價值，Claude App 裡的也算。",
+            "ko": "세션과 주간, 초기화 시간, 토큰과 API 가치, Claude 앱에서도.",
+            "ja": "セッションと週、リセット時刻、トークンと API 価格。Claude アプリでも。"
+          }
+        },
+        {
+          "icon": "eye",
+          "title": {
+            "en": "Your Mac at a glance",
+            "fr": "Ton Mac d'un coup d'œil",
+            "es": "Tu Mac de un vistazo",
+            "pt-BR": "Seu Mac num relance",
+            "ru": "Ваш Mac одним взглядом",
+            "zh-Hans": "一眼看清你的 Mac",
+            "hi": "एक नज़र में आपका Mac",
+            "ar": "جهازك بنظرة واحدة",
+            "bn": "এক নজরে আপনার Mac",
+            "id": "Mac-mu sekilas",
+            "de": "Dein Mac auf einen Blick",
+            "tr": "Mac'in bir bakışta",
+            "th": "ดู Mac ได้ในพริบตา",
+            "zh-Hant": "一眼看清你的 Mac",
+            "ko": "내 Mac을 한눈에",
+            "ja": "Mac をひと目で"
+          },
+          "detail": {
+            "en": "Processor, memory, disk, ports, sound outputs, a volume for each app, your displays.",
+            "fr": "Processeur, mémoire, disque, ports, sorties audio, un volume par app, tes écrans.",
+            "es": "Procesador, memoria, disco, puertos, salidas de audio, un volumen por app, tus pantallas.",
+            "pt-BR": "Processador, memória, disco, portas, saídas de áudio, um volume por app, suas telas.",
+            "ru": "Процессор, память, диск, порты, аудиовыходы, громкость для каждого приложения, экраны.",
+            "zh-Hans": "处理器、内存、磁盘、端口、音频输出、每个应用的音量、显示器。",
+            "hi": "प्रोसेसर, मेमोरी, डिस्क, पोर्ट, साउंड आउटपुट, हर ऐप का वॉल्यूम, डिस्प्ले।",
+            "ar": "المعالج والذاكرة والقرص والمنافذ ومخارج الصوت وصوت كل تطبيق وشاشاتك.",
+            "bn": "প্রসেসর, মেমরি, ডিস্ক, পোর্ট, সাউন্ড আউটপুট, অ্যাপ অনুযায়ী ভলিউম, ডিসপ্লে।",
+            "id": "Prosesor, memori, disk, port, keluaran suara, volume tiap aplikasi, layarmu.",
+            "de": "Prozessor, Speicher, Festplatte, Ports, Tonausgänge, Lautstärke pro App, Bildschirme.",
+            "tr": "İşlemci, bellek, disk, portlar, ses çıkışları, uygulama başına ses, ekranların.",
+            "th": "โปรเซสเซอร์ หน่วยความจำ ดิสก์ พอร์ต เอาต์พุตเสียง เสียงต่อแอป จอภาพ",
+            "zh-Hant": "處理器、記憶體、磁碟、連接埠、音訊輸出、每個 App 的音量、顯示器。",
+            "ko": "프로세서, 메모리, 디스크, 포트, 사운드 출력, 앱별 볼륨, 디스플레이.",
+            "ja": "プロセッサ、メモリ、ディスク、ポート、出力、アプリごとの音量、ディスプレイ。"
+          }
+        },
+        {
+          "icon": "keyboard",
+          "title": {
+            "en": "A command bar",
+            "fr": "Une barre de commande",
+            "es": "Una barra de comandos",
+            "pt-BR": "Uma barra de comandos",
+            "ru": "Командная строка",
+            "zh-Hans": "命令栏",
+            "hi": "एक कमांड बार",
+            "ar": "شريط أوامر",
+            "bn": "একটি কমান্ড বার",
+            "id": "Bilah perintah",
+            "de": "Eine Befehlsleiste",
+            "tr": "Bir komut çubuğu",
+            "th": "แถบคำสั่ง",
+            "zh-Hant": "命令列",
+            "ko": "명령 막대",
+            "ja": "コマンドバー"
+          },
+          "detail": {
+            "en": "⌃⌥K finds apps, files, what you copied, and asks Rafiq the rest. ⌃⌥ arrows place windows.",
+            "fr": "⌃⌥K trouve apps, fichiers et ce que tu as copié, et demande le reste à Rafiq. ⌃⌥ flèches placent les fenêtres.",
+            "es": "⌃⌥K encuentra apps, archivos y lo copiado, y pregunta el resto a Rafiq. ⌃⌥ flechas colocan ventanas.",
+            "pt-BR": "⌃⌥K acha apps, arquivos e o que você copiou, e pergunta o resto ao Rafiq. ⌃⌥ setas posicionam janelas.",
+            "ru": "⌃⌥K находит приложения, файлы и скопированное, остальное спросит у Rafiq. ⌃⌥ стрелки — окна.",
+            "zh-Hans": "⌃⌥K 查找应用、文件和复制的内容，其余问 Rafiq。⌃⌥ 方向键摆放窗口。",
+            "hi": "⌃⌥K ऐप, फ़ाइलें और कॉपी की चीज़ें ढूँढता है, बाकी Rafiq से पूछता है। ⌃⌥ एरो विंडो रखते हैं।",
+            "ar": "⌃⌥K يجد التطبيقات والملفات وما نسخته، ويسأل Rafiq عن الباقي. ⌃⌥ والأسهم ترتّب النوافذ.",
+            "bn": "⌃⌥K অ্যাপ, ফাইল, কপি করা জিনিস খোঁজে, বাকিটা Rafiq-কে জিজ্ঞেস করে। ⌃⌥ অ্যারো উইন্ডো সাজায়।",
+            "id": "⌃⌥K mencari aplikasi, berkas, dan salinan, sisanya tanya Rafiq. ⌃⌥ panah menata jendela.",
+            "de": "⌃⌥K findet Apps, Dateien und Kopiertes und fragt Rafiq den Rest. ⌃⌥-Pfeile ordnen Fenster.",
+            "tr": "⌃⌥K uygulama, dosya ve kopyaladıklarını bulur, gerisini Rafiq'e sorar. ⌃⌥ oklar pencereleri yerleştirir.",
+            "th": "⌃⌥K หาแอป ไฟล์ สิ่งที่คัดลอก ที่เหลือถาม Rafiq ⌃⌥ ลูกศรจัดหน้าต่าง",
+            "zh-Hant": "⌃⌥K 尋找 App、檔案和複製的內容，其餘問 Rafiq。⌃⌥ 方向鍵擺放視窗。",
+            "ko": "⌃⌥K로 앱, 파일, 복사한 것을 찾고 나머지는 Rafiq에게. ⌃⌥ 화살표로 창 배치.",
+            "ja": "⌃⌥K でアプリ、ファイル、コピーを検索、残りは Rafiq に。⌃⌥ 矢印でウインドウ配置。"
+          }
+        }
+      ]
+    },
+    {
       "version": "0.7.0",
       "items": [
         {
