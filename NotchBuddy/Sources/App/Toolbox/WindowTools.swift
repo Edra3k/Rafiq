@@ -27,6 +27,7 @@ private func rafiqWindowHotKeyHandler(_: EventHandlerCallRef?, _ event: EventRef
 
 enum WindowAction: UInt32, CaseIterable {
     case left = 1000, right, top, bottom, maximize, center, leftThird, middleThird, rightThird, nextDisplay, restore, switcher
+    case commandBar, radial, quickPanel
 
     /// (key code, Carbon modifiers): ⌃⌥ arrows and ↩, ⌃⌥C, ⌃⌥⇧ ← ↓ → for thirds, ⌃⌥⌘→, ⌃⌥⌫, ⌥⇥.
     var key: (UInt32, UInt32) {
@@ -44,6 +45,9 @@ enum WindowAction: UInt32, CaseIterable {
         case .nextDisplay: return (UInt32(kVK_RightArrow), co | UInt32(cmdKey))
         case .restore: return (UInt32(kVK_Delete), co)
         case .switcher: return (UInt32(kVK_Tab), UInt32(optionKey))
+        case .commandBar: return (UInt32(kVK_ANSI_K), co)
+        case .radial: return (UInt32(kVK_ANSI_R), co)
+        case .quickPanel: return (UInt32(kVK_ANSI_T), co | UInt32(cmdKey))
         }
     }
 
@@ -61,6 +65,9 @@ enum WindowAction: UInt32, CaseIterable {
         case .nextDisplay: return "rectangle.on.rectangle"
         case .restore: return "arrow.uturn.backward"
         case .switcher: return "square.on.square"
+        case .commandBar: return "sparkle.magnifyingglass"
+        case .radial: return "circle.dashed"
+        case .quickPanel: return "square.grid.2x2"
         }
     }
 
@@ -78,6 +85,9 @@ enum WindowAction: UInt32, CaseIterable {
         case .nextDisplay: return "⌃⌥⌘→"
         case .restore: return "⌃⌥⌫"
         case .switcher: return "⌥⇥"
+        case .commandBar: return "⌃⌥K"
+        case .radial: return "⌃⌥R"
+        case .quickPanel: return "⌃⌥⌘T"
         }
     }
 }
@@ -96,8 +106,11 @@ final class WindowManager {
         unregister()
         let hub = FeatureHub.shared
         var actions: [WindowAction] = []
-        if hub.isOn(.windowLayout) { actions += WindowAction.allCases.filter { $0 != .switcher } }
+        if hub.isOn(.windowLayout) { actions += WindowAction.allCases.filter { $0.rawValue <= WindowAction.restore.rawValue } }
         if hub.isOn(.windowSwitcher) { actions.append(.switcher) }
+        if hub.isOn(.commandBar) { actions.append(.commandBar) }
+        if hub.isOn(.radialMenu) { actions.append(.radial) }
+        if hub.isOn(.quickPanel) { actions.append(.quickPanel) }
         if !actions.isEmpty { register(actions) }
         if hub.isOn(.windowLayout) { startEdgeSnap() } else { stopEdgeSnap() }
     }
@@ -126,6 +139,13 @@ final class WindowManager {
 
     func perform(_ action: WindowAction) {
         if action == .switcher { WindowSwitcher.shared.show(); return }
+        if action == .commandBar { CommandBar.shared.toggle(); return }
+        if action == .radial { RadialMenu.shared.show(); return }
+        if action == .quickPanel {
+            UserDefaults.standard.set("tools", forKey: "tools.page")
+            NotificationCenter.default.post(name: .hookExpand, object: IslandView.tools)
+            return
+        }
         guard AXIsProcessTrusted() else { Self.askAccessibility(); return }
         guard let app = NSWorkspace.shared.frontmostApplication, let window = Self.focusedWindow(of: app.processIdentifier),
               let frame = Self.frame(of: window), let screen = Self.screen(containing: frame) else { return }
@@ -153,7 +173,7 @@ final class WindowManager {
             let next = Self.axRect(screens[(index + 1) % screens.count].visibleFrame)
             let w = min(frame.width, next.width), h = min(frame.height, next.height)
             target = CGRect(x: next.midX - w / 2, y: next.midY - h / 2, width: w, height: h)
-        case .restore, .switcher: return
+        case .restore, .switcher, .commandBar, .radial, .quickPanel: return
         }
         Self.set(window, target)
     }

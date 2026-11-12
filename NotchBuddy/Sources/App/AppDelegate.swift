@@ -57,6 +57,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         WindowManager.shared.featureChanged()
         QuitGuard.shared.featureChanged()
         QuitOnClose.shared.featureChanged()
+        InputTools.shared.featureChanged()
         #endif
         #if !APPSTORE
         // Opened by hand (Finder, Dock, Spotlight): the Rafiq window shows. Not at login.

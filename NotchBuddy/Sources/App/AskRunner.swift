@@ -444,6 +444,9 @@ final class AskRunner: ObservableObject {
                     let parts = pill.split(separator: ":", maxSplits: 2).map(String.init)
                     switch parts.count > 1 ? parts[1] : "" {
                     case "record": ScreenRecorder.shared.toggle()
+                    case "command":
+                        CommandBar.shared.toggle()
+                        if parts.count > 2 { CommandBar.shared.query = parts[2] }
                     case "win" where parts.count > 2:
                         let names: [String: WindowAction] = ["left": .left, "right": .right, "max": .maximize, "center": .center, "restore": .restore]
                         if let action = names[parts[2]] { WindowManager.shared.perform(action) }
