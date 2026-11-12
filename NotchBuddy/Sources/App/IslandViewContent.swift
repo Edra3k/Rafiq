@@ -4542,6 +4542,9 @@ struct AgentPill: View {
                         .lineLimit(1)
                         .truncationMode(.tail)
                         .frame(maxWidth: .infinity, alignment: .center)
+                        // Keep a long name clear of the companion (8 + 22 + 4) on the left.
+                        .padding(.leading, 34)
+                        .padding(.trailing, 10)
                 }
                 .frame(maxWidth: .infinity)
                 .frame(height: 28)

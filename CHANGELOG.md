@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.1.0 — Unreleased
+## 0.7.0 — 2026-11-12
 
 Rafiq starts from the code of Coucou 0.6 (MIT) and becomes its own app.
 

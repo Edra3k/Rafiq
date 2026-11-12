@@ -168,7 +168,7 @@ git tag "$TAG" "$COMMIT"
 git push origin "$TAG"
 
 gh release create "$TAG" "$ZIP" \
-  --repo Louis-CFM/coucou \
+  --repo Edra3k/Rafiq \
   --title "Rafiq $VERSION" \
   --latest \
   --notes "$NOTES"

@@ -120,6 +120,12 @@ On the Mac, open Rafiq from the Dock or the menu bar: its window has every setti
 If Rafiq isn't running, the hook exits immediately: **Claude Code is never blocked.**
 
 
+## Versions
+
+| Version | Date | Ce qui change |
+|---|---|---|
+| [0.7.0](https://github.com/Edra3k/Rafiq/releases/tag/v0.7.0) | 12 novembre 2026 | Première version de Rafiq : le nouveau compagnon, les heures de prière, « Demande à Hermes ou Claude » avec la réponse à voix haute, le garde des agents, le serveur maison, l'app iPhone et l'app Apple Watch. Voir [CHANGELOG.md](CHANGELOG.md). |
+
 ## D'où vient Rafiq
 
 Rafiq est construit sur le code de **[Coucou](https://github.com/Louis-CFM/coucou)**, de Louis Raillé, et de **Coucou for Android**, de Rhytam Biswas, tous deux publiés sous licence MIT. Merci à eux. Le nom, le personnage, l'icône et les sons de Coucou ne sont pas repris : Rafiq a les siens.

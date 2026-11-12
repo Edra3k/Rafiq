@@ -151,8 +151,8 @@ targets:
         CFBundleName: Rafiq
         CFBundleDisplayName: Rafiq
         CFBundleIdentifier: com.edra3k.rafiq
-        CFBundleVersion: "25"
-        CFBundleShortVersionString: "0.5.8"
+        CFBundleVersion: "26"
+        CFBundleShortVersionString: "0.7.0"
         CFBundlePackageType: APPL
         LSUIElement: YES
         NSHighResolutionCapable: YES
@@ -333,8 +333,8 @@ targets:
         CFBundleName: Rafiq
         CFBundleDisplayName: Rafiq
         CFBundleIdentifier: com.edra3k.rafiq.ios
-        CFBundleVersion: "21"
-        CFBundleShortVersionString: "2.0"
+        CFBundleVersion: "22"
+        CFBundleShortVersionString: "2.1"
         CFBundlePackageType: APPL
         LSRequiresIPhoneOS: YES
         UILaunchScreen: {}
@@ -415,8 +415,8 @@ targets:
         CFBundleName: CoucouWidgets
         CFBundleDisplayName: Rafiq
         CFBundleIdentifier: com.edra3k.rafiq.ios.Widgets
-        CFBundleVersion: "21"
-        CFBundleShortVersionString: "2.0"
+        CFBundleVersion: "22"
+        CFBundleShortVersionString: "2.1"
         CFBundlePackageType: XPC!
         NSExtension:
           NSExtensionPointIdentifier: com.apple.widgetkit-extension
@@ -460,8 +460,8 @@ targets:
         CFBundleName: CoucouNotificationContent
         CFBundleDisplayName: Rafiq
         CFBundleIdentifier: com.edra3k.rafiq.ios.NotificationContent
-        CFBundleVersion: "21"
-        CFBundleShortVersionString: "2.0"
+        CFBundleVersion: "22"
+        CFBundleShortVersionString: "2.1"
         CFBundlePackageType: XPC!
         NSExtension:
           NSExtensionPointIdentifier: com.apple.usernotifications.content-extension
@@ -514,8 +514,8 @@ targets:
       properties:
         CFBundleName: Rafiq
         CFBundleDisplayName: Rafiq
-        CFBundleVersion: "21"
-        CFBundleShortVersionString: "2.0"
+        CFBundleVersion: "22"
+        CFBundleShortVersionString: "2.1"
         WKApplication: true
         WKCompanionAppBundleIdentifier: com.edra3k.rafiq.ios
         UISupportedInterfaceOrientations:
@@ -553,8 +553,8 @@ targets:
       properties:
         CFBundleName: RafiqWatchWidgets
         CFBundleDisplayName: Rafiq
-        CFBundleVersion: "21"
-        CFBundleShortVersionString: "2.0"
+        CFBundleVersion: "22"
+        CFBundleShortVersionString: "2.1"
         CFBundlePackageType: XPC!
         NSExtension:
           NSExtensionPointIdentifier: com.apple.widgetkit-extension

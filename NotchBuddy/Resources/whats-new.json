@@ -2,6 +2,167 @@
   "about": "What's new, shown once in the notch after Rafiq updates itself (WhatsNew.swift). Every Mac release adds its entry here, in the 16 languages, before release.sh: 1 to 4 items, a short title and one line each, an icon from scripts/test-whats-new.py. python3 scripts/test-whats-new.py checks it.",
   "releases": [
     {
+      "version": "0.7.0",
+      "items": [
+        {
+          "icon": "sparkles",
+          "title": {
+            "en": "Ask Hermes or Claude",
+            "fr": "Demande à Hermes ou Claude",
+            "es": "Pídeselo a Hermes o Claude",
+            "pt-BR": "Peça ao Hermes ou ao Claude",
+            "ru": "Попросите Hermes или Claude",
+            "zh-Hans": "让 Hermes 或 Claude 去做",
+            "hi": "Hermes या Claude से कहें",
+            "ar": "اطلب من Hermes أو Claude",
+            "bn": "Hermes বা Claude-কে বলুন",
+            "id": "Minta Hermes atau Claude",
+            "de": "Hermes oder Claude fragen",
+            "tr": "Hermes'e veya Claude'a sor",
+            "th": "สั่ง Hermes หรือ Claude",
+            "zh-Hant": "讓 Hermes 或 Claude 去做",
+            "ko": "Hermes나 Claude에게 맡기기",
+            "ja": "Hermes や Claude に頼む"
+          },
+          "detail": {
+            "en": "Type or say a task in the ✦ tab: Rafiq picks the agent and says the answer aloud.",
+            "fr": "Tape ou dis une tâche dans l'onglet ✦ : Rafiq choisit l'agent et dit la réponse à voix haute.",
+            "es": "Escribe o di una tarea en la pestaña ✦: Rafiq elige el agente y lee la respuesta en voz alta.",
+            "pt-BR": "Digite ou diga uma tarefa na aba ✦: o Rafiq escolhe o agente e lê a resposta em voz alta.",
+            "ru": "Напишите или скажите задачу во вкладке ✦: Rafiq выберет агента и прочитает ответ вслух.",
+            "zh-Hans": "在 ✦ 标签页输入或说出任务：Rafiq 选好代理，并把回答读出来。",
+            "hi": "✦ टैब में काम लिखें या बोलें: Rafiq एजेंट चुनता है और जवाब बोलकर सुनाता है।",
+            "ar": "اكتب مهمة أو قلها في تبويب ✦: يختار Rafiq الوكيل ويقرأ الجواب بصوت عالٍ.",
+            "bn": "✦ ট্যাবে কাজ লিখুন বা বলুন: Rafiq এজেন্ট বেছে নেয় আর উত্তর জোরে পড়ে শোনায়।",
+            "id": "Ketik atau ucapkan tugas di tab ✦: Rafiq memilih agennya dan membacakan jawabannya.",
+            "de": "Eine Aufgabe im Tab ✦ tippen oder sagen: Rafiq wählt den Agenten und liest die Antwort vor.",
+            "tr": "✦ sekmesine bir görev yaz ya da söyle: Rafiq ajanı seçer ve yanıtı sesli okur.",
+            "th": "พิมพ์หรือพูดงานในแท็บ ✦ แล้ว Rafiq จะเลือกเอเจนต์และอ่านคำตอบออกเสียง",
+            "zh-Hant": "在 ✦ 分頁輸入或說出任務：Rafiq 選好代理，並把回答念出來。",
+            "ko": "✦ 탭에 할 일을 입력하거나 말하세요. Rafiq가 에이전트를 고르고 답을 소리 내어 읽어 줍니다.",
+            "ja": "✦ タブでタスクを入力するか話すと、Rafiq がエージェントを選び、答えを読み上げます。"
+          }
+        },
+        {
+          "icon": "clock",
+          "title": {
+            "en": "Prayer times in the notch",
+            "fr": "Les heures de prière dans l'encoche",
+            "es": "Horarios de oración en el notch",
+            "pt-BR": "Horários de oração no notch",
+            "ru": "Время намаза в вырезе",
+            "zh-Hans": "刘海里的礼拜时间",
+            "hi": "नॉच में नमाज़ का समय",
+            "ar": "مواقيت الصلاة في النوتش",
+            "bn": "নচে নামাজের সময়",
+            "id": "Waktu salat di notch",
+            "de": "Gebetszeiten in der Notch",
+            "tr": "Çentikte namaz vakitleri",
+            "th": "เวลาละหมาดในรอยบาก",
+            "zh-Hant": "瀏海裡的禮拜時間",
+            "ko": "노치에 기도 시간",
+            "ja": "ノッチに礼拝時刻"
+          },
+          "detail": {
+            "en": "The next prayer, a reminder before it, your adhan at the time, and quiet while you pray.",
+            "fr": "La prochaine prière, un rappel avant, ton adhan à l'heure, et le silence pendant que tu pries.",
+            "es": "La próxima oración, un aviso antes, tu adhan a la hora y silencio mientras rezas.",
+            "pt-BR": "A próxima oração, um lembrete antes, seu adhan na hora e silêncio enquanto você reza.",
+            "ru": "Следующий намаз, напоминание заранее, ваш азан вовремя и тишина, пока вы молитесь.",
+            "zh-Hans": "下一次礼拜、提前提醒、准时播放你的宣礼，祈祷时保持安静。",
+            "hi": "अगली नमाज़, पहले याद दिलाना, समय पर आपकी अज़ान, और नमाज़ के दौरान शांति।",
+            "ar": "الصلاة القادمة، وتذكير قبلها، وأذانك في وقته، وهدوء أثناء صلاتك.",
+            "bn": "পরের নামাজ, আগে মনে করিয়ে দেওয়া, সময়মতো আপনার আজান, আর নামাজের সময় নীরবতা।",
+            "id": "Salat berikutnya, pengingat sebelumnya, azanmu tepat waktu, dan hening saat kamu salat.",
+            "de": "Das nächste Gebet, eine Erinnerung vorher, dein Adhan zur Zeit und Ruhe, während du betest.",
+            "tr": "Sıradaki namaz, öncesinde hatırlatma, vaktinde ezanın ve namaz kılarken sessizlik.",
+            "th": "ละหมาดถัดไป การเตือนล่วงหน้า อะซานของคุณตรงเวลา และความเงียบขณะละหมาด",
+            "zh-Hant": "下一次禮拜、提前提醒、準時播放你的宣禮，禮拜時保持安靜。",
+            "ko": "다음 기도, 미리 알림, 제시간의 아잔, 기도하는 동안의 고요함.",
+            "ja": "次の礼拝、事前の通知、時間どおりのアザーン、礼拝中の静けさ。"
+          }
+        },
+        {
+          "icon": "shield",
+          "title": {
+            "en": "The agent guard",
+            "fr": "Le garde des agents",
+            "es": "El guardián de los agentes",
+            "pt-BR": "O guarda dos agentes",
+            "ru": "Страж агентов",
+            "zh-Hans": "代理守卫",
+            "hi": "एजेंट गार्ड",
+            "ar": "حارس الوكلاء",
+            "bn": "এজেন্ট গার্ড",
+            "id": "Penjaga agen",
+            "de": "Der Agenten-Wächter",
+            "tr": "Ajan koruması",
+            "th": "ผู้คุมเอเจนต์",
+            "zh-Hant": "代理守衛",
+            "ko": "에이전트 가드",
+            "ja": "エージェントガード"
+          },
+          "detail": {
+            "en": "Every action an agent asks for is rated, and hidden orders in what it reads are flagged.",
+            "fr": "Chaque action demandée par un agent est notée, et les ordres cachés dans ce qu'il lit sont signalés.",
+            "es": "Cada acción que pide un agente se evalúa, y se señalan las órdenes ocultas en lo que lee.",
+            "pt-BR": "Cada ação que um agente pede é avaliada, e ordens ocultas no que ele lê são sinalizadas.",
+            "ru": "Каждое действие агента получает оценку, а скрытые команды в прочитанном отмечаются.",
+            "zh-Hans": "代理请求的每个操作都会评级，它读到的内容里的隐藏指令也会被标出。",
+            "hi": "एजेंट की हर माँगी गई कार्रवाई को रेट किया जाता है, और पढ़ी गई चीज़ों में छिपे आदेश दिखाए जाते हैं।",
+            "ar": "يُقيَّم كل إجراء يطلبه الوكيل، وتُكشف الأوامر المخفية فيما يقرؤه.",
+            "bn": "এজেন্টের চাওয়া প্রতিটি কাজের ঝুঁকি দেখানো হয়, আর সে যা পড়ে তাতে লুকানো নির্দেশ ধরা পড়ে।",
+            "id": "Setiap tindakan yang diminta agen dinilai, dan perintah tersembunyi dalam bacaannya ditandai.",
+            "de": "Jede Aktion, die ein Agent anfragt, wird bewertet; versteckte Befehle im Gelesenen werden markiert.",
+            "tr": "Ajanın istediği her işlem derecelendirilir, okuduklarındaki gizli komutlar işaretlenir.",
+            "th": "ทุกคำขอของเอเจนต์ได้รับการประเมิน และคำสั่งที่ซ่อนในสิ่งที่มันอ่านจะถูกแจ้ง",
+            "zh-Hant": "代理請求的每個操作都會評級，它讀到的內容裡的隱藏指令也會被標出。",
+            "ko": "에이전트가 요청하는 모든 작업에 위험도가 표시되고, 읽은 내용 속 숨은 명령도 알려 줍니다.",
+            "ja": "エージェントが求める操作はすべて評価され、読んだ内容に潜む指示も知らせます。"
+          }
+        },
+        {
+          "icon": "phone",
+          "title": {
+            "en": "iPhone and Apple Watch",
+            "fr": "iPhone et Apple Watch",
+            "es": "iPhone y Apple Watch",
+            "pt-BR": "iPhone e Apple Watch",
+            "ru": "iPhone и Apple Watch",
+            "zh-Hans": "iPhone 和 Apple Watch",
+            "hi": "iPhone और Apple Watch",
+            "ar": "iPhone وApple Watch",
+            "bn": "iPhone আর Apple Watch",
+            "id": "iPhone dan Apple Watch",
+            "de": "iPhone und Apple Watch",
+            "tr": "iPhone ve Apple Watch",
+            "th": "iPhone และ Apple Watch",
+            "zh-Hant": "iPhone 與 Apple Watch",
+            "ko": "iPhone과 Apple Watch",
+            "ja": "iPhone と Apple Watch"
+          },
+          "detail": {
+            "en": "Allow, deny or ask a task from your iPhone or your wrist, with the next prayer.",
+            "fr": "Autorise, refuse ou demande une tâche depuis ton iPhone ou ton poignet, avec la prochaine prière.",
+            "es": "Permite, deniega o pide una tarea desde tu iPhone o tu muñeca, con la próxima oración.",
+            "pt-BR": "Permita, negue ou peça uma tarefa pelo iPhone ou pelo pulso, com a próxima oração.",
+            "ru": "Разрешайте, отклоняйте и ставьте задачи с iPhone или с запястья, со следующим намазом.",
+            "zh-Hans": "在 iPhone 或手腕上允许、拒绝或布置任务，还能看到下一次礼拜。",
+            "hi": "iPhone या कलाई से अनुमति दें, मना करें या काम सौंपें, अगली नमाज़ के साथ।",
+            "ar": "اسمح أو ارفض أو اطلب مهمة من iPhone أو من معصمك، مع الصلاة القادمة.",
+            "bn": "iPhone বা কবজি থেকে অনুমতি দিন, না বলুন বা কাজ দিন, সঙ্গে পরের নামাজ।",
+            "id": "Izinkan, tolak, atau minta tugas dari iPhone atau pergelangan tangan, plus salat berikutnya.",
+            "de": "Erlauben, ablehnen oder eine Aufgabe geben, vom iPhone oder Handgelenk, mit dem nächsten Gebet.",
+            "tr": "iPhone'dan ya da bileğinden izin ver, reddet veya görev iste; sıradaki namaz da orada.",
+            "th": "อนุญาต ปฏิเสธ หรือสั่งงานจาก iPhone หรือข้อมือ พร้อมเวลาละหมาดถัดไป",
+            "zh-Hant": "在 iPhone 或手腕上允許、拒絕或指派任務，還能看到下一次禮拜。",
+            "ko": "iPhone이나 손목에서 허용, 거부, 작업 요청까지. 다음 기도 시간도 함께.",
+            "ja": "iPhone や手首から許可、拒否、タスクの依頼ができ、次の礼拝も見られます。"
+          }
+        }
+      ]
+    },
+    {
       "version": "0.6.0",
       "items": [
         {
