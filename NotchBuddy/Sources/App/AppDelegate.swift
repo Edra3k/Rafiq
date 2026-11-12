@@ -53,6 +53,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         ClipboardHistory.shared.featureChanged()
         SoundCenter.shared.featureChanged()
         BluetoothSleep.shared.featureChanged()
+        AppMixer.shared.restore()
         #endif
         #if !APPSTORE
         // Opened by hand (Finder, Dock, Spotlight): the Rafiq window shows. Not at login.

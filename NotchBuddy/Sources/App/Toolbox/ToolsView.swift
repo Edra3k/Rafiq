@@ -627,7 +627,7 @@ private struct MacPage: View {
 
     private var sections: [(String, String)] {
         var list = [("system", String(localized: "tools.mac.system", defaultValue: "System"))]
-        if hub.isOn(.outputSwitcher) || hub.isOn(.micTools) { list.append(("sound", String(localized: "feature.family.sound", defaultValue: "Sound"))) }
+        if hub.isOn(.outputSwitcher) || hub.isOn(.micTools) || hub.isOn(.appMixer) { list.append(("sound", String(localized: "feature.family.sound", defaultValue: "Sound"))) }
         if hub.isOn(.displays) { list.append(("displays", String(localized: "feature.displays", defaultValue: "Displays"))) }
         return list
     }
@@ -694,6 +694,7 @@ private struct SoundSection: View {
                 }
                 deviceRow(sound.inputs, selected: sound.input)
             }
+            if hub.isOn(.appMixer) { MixerList() }
             if hub.isOn(.musicBlocker) {
                 Text(String(localized: "tools.sound.music-blocked", defaultValue: "The Music app is closed as soon as something opens it."))
                     .font(.system(size: 10)).foregroundColor(Color(hex: "#6B7079"))
@@ -717,6 +718,46 @@ private struct SoundSection: View {
                 }
             }
         }
+    }
+}
+
+private struct MixerList: View {
+    @ObservedObject private var mixer = AppMixer.shared
+    @ObservedObject private var sound = SoundCenter.shared
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 3) {
+            Text(String(localized: "tools.mixer.title", defaultValue: "Per app")).font(.system(size: 10)).foregroundColor(Color(hex: "#6B7079"))
+            if mixer.apps.isEmpty {
+                Text(String(localized: "tools.mixer.none", defaultValue: "No app is playing sound."))
+                    .font(.system(size: 10.5)).foregroundColor(Color(hex: "#8E939C"))
+            }
+            ForEach(mixer.apps) { app in
+                HStack(spacing: 6) {
+                    if let icon = NSRunningApplication(processIdentifier: app.pid)?.icon {
+                        Image(nsImage: icon).resizable().frame(width: 14, height: 14)
+                    }
+                    Text(verbatim: app.name).font(.system(size: 10.5)).foregroundColor(Color(hex: "#E1E3E6")).frame(width: 78, alignment: .leading).lineLimit(1)
+                    Slider(value: Binding(get: { Double(mixer.level(app)) }, set: { mixer.setLevel(app, Float($0)) }), in: 0...2)
+                        .controlSize(.mini)
+                    Text(verbatim: "\(Int((mixer.level(app) * 100).rounded()))")
+                        .font(.system(size: 10)).foregroundColor(mixer.level(app) > 1 ? RafiqLook.gold : Color(hex: "#8E939C")).frame(width: 26)
+                    Menu {
+                        Button(String(localized: "tools.mixer.default-output", defaultValue: "Default output")) { mixer.setOutput(app, uid: nil) }
+                        ForEach(sound.outputs) { d in Button(d.name) { mixer.setOutput(app, uid: d.uid) } }
+                        Divider()
+                        Button(String(localized: "tools.mixer.reset", defaultValue: "Back to normal")) { mixer.reset(app) }
+                    } label: {
+                        Image(systemName: mixer.output(app) == nil ? "hifispeaker" : "hifispeaker.fill").font(.system(size: 10))
+                    }
+                    .menuStyle(.borderlessButton).fixedSize()
+                }
+            }
+            if let failure = mixer.failure {
+                Text(failure).font(.system(size: 10)).foregroundColor(Color(hex: "#F4505E"))
+            }
+        }
+        .onAppear { mixer.refresh() }
     }
 }
 

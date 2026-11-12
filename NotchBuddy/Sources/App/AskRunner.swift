@@ -444,6 +444,17 @@ final class AskRunner: ObservableObject {
                     let parts = pill.split(separator: ":", maxSplits: 2).map(String.init)
                     switch parts.count > 1 ? parts[1] : "" {
                     case "record": ScreenRecorder.shared.toggle()
+                    case "mix" where parts.count > 2:
+                        // "tool:mix:<name>=<level>": the first playing app whose name contains <name>.
+                        let pair = parts[2].split(separator: "=").map(String.init)
+                        AppMixer.shared.refresh()
+                        if pair.count == 2, let level = Float(pair[1]),
+                           let app = AppMixer.shared.apps.first(where: { $0.name.lowercased().contains(pair[0].lowercased()) }) {
+                            AppMixer.shared.setLevel(app, level)
+                            appendAppLog("nb.log", "[Mixer] \(app.name) → \(level) failure=\(AppMixer.shared.failure ?? "none")")
+                        } else {
+                            appendAppLog("nb.log", "[Mixer] apps: \(AppMixer.shared.apps.map(\.name))")
+                        }
                     case "gif" where parts.count > 2:
                         Task { let out = await MediaTools.gif(URL(fileURLWithPath: parts[2])); appendAppLog("nb.log", "[Tools] gif → \(out?.path ?? "failed")") }
                     case "compress" where parts.count > 2:

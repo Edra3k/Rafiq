@@ -13,7 +13,7 @@ enum RafiqFeature: String, CaseIterable, Identifiable {
     case clipboard, cleanURL, plainPaste, shelf, scratchpad
     case screenshots, recorder, camera, media
     case appUpdates, homebrew, uninstaller, cleaner, diskImages
-    case outputSwitcher, micTools, musicBlocker, displays, bluetoothSleep
+    case outputSwitcher, micTools, musicBlocker, displays, bluetoothSleep, appMixer
 
     var id: String { rawValue }
 
@@ -51,7 +51,7 @@ enum RafiqFeature: String, CaseIterable, Identifiable {
         case .claudeUsage: return .agents
         case .macMonitor, .speedTest, .ports: return .system
         case .keepAwake, .quickToggles, .displays, .bluetoothSleep: return .energy
-        case .outputSwitcher, .micTools, .musicBlocker: return .sound
+        case .outputSwitcher, .micTools, .musicBlocker, .appMixer: return .sound
         case .colorPicker, .screenText, .screenshots, .recorder, .camera, .media: return .capture
         case .quitApps, .appUpdates, .homebrew, .uninstaller, .cleaner, .diskImages: return .apps
         case .clipboard, .cleanURL, .plainPaste, .shelf, .scratchpad: return .write
@@ -88,6 +88,7 @@ enum RafiqFeature: String, CaseIterable, Identifiable {
         case .musicBlocker: return "music.note.slash"
         case .displays:     return "sun.max"
         case .bluetoothSleep: return "bolt.horizontal.circle"
+        case .appMixer:     return "slider.vertical.3"
         }
     }
 
@@ -121,6 +122,7 @@ enum RafiqFeature: String, CaseIterable, Identifiable {
         case .musicBlocker: return String(localized: "feature.musicBlocker", defaultValue: "Block the Music app")
         case .displays:     return String(localized: "feature.displays", defaultValue: "Displays")
         case .bluetoothSleep: return String(localized: "feature.bluetoothSleep", defaultValue: "Bluetooth off in sleep")
+        case .appMixer:     return String(localized: "feature.appMixer", defaultValue: "Volume per app")
         }
     }
 
@@ -154,6 +156,7 @@ enum RafiqFeature: String, CaseIterable, Identifiable {
         case .musicBlocker: return String(localized: "feature.musicBlocker.detail", defaultValue: "The play key no longer opens the Music app")
         case .displays:     return String(localized: "feature.displays.detail", defaultValue: "Each display's brightness, dimmed in software when needed")
         case .bluetoothSleep: return String(localized: "feature.bluetoothSleep.detail", defaultValue: "Off while the Mac sleeps, back on when it wakes")
+        case .appMixer:     return String(localized: "feature.appMixer.detail", defaultValue: "Each app's volume up to 200 %, and its own output")
         }
     }
 
@@ -236,6 +239,7 @@ final class FeatureHub: ObservableObject {
         if feature == .clipboard { ClipboardHistory.shared.featureChanged() }
         if [.outputSwitcher, .musicBlocker].contains(feature) { SoundCenter.shared.featureChanged() }
         if feature == .bluetoothSleep { BluetoothSleep.shared.featureChanged() }
+        if feature == .appMixer { if on { AppMixer.shared.restore() } else { AppMixer.shared.stopAll() } }
     }
 
     func apply(_ pack: FeaturePack) {

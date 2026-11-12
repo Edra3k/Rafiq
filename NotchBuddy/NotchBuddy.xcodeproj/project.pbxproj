@@ -370,6 +370,7 @@
 		9492F8E414E8E1814F01EE66 /* ApprovalCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BEAB5F20A13E5806A42EC9 /* ApprovalCard.swift */; };
 		94BF42E15EC9E8317DB6607A /* CoucoudoroEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1661E34BFBDDF4A9AD41FF75 /* CoucoudoroEngine.swift */; };
 		94E0849D13762C6EC8548FEF /* ClaudePlanCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4263B550838CC5614569D13 /* ClaudePlanCardView.swift */; };
+		9555B5499EE72CDBE07C56B3 /* AppMixer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6493EAF8025773F449DAF0 /* AppMixer.swift */; };
 		966D2EFF8BF71A45D8386638 /* Verses.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA32E7F20608ABE7A9804233 /* Verses.swift */; };
 		967B525F7D3837F31D740D18 /* ResendPoller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B5FDDE03F5F711146937E2 /* ResendPoller.swift */; };
 		968D08C757C0DD1CB593DC89 /* WhatsAppGateway.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4F560E1BEFB7B9D5865101 /* WhatsAppGateway.swift */; };
@@ -541,6 +542,7 @@
 		D6559770BBFB06FD4E90187B /* OpenLeadMochiIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D96E57E8DADE6B82628E3E /* OpenLeadMochiIntent.swift */; };
 		D69E561062D9358837380ABD /* CryptoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73DF398C822D98F541B62F89 /* CryptoController.swift */; };
 		D7FD1948C7F97D6A2904CDBE /* ElevenLabsTTS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046F9CD91704C34AE5BE9393 /* ElevenLabsTTS.swift */; };
+		D7FE43B7E25240D5C3DDBF63 /* AppMixer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6493EAF8025773F449DAF0 /* AppMixer.swift */; };
 		D839CEC9D07B0982BEE9AAFD /* ClaudeUsage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB153E0FDF5BA6D093C424D /* ClaudeUsage.swift */; };
 		D861479F6E7EAD07A6AC2105 /* ClaudePlanGauge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF22817EC70748F2D1FB2E7 /* ClaudePlanGauge.swift */; };
 		D8BD2C7684DE02ADC2FE582C /* QuickScreenshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86D1099CC2AE61958DBCF570 /* QuickScreenshot.swift */; };
@@ -828,6 +830,7 @@
 		5CB06C175FF10385FD8E8C80 /* MailTriageStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailTriageStore.swift; sourceTree = "<group>"; };
 		5EBFF7097973CC22F3893694 /* ReviewPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewPolicy.swift; sourceTree = "<group>"; };
 		5EE7672169F5132630351945 /* PrayerQuiet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrayerQuiet.swift; sourceTree = "<group>"; };
+		5F6493EAF8025773F449DAF0 /* AppMixer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppMixer.swift; sourceTree = "<group>"; };
 		60401D1023D17C3FD30D7113 /* PhoneAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = PhoneAssets.xcassets; sourceTree = "<group>"; };
 		61B5FDDE03F5F711146937E2 /* ResendPoller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResendPoller.swift; sourceTree = "<group>"; };
 		62CF42AE7611EF212CA0458F /* ShortcutsSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutsSettingsView.swift; sourceTree = "<group>"; };
@@ -1302,6 +1305,7 @@
 		839E12125C75E7EFB68802E5 /* Toolbox */ = {
 			isa = PBXGroup;
 			children = (
+				5F6493EAF8025773F449DAF0 /* AppMixer.swift */,
 				900CDC2CBA9068CCCADC87DE /* AppsManager.swift */,
 				6ADD830B9A1A13FC3DB47AB4 /* CaptureTools.swift */,
 				3CB153E0FDF5BA6D093C424D /* ClaudeUsage.swift */,
@@ -1811,6 +1815,7 @@
 				EED36668E2449104E03F353E /* AndroidLinkSettings.swift in Sources */,
 				C940B651C6CA952D99388E04 /* AppDelegate.swift in Sources */,
 				4B6AC00F22EC75E90E0157D5 /* AppLog.swift in Sources */,
+				9555B5499EE72CDBE07C56B3 /* AppMixer.swift in Sources */,
 				2DDE8147DEDA2CFB48678817 /* AppReview.swift in Sources */,
 				1F11EC4E6F604C612A1ADAD1 /* AppState.swift in Sources */,
 				0325A44358904B44C2237CCE /* ApprovalQueue.swift in Sources */,
@@ -2163,6 +2168,7 @@
 				998FA37DB4E8977DC46AA474 /* AndroidLinkSettings.swift in Sources */,
 				878924960FC0F2B3524D48AC /* AppDelegate.swift in Sources */,
 				61CB7049490F61CFA1B36B64 /* AppLog.swift in Sources */,
+				D7FE43B7E25240D5C3DDBF63 /* AppMixer.swift in Sources */,
 				DE6D9DF0B6D06797949B5D6D /* AppReview.swift in Sources */,
 				61F73B27A7E3AFF584B2CC22 /* AppState.swift in Sources */,
 				8C5CF7C82640DD6A0685A0D5 /* ApprovalQueue.swift in Sources */,
