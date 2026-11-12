@@ -7,13 +7,13 @@ import SwiftUI
 enum HubPage: String, CaseIterable, Identifiable {
     case today
     case dictation, notes, insights, dictionary, snippets, styles, settings
-    case general, pills, agents, chat, integrations, voice, shortcuts
+    case general, features, pills, agents, chat, integrations, voice, shortcuts
     case mailOverview, mailRules, mailBanned, mailVIP
 
     var id: String { rawValue }
 
     static let flowPages: [HubPage] = [.dictation, .notes, .insights, .dictionary, .snippets, .styles, .settings]
-    static let notchPages: [HubPage] = [.general, .pills, .agents, .chat, .integrations, .voice, .shortcuts]
+    static let notchPages: [HubPage] = [.general, .features, .pills, .agents, .chat, .integrations, .voice, .shortcuts]
     static let mailPages: [HubPage] = [.mailOverview, .mailRules, .mailBanned, .mailVIP]
 
     /// The section of Settings this page shows, for the notch's pages.
@@ -38,6 +38,7 @@ enum HubPage: String, CaseIterable, Identifiable {
     var title: String {
         switch self {
         case .general:      return String(localized: "General")
+        case .features:     return String(localized: "feature.page", defaultValue: "Features")
         case .pills:        return String(localized: "Active pills")
         case .agents:       return String(localized: "Agents")
         case .chat:         return String(localized: "Chat")
@@ -70,6 +71,7 @@ enum HubPage: String, CaseIterable, Identifiable {
         case .styles:     return "textformat"
         case .settings:   return "slider.horizontal.3"
         case .general:      return "gearshape"
+        case .features:     return "square.grid.3x3"
         case .pills:        return "square.grid.2x2"
         case .agents:       return "terminal"
         case .chat:         return "bubble.left.and.bubble.right"
@@ -125,6 +127,7 @@ extension HubPage {
     static func notchSubtitle(_ page: HubPage) -> String? {
         switch page {
         case .general:      return String(localized: "hub.notch.general")
+        case .features:     return String(localized: "feature.page.subtitle", defaultValue: "Install only what you use.")
         case .pills:        return String(localized: "hub.notch.pills")
         case .agents:       return String(localized: "hub.notch.agents")
         case .chat:         return String(localized: "hub.notch.chat")
@@ -245,6 +248,7 @@ struct FlowHubView: View {
         case .snippets:   HubSnippetsPage()
         case .styles:     HubStylesPage(router: router)
         case .settings:   HubSettingsPage()
+        case .features:   HubFeaturesPage()
         case .mailOverview: HubMailOverviewPage()
         case .mailRules:    HubMailRulesPage()
         case .mailBanned:   HubMailBannedPage()

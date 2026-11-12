@@ -434,6 +434,15 @@ final class AskRunner: ObservableObject {
                     }
                     return
                 }
+                // "view:tools" opens that island view (DEBUG checks of new pages).
+                if pill.hasPrefix("view:"), let view = IslandView(rawValue: String(pill.dropFirst(5))) {
+                    NotificationCenter.default.post(name: .hookExpand, object: view)
+                    return
+                }
+                if pill.hasPrefix("page:") {
+                    UserDefaults.standard.set(String(pill.dropFirst(5)), forKey: "tools.page")
+                    return
+                }
                 if pill.hasPrefix("say:") {
                     VoiceSpeaker.shared.say([String(pill.dropFirst(4))], locale: Locale(identifier: "fr-FR"))
                     return

@@ -5,6 +5,7 @@
 #   scripts/details-debug.sh integration_claude    VS Code and terminal sessions
 #   scripts/details-debug.sh "say:Bonjour Ahmed"   Rafiq says it
 #   scripts/details-debug.sh "ask:Où en est Claude ?"   the same path as Siri, answer said and logged
+#   scripts/details-debug.sh "page:mac"; scripts/details-debug.sh "view:tools"   the Tools tab on a page
 set -euo pipefail
 PILL="${1:-agent_claude-desktop}" /usr/bin/osascript -l JavaScript -e '
 ObjC.import("Foundation");

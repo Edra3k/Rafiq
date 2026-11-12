@@ -577,6 +577,24 @@ final class AppState: ObservableObject {
         }
     }
 
+    private static var lastClaudeAccountAttempt: Date = .distantPast
+    private static var claudeAccountFetchInFlight = false
+
+    /// Asks Claude Code for the plan's limits (what /usage shows): sessions from the Claude
+    /// app never relay them. At most every five minutes, only while the gauge is on screen.
+    func refreshClaudeAccountUsage(force: Bool = false) {
+        guard FeatureHub.shared.isOn(.claudeUsage), !Self.claudeAccountFetchInFlight else { return }
+        guard force || Date().timeIntervalSince(Self.lastClaudeAccountAttempt) > 300 else { return }
+        Self.claudeAccountFetchInFlight = true
+        Self.lastClaudeAccountAttempt = Date()
+        Task {
+            if let u = await ClaudeAccountUsage.fetch() {
+                claudePlanUsage = ClaudePlanGauge.merge(claudePlanUsage, with: u)
+            }
+            Self.claudeAccountFetchInFlight = false
+        }
+    }
+
     func refreshPlanRelayState() {
         planRelayInstalled = HookServer.statusLineInstalled()
     }

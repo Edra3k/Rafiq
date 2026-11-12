@@ -187,7 +187,7 @@ enum JarvisMac {
         }
     }
 
-    nonisolated private static func recognize(_ image: CGImage) -> String {
+    nonisolated static func recognize(_ image: CGImage) -> String {
         let request = VNRecognizeTextRequest()
         request.recognitionLevel = .accurate
         request.usesLanguageCorrection = false

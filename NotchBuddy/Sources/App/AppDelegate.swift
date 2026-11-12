@@ -49,6 +49,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         setupIsland()
         MachineVitals.shared.start()
         #if !APPSTORE
+        KeepAwake.shared.featureChanged()
+        #endif
+        #if !APPSTORE
         // Opened by hand (Finder, Dock, Spotlight): the Rafiq window shows. Not at login.
         if FlowHubController.openAtLaunch && !FlowHubController.launchedAtLogin() {
             Task { @MainActor in

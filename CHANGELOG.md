@@ -21,6 +21,10 @@
 - **Siri and Shortcuts** — "Hey Siri, ask Rafiq…", "… where are my agents in Rafiq", "Next prayer with Rafiq", and "Give a task to an agent": the same brain, answered by Siri, and the same actions in the Shortcuts app.
 - **Voice fixes** — "résume-moi ma journée" no longer resumes the music, a Pomodoro is no longer looked up as a song, and the first answer of the day has time to load the model.
 - **Cards no longer wait behind the verse** — a security card that came while the verse of the day was up, or during Rafiq's greeting, now shows at once.
+- **Features** — Settings → Features: install only what you use. Every tool says what it does at rest (most do nothing), packs set them in one click (Developer, Light, Everything), and an off feature leaves the island and loads nothing.
+- **The Tools tab** — a new tab in the island (the grid icon), with three pages. Tools: keep awake, dark mode, desktop icons, eject, empty the Trash (two clicks), lock, color picker, text from screen, speed test, quit apps. Mac: processor and its graph, temperature, battery and its health, memory, disk, network, what uses the processor, and the open ports with Stop — read every two seconds and only while the page is shown. Usage: below.
+- **Claude's real usage** — the "Claude —" chip now shows the plan's limits even for sessions from the Claude app: Rafiq asks Claude Code itself, as /usage does (no prompt, no model call, no tool, at most every five minutes). The Usage page shows the session and the week as two rings with their resets, the tokens of today and of 7 days with what they would cost at API prices, the week's days, the projects and the models — read from Claude Code's transcripts on this Mac.
+- **Keep the Mac awake while an agent works** — on by default with Keep awake; or for an hour from the Tools tab.
 
 ## 0.7.0 — 2026-11-12
 

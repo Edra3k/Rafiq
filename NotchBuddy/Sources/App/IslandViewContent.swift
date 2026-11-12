@@ -36,6 +36,12 @@ struct IslandViewContent: View {
             #else
             EmptyView()
             #endif
+        case .tools:
+            #if !APPSTORE
+            ToolsView(state: state)
+            #else
+            EmptyView()
+            #endif
         case .homelab:
             #if !APPSTORE
             HomelabView(state: state)

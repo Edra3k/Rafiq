@@ -23,6 +23,7 @@ enum IslandView: String, CaseIterable {
     case homelab      // the home server's VMs and labs, with their actions (GitHub build)
     case session      // the focused session in full: every step rated, files, Git, the guard
     case ask          // "Ask…": a task for Hermes or Claude, then its answer (GitHub build)
+    case tools        // the installed features: tools, the Mac, the agents' usage (GitHub build)
 }
 
 // MARK: - Bot State
@@ -288,6 +289,7 @@ enum IslandConst {
         .homelab:      ViewLayout(height: 270, botX: 62,  botY: nil, botDiameter: 58, agentMode: .none),
         .session:      ViewLayout(height: 430, botX: 60,  botY: 92,  botDiameter: 58, agentMode: .none),
         .ask:          ViewLayout(height: 236, botX: 60,  botY: nil, botDiameter: 56, agentMode: .none),
+        .tools:        ViewLayout(height: 292, botX: 56,  botY: 96,  botDiameter: 52, agentMode: .none),
         // New version: Rafiq on the left, the version and Update now
         .update:       ViewLayout(height: 160, botX: 62,  botY: nil, botDiameter: 58, agentMode: .none),
         // After an update: taller, four items then the stats (like mail, it fills the height)

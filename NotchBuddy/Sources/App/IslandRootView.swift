@@ -695,7 +695,7 @@ struct IslandContentView: View {
                     // Views that fill available height instead of the fixed 98pt content frame:
                     // chat (prompt) is always flexible; mail is flexible only when active so
                     // it doesn't push the ZStack taller when inactive.
-                    let isTall = v == .prompt || ((v == .mail || v == .whatsNew || v == .digest || v == .tasbih || v == .homelab || v == .session || v == .ask) && active)
+                    let isTall = v == .prompt || ((v == .mail || v == .whatsNew || v == .digest || v == .tasbih || v == .homelab || v == .session || v == .ask || v == .tools) && active)
                         || (v == .overview && active && cornerHome)
                     let anim: Animation = active
                         ? .spring(response: 0.4, dampingFraction: 0.8).delay(0.16)
@@ -749,7 +749,7 @@ struct IslandHeader: View {
     private var planPillShown: Bool {
         #if !APPSTORE
         return state.view == .overview
-            && ((state.showPlanInNotch && state.planRelayInstalled) || state.showCodexPlanInNotch)
+            && ((state.showPlanInNotch && (state.planRelayInstalled || state.claudePlanUsage != nil)) || state.showCodexPlanInNotch)
         #else
         return false
         #endif
@@ -780,6 +780,10 @@ struct IslandHeader: View {
                 TabButton(icon: "terminal", view: .launch, state: state)
                 // Ask Hermes or Claude to do something.
                 TabButton(icon: "sparkles", view: .ask, state: state)
+                // Tools: every installed feature, the Mac, and the agents' usage.
+                if !FeatureHub.shared.enabled.isEmpty {
+                    TabButton(icon: "square.grid.2x2", view: .tools, state: state)
+                }
                 #endif
                 // The next prayer, when it clears the notch (HeaderPrayerChip shortens or hides).
                 HeaderPrayerChip(state: state)
@@ -795,7 +799,7 @@ struct IslandHeader: View {
                 #if !APPSTORE
                 // Claude and Codex both on: only Claude here (two pills and the icons do not
                 // clear the notch); Codex is a row in the Claude plan card.
-                if state.view == .overview && state.showPlanInNotch && state.planRelayInstalled {
+                if state.view == .overview && state.showPlanInNotch && (state.planRelayInstalled || state.claudePlanUsage != nil) {
                     ClaudePlanHeaderPill(state: state)
                 } else if state.view == .overview && state.showCodexPlanInNotch {
                     ClaudePlanHeaderPill(state: state, codex: true)
@@ -909,7 +913,7 @@ struct ClaudePlanHeaderPill: View {
                 state.planDetailIsCodex = codex
                 state.showingPlanDetail = !open
             }
-            if codex { state.refreshCodexPlanUsage() }
+            if codex { state.refreshCodexPlanUsage() } else { state.refreshClaudeAccountUsage() }
         }) {
             HStack(spacing: 4) {
                 Circle()
@@ -940,7 +944,7 @@ struct ClaudePlanHeaderPill: View {
         .onHover { h in
             withAnimation(.spring(response: 0.2, dampingFraction: 0.7)) { isHovered = h }
         }
-        .onAppear { if codex { state.refreshCodexPlanUsage() } }
+        .onAppear { if codex { state.refreshCodexPlanUsage() } else { state.refreshClaudeAccountUsage() } }
     }
 }
 #endif
