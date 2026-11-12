@@ -444,6 +444,9 @@ final class AskRunner: ObservableObject {
                     let parts = pill.split(separator: ":", maxSplits: 2).map(String.init)
                     switch parts.count > 1 ? parts[1] : "" {
                     case "record": ScreenRecorder.shared.toggle()
+                    case "win" where parts.count > 2:
+                        let names: [String: WindowAction] = ["left": .left, "right": .right, "max": .maximize, "center": .center, "restore": .restore]
+                        if let action = names[parts[2]] { WindowManager.shared.perform(action) }
                     case "mix" where parts.count > 2:
                         // "tool:mix:<name>=<level>": the first playing app whose name contains <name>.
                         let pair = parts[2].split(separator: "=").map(String.init)

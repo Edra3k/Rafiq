@@ -71,6 +71,7 @@
 		160EDB9D06275E2607DA5151 /* N8nPoller.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89DA1A0C21AE3535A1760BB /* N8nPoller.swift */; };
 		16C04CE6EFDFDCD3EEFBD3DD /* QuestionQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4162B4B5D5776EC9FD0866F /* QuestionQueue.swift */; };
 		17392C63757FBAC38F22B9D6 /* ServiceViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08128342A3F894D567AD9E6B /* ServiceViews.swift */; };
+		177741251E853700797722B4 /* WindowTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2127F5751EB5E74428661D6E /* WindowTools.swift */; };
 		17D6063D3B374FB82340314E /* IslandTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0365DDE3C554F5E8570055F4 /* IslandTypes.swift */; };
 		189811F4DB3C4F6030043643 /* VoiceTranscriptHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE925A6844FE3E3C09131CE0 /* VoiceTranscriptHistory.swift */; };
 		18D47AE663EB96BE5638D5F7 /* ClaudePlanCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4263B550838CC5614569D13 /* ClaudePlanCardView.swift */; };
@@ -629,6 +630,7 @@
 		F6730E5412B9D7CA7F654503 /* SystemMute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EA4F18C69EE1F181408CF0 /* SystemMute.swift */; };
 		F6CA56F362902839EF9A3E2E /* PhoneAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 60401D1023D17C3FD30D7113 /* PhoneAssets.xcassets */; };
 		F6D57EEBD7E937EFD2B715CF /* ClaudeHost.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F0D0F67E7C56B9E37E7648 /* ClaudeHost.swift */; };
+		F6E99E5673F756B674C29FA0 /* WindowTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2127F5751EB5E74428661D6E /* WindowTools.swift */; };
 		F6FC9AF8B1500D7AC14D6A7A /* RafiqLook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736005266D495A51C9B0E890 /* RafiqLook.swift */; };
 		F7162101509D8CAE59711602 /* VoiceSpeaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD11C7925B0A7831BFC2199C /* VoiceSpeaker.swift */; };
 		F71939B87A353FF8E8FB84F4 /* Clipboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81B34F604BE1B59FDAF888D3 /* Clipboard.swift */; };
@@ -767,6 +769,7 @@
 		1D2B9223A429098FE0C2F2A4 /* AskPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AskPublisher.swift; sourceTree = "<group>"; };
 		1E173E76A9B04BF0CB8E3DA4 /* AskRunner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AskRunner.swift; sourceTree = "<group>"; };
 		1EA7D927F6BB2667D37AA963 /* ClaudeHookDetection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaudeHookDetection.swift; sourceTree = "<group>"; };
+		2127F5751EB5E74428661D6E /* WindowTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowTools.swift; sourceTree = "<group>"; };
 		216717588DFD8663D35BAE8B /* MailTriage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailTriage.swift; sourceTree = "<group>"; };
 		21B710512DB99390EC564487 /* ServiceLiveDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceLiveDetail.swift; sourceTree = "<group>"; };
 		22E03C8E267399FA25C75877 /* VoiceIslandView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceIslandView.swift; sourceTree = "<group>"; };
@@ -1315,6 +1318,7 @@
 				C2FAA36E6DD3E44182E57A11 /* QuickActions.swift */,
 				040EFB8E69B9025E4B21BBB2 /* SoundTools.swift */,
 				002B2F0A4998EAA6F4D1FF7C /* ToolsView.swift */,
+				2127F5751EB5E74428661D6E /* WindowTools.swift */,
 			);
 			path = Toolbox;
 			sourceTree = "<group>";
@@ -2048,6 +2052,7 @@
 				54EC01EB708DCE591FAB0763 /* WhatsNew.swift in Sources */,
 				464608502EE497379F618D89 /* WhatsNewViews.swift in Sources */,
 				2875610F701376BD65573386 /* WindowContextCapture.swift in Sources */,
+				177741251E853700797722B4 /* WindowTools.swift in Sources */,
 				D6169A6FDB54ED45A461060A /* WorkStreak.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2401,6 +2406,7 @@
 				FA24FC6B89DE57E764293D50 /* WhatsNew.swift in Sources */,
 				C07E0C853112F1E7F6E950B4 /* WhatsNewViews.swift in Sources */,
 				2CC2E3B688B15BBEB3AE3BCE /* WindowContextCapture.swift in Sources */,
+				F6E99E5673F756B674C29FA0 /* WindowTools.swift in Sources */,
 				F21043A1121544B10FAAAD01 /* WorkStreak.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -384,6 +384,14 @@ private struct ToolsGrid: View {
                     if hub.isOn(.media) {
                         ToolTile(symbol: "photo.on.rectangle.angled", title: String(localized: "tools.media", defaultValue: "Media")) { panel = "media" }
                     }
+                    if hub.isOn(.windowLayout) {
+                        ForEach([WindowAction.left, .right, .maximize, .center], id: \.self) { action in
+                            ToolTile(symbol: action.symbol, title: action.keyLabel) { WindowManager.shared.perform(action) }
+                        }
+                    }
+                    if hub.isOn(.windowSwitcher) {
+                        ToolTile(symbol: "square.on.square", title: "⌥⇥") { WindowManager.shared.perform(.switcher) }
+                    }
                     if hub.isOn(.speedTest) {
                         ToolTile(symbol: "speedometer", title: speed.running ? String(localized: "tools.speed.running", defaultValue: "Testing…")
                                                                              : String(localized: "tools.speed", defaultValue: "Speed"),

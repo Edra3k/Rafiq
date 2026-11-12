@@ -14,11 +14,12 @@ enum RafiqFeature: String, CaseIterable, Identifiable {
     case screenshots, recorder, camera, media
     case appUpdates, homebrew, uninstaller, cleaner, diskImages
     case outputSwitcher, micTools, musicBlocker, displays, bluetoothSleep, appMixer
+    case windowLayout, windowSwitcher, quitProtection, quitOnClose, spacesOrder
 
     var id: String { rawValue }
 
     enum Family: String, CaseIterable, Identifiable {
-        case agents, system, sound, energy, write, capture, apps
+        case agents, system, sound, energy, windows, write, capture, apps
         var id: String { rawValue }
         var title: String {
             switch self {
@@ -26,6 +27,7 @@ enum RafiqFeature: String, CaseIterable, Identifiable {
             case .system:  return String(localized: "feature.family.system", defaultValue: "Your Mac")
             case .sound:   return String(localized: "feature.family.sound", defaultValue: "Sound")
             case .energy:  return String(localized: "feature.family.energy", defaultValue: "Energy")
+            case .windows: return String(localized: "feature.family.windows", defaultValue: "Windows")
             case .write:   return String(localized: "feature.family.write", defaultValue: "Write and paste")
             case .capture: return String(localized: "feature.family.capture", defaultValue: "Capture")
             case .apps:    return String(localized: "feature.family.apps", defaultValue: "Apps")
@@ -35,13 +37,15 @@ enum RafiqFeature: String, CaseIterable, Identifiable {
 
     /// What the feature does while the user is not using it.
     enum AtRest {
-        case nothing, files, network, clipboard
+        case nothing, files, network, clipboard, keyboard, mouse
         var label: String {
             switch self {
             case .nothing: return String(localized: "feature.rest.nothing", defaultValue: "nothing at rest")
             case .files:   return String(localized: "feature.rest.files", defaultValue: "reads local files")
             case .network: return String(localized: "feature.rest.network", defaultValue: "asks your account")
             case .clipboard: return String(localized: "feature.rest.clipboard", defaultValue: "reads the clipboard")
+            case .keyboard: return String(localized: "feature.rest.keyboard", defaultValue: "listens to the keyboard")
+            case .mouse: return String(localized: "feature.rest.mouse", defaultValue: "listens to the mouse")
             }
         }
     }
@@ -52,6 +56,7 @@ enum RafiqFeature: String, CaseIterable, Identifiable {
         case .macMonitor, .speedTest, .ports: return .system
         case .keepAwake, .quickToggles, .displays, .bluetoothSleep: return .energy
         case .outputSwitcher, .micTools, .musicBlocker, .appMixer: return .sound
+        case .windowLayout, .windowSwitcher, .quitProtection, .quitOnClose, .spacesOrder: return .windows
         case .colorPicker, .screenText, .screenshots, .recorder, .camera, .media: return .capture
         case .quitApps, .appUpdates, .homebrew, .uninstaller, .cleaner, .diskImages: return .apps
         case .clipboard, .cleanURL, .plainPaste, .shelf, .scratchpad: return .write
@@ -89,6 +94,11 @@ enum RafiqFeature: String, CaseIterable, Identifiable {
         case .displays:     return "sun.max"
         case .bluetoothSleep: return "bolt.horizontal.circle"
         case .appMixer:     return "slider.vertical.3"
+        case .windowLayout: return "rectangle.split.2x1"
+        case .windowSwitcher: return "square.on.square"
+        case .quitProtection: return "hand.raised"
+        case .quitOnClose:  return "xmark.square"
+        case .spacesOrder:  return "square.stack.3d.up"
         }
     }
 
@@ -123,6 +133,11 @@ enum RafiqFeature: String, CaseIterable, Identifiable {
         case .displays:     return String(localized: "feature.displays", defaultValue: "Displays")
         case .bluetoothSleep: return String(localized: "feature.bluetoothSleep", defaultValue: "Bluetooth off in sleep")
         case .appMixer:     return String(localized: "feature.appMixer", defaultValue: "Volume per app")
+        case .windowLayout: return String(localized: "feature.windowLayout", defaultValue: "Window layout")
+        case .windowSwitcher: return String(localized: "feature.windowSwitcher", defaultValue: "Window switcher")
+        case .quitProtection: return String(localized: "feature.quitProtection", defaultValue: "Quit protection")
+        case .quitOnClose:  return String(localized: "feature.quitOnClose", defaultValue: "Quit on close")
+        case .spacesOrder:  return String(localized: "feature.spacesOrder", defaultValue: "Spaces in a fixed order")
         }
     }
 
@@ -157,6 +172,11 @@ enum RafiqFeature: String, CaseIterable, Identifiable {
         case .displays:     return String(localized: "feature.displays.detail", defaultValue: "Each display's brightness, dimmed in software when needed")
         case .bluetoothSleep: return String(localized: "feature.bluetoothSleep.detail", defaultValue: "Off while the Mac sleeps, back on when it wakes")
         case .appMixer:     return String(localized: "feature.appMixer.detail", defaultValue: "Each app's volume up to 200 %, and its own output")
+        case .windowLayout: return String(localized: "feature.windowLayout.detail", defaultValue: "Halves, thirds, full, center, next display with ⌃⌥ arrows, or a window dragged to an edge")
+        case .windowSwitcher: return String(localized: "feature.windowSwitcher.detail", defaultValue: "Every window in one searchable list (⌥⇥)")
+        case .quitProtection: return String(localized: "feature.quitProtection.detail", defaultValue: "Hold ⌘Q to quit an app, a slip of the finger does nothing")
+        case .quitOnClose:  return String(localized: "feature.quitOnClose.detail", defaultValue: "Preview and TextEdit quit when their last window closes")
+        case .spacesOrder:  return String(localized: "feature.spacesOrder.detail", defaultValue: "Spaces stay where you put them instead of moving by use")
         }
     }
 
@@ -164,12 +184,14 @@ enum RafiqFeature: String, CaseIterable, Identifiable {
         switch self {
         case .claudeUsage: return .network
         case .clipboard, .cleanURL: return .clipboard
+        case .windowLayout: return .mouse
+        case .windowSwitcher, .quitProtection: return .keyboard
         default: return .nothing
         }
     }
 
     /// The features that change how the Mac itself behaves start off.
-    var onByDefault: Bool { ![.musicBlocker, .bluetoothSleep].contains(self) }
+    var onByDefault: Bool { ![.musicBlocker, .bluetoothSleep, .windowSwitcher, .quitProtection, .quitOnClose, .spacesOrder].contains(self) }
 }
 
 /// The packs that set the features in one click.
@@ -239,6 +261,10 @@ final class FeatureHub: ObservableObject {
         if feature == .clipboard { ClipboardHistory.shared.featureChanged() }
         if [.outputSwitcher, .musicBlocker].contains(feature) { SoundCenter.shared.featureChanged() }
         if feature == .bluetoothSleep { BluetoothSleep.shared.featureChanged() }
+        if [.windowLayout, .windowSwitcher].contains(feature) { WindowManager.shared.featureChanged() }
+        if feature == .quitProtection { QuitGuard.shared.featureChanged() }
+        if feature == .quitOnClose { QuitOnClose.shared.featureChanged() }
+        if feature == .spacesOrder { SpacesOrder.set(fixed: on) }
         if feature == .appMixer { if on { AppMixer.shared.restore() } else { AppMixer.shared.stopAll() } }
     }
 
@@ -249,6 +275,9 @@ final class FeatureHub: ObservableObject {
         ClipboardHistory.shared.featureChanged()
         SoundCenter.shared.featureChanged()
         BluetoothSleep.shared.featureChanged()
+        WindowManager.shared.featureChanged()
+        QuitGuard.shared.featureChanged()
+        QuitOnClose.shared.featureChanged()
     }
 
     func binding(_ feature: RafiqFeature) -> Binding<Bool> {
