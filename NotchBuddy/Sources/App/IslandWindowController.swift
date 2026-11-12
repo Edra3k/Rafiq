@@ -2220,6 +2220,8 @@ extension Notification.Name {
     static let islandSendMessage   = Notification.Name("notchBuddy.islandSendMessage")
     static let islandNewConversation = Notification.Name("notchBuddy.islandNewConversation")
     static let islandToggleDiff           = Notification.Name("notchBuddy.islandToggleDiff")
+    /// Open one diff of the focused session (object: its FileDiff id, an Int).
+    static let islandShowDiff             = Notification.Name("notchBuddy.islandShowDiff")
     static let islandActivateCardSelection = Notification.Name("notchBuddy.islandActivateCardSelection")
     static let openFullSettings    = Notification.Name("notchBuddy.openFullSettings")
     static let hookReveal       = Notification.Name("notchBuddy.hookReveal")

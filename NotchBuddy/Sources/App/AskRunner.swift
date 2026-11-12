@@ -343,7 +343,12 @@ final class AskRunner: ObservableObject {
     }
 
     func readAloud(_ job: Job) {
-        say(AskSpeech.sentences(job.answer, max: 12, maxLength: 1500))
+        readAloud(text: job.answer)
+    }
+
+    /// Any answer, said aloud in its own language (Details' "Read aloud").
+    func readAloud(text: String) {
+        say(AskSpeech.sentences(text, max: 12, maxLength: 1500))
     }
 
     private func say(_ sentences: [String]) {

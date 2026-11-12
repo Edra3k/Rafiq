@@ -25,6 +25,7 @@
 		053B30CF4568F7FE5138A898 /* MochiWardrobe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A7807ADD0963FF260D1FAD /* MochiWardrobe.swift */; };
 		05C1EC9E2EEDAE15EA5AE7AD /* MailPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = F205F7AFCEAC73DFF69F0A25 /* MailPlan.swift */; };
 		05F087B838004891988FBA79 /* FlowAudioBands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0596FD03875A10BD2CCBE332 /* FlowAudioBands.swift */; };
+		0614D6639DE701F55ABE22CE /* SessionReply.swift in Sources */ = {isa = PBXBuildFile; fileRef = B132BA151FEA359EEBE8FD22 /* SessionReply.swift */; };
 		065FCE817315454DE3F85F25 /* IslandViewContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA02B08886939FF6FE0475DD /* IslandViewContent.swift */; };
 		0685C3D47D27D06FCB6E4AD1 /* IslandTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0365DDE3C554F5E8570055F4 /* IslandTypes.swift */; };
 		068E6F3E016B3429039D8067 /* RafiqComplications.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF89A5EF40307D3DC140EEC /* RafiqComplications.swift */; };
@@ -141,6 +142,7 @@
 		3CF69605BB03E567C2DB0935 /* MacDictation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6544ED02D945CF9F00647AD1 /* MacDictation.swift */; };
 		3D2953CB0C9A42682F233009 /* AgentAsk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470180233A9B16C96CD54531 /* AgentAsk.swift */; };
 		3D9DF8094D4B5FADBC64A071 /* CaptureCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BA58E1F273995F1C51AAAC /* CaptureCardView.swift */; };
+		3DC64F42A011D2EA0C359100 /* TurnHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CD51DD30DC4D25A011831B /* TurnHistory.swift */; };
 		3E6B68F0BBB88C318997E2C5 /* PrayerViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFFF1C75C5AB2C30A441DBC /* PrayerViews.swift */; };
 		3E84EA0AE7C450941ED943CF /* NowPlayingViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = F56C7E1EBC74664A7F1689CF /* NowPlayingViews.swift */; };
 		40453F38D747561C5F1E1B29 /* ServerLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51C7F3A1FC673EFB8135B8C5 /* ServerLink.swift */; };
@@ -216,6 +218,7 @@
 		61F73B27A7E3AFF584B2CC22 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E4F18AA940EFF7E047B9F7 /* AppState.swift */; };
 		62C4EE3F74DAA59764729E62 /* UploadCanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B241B043223AFBBFB7418A5E /* UploadCanvasView.swift */; };
 		63093DC288B68F7F17249517 /* GitHubActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 168A9A73B519018FAB0AA465 /* GitHubActivity.swift */; };
+		63A2C9B33ECDECE773DAC18F /* TurnHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CD51DD30DC4D25A011831B /* TurnHistory.swift */; };
 		63B87D9E49F228ADCEC4C293 /* WakeSpotter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC1DE3225F5239394398E6B6 /* WakeSpotter.swift */; };
 		63F9F3AAC881D3EDDDD8AED9 /* UserIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A13AEE6E06F46CEC9D908C /* UserIdentity.swift */; };
 		640D3B3296748445A8F96F6D /* question.wav in Resources */ = {isa = PBXBuildFile; fileRef = A5DC0954D23B69B247578437 /* question.wav */; };
@@ -595,6 +598,7 @@
 		F73CE222E90851292929E72E /* ServerLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2BE2B6FFE97653600C5AF8F /* ServerLog.swift */; };
 		F8B6F5C96F552D5CECDE4DFA /* AgyPermissionRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF061515B3BCF2B0593FA5A /* AgyPermissionRules.swift */; };
 		F8F95EAD88F70E0A147D1662 /* MacDictation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6544ED02D945CF9F00647AD1 /* MacDictation.swift */; };
+		F8FAA9E2FE48AA23B78BF61D /* SessionReply.swift in Sources */ = {isa = PBXBuildFile; fileRef = B132BA151FEA359EEBE8FD22 /* SessionReply.swift */; };
 		F9445A71BBF9E4D20224238E /* QuestionPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C6993B34A0FFF8E3D454ADC /* QuestionPayload.swift */; };
 		F9685A58729FE64B23FCCFC5 /* VoiceResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C432FE1286945E42D3E11D7 /* VoiceResultView.swift */; };
 		F994644F96DD823EA1197FE1 /* AskPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2B9223A429098FE0C2F2A4 /* AskPublisher.swift */; };
@@ -822,6 +826,7 @@
 		824E56D2255CA86DAC350DBF /* SessionPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionPublisher.swift; sourceTree = "<group>"; };
 		8296E14A0C15515E6C3C1DBB /* QuestionCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionCard.swift; sourceTree = "<group>"; };
 		8436291D94C826F1D9DA3130 /* FlowSettingsBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowSettingsBox.swift; sourceTree = "<group>"; };
+		84CD51DD30DC4D25A011831B /* TurnHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TurnHistory.swift; sourceTree = "<group>"; };
 		84ECC59BE7CDDEE348FC7096 /* ServiceSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceSnapshot.swift; sourceTree = "<group>"; };
 		868DE9FCE08E3280D414317F /* LaunchScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScript.swift; sourceTree = "<group>"; };
 		86D1099CC2AE61958DBCF570 /* QuickScreenshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickScreenshot.swift; sourceTree = "<group>"; };
@@ -870,6 +875,7 @@
 		ADA6A002ABEC0CC57667FBE0 /* MochiLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MochiLiveActivity.swift; sourceTree = "<group>"; };
 		ADC663D1C8F67C4A0C5B50CA /* AppReview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppReview.swift; sourceTree = "<group>"; };
 		AEF5BD66B00BB64BB80AF38C /* DemoEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoEngine.swift; sourceTree = "<group>"; };
+		B132BA151FEA359EEBE8FD22 /* SessionReply.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionReply.swift; sourceTree = "<group>"; };
 		B1DDC96E7967032F5D0BD585 /* DesktopMochi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesktopMochi.swift; sourceTree = "<group>"; };
 		B241B043223AFBBFB7418A5E /* UploadCanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadCanvasView.swift; sourceTree = "<group>"; };
 		B249C39EA29E941BC52A6126 /* FlowHubSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowHubSettings.swift; sourceTree = "<group>"; };
@@ -1147,6 +1153,7 @@
 				363E14E2DF8A6FC629E1C89E /* SessionDrop.swift */,
 				8BBC340182AA9AF85E9F5CCB /* SessionFullView.swift */,
 				344E876933F4FCF67912CD86 /* SessionLauncher.swift */,
+				B132BA151FEA359EEBE8FD22 /* SessionReply.swift */,
 				B2C57EA9BF72452EE9425662 /* SettingsSearch.swift */,
 				9DFD657366DCCC47D6C0FEAB /* SettingsSearchMatch.swift */,
 				7C1A7D5CBE2AC084A10C5FF3 /* SettingsView.swift */,
@@ -1160,6 +1167,7 @@
 				950A3A5B9273F65A9F5EBE9F /* Tasbih.swift */,
 				87AF6F7A027AB1D46309DD49 /* TerminalTarget.swift */,
 				244A7909EEDA4BFF4C2EA9B5 /* TerminalTarget+AppKit.swift */,
+				84CD51DD30DC4D25A011831B /* TurnHistory.swift */,
 				B241B043223AFBBFB7418A5E /* UploadCanvasView.swift */,
 				6FD65943C32E150F1CD65C31 /* UploadSequenceEngine.swift */,
 				F4A13AEE6E06F46CEC9D908C /* UserIdentity.swift */,
@@ -1875,6 +1883,7 @@
 				D10D3232FEA0A159C6F889E1 /* SessionFullView.swift in Sources */,
 				4C59AC547C3BBC5F5985B93B /* SessionLauncher.swift in Sources */,
 				9728564FCBF0334E68E9E6E7 /* SessionPublisher.swift in Sources */,
+				F8FAA9E2FE48AA23B78BF61D /* SessionReply.swift in Sources */,
 				35468D647AFF3E66EE158994 /* SettingsSearch.swift in Sources */,
 				A50FF47A189A49FDE5494369 /* SettingsSearchMatch.swift in Sources */,
 				56BE8C733F10A030A638FB60 /* SettingsView.swift in Sources */,
@@ -1890,6 +1899,7 @@
 				9EA178EA395B116336C1FA10 /* TerminalTarget+AppKit.swift in Sources */,
 				1D4CE0CCD2B5A0FFE50C7F06 /* TerminalTarget.swift in Sources */,
 				8551E592C5FFC6A0A7458A26 /* TurnEndPolicy.swift in Sources */,
+				3DC64F42A011D2EA0C359100 /* TurnHistory.swift in Sources */,
 				0408FE7F86EBEE61CAED32DA /* TurnRecorder.swift in Sources */,
 				68C3ACC708B69035FD0CB8C4 /* TurnSnapshot.swift in Sources */,
 				62C4EE3F74DAA59764729E62 /* UploadCanvasView.swift in Sources */,
@@ -2206,6 +2216,7 @@
 				6F810B0DBF5EE6570190438E /* SessionFullView.swift in Sources */,
 				CDF3E5390F9D8E28EAC128F6 /* SessionLauncher.swift in Sources */,
 				DE66BB6D18F467A7F4220CC3 /* SessionPublisher.swift in Sources */,
+				0614D6639DE701F55ABE22CE /* SessionReply.swift in Sources */,
 				8E01F2BD38F55EEC9AF834C0 /* SettingsSearch.swift in Sources */,
 				6595FC1914635EE7751CFD3F /* SettingsSearchMatch.swift in Sources */,
 				8D1C01F283FA7806119A1C85 /* SettingsView.swift in Sources */,
@@ -2221,6 +2232,7 @@
 				11F14DB97C93CF84DF9D5C43 /* TerminalTarget+AppKit.swift in Sources */,
 				6726F74966EDE7F82BFE89B2 /* TerminalTarget.swift in Sources */,
 				ABE0CEF17018F1BAD8F7DBFA /* TurnEndPolicy.swift in Sources */,
+				63A2C9B33ECDECE773DAC18F /* TurnHistory.swift in Sources */,
 				CE0A1BD64DF3E08D200691A6 /* TurnRecorder.swift in Sources */,
 				4D34FF10654B19B69FE1964C /* TurnSnapshot.swift in Sources */,
 				4117E7C8AA231AAE36E7509D /* UploadCanvasView.swift in Sources */,

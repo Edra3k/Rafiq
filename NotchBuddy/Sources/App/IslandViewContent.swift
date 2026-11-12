@@ -29,7 +29,7 @@ struct IslandViewContent: View {
         case .recap:     WeeklyRecapCardView(state: state)
         case .digest:    DigestCardView(state: state)
         case .tasbih:    TasbihView(state: state)
-        case .session:   SessionFullView(state: state)
+        case .session:   SessionFullView(state: state, openTarget: { OverviewView.openAgentTarget(state.focusTask) })
         case .ask:
             #if !APPSTORE
             AskView(state: state)
@@ -166,7 +166,7 @@ struct OverviewView: View {
 
             // Under the steps: time, place, the guard's strip, changes, Git, shortcuts.
             if let agent = agent, PrayerStripLayout.showsSession(state: state) {
-                SessionDetailsView(task: agent, state: state, openTarget: { openAgentTarget(agent) })
+                SessionDetailsView(task: agent, state: state, openTarget: { Self.openAgentTarget(agent) })
                     .padding(.leading, 108)
                     .padding(.trailing, 12)
                     .padding(.bottom, 10)
@@ -221,7 +221,7 @@ struct OverviewView: View {
                 || agent?.id == PrayerController.pillId
             #endif
             if !hideJumpButton {
-                Button(action: { openAgentTarget(agent) }) {
+                Button(action: { Self.openAgentTarget(agent) }) {
                     Image(systemName: "arrow.up.right")
                         .font(.system(size: 8, weight: .medium))
                         .foregroundColor(Color(hex: "#5F646D"))
@@ -305,6 +305,10 @@ struct OverviewView: View {
                 GithubPoller.shared.refreshIfStale()
             }
         }
+        .onReceive(NotificationCenter.default.publisher(for: .islandShowDiff)) { note in
+            guard let id = note.object as? Int else { return }
+            withAnimation(.easeIn(duration: 0.16)) { activeDiffId = id }
+        }
         .onReceive(NotificationCenter.default.publisher(for: .islandToggleDiff)) { _ in
             if let id = activeDiffId {
                 withAnimation(.easeIn(duration: 0.16)) { activeDiffId = nil }
@@ -316,7 +320,7 @@ struct OverviewView: View {
         }
     }
 
-    private func openAgentTarget(_ task: AgentTask?) {
+    static func openAgentTarget(_ task: AgentTask?) {
         guard let task else { return }
         switch task.pill {
         case "integration_claude":

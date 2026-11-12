@@ -774,6 +774,8 @@ final class HookServer: @unchecked Sendable {
             }
             RecapStore.shared.userPromptSubmit(sessionId: recapSessionId, pillId: agentId, project: projectName)
             CommandRiskLog.shared.beginTurn(pill: agentId)
+            TurnHistory.shared.begin(pill: agentId, session: sessionId, title: projectName, cwd: cwd,
+                                     prompt: payload["prompt"] as? String ?? "")
             GitStatusStore.shared.refresh(cwd)
             NotificationCenter.default.post(name: .checkMondayRecap, object: nil)
             // A new turn: the finished card would show the prompt as if it were the answer.
@@ -795,6 +797,8 @@ final class HookServer: @unchecked Sendable {
             let label = localizedStep(tool: tool, input: input)
             // The agent guard rates it for the open card's badge (information only).
             CommandRiskLog.shared.record(pill: agentId, tool: tool, input: input, label: label)
+            TurnHistory.shared.step(pill: agentId, session: sessionId, tool: tool, input: input, label: label,
+                                    risk: CommandRisk.assess(tool: tool, command: input["command"] as? String ?? tool))
             AgentShield.shared.checkCanary(tool: tool, input: input)
             #if !APPSTORE
             AskRunner.shared.noteStep(session: sessionId, cwd: cwd, label: label)
@@ -866,6 +870,8 @@ final class HookServer: @unchecked Sendable {
             #if !APPSTORE
             AskRunner.shared.noteStop(session: sessionId, cwd: cwd, answer: rawFinal)
             #endif
+            TurnHistory.shared.end(pill: agentId, session: sessionId, answer: rawFinal,
+                                   transcript: payload["transcript_path"] as? String)
             let finalText = DiffEngine.toOneLine(rawFinal)
             note {
                 $0.state = .finished

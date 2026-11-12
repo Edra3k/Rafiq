@@ -286,7 +286,7 @@ enum IslandConst {
         .digest:       ViewLayout(height: 206, botX: 62,  botY: nil, botDiameter: 58, agentMode: .none),
         .tasbih:       ViewLayout(height: 180, botX: 62,  botY: nil, botDiameter: 58, agentMode: .none),
         .homelab:      ViewLayout(height: 270, botX: 62,  botY: nil, botDiameter: 58, agentMode: .none),
-        .session:      ViewLayout(height: 340, botX: 60,  botY: 92,  botDiameter: 58, agentMode: .none),
+        .session:      ViewLayout(height: 430, botX: 60,  botY: 92,  botDiameter: 58, agentMode: .none),
         .ask:          ViewLayout(height: 236, botX: 60,  botY: nil, botDiameter: 56, agentMode: .none),
         // New version: Rafiq on the left, the version and Update now
         .update:       ViewLayout(height: 160, botX: 62,  botY: nil, botDiameter: 58, agentMode: .none),
