@@ -165,7 +165,7 @@ struct VoiceQueryTests {
         contains("not configured", VoiceAnswer.text(.stripe, off, french: true), "Stripe n'est pas connecté")
         var w = VoiceSnapshot()
         w.weatherOff = true
-        contains("weather off", VoiceAnswer.text(.weatherToday, w, french: true), "Active la météo")
+        contains("weather off", VoiceAnswer.text(.weatherToday, w, french: true), "Météo par la voix")
         w.weatherOff = false
         w.weather = .init(city: "Bordeaux", nowTemp: 17, code: 61, min: 12, max: 19, rainChance: 70, wind: 20)
         let wt = VoiceAnswer.text(.weatherToday, w, french: true)
