@@ -52,6 +52,8 @@
 	<string>Pour sauter au terminal, envoyer des mails et piloter Musique et Spotify.</string>
 	<key>NSAudioCaptureUsageDescription</key>
 	<string>Rafiq records what your Mac plays only while you note a call, to write down what the other people say.</string>
+	<key>NSCalendarsFullAccessUsageDescription</key>
+	<string>Rafiq reads your agenda and adds events when you ask it by voice or Siri.</string>
 	<key>NSContactsUsageDescription</key>
 	<string>Rafiq looks up an email address when you ask it, by voice, to prepare an email.</string>
 	<key>NSFocusStatusUsageDescription</key>
@@ -60,6 +62,8 @@
 	<true/>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Rafiq uses the microphone when you dictate, and to note your calls when you ask it to.</string>
+	<key>NSRemindersFullAccessUsageDescription</key>
+	<string>Rafiq lists your reminders and adds one when you ask it by voice or Siri.</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
 	<string>Rafiq turns your voice into the text of a chat message.</string>
 	<key>NSSupportsAutomaticGraphicsSwitching</key>

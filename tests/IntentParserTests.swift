@@ -29,6 +29,9 @@ enum IntentParserTests {
         check("lance un Pomodoro → brain",   parse("Lance un Pomodoro"),       .unknown)
         check("arrête le pomodoro → brain",  parse("Arrête le pomodoro"),      .unknown)
         check("résume-moi ma journée → brain", parse("Résume-moi ma journée"), .unknown)
+        check("minuteur → brain",           parse("Mets un minuteur d'une minute"), .unknown)
+        check("agenda → brain",             parse("Qu'est-ce que j'ai dans mon agenda demain"), .unknown)
+        check("raccourci → brain",          parse("Lance le raccourci Shazam"), .unknown)
         check("coupe la musique",            parse("coupe la musique"),        .musicPause)
         check("arrête",                      parse("arrête"),                  .musicPause)
 

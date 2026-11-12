@@ -108,6 +108,16 @@ final class VoiceBrain {
         return .notMacOS26
     }
 
+    /// "jeudi 12 novembre 2026, 18:45 (2026-11-12)": for the calendar's dates.
+    static func nowText(fr: Bool) -> String {
+        let now = Date()
+        let f = DateFormatter()
+        f.locale = Locale(identifier: fr ? "fr_FR" : "en_US")
+        f.dateFormat = fr ? "EEEE d MMMM yyyy, HH:mm" : "EEEE, MMMM d yyyy, HH:mm"
+        let iso = DateFormatter(); iso.locale = Locale(identifier: "en_US_POSIX"); iso.dateFormat = "yyyy-MM-dd"
+        return "\(f.string(from: now)) (\(iso.string(from: now)))"
+    }
+
     /// Instructions in the language Rafiq speaks (Settings → Voice, English by default).
     static func instructions() -> String {
         if VoiceSettings.language == "fr" {
@@ -122,6 +132,7 @@ final class VoiceBrain {
             Tu es un assistant à la Jarvis : quand l'utilisateur veut faire, vérifier, corriger ou construire quelque chose, appelle agent_task (hermes pour le serveur et la maison, claude pour le code, auto sinon) et dis en une phrase qui s'en occupe.
             « Où en est Claude », « qu'est-ce qui attend » : appelle agents_now. Les prières : prayer. La journée, ce qui est à pousser, le serveur : day. Un Pomodoro : pomodoro.
             Tu n'autorises ni ne refuses jamais une demande d'un agent : show_request ouvre la carte, l'utilisateur clique.
+            Nous sommes le \(VoiceBrain.nowText(fr: true)).
             """
         }
         return """
@@ -135,6 +146,7 @@ final class VoiceBrain {
         You are a Jarvis-like assistant: when the user wants something done, checked, fixed or built, call agent_task (hermes for the server and the home, claude for code, auto otherwise) and say in one sentence who is on it.
         "Where is Claude", "what's waiting": call agents_now. Prayers: prayer. The day, what to push, the server: day. A Pomodoro: pomodoro.
         You never allow or deny an agent's request: show_request opens the card, the user clicks.
+        It is \(VoiceBrain.nowText(fr: false)).
         """
     }
 
@@ -205,6 +217,10 @@ final class VoiceBrain {
             guard let container = sessionBox as? SessionContainer else { return nil }
             let collector = container.collector
             collector.reset()
+            // The Mac's own powers: a typed command Rafiq runs itself (JarvisRouter).
+            if let routed = await JarvisRouter.handle(transcript) {
+                return BrainResult(intents: [], text: routed)
+            }
 
             // All pill names — no prefix limit; no IDs (tool resolves names via EntityResolver)
             let pillNames = pills.map { $0.name }.joined(separator: ", ")
@@ -243,6 +259,10 @@ final class VoiceBrain {
             guard let container = sessionBox as? SessionContainer else { return nil }
             let collector = container.collector
             collector.reset()
+            if let routed = await JarvisRouter.handle(transcript) {
+                await MainActor.run { onSentence(routed, false) }
+                return BrainResult(intents: [], text: routed)
+            }
 
             let pillNames = pills.map { $0.name }.joined(separator: ", ")
             let prompt = """

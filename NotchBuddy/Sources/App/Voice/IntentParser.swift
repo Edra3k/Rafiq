@@ -17,6 +17,14 @@ enum IntentParser {
 
         // The Pomodoro is the brain's (its pomodoro tool), not a song to look up.
         if words.contains(where: { $0.hasPrefix("pomodoro") }) { return .unknown }
+        // Timers, the calendar, reminders, the screen, files, Shortcuts and the home are the
+        // brain's (JarvisMac): "mets un minuteur" is not music to play.
+        let brainWords: Set<String> = ["minuteur", "minuteurs", "timer", "alarme", "rappel", "rappels", "rappelle",
+                                       "agenda", "calendrier", "rendez", "reunion", "evenement", "ecran", "screen",
+                                       "raccourci", "raccourcis", "shortcut", "shortcuts", "fichier", "fichiers",
+                                       "lumiere", "lumieres", "lampe", "salon", "traduis", "reminder", "calendar"]
+        if words.contains(where: { brainWords.contains($0) }) { return .unknown }
+
         // "Résume-moi ma journée" asks for a summary, not to resume the music.
         if words.first == "resume", words.count > 1,
            ["moi", "ma", "mon", "mes", "ce", "cette", "ces", "tout", "ca"].contains(words[1]),

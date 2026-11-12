@@ -163,6 +163,8 @@ targets:
         NSSpeechRecognitionUsageDescription: "Rafiq turns your voice into the text of a chat message."
         NSAccessibilityUsageDescription: "Pour lire le titre de la fenêtre active et l'attacher comme contexte."
         NSContactsUsageDescription: "Rafiq looks up an email address when you ask it, by voice, to prepare an email."
+        NSCalendarsFullAccessUsageDescription: "Rafiq reads your agenda and adds events when you ask it by voice or Siri."
+        NSRemindersFullAccessUsageDescription: "Rafiq lists your reminders and adds one when you ask it by voice or Siri."
         NSFocusStatusUsageDescription: "Rafiq stays quiet about new WhatsApp messages while a Focus is on."
         NSAppTransportSecurity:
           NSAllowsLocalNetworking: true

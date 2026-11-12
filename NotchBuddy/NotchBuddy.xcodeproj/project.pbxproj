@@ -175,6 +175,7 @@
 		4C142089AC68774050AB551B /* WhatsAppGOWAProcess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94AA2388D0E7690653E62BBB /* WhatsAppGOWAProcess.swift */; };
 		4C3CCE6691BBDB4F5FD4B49D /* WhatsAppGateway.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4F560E1BEFB7B9D5865101 /* WhatsAppGateway.swift */; };
 		4C59AC547C3BBC5F5985B93B /* SessionLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 344E876933F4FCF67912CD86 /* SessionLauncher.swift */; };
+		4C8276067D57C79C5B89B079 /* JarvisRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9838FE36DA36AB466D01C3D /* JarvisRouter.swift */; };
 		4C9299F82F3F4E12AB335927 /* PrayerTimesEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72F50B4C36553785795FA985 /* PrayerTimesEngine.swift */; };
 		4C946267DDFEB57C767FD13A /* SessionDrop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 363E14E2DF8A6FC629E1C89E /* SessionDrop.swift */; };
 		4CA7948E8518229C04C6BE5A /* WakeWindowBackoff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C3405BCC9BF5F378094BFB /* WakeWindowBackoff.swift */; };
@@ -477,6 +478,7 @@
 		C420F939B6D425B4AEE4C516 /* MochiMood.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE096F3D7C3CD989EEBA55C4 /* MochiMood.swift */; };
 		C47046BF30AC3E2350DABFDC /* ParakeetEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8178EB447DDE9C03427B36 /* ParakeetEngine.swift */; };
 		C4783ABAAF4D935C333FAF50 /* AndroidLinkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE4ACBA2B2368760EEAF457 /* AndroidLinkService.swift */; };
+		C54849B606F96CD2B40952FB /* JarvisMac.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AE0C4048B5EEBAF8B6835FA /* JarvisMac.swift */; };
 		C5549C2D60998E297A7DC593 /* TurnSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1C4152EBDBD7C24CABFFD7 /* TurnSnapshot.swift */; };
 		C5737FE7AE6B2BA92B9A8F72 /* ServiceDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F64746B2740D5FE26B7E5A /* ServiceDetail.swift */; };
 		C61DDE2EC5FDDB39E4AA3B34 /* IslandWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D710BD7834228045869D0184 /* IslandWindowController.swift */; };
@@ -549,6 +551,7 @@
 		DE6D9DF0B6D06797949B5D6D /* AppReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC663D1C8F67C4A0C5B50CA /* AppReview.swift */; };
 		DEDE942C3CD3F30B492BEEF5 /* CryptoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73DF398C822D98F541B62F89 /* CryptoController.swift */; };
 		DEF16BFEF63E298BC3F981C5 /* AndroidLinkIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1354FBD5B1615060B5A8720 /* AndroidLinkIdentity.swift */; };
+		DF35D522DFB3F5159E16D41A /* JarvisRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9838FE36DA36AB466D01C3D /* JarvisRouter.swift */; };
 		E1581F8F2725B26E90D91C4A /* IntroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2EED5205DD7161E51BE1E1 /* IntroView.swift */; };
 		E19B34442625F2DB29DF03CC /* AndroidLinkServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196392ADB84D6B58731A3594 /* AndroidLinkServer.swift */; };
 		E2414533EDC7565286141198 /* SpotifyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9E6EB7C8468A8339CF6A5C /* SpotifyController.swift */; };
@@ -565,6 +568,7 @@
 		E776C7D1DE5C62EA8D4BA3E3 /* FileDropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3232F258523DD8D09B670363 /* FileDropView.swift */; };
 		E81575CE4433C6F88E424A8F /* LocalChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8790ACE9F73BD74640A0F20C /* LocalChat.swift */; };
 		E82CA1269BF4859EEDE322AE /* MochiStill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045E7300878138F0AC385920 /* MochiStill.swift */; };
+		E8C9E1882A33F2D83BDD628F /* JarvisMac.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AE0C4048B5EEBAF8B6835FA /* JarvisMac.swift */; };
 		E9342A768208D5054F6A74AD /* WhatsAppGOWAProcess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94AA2388D0E7690653E62BBB /* WhatsAppGOWAProcess.swift */; };
 		E9C18F039035C78173C306C7 /* MailViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23F907A5CC3CC05876548E96 /* MailViews.swift */; };
 		E9C21D11BCB72C392436D19E /* ClaudePlanGauge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF22817EC70748F2D1FB2E7 /* ClaudePlanGauge.swift */; };
@@ -868,6 +872,7 @@
 		95FF987AE2A4E9EFB6A15519 /* ClaudeDesktopChatWatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaudeDesktopChatWatcher.swift; sourceTree = "<group>"; };
 		96C64C4C5D705CE486221B74 /* PillCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PillCatalog.swift; sourceTree = "<group>"; };
 		982CBB722685931BB8958162 /* FlowHubHome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowHubHome.swift; sourceTree = "<group>"; };
+		9AE0C4048B5EEBAF8B6835FA /* JarvisMac.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JarvisMac.swift; sourceTree = "<group>"; };
 		9AF705275522F99CAE7E1429 /* ServiceStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceStatus.swift; sourceTree = "<group>"; };
 		9B5A107614C06ACAD610806B /* AndroidLinkSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AndroidLinkSettings.swift; sourceTree = "<group>"; };
 		9B66D0C664FB9FF74517AAF5 /* MacStubs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacStubs.swift; sourceTree = "<group>"; };
@@ -966,6 +971,7 @@
 		E7000E431FB66DA3D5B03E19 /* WatchBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchBridge.swift; sourceTree = "<group>"; };
 		E84E5D91129352E8A1D32AA4 /* MochiOutfitDrawing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MochiOutfitDrawing.swift; sourceTree = "<group>"; };
 		E91B733ADC638E14E9BB6EFA /* WindowContextCapture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowContextCapture.swift; sourceTree = "<group>"; };
+		E9838FE36DA36AB466D01C3D /* JarvisRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JarvisRouter.swift; sourceTree = "<group>"; };
 		EA8F1078D126453922E5BB93 /* GitStatusStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitStatusStore.swift; sourceTree = "<group>"; };
 		EADD0D8C37F00BF1877153D8 /* WhatsAppModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsAppModels.swift; sourceTree = "<group>"; };
 		EBB761EA15EABCD584DD012B /* FlowLanguages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowLanguages.swift; sourceTree = "<group>"; };
@@ -1427,6 +1433,8 @@
 				F0E2C3ACD815230A0ECAB014 /* EnergyVAD.swift */,
 				EDC1DEBFCAEBE6F0EEB865F3 /* EntityResolver.swift */,
 				F39753CFF90B494D449CCD95 /* IntentParser.swift */,
+				9AE0C4048B5EEBAF8B6835FA /* JarvisMac.swift */,
+				E9838FE36DA36AB466D01C3D /* JarvisRouter.swift */,
 				5081F50CA515C69714221310 /* JarvisTools.swift */,
 				54E47E39D2D52584FA219FA1 /* LiveVoiceControls.swift */,
 				EF91ED6466F916F0C216325A /* NeuralTTS.swift */,
@@ -1847,6 +1855,8 @@
 				A7733EE60694EA3E2A86C37A /* IslandTypes.swift in Sources */,
 				065FCE817315454DE3F85F25 /* IslandViewContent.swift in Sources */,
 				091EC3B2F1060D7EE1317E4E /* IslandWindowController.swift in Sources */,
+				E8C9E1882A33F2D83BDD628F /* JarvisMac.swift in Sources */,
+				4C8276067D57C79C5B89B079 /* JarvisRouter.swift in Sources */,
 				FD86B0B24558E03F9D4A82A6 /* JarvisTools.swift in Sources */,
 				EB00D20032C24F3A84EC43BA /* LaunchScript.swift in Sources */,
 				C3ECA730677F467D28910AF6 /* LiveActivityRelay.swift in Sources */,
@@ -2188,6 +2198,8 @@
 				0685C3D47D27D06FCB6E4AD1 /* IslandTypes.swift in Sources */,
 				68A950E3C23FD612639D9776 /* IslandViewContent.swift in Sources */,
 				C61DDE2EC5FDDB39E4AA3B34 /* IslandWindowController.swift in Sources */,
+				C54849B606F96CD2B40952FB /* JarvisMac.swift in Sources */,
+				DF35D522DFB3F5159E16D41A /* JarvisRouter.swift in Sources */,
 				A27F24DA4613267D0076C7ED /* JarvisTools.swift in Sources */,
 				AAB3F9BE9B5BD6F03EE079E9 /* LaunchScript.swift in Sources */,
 				F28275101D83F121E582B1B1 /* LiveActivityRelay.swift in Sources */,
