@@ -55,8 +55,8 @@ enum JarvisRouter {
                 ? "Tu es Rafiq, un assistant vocal. Tu tutoies l'utilisateur. Réponds en français, en une ou deux phrases courtes, sans rien inventer : dis seulement ce que les faits disent. Pour une liste longue (fichiers, raccourcis), cite les deux ou trois plus utiles et dis combien il y en a."
                 : "You are Rafiq, a voice assistant. Answer in English in one or two short sentences, inventing nothing: say only what the facts say. For a long list (files, shortcuts), name the two or three most useful and say how many there are.")
             let prompt = command.domain == "screen"
-                ? (fr ? "Question de l'utilisateur : \(transcript)\nCe qu'il y a à l'écran :\n\(outcome)\nRéponds à sa question à partir de l'écran."
-                      : "The user's question: \(transcript)\nWhat is on screen:\n\(outcome)\nAnswer the question from the screen.")
+                ? (fr ? "Question de l'utilisateur : \(transcript)\nCe qu'il y a à l'écran (texte lu dans la fenêtre) :\n\(outcome)\nRéponds à sa question à partir de ce texte : dis de quoi il s'agit concrètement (l'app, le sujet, ce qui est important ou anormal). S'il demande de résumer ou traduire, fais-le."
+                      : "The user's question: \(transcript)\nWhat is on screen (text read in the window):\n\(outcome)\nAnswer from that text: say concretely what it is (the app, the subject, what matters or looks wrong). If they ask to sum up or translate, do it.")
                 : (fr ? "L'utilisateur a dit : \(transcript)\nRésultat réel : \(outcome)\nDis-lui le résultat."
                       : "The user said: \(transcript)\nActual result: \(outcome)\nTell them the result.")
             return (try? await speaker.respond(to: prompt).content) ?? outcome

@@ -142,18 +142,25 @@ enum JarvisMac {
 
     // MARK: The screen
 
+    private static var askedScreenAccess = false
+
     /// The front app, its window title, and the text on the display it is on (read on the Mac).
     static func screenText() async -> String {
         // The topmost normal window of another app (Rafiq's own island and panels don't count).
         let me = ProcessInfo.processInfo.processIdentifier
         let list = (CGWindowListCopyWindowInfo([.optionOnScreenOnly, .excludeDesktopElements], kCGNullWindowID) as? [[String: Any]]) ?? []
+        // System prompts and bars are not what the user is looking at.
+        let system: Set<String> = ["universalAccessAuthWarn", "UserNotificationCenter", "Dock", "Window Server",
+                                   "Control Center", "Centre de contrôle", "SystemUIServer", "Notification Center",
+                                   "Centre de notifications", "loginwindow", "CoreServicesUIAgent", "Spotlight"]
         let top = list.first { info in
             (info[kCGWindowLayer as String] as? Int) == 0 && (info[kCGWindowOwnerPID as String] as? pid_t) != me
+                && !system.contains(info[kCGWindowOwnerName as String] as? String ?? "")
                 && ((info[kCGWindowBounds as String] as? [String: CGFloat])?["Width"] ?? 0) > 200
         }
         let topID = top?[kCGWindowNumber as String] as? CGWindowID
         let appName = top?[kCGWindowOwnerName as String] as? String ?? "?"
-        var head = "Front app: \(appName)."
+        var head = "App: \(appName)."
         do {
             let content = try await SCShareableContent.excludingDesktopWindows(true, onScreenWindowsOnly: true)
             let front = content.windows.first { $0.windowID == topID }
@@ -161,13 +168,20 @@ enum JarvisMac {
             guard let window = front else { return head + " No window to read." }
             let filter = SCContentFilter(desktopIndependentWindow: window)
             let config = SCStreamConfiguration()
-            config.width = Int(window.frame.width * 2)
-            config.height = Int(window.frame.height * 2)
+            // 1× is enough to read text and keeps the reading quick.
+            config.width = Int(window.frame.width)
+            config.height = Int(window.frame.height)
             config.showsCursor = false
             let image = try await SCScreenshotManager.captureImage(contentFilter: filter, configuration: config)
             let text = await Task.detached { recognize(image) }.value
             return head + " Text in the window: " + String(text.prefix(2400))
         } catch {
+            appendAppLog("nb.log", "[Jarvis] screen capture failed: \((error as NSError).domain)/\((error as NSError).code)")
+            // Not allowed yet: macOS lists Rafiq in Screen Recording (and asks, the first time).
+            if !askedScreenAccess && !CGPreflightScreenCaptureAccess() {
+                askedScreenAccess = true          // once per launch, never in a loop
+                _ = CGRequestScreenCaptureAccess()
+            }
             return JarvisMac.final(String(localized: "jarvis.screen.permission",
                 defaultValue: "I can't see your screen yet: allow Rafiq in System Settings → Privacy & Security → Screen & System Audio Recording, then ask again."))
         }
@@ -176,7 +190,9 @@ enum JarvisMac {
     nonisolated private static func recognize(_ image: CGImage) -> String {
         let request = VNRecognizeTextRequest()
         request.recognitionLevel = .accurate
-        request.usesLanguageCorrection = true
+        request.usesLanguageCorrection = false
+        request.recognitionLanguages = ["fr-FR", "en-US"]
+        request.automaticallyDetectsLanguage = false
         try? VNImageRequestHandler(cgImage: image).perform([request])
         return (request.results ?? []).compactMap { $0.topCandidates(1).first?.string }.joined(separator: "\n")
     }

@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 # Builds the Debug Rafiq, signs it with your Apple Development certificate when you have one
-# (a free Apple Account in Xcode is enough), and relaunches it. Signed this way, macOS knows
-# it is the same app from one build to the next and keeps its permissions (microphone,
-# Calendars, Screen Recording…). dev-install.sh does the same for the iCloud build, which
-# needs a paid team.
+# (a free Apple Account in Xcode is enough), installs it as the only Rafiq in /Applications and
+# launches it. Signed this way and at one place, macOS knows it is the same app from one build
+# to the next and keeps its permissions (microphone, Calendars, Screen Recording…).
+# dev-install.sh does the same for the iCloud build, which needs a paid team.
 #
 #   ./scripts/dev-run.sh
 set -euo pipefail
@@ -24,7 +24,18 @@ else
   echo "No Apple Development certificate: ad-hoc build (macOS will ask for permissions again after each build)."
 fi
 
-pkill -f "${APP}/Contents/MacOS/Rafiq" 2>/dev/null || true
+# One Rafiq only: quit every copy, put this one in /Applications (never over the App Store
+# Rafiq, which has another bundle identifier), launch it from there.
+TARGET="/Applications/Rafiq.app"
+if [ -d "${TARGET}" ]; then
+  EXISTING=$(/usr/libexec/PlistBuddy -c "Print :CFBundleIdentifier" "${TARGET}/Contents/Info.plist" 2>/dev/null || echo "")
+  if [ "${EXISTING}" != "com.edra3k.rafiq" ]; then TARGET="${HOME}/Applications/Rafiq.app"; mkdir -p "${HOME}/Applications"; fi
+fi
+osascript -e 'tell application id "com.edra3k.rafiq" to quit' >/dev/null 2>&1 || true
 sleep 1
-open "${APP}"
-echo "Rafiq relaunched."
+pkill -f "Rafiq.app/Contents/MacOS/Rafiq" 2>/dev/null || true
+sleep 1
+rm -rf "${TARGET}"
+ditto "${APP}" "${TARGET}"
+open "${TARGET}"
+echo "Rafiq installed in ${TARGET} and launched."
