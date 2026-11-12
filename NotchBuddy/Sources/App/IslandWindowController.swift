@@ -185,6 +185,10 @@ final class IslandWindowController: NSWindowController {
                     return
                 }
                 // Dropped on a session: into its prompt.
+                if AppState.shared.dropSessionTarget == SessionDrop.askId {
+                    SessionDrop.askAbout(urls, state: AppState.shared)
+                    return
+                }
                 if let target = AppState.shared.dropSessionTarget {
                     SessionDrop.send(urls, to: target, state: AppState.shared)
                     return

@@ -13,13 +13,26 @@ enum SessionDrop {
         Array(state.tasks.filter { !$0.isIntegration && $0.sessionBundleId != nil }.prefix(3))
     }
 
+    /// The target that hands the file to "Ask…" for Claude (a capture to explain or fix).
+    static let askId = "__ask_claude__"
+
+    static func askAbout(_ urls: [URL], state: AppState) {
+        state.fileDragOver = false
+        state.dropSessionTarget = nil
+        UploadSequenceEngine.shared.exitZone()
+        AskRunner.shared.attachment = urls.first
+        AskRunner.shared.comparison = nil
+        AskRunner.shared.shown = nil
+        withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) { state.view = .ask }
+    }
+
     /// Where each target sits, in the island's hosting view (top-left origin).
     static var frames: [String: CGRect] = [:]
 
     /// The target under the pointer, in the same coordinates.
     static func hit(_ point: CGPoint, state: AppState) -> String? {
         guard state.view == .upload else { return nil }
-        let ids = Set(targets(state).map(\.id))
+        let ids = Set(targets(state).map(\.id)).union([askId])
         return frames.first { ids.contains($0.key) && $0.value.insetBy(dx: -4, dy: -4).contains(point) }?.key
     }
 
@@ -86,6 +99,20 @@ struct SessionDropTargets: View {
 
     var body: some View {
         let targets = SessionDrop.targets(state)
+        let askOn = state.dropSessionTarget == SessionDrop.askId
+        VStack(alignment: .leading, spacing: 5) {
+            HStack(spacing: 6) {
+                Image(systemName: "sparkles").font(.system(size: 9, weight: .semibold))
+                Text(verbatim: String(localized: "drop.ask", defaultValue: "Ask Claude about it"))
+                    .font(.system(size: 11.5, weight: askOn ? .semibold : .regular)).lineLimit(1)
+            }
+            .foregroundColor(askOn ? RafiqLook.gold : Color(hex: "#D5D7DB"))
+            .padding(.horizontal, 9).padding(.vertical, 4)
+            .frame(width: 150, alignment: .leading)
+            .background(askOn ? RafiqLook.gold.opacity(0.16) : Color.white.opacity(0.07))
+            .overlay(Capsule().stroke(askOn ? RafiqLook.gold.opacity(0.7) : Color.clear, lineWidth: 1))
+            .clipShape(Capsule())
+            .onGeometryChange(for: CGRect.self, of: { $0.frame(in: .global) }) { SessionDrop.frames[SessionDrop.askId] = $0 }
         if !targets.isEmpty {
             VStack(alignment: .leading, spacing: 5) {
                 Text("drop.session.title")
@@ -111,6 +138,8 @@ struct SessionDropTargets: View {
             }
             .animation(.easeOut(duration: 0.12), value: state.dropSessionTarget)
         }
+        }
+        .animation(.easeOut(duration: 0.12), value: state.dropSessionTarget)
     }
 }
 #endif

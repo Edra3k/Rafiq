@@ -210,6 +210,7 @@ final class AgentShield: ObservableObject {
         if awaySince == nil {
             awaySince = Date().addingTimeInterval(-idle)
             awayCounts = (0, 0, 0)
+            decisionsWhileAway = 0
             armReturnMonitor()
         }
         switch view {
@@ -218,6 +219,13 @@ final class AgentShield: ObservableObject {
         case .approval, .question: awayCounts.waiting += 1
         default: break
         }
+    }
+
+    private var decisionsWhileAway = 0
+
+    /// A request was answered (a click, the iPhone): counted while the user is away.
+    func noteDecision() {
+        if awaySince != nil { decisionsWhileAway += 1 }
     }
 
     private func armReturnMonitor() {
@@ -234,6 +242,17 @@ final class AgentShield: ObservableObject {
         let minutes = Int(Date().timeIntervalSince(since) / 60)
         let c = awayCounts
         guard minutes >= 10, c.finished + c.waiting + c.errors > 0, !PrayerQuiet.shared.isActive else { return }
+        // What finished, by project, and whether anything was answered meanwhile (the iPhone can).
+        var lines = TurnLog.shared.turns(from: since).suffix(3).reversed().map { "\($0.project) · « \($0.prompt.prefix(60)) »" }
+        lines.append(decisionsWhileAway == 0
+            ? String(localized: "away.nothing-allowed", defaultValue: "Nothing was allowed while you were away.")
+            : String(format: String(localized: "away.answered %lld", defaultValue: "%lld requests were answered meanwhile (from your phone)."),
+                     Int64(decisionsWhileAway)))
+        decisionsWhileAway = 0
+        var primary: (label: String, action: Digest.Action)? = nil
+        if let asking = AppState.shared.pendingApproval?.pillId {
+            primary = (String(localized: "morning.see-request", defaultValue: "See the request"), .focus(asking))
+        }
         DigestCenter.shared.show(Digest(
             kind: .away,
             title: String(format: String(localized: "away.title %@", defaultValue: "While you were away (%@)"),
@@ -243,7 +262,9 @@ final class AgentShield: ObservableObject {
                 .init(value: "\(c.finished)", label: String(localized: "quiet.tile.finished", defaultValue: "finished"), tone: c.finished > 0 ? .good : .plain),
                 .init(value: "\(c.waiting)", label: String(localized: "quiet.tile.waiting", defaultValue: "waiting for you"), tone: c.waiting > 0 ? .warn : .plain),
                 .init(value: "\(c.errors)", label: String(localized: "quiet.tile.errors", defaultValue: "errors"), tone: c.errors > 0 ? .bad : .plain),
-            ]
+            ],
+            lines: lines,
+            primary: primary
         ))
     }
 

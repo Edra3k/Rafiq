@@ -100,6 +100,7 @@ final class TurnHistory: ObservableObject {
         list[i].planEnd = Self.planPct()
         if let transcript, !transcript.isEmpty { list[i].transcript = transcript }
         turns[pill] = list
+        TurnLog.shared.note(list[i])
         guard let transcript = list[i].transcript else { return }
         let turnId = list[i].id
         readTokens(pill: pill, turnId: turnId, transcript: transcript, since: list[i].startedAt)
@@ -109,6 +110,7 @@ final class TurnHistory: ObservableObject {
                 guard var l = TurnHistory.shared.turns[pill], let j = l.firstIndex(where: { $0.id == turnId }) else { return }
                 l[j].model = model
                 TurnHistory.shared.turns[pill] = l
+                TurnLog.shared.note(l[j])
             }
         }
     }
@@ -121,6 +123,7 @@ final class TurnHistory: ObservableObject {
             list[i].stopped = true
             list[i].files = files(of: list[i])
             turns[pill] = list
+            TurnLog.shared.note(list[i])
         }
     }
 
@@ -140,6 +143,7 @@ final class TurnHistory: ObservableObject {
                 guard var l = TurnHistory.shared.turns[pill], let j = l.firstIndex(where: { $0.id == turnId }) else { return }
                 l[j].tokens = tokens
                 TurnHistory.shared.turns[pill] = l
+                if l[j].endedAt != nil { TurnLog.shared.note(l[j]) }
             }
         }
     }

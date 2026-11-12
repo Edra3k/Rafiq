@@ -7,6 +7,14 @@
 - **More in Details** — while a turn runs: Stop (a reply Rafiq started stops at once; a turn of a terminal or the Claude app opens it, to stop it there), the tokens of the turn, and a request waiting for that session shown right there with its whole command and the same Deny, Allow and Allow with a net (nothing answered without a click). Once done: one-click replies (Continue, Run the tests, Commit and push, Explain what you did; + to add yours, right-click to remove), a microphone in the reply field, and the share of the Claude plan the turn used.
 - **"Hey Rafiq, tell Claude to…"** — with no project named, it carries on the Claude Code conversation that ended last (within two hours) instead of starting a new one.
 - **The Claude app's sessions stay** in the notch after a turn, so their Details and reply stay at hand.
+- **Morning brief** — the first time you're at the Mac after Fajr (05:00 without the Prayer pill): the next prayer, the turns your agents finished overnight and what waits for you, the home server's fullest disk, the projects with commits to push. A card, and the same said aloud (Settings → General, both on by default).
+- **Focus** — while a Pomodoro works, an agent that finishes no longer opens the island nor rings; one card at the end says what came in. Requests to allow, questions and errors still come at once.
+- **Back at the Mac** — the "while you were away" card now lists what finished and says whether anything was answered meanwhile, with a button to the request that waits.
+- **A push checked before it leaves** — when an agent runs `git push`, the files of the commits no remote has yet are checked for keys, `.env` files, private keys and files over 10 MB. The request's card (and Details) shows what it found, so Deny stays an informed click; if the push asked nothing, a red card says what left and offers a prompt for Claude. Read only.
+- **Ask with a capture** — drop a file on the island, on "Ask Claude about it": it waits on the ✦ card with three quick questions (explain the error, fix it, read the text).
+- **Hermes and Claude, side by side** — "Both" on the ✦ card asks them the same thing; keep the better answer.
+- **The day and the week** — the Today page shows the day's timeline (a dot per turn, coloured by the guard, the prayers above; a click shows the turn) and the week's tokens per project beside the Claude plan. A short line per turn is kept 30 days on this Mac (no answer, no command, keys masked).
+- **Cards no longer wait behind the verse** — a security card that came while the verse of the day was up, or during Rafiq's greeting, now shows at once.
 
 ## 0.7.0 — 2026-11-12
 

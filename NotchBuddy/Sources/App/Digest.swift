@@ -12,7 +12,7 @@ import SwiftUI
 // copy or dismiss.
 
 struct Digest: Identifiable, Equatable {
-    enum Kind: Equatable { case prayer, evening, cve, secret, verse, injection, canary, away, care, server }
+    enum Kind: Equatable { case prayer, evening, cve, secret, verse, injection, canary, away, care, server, morning, focus, push }
 
     struct Tile: Equatable {
         var value: String
@@ -63,7 +63,9 @@ struct Digest: Identifiable, Equatable {
 
     var titleColor: Color {
         switch kind {
-        case .prayer, .verse:  return RafiqLook.gold
+        case .prayer, .verse, .morning:  return RafiqLook.gold
+        case .focus: return Color(hex: "#F5F6F8")
+        case .push: return Color(hex: "#F7C1C1")
         case .evening, .away, .care: return Color(hex: "#F5F6F8")
         case .cve, .secret, .injection, .canary, .server: return Color(hex: "#F7C1C1")
         }
@@ -92,12 +94,13 @@ final class DigestCenter: ObservableObject {
 
     /// Shows the card now if none is up, else after the ones before it.
     func show(_ digest: Digest) {
-        if [.secret, .cve, .injection, .canary, .server].contains(digest.kind) {
+        if [.secret, .cve, .injection, .canary, .server, .push].contains(digest.kind) {
             let key = Self.securityKey(Date())
             UserDefaults.standard.set(UserDefaults.standard.integer(forKey: key) + 1, forKey: key)
             objectWillChange.send()
         }
-        if current == nil {
+        // The verse or a break card up (they don't hold the island) never keeps another waiting.
+        if current == nil || !holdsIsland {
             current = digest
             surface()
         } else {
@@ -159,6 +162,13 @@ final class DigestCenter: ObservableObject {
     /// then the card waits until that one is answered (`resumeIfWaiting`).
     private func surface() {
         let state = AppState.shared
+        // Rafiq's greeting is playing (at launch): the card comes once it is over.
+        if state.view == .greeting {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                MainActor.assumeIsolated { DigestCenter.shared.surface() }
+            }
+            return
+        }
         if state.pendingApproval != nil || state.pendingQuestion != nil { return }
         if PrayerQuiet.shared.isActive { return }
         if state.mode != .expanded {
@@ -282,8 +292,8 @@ struct DigestCardView: View {
 
     private var wash: CardBackground<EmptyView>.Wash? {
         switch center.current?.kind {
-        case .prayer?, .verse?:  return .amber
-        case .cve?, .secret?, .injection?, .canary?, .server?: return .red
+        case .prayer?, .verse?, .morning?:  return .amber
+        case .cve?, .secret?, .injection?, .canary?, .server?, .push?: return .red
         default: return .soft
         }
     }
@@ -317,7 +327,7 @@ enum SecretAlert {
         _ = pill
     }
 
-    static func label(_ kind: SecretHit.Kind) -> String {
+    nonisolated static func label(_ kind: SecretHit.Kind) -> String {
         switch kind {
         case .awsKey: return "AWS"
         case .githubToken: return "GitHub"

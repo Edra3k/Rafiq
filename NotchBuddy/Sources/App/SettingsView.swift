@@ -2732,6 +2732,10 @@ struct RafiqWatchSettings: View {
     @AppStorage(AgentShield.absenceKey) private var absence = true
     @AppStorage(AgentShield.careKey) private var care = true
     @AppStorage(AgentShield.speakKey) private var speak = false
+    @AppStorage(MorningBrief.enabledKey) private var morningBrief = true
+    @AppStorage(MorningBrief.speakKey) private var morningSpeak = true
+    @AppStorage(FocusMode.enabledKey) private var focusQuiet = true
+    @AppStorage(PushGuard.enabledKey) private var pushGuard = true
 
     var body: some View {
         GroupBox(String(localized: "watch.title", defaultValue: "Rafiq watches")) {
@@ -2748,6 +2752,25 @@ struct RafiqWatchSettings: View {
                     Button(String(localized: "watch.brief.now", defaultValue: "Show today's")) { EveningBrief.shared.fire(force: true) }
                 }
                 Text(String(localized: "watch.brief.help", defaultValue: "Once a day, 45 minutes after Isha (21:00 without the Prayer pill): what your agents did today."))
+                    .font(.system(size: 11)).foregroundColor(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+                HStack {
+                    Toggle(String(localized: "watch.morning", defaultValue: "Morning brief"), isOn: $morningBrief)
+                    Toggle(String(localized: "watch.morning.speak", defaultValue: "Say it aloud"), isOn: $morningSpeak)
+                        .disabled(!morningBrief)
+                    Spacer()
+                    Button(String(localized: "watch.brief.now", defaultValue: "Show today's")) { MorningBrief.shared.fire(force: true) }
+                }
+                Text(String(localized: "watch.morning.help", defaultValue: "The first time you're at the Mac after Fajr (05:00 without the Prayer pill): the next prayer, what your agents did overnight and what waits, the server, the commits to push."))
+                    .font(.system(size: 11)).foregroundColor(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+                Toggle(String(localized: "watch.focus", defaultValue: "Keep what can wait during a Pomodoro"), isOn: $focusQuiet)
+                    .onChange(of: focusQuiet) { _, _ in FocusMode.shared.settingsChanged() }
+                Text(String(localized: "watch.focus.help", defaultValue: "While a Pomodoro works: an agent that finishes doesn't open the island nor ring; one card at the end says what came in. Requests to allow, questions and errors still come at once."))
+                    .font(.system(size: 11)).foregroundColor(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+                Toggle(String(localized: "watch.push", defaultValue: "Check a push before it leaves"), isOn: $pushGuard)
+                Text(String(localized: "watch.push.help", defaultValue: "When an agent runs git push: the files of the commits not pushed yet are checked for keys, .env files, private keys and files over 10 MB. The request's card shows what it found; read only, nothing is changed."))
                     .font(.system(size: 11)).foregroundColor(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
                 HStack {

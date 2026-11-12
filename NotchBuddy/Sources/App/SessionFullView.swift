@@ -209,6 +209,7 @@ struct SessionFullView: View {
                     .textSelection(.enabled)
             }
             .frame(maxHeight: 40)
+            PushGuardBanner(cwd: a.cwd, command: a.command)
             HStack(spacing: 6) {
                 SecondaryButton("Deny") { HookServer.shared.sendApprovalDecision("deny", for: shownId) }
                 PrimaryButton("Allow") { HookServer.shared.sendApprovalDecision("allow", for: shownId) }

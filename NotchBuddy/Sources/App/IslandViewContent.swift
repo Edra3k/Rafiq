@@ -501,6 +501,9 @@ struct ApprovalView: View {
                             .fixedSize(horizontal: false, vertical: true)
                     }
                 }
+                if let a = approval, !isPlan {
+                    PushGuardBanner(cwd: a.cwd, command: a.command)
+                }
                 if isPlan {
                     // The terminal's plan dialog choices, not a tool permission.
                     HStack(spacing: 8) {

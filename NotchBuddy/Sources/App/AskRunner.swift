@@ -59,6 +59,34 @@ final class AskRunner: ObservableObject {
     private var outputs: [String: Data] = [:]
 
     var shownJob: Job? { shown.flatMap { id in jobs.first { $0.id == id } } }
+
+    /// Two jobs on the same question, side by side on the card ("Both").
+    struct Comparison: Equatable { var hermes: String; var claude: String }
+    @Published var comparison: Comparison?
+    /// A file dropped on the island for Claude (a capture…), shown on the composer until sent.
+    @Published var attachment: URL?
+
+    /// The same question to Hermes and to Claude. One of them alone when the other can't run.
+    @discardableResult
+    func compare(_ raw: String, project: String?, source: String = "notch") -> Outcome {
+        guard running.count <= 1 else { return .busy }
+        let h = hasHermes ? ask(raw, chosen: .hermes, source: source) : .noHermes
+        let c = ask(raw, chosen: .claude, project: project, source: source)
+        switch (h, c) {
+        case (.started(let a), .started(let b)):
+            comparison = Comparison(hermes: a, claude: b)
+            shown = nil
+            return h
+        case (.started, _): return h
+        default: return c
+        }
+    }
+
+    /// "Keep" on one side: that answer alone on the card.
+    func keep(_ id: String) {
+        comparison = nil
+        shown = id
+    }
     var running: [Job] { jobs.filter { $0.state == .running } }
 
     // MARK: Where Hermes is

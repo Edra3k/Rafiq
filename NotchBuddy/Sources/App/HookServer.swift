@@ -801,6 +801,9 @@ final class HookServer: @unchecked Sendable {
                                     risk: CommandRisk.assess(tool: tool, command: input["command"] as? String ?? tool),
                                     transcript: payload["transcript_path"] as? String)
             AgentShield.shared.checkCanary(tool: tool, input: input)
+            if tool == "Bash", let bash = input["command"] as? String {
+                PushGuard.shared.check(command: bash, cwd: cwd, pill: agentId)
+            }
             #if !APPSTORE
             AskRunner.shared.noteStep(session: sessionId, cwd: cwd, label: label)
             #endif
@@ -887,7 +890,7 @@ final class HookServer: @unchecked Sendable {
             if working > 0 { nbLog("Stop \(sessionId.prefix(8)) — \(working) other session(s) still working on \(agentId)") }
             syncPill(agentId)
             let finished = board.poppedPill(pill: agentId, session: key) ?? agentId
-            if !terminalInFront { SoundEngine.shared.play("finish") }
+            if !terminalInFront && !FocusMode.shared.isActive { SoundEngine.shared.play("finish") }
             AppReview.noteFinished()
             if !terminalInFront && showsAlert(for: finished, focused: state.focusId == finished) {
                 expandIfNeeded(to: .finished)
@@ -1060,6 +1063,11 @@ final class HookServer: @unchecked Sendable {
             PrayerQuiet.shared.note(view, pill: state.focusId)
             return
         }
+        // A Pomodoro's work: what can wait is kept for its end (approvals and errors pass).
+        if FocusMode.shared.holds(view) {
+            FocusMode.shared.note(view, name: state.focusTask?.name)
+            return
+        }
         if state.mode == .expanded {
             // Approval and question always win; other alerts are blocked while a card is showing
             if view == .approval, state.view == .session,
@@ -1178,6 +1186,9 @@ final class HookServer: @unchecked Sendable {
         #if !APPSTORE
         AskRunner.shared.noteApproval(session: sessionId, cwd: cwd)
         #endif
+        if tool == "Bash", let bash = toolInput["command"] as? String {
+            PushGuard.shared.check(command: bash, cwd: cwd, pill: pillId)
+        }
 
         // AskUserQuestion is now handled via the dedicated --ask PreToolUse hook.
         // If it still arrives here as a PermissionRequest, reply "ask" so Claude Code
@@ -1402,6 +1413,7 @@ final class HookServer: @unchecked Sendable {
         // The recap only counts allow / always / deny ("ask" hands the choice back to the agent).
         let recapDecision = ["plan_auto": "allow", "plan_default": "allow", "plan_change": "deny"][decision] ?? decision
         if decision != "ask" { RecapStore.shared.recordDecision(pillId: head.pillId, decision: recapDecision) }
+        if decision != "ask" { AgentShield.shared.noteDecision() }
         removeApproval(id: head.id, answer: json)
         if decision == "plan_change" { ClaudeHost.activate(head.hostApp) }
     }

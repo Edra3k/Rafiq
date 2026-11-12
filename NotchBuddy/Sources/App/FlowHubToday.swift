@@ -52,6 +52,8 @@ struct HubTodayPage: View {
                     .padding(16)
                     .background(RoundedRectangle(cornerRadius: 16).fill(HubTheme.card))
                 }
+                TodayTimelineCard(now: now)
+                WeekCostCard(now: now)
                 let verse = Verses.verse(on: now)
                 VStack(alignment: .leading, spacing: 6) {
                     Text(verbatim: verse.arabic)

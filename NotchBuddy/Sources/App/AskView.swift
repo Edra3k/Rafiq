@@ -16,13 +16,16 @@ struct AskView: View {
     @State private var chosen: AskTarget = .auto
     @State private var message: String?
     @State private var dictation = MacDictation()
+    @State private var both = false
     @FocusState private var focused: Bool
 
     var body: some View {
         ZStack(alignment: .topLeading) {
             CardBackground(wash: .indigo)
             Group {
-                if let job = runner.shownJob {
+                if let pair = runner.comparison {
+                    CompareCard(pair: pair, runner: runner)
+                } else if let job = runner.shownJob {
                     JobCard(job: job, runner: runner, onNew: newTask)
                 } else {
                     composer
@@ -56,6 +59,7 @@ struct AskView: View {
                 chip(.hermes, dot: "#C084FC", label: "Hermes")
                 chip(.claude, dot: "#D97757", label: "Claude")
                 chip(.answer, icon: "bubble.left", label: String(localized: "ask.just-answer", defaultValue: "Just answer"))
+                if runner.hasHermes { bothChip }
                 Spacer(minLength: 0)
                 if let busy = runner.running.first {
                     Button { runner.shown = busy.id } label: {
@@ -73,6 +77,7 @@ struct AskView: View {
                     .help(String(localized: "ask.running", defaultValue: "Tasks running"))
                 }
             }
+            if let file = runner.attachment { attachmentRow(file) }
             HStack(spacing: 8) {
                 TextField(String(localized: "ask.placeholder", defaultValue: "Check the server's disk space"), text: $text, axis: .vertical)
                     .textFieldStyle(.plain)
@@ -155,9 +160,55 @@ struct AskView: View {
         return r.explicit ? who : String(format: String(localized: "ask.hint.auto %@", defaultValue: "Auto picks %@"), who)
     }
 
+    /// Hermes and Claude, the same question: two answers side by side.
+    private var bothChip: some View {
+        Button { both.toggle() } label: {
+            HStack(spacing: 3) {
+                Circle().fill(Color(hex: "#C084FC")).frame(width: 6, height: 6)
+                Circle().fill(Color(hex: "#D97757")).frame(width: 6, height: 6)
+                Text(verbatim: String(localized: "ask.both", defaultValue: "Both")).font(.system(size: 11, weight: .medium)).lineLimit(1)
+            }
+            .foregroundColor(both ? Color(hex: "#0B0C0E") : Color(hex: "#C9CDD4"))
+            .padding(.horizontal, 8).padding(.vertical, 3)
+            .background(both ? Color(hex: "#F5F6F8") : Color.white.opacity(0.06))
+            .clipShape(Capsule())
+        }
+        .buttonStyle(.plain)
+        .help(String(localized: "ask.both.help", defaultValue: "Ask Hermes and Claude the same thing, and keep the better answer"))
+    }
+
+    /// A file dropped for Claude: its name, a thumbnail for an image, three quick questions.
+    private func attachmentRow(_ file: URL) -> some View {
+        HStack(spacing: 6) {
+            if let image = NSImage(contentsOf: file) {
+                Image(nsImage: image).resizable().scaledToFill()
+                    .frame(width: 34, height: 24).clipShape(RoundedRectangle(cornerRadius: 4))
+            } else {
+                Image(systemName: "doc").font(.system(size: 12)).foregroundColor(Color(hex: "#8E939C"))
+            }
+            Text(verbatim: file.lastPathComponent).font(.system(size: 10.5)).foregroundColor(Color(hex: "#C9CDD4"))
+                .lineLimit(1).truncationMode(.middle).frame(maxWidth: 110, alignment: .leading)
+            ForEach([String(localized: "ask.attach.explain", defaultValue: "Explain the error"),
+                     String(localized: "ask.attach.fix", defaultValue: "Fix it"),
+                     String(localized: "ask.attach.read", defaultValue: "Read the text")], id: \.self) { q in
+                Button { text = q; chosen = .claude; both = false; send() } label: {
+                    Text(verbatim: q).font(.system(size: 10.5, weight: .semibold)).foregroundColor(RafiqLook.gold)
+                        .padding(.horizontal, 8).padding(.vertical, 2)
+                        .background(Capsule().fill(RafiqLook.gold.opacity(0.1)))
+                }
+                .buttonStyle(.plain)
+            }
+            Spacer(minLength: 0)
+            Button { runner.attachment = nil } label: {
+                Image(systemName: "xmark").font(.system(size: 8.5, weight: .bold)).foregroundColor(Color(hex: "#8E939C"))
+            }
+            .buttonStyle(.plain)
+        }
+    }
+
     private func chip(_ target: AskTarget, icon: String? = nil, dot: String? = nil, label: String) -> some View {
-        let on = chosen == target
-        return Button { chosen = target } label: {
+        let on = chosen == target && !both
+        return Button { chosen = target; both = false } label: {
             HStack(spacing: 4) {
                 if let icon { Image(systemName: icon).font(.system(size: 9, weight: .semibold)) }
                 if let dot { Circle().fill(Color(hex: dot)).frame(width: 6, height: 6) }
@@ -202,7 +253,16 @@ struct AskView: View {
     }
 
     private func go() {
-        let outcome = runner.ask(text, chosen: chosen, project: launcher.folder, source: "notch")
+        var task = text
+        var target = chosen
+        if let file = runner.attachment, !task.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            task += "\n\n" + String(format: String(localized: "ask.attach.file %@", defaultValue: "Attached file: %@"), file.path)
+            target = .claude
+        }
+        let outcome = both && runner.attachment == nil
+            ? runner.compare(task, project: launcher.folder, source: "notch")
+            : runner.ask(task, chosen: target, project: launcher.folder, source: "notch")
+        if case .started = outcome { runner.attachment = nil }
         switch outcome {
         case .started:
             text = ""
@@ -222,6 +282,73 @@ struct AskView: View {
             message = nil
         }
         if case .started = outcome {} else if outcome != .chat { SoundEngine.shared.play("error") }
+    }
+}
+
+// MARK: - Both: Hermes and Claude side by side
+
+private struct CompareCard: View {
+    let pair: AskRunner.Comparison
+    @ObservedObject var runner: AskRunner
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            HStack(spacing: 6) {
+                Text(verbatim: runner.jobs.first { $0.id == pair.claude }?.text ?? "")
+                    .font(.system(size: 12.5, weight: .semibold)).lineLimit(1)
+                Spacer(minLength: 4)
+                Button { runner.comparison = nil } label: {
+                    Image(systemName: "xmark").font(.system(size: 9, weight: .bold)).foregroundColor(Color(hex: "#6B7079"))
+                        .frame(width: 18, height: 18).background(Color.white.opacity(0.06)).clipShape(Circle())
+                }
+                .buttonStyle(.plain)
+            }
+            HStack(alignment: .top, spacing: 8) {
+                side(pair.hermes, name: "Hermes", color: "#C084FC")
+                side(pair.claude, name: "Claude", color: "#D97757")
+            }
+        }
+    }
+
+    private func side(_ id: String, name: String, color: String) -> some View {
+        let job = runner.jobs.first { $0.id == id }
+        return VStack(alignment: .leading, spacing: 4) {
+            HStack(spacing: 5) {
+                Circle().fill(Color(hex: color)).frame(width: 7, height: 7)
+                Text(verbatim: name).font(.system(size: 12, weight: .semibold))
+                Spacer(minLength: 2)
+                if let job {
+                    TimelineView(.periodic(from: .now, by: 1)) { tl in
+                        Text(verbatim: SessionFullView.duration((job.endedAt ?? tl.date).timeIntervalSince(job.startedAt)))
+                            .font(.system(size: 10)).monospacedDigit().foregroundColor(Color(hex: "#6B7079"))
+                    }
+                }
+            }
+            if let job {
+                switch job.state {
+                case .running:
+                    HStack(spacing: 5) {
+                        ProgressView().controlSize(.mini)
+                        Text(verbatim: job.steps.last ?? String(localized: "ask.thinking", defaultValue: "Thinking…"))
+                            .font(.system(size: 10.5)).foregroundColor(Color(hex: "#8E939C")).lineLimit(1)
+                    }
+                case .done:
+                    ScrollView {
+                        Text(verbatim: job.answer.isEmpty ? String(localized: "ask.no-answer", defaultValue: "Done, with nothing to say.") : job.answer)
+                            .font(.system(size: 11)).foregroundColor(Color(hex: "#C9CDD4"))
+                            .frame(maxWidth: .infinity, alignment: .leading).textSelection(.enabled)
+                    }
+                    .frame(maxHeight: 92)
+                    PrimaryButton(verbatim: String(localized: "ask.keep", defaultValue: "Keep")) { runner.keep(id) }
+                case .failed, .stopped:
+                    Text(verbatim: String(format: String(localized: "ask.failed %@", defaultValue: "%@ stopped"), name))
+                        .font(.system(size: 10.5)).foregroundColor(Color(hex: "#F4505E"))
+                }
+            }
+        }
+        .padding(8)
+        .frame(maxWidth: .infinity, alignment: .topLeading)
+        .background(RoundedRectangle(cornerRadius: 9).fill(Color(hex: "#0E0F11")))
     }
 }
 

@@ -97,6 +97,8 @@ final class PrayerController: ObservableObject {
         updatePolling()
         _ = PrayerQuiet.shared
         EveningBrief.shared.start()
+        MorningBrief.shared.start()
+        _ = FocusMode.shared
     }
 
     /// A setting changed: new times (also for the preview in Settings while the pill is off),
