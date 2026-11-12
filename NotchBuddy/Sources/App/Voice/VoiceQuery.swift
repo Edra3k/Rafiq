@@ -722,8 +722,8 @@ enum VoiceAnswer {
             return (main + others).trimmingCharacters(in: .whitespaces)
 
         case .weatherToday, .weatherTomorrow:
-            if s.weatherOff { return t("Active la météo dans les réglages de Rafiq, section Voix.", "Turn on weather in Rafiq's settings, Voice section.") }
-            if s.weatherNoCity { return t("Indique ta ville dans les réglages de Rafiq, section Voix.", "Set your city in Rafiq's settings, Voice section.") }
+            if s.weatherOff { return t("La météo est coupée : active « Météo par la voix » dans Réglages, section Voix, avec ta ville.", "Weather is off: turn on \"Weather by voice\" in Settings, Voice section, with your city.") }
+            if s.weatherNoCity { return t("Il me manque ta ville : écris-la à côté de « Météo par la voix », dans Réglages, section Voix.", "I need your city: type it next to \"Weather by voice\" in Settings, Voice section.") }
             guard let w = s.weather else { return t("Je n'arrive pas à avoir la météo pour l'instant.", "I can't get the weather right now.") }
             let sky = weatherText(w.code, fr: fr)
             var out: String

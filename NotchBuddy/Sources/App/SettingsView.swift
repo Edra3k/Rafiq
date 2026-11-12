@@ -1580,6 +1580,8 @@ struct SettingsView: View {
     @State private var voicePermissionsGranted: Bool = false
     @ObservedObject private var voiceEngine = VoiceEngine.shared
     @AppStorage(VoiceSettings.listenOnLowPowerKey) private var listenOnLowPower = true
+    @AppStorage("voiceWeatherEnabled") private var weatherOn = false
+    @AppStorage("voiceWeatherCity") private var weatherCity = ""
     @AppStorage("voiceLanguage")       private var voiceLanguage: String = "en"
     @AppStorage("voiceListenLanguage") private var listenLanguage: String = "auto"
     @AppStorage("voiceTTSEngine")      private var ttsEngine: String = "system"
@@ -1619,6 +1621,25 @@ struct SettingsView: View {
                         .fixedSize(horizontal: false, vertical: true)
                 }
                 .onAppear { webKeySaved = !(KeychainStore.shared.get("anthropic-api-key") ?? "").isEmpty }
+
+                // Weather by voice: off until turned on with a city (Open-Meteo, no key).
+                HStack(spacing: 8) {
+                    Toggle(String(localized: "voice.weather", defaultValue: "Weather by voice"), isOn: $weatherOn)
+                        .onChange(of: weatherOn) { _, on in
+                            // The Prayer pill already knows where you are: its city by default.
+                            if on && weatherCity.trimmingCharacters(in: .whitespaces).isEmpty,
+                               let place = PrayerController.shared.location?.name, !place.isEmpty {
+                                weatherCity = place
+                            }
+                        }
+                    TextField(String(localized: "voice.weather.city", defaultValue: "City"), text: $weatherCity)
+                        .textFieldStyle(.roundedBorder)
+                        .frame(maxWidth: 180)
+                        .disabled(!weatherOn)
+                }
+                Text(String(localized: "voice.weather.help", defaultValue: "\"What's the weather tomorrow?\" Rafiq asks Open-Meteo (free, no account) for this city only, when you ask."))
+                    .font(.system(size: 11)).foregroundColor(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
 
                 Toggle(String(localized: "voice.low-power", defaultValue: "Keep listening in Low Power Mode"), isOn: $listenOnLowPower)
                     .onChange(of: listenOnLowPower) { _, _ in VoiceEngine.shared.lowPowerSettingChanged() }

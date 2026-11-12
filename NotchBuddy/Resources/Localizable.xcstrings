@@ -146503,6 +146503,306 @@
           }
         }
       }
+    },
+    "voice.weather" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weather by voice"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Météo par la voix"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tiempo por voz"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clima por voz"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Погода голосом"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "语音查天气"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "आवाज़ से मौसम"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الطقس بالصوت"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ভয়েসে আবহাওয়া"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cuaca lewat suara"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wetter per Sprache"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sesle hava durumu"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "สภาพอากาศด้วยเสียง"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "語音查天氣"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "음성으로 날씨"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "音声で天気"
+          }
+        }
+      }
+    },
+    "voice.weather.city" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "City"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ville"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ciudad"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cidade"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Город"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "城市"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "शहर"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "المدينة"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "শহর"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kota"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stadt"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Şehir"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เมือง"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "城市"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "도시"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "都市"
+          }
+        }
+      }
+    },
+    "voice.weather.help" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\"What's the weather tomorrow?\" Rafiq asks Open-Meteo (free, no account) for this city only, when you ask."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "« Quel temps demain ? » Rafiq interroge Open-Meteo (gratuit, sans compte) pour cette ville seulement, quand tu le demandes."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "«¿Qué tiempo hará mañana?» Rafiq consulta Open-Meteo (gratis, sin cuenta) solo para esta ciudad y solo cuando preguntas."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\"Como vai estar o tempo amanhã?\" O Rafiq consulta o Open-Meteo (grátis, sem conta) só para esta cidade, quando você pergunta."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "«Какая завтра погода?» Rafiq спрашивает Open-Meteo (бесплатно, без аккаунта) только про этот город и только по вашему запросу."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "“明天天气怎么样？”Rafiq 仅在你询问时向 Open-Meteo（免费、无需账户）查询这座城市。"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\"कल मौसम कैसा रहेगा?\" Rafiq सिर्फ़ आपके पूछने पर, सिर्फ़ इस शहर के लिए Open-Meteo (मुफ़्त, बिना अकाउंट) से पूछता है।"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "«كيف سيكون الطقس غدًا؟» يسأل Rafiq خدمة Open-Meteo (مجانية، بلا حساب) عن هذه المدينة فقط، وعند سؤالك فقط."
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\"কাল আবহাওয়া কেমন?\" শুধু আপনি জিজ্ঞেস করলে, শুধু এই শহরের জন্য Rafiq Open-Meteo-কে (ফ্রি, অ্যাকাউন্ট ছাড়া) জিজ্ঞেস করে।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\"Cuaca besok bagaimana?\" Rafiq bertanya ke Open-Meteo (gratis, tanpa akun) hanya untuk kota ini, saat kamu bertanya."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "„Wie wird das Wetter morgen?“ Rafiq fragt Open-Meteo (kostenlos, ohne Konto) nur für diese Stadt und nur, wenn du fragst."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\"Yarın hava nasıl?\" Rafiq yalnızca sorduğunda, yalnızca bu şehir için Open-Meteo'ya (ücretsiz, hesapsız) sorar."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\"พรุ่งนี้อากาศเป็นอย่างไร\" Rafiq ถาม Open-Meteo (ฟรี ไม่ต้องมีบัญชี) เฉพาะเมืองนี้ และเฉพาะเมื่อคุณถาม"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "「明天天氣怎麼樣？」Rafiq 只在你詢問時向 Open-Meteo（免費、免帳號）查詢這座城市。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\"내일 날씨 어때?\" Rafiq는 물어볼 때만, 이 도시에 대해서만 Open-Meteo(무료, 계정 불필요)에 물어봐요."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "「明日の天気は？」Rafiq は聞かれたときだけ、この都市について Open-Meteo（無料・アカウント不要）に問い合わせます。"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"
