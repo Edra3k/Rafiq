@@ -140603,6 +140603,606 @@
           }
         }
       }
+    },
+    "voice.tts-neural" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Neural voice (on this Mac)"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Voix neuronale (sur ce Mac)"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Voz neuronal (en este Mac)"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Voz neural (neste Mac)"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Нейронный голос (на этом Mac)"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "神经网络语音（在这台 Mac 上）"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "न्यूरल आवाज़ (इसी Mac पर)"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "صوت عصبي (على هذا الـ Mac)"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "নিউরাল ভয়েস (এই Mac-এ)"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suara neural (di Mac ini)"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Neuronale Stimme (auf diesem Mac)"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nöral ses (bu Mac'te)"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เสียงนิวรัล (บน Mac เครื่องนี้)"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "神經網路語音（在這台 Mac 上）"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "뉴럴 음성(이 Mac에서)"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ニューラル音声（この Mac 上）"
+          }
+        }
+      }
+    },
+    "voice.neural.voice" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Voice"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Voix"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Voz"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Voz"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Голос"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "语音"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "आवाज़"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الصوت"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ভয়েস"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suara"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stimme"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ses"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เสียง"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "語音"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "음성"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "音声"
+          }
+        }
+      }
+    },
+    "voice.neural.listen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Listen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Écouter"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Escuchar"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ouvir"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Послушать"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "试听"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "सुनें"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "استمع"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "শুনুন"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dengarkan"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anhören"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dinle"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ฟัง"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "試聽"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "듣기"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "聞く"
+          }
+        }
+      }
+    },
+    "voice.neural.downloading" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Downloading the voice (about 200 MB)…"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Téléchargement de la voix (environ 200 Mo)…"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Descargando la voz (unos 200 MB)…"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Baixando a voz (cerca de 200 MB)…"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Загрузка голоса (около 200 МБ)…"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在下载语音（约 200 MB）…"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "आवाज़ डाउनलोड हो रही है (लगभग 200 MB)…"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "جارٍ تنزيل الصوت (نحو 200 ميغابايت)…"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ভয়েস ডাউনলোড হচ্ছে (প্রায় ২০০ MB)…"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mengunduh suara (sekitar 200 MB)…"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stimme wird geladen (etwa 200 MB) …"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ses indiriliyor (yaklaşık 200 MB)…"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "กำลังดาวน์โหลดเสียง (ประมาณ 200 MB)…"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在下載語音（約 200 MB）…"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "음성 내려받는 중(약 200MB)…"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "音声をダウンロード中（約 200 MB）…"
+          }
+        }
+      }
+    },
+    "voice.neural.download" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Download the voice (about 200 MB)"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Télécharger la voix (environ 200 Mo)"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Descargar la voz (unos 200 MB)"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Baixar a voz (cerca de 200 MB)"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Скачать голос (около 200 МБ)"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "下载语音（约 200 MB）"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "आवाज़ डाउनलोड करें (लगभग 200 MB)"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "نزّل الصوت (نحو 200 ميغابايت)"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ভয়েস ডাউনলোড করুন (প্রায় ২০০ MB)"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unduh suara (sekitar 200 MB)"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stimme laden (etwa 200 MB)"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sesi indir (yaklaşık 200 MB)"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ดาวน์โหลดเสียง (ประมาณ 200 MB)"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "下載語音（約 200 MB）"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "음성 내려받기(약 200MB)"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "音声をダウンロード（約 200 MB）"
+          }
+        }
+      }
+    },
+    "voice.neural.help" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Supertonic 3, a natural voice that runs on the Mac's Neural Engine: 31 languages, no account, nothing leaves the Mac. Downloaded once from Hugging Face (FluidInference). A language it doesn't speak uses the Mac voice."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Supertonic 3, une voix naturelle qui tourne sur le Neural Engine du Mac : 31 langues, sans compte, rien ne quitte le Mac. Téléchargée une fois depuis Hugging Face (FluidInference). Une langue qu'elle ne parle pas passe par la voix du Mac."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Supertonic 3, una voz natural que funciona en el Neural Engine del Mac: 31 idiomas, sin cuenta, nada sale del Mac. Se descarga una vez desde Hugging Face (FluidInference). Un idioma que no habla usa la voz del Mac."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Supertonic 3, uma voz natural que roda no Neural Engine do Mac: 31 idiomas, sem conta, nada sai do Mac. Baixada uma vez do Hugging Face (FluidInference). Um idioma que ela não fala usa a voz do Mac."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Supertonic 3 — естественный голос на Neural Engine вашего Mac: 31 язык, без аккаунта, ничего не покидает Mac. Загружается один раз с Hugging Face (FluidInference). Для других языков используется голос Mac."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Supertonic 3，一种在 Mac 神经网络引擎上运行的自然语音：31 种语言，无需账户，数据不离开 Mac。从 Hugging Face（FluidInference）下载一次。它不支持的语言使用 Mac 语音。"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Supertonic 3, एक स्वाभाविक आवाज़ जो Mac के Neural Engine पर चलती है: 31 भाषाएँ, कोई अकाउंट नहीं, कुछ भी Mac से बाहर नहीं जाता। Hugging Face (FluidInference) से एक बार डाउनलोड। जो भाषा यह नहीं बोलती, उसके लिए Mac की आवाज़।"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Supertonic 3 صوت طبيعي يعمل على المحرك العصبي في الـ Mac: 31 لغة، بلا حساب، ولا يغادر شيء جهازك. يُنزَّل مرة واحدة من Hugging Face (FluidInference). اللغة التي لا يتحدثها تستخدم صوت الـ Mac."
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Supertonic 3, Mac-এর Neural Engine-এ চলা একটি স্বাভাবিক ভয়েস: ৩১টি ভাষা, কোনো অ্যাকাউন্ট নেই, কিছুই Mac থেকে বের হয় না। Hugging Face (FluidInference) থেকে একবার ডাউনলোড। যে ভাষা এটি বলে না তাতে Mac-এর ভয়েস।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Supertonic 3, suara alami yang berjalan di Neural Engine Mac: 31 bahasa, tanpa akun, tidak ada yang keluar dari Mac. Diunduh sekali dari Hugging Face (FluidInference). Bahasa yang tidak didukung memakai suara Mac."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Supertonic 3, eine natürliche Stimme auf der Neural Engine des Mac: 31 Sprachen, kein Konto, nichts verlässt den Mac. Einmal von Hugging Face (FluidInference) geladen. Eine Sprache, die sie nicht spricht, nutzt die Mac-Stimme."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Supertonic 3, Mac'in Neural Engine'inde çalışan doğal bir ses: 31 dil, hesap yok, hiçbir şey Mac'ten çıkmaz. Hugging Face'ten (FluidInference) bir kez indirilir. Konuşmadığı bir dilde Mac'in sesi kullanılır."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Supertonic 3 เสียงธรรมชาติที่ทำงานบน Neural Engine ของ Mac: 31 ภาษา ไม่ต้องมีบัญชี ไม่มีข้อมูลออกจาก Mac ดาวน์โหลดครั้งเดียวจาก Hugging Face (FluidInference) ภาษาที่ไม่รองรับจะใช้เสียงของ Mac"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Supertonic 3，一種在 Mac 神經網路引擎上執行的自然語音：31 種語言，免帳號，資料不離開 Mac。從 Hugging Face（FluidInference）下載一次。它不支援的語言使用 Mac 語音。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Supertonic 3는 Mac의 Neural Engine에서 돌아가는 자연스러운 음성이에요: 31개 언어, 계정 불필요, Mac 밖으로 나가는 것 없음. Hugging Face(FluidInference)에서 한 번 내려받아요. 지원하지 않는 언어는 Mac 음성을 써요."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Supertonic 3 は Mac の Neural Engine で動く自然な音声です：31 言語、アカウント不要、Mac の外には何も出ません。Hugging Face（FluidInference）から一度だけダウンロード。対応しない言語は Mac の音声を使います。"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

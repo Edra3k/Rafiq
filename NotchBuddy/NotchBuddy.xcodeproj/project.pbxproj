@@ -182,6 +182,7 @@
 		4D61E1A94E148F8615F12128 /* AskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5268D1C75AE6CAE0F953E6D /* AskView.swift */; };
 		4D6654A7CDD90B819ECA163B /* WatchViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06A638598C374B1598ED55E3 /* WatchViews.swift */; };
 		4D958F2DDCE9504490FDA357 /* DiffEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B32FB972D02162720E566674 /* DiffEngine.swift */; };
+		4DB14E307641E1B425105C99 /* NeuralTTS.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF91ED6466F916F0C216325A /* NeuralTTS.swift */; };
 		4F1E0B3C838DA3CD6F864BC0 /* CalcomPoller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3104222B3F17BA5E8DEA5277 /* CalcomPoller.swift */; };
 		4F4176856B544D8C620B6204 /* ConversationContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A67DA3B8EEF063C44E07F7E /* ConversationContext.swift */; };
 		4FD6E6E41082A1BB77A3629C /* MailHubPages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D5E43B1ACC9C77D4A75A3A2 /* MailHubPages.swift */; };
@@ -235,6 +236,7 @@
 		6613EB914852E6EEB1FF37BF /* IntentParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F39753CFF90B494D449CCD95 /* IntentParser.swift */; };
 		66CCA12B40C0DF85217A56A2 /* Verses.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA32E7F20608ABE7A9804233 /* Verses.swift */; };
 		6726F74966EDE7F82BFE89B2 /* TerminalTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87AF6F7A027AB1D46309DD49 /* TerminalTarget.swift */; };
+		673058DC6B4B4794A614DC94 /* NeuralTTS.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF91ED6466F916F0C216325A /* NeuralTTS.swift */; };
 		67B768A8B9395BC6AC32AD54 /* FlowHubHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982CBB722685931BB8958162 /* FlowHubHome.swift */; };
 		68A950E3C23FD612639D9776 /* IslandViewContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA02B08886939FF6FE0475DD /* IslandViewContent.swift */; };
 		68C3ACC708B69035FD0CB8C4 /* TurnSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1C4152EBDBD7C24CABFFD7 /* TurnSnapshot.swift */; };
@@ -966,6 +968,7 @@
 		ECF061515B3BCF2B0593FA5A /* AgyPermissionRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgyPermissionRules.swift; sourceTree = "<group>"; };
 		EDC1DEBFCAEBE6F0EEB865F3 /* EntityResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityResolver.swift; sourceTree = "<group>"; };
 		EE60A834934474CDAE022FF8 /* SearchAndSpotlight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAndSpotlight.swift; sourceTree = "<group>"; };
+		EF91ED6466F916F0C216325A /* NeuralTTS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NeuralTTS.swift; sourceTree = "<group>"; };
 		EFE8C8C843B4B30C547FF64A /* ClaudeVoiceBrain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaudeVoiceBrain.swift; sourceTree = "<group>"; };
 		F0E2C3ACD815230A0ECAB014 /* EnergyVAD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyVAD.swift; sourceTree = "<group>"; };
 		F1064AD8471C51AFF4F12258 /* SharedSessions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedSessions.swift; sourceTree = "<group>"; };
@@ -1418,6 +1421,7 @@
 				EDC1DEBFCAEBE6F0EEB865F3 /* EntityResolver.swift */,
 				F39753CFF90B494D449CCD95 /* IntentParser.swift */,
 				54E47E39D2D52584FA219FA1 /* LiveVoiceControls.swift */,
+				EF91ED6466F916F0C216325A /* NeuralTTS.swift */,
 				F4EF48A44D82B5422E631FE0 /* SpotterGeneration.swift */,
 				787D306C2399FBAE8BBB86ED /* TurnEndPolicy.swift */,
 				A2737EC4885ADB8FDDA1C610 /* VoiceActionRunner.swift */,
@@ -1860,6 +1864,7 @@
 				993886B49239F57F8739EBBF /* MorningBrief.swift in Sources */,
 				5C6D0BC8C546718CAA82BF90 /* MusicController.swift in Sources */,
 				0A267EE2955C7AD8E02A296C /* N8nPoller.swift in Sources */,
+				673058DC6B4B4794A614DC94 /* NeuralTTS.swift in Sources */,
 				06BF5FD95E03010CAFDBF2D0 /* NotchBuddyApp.swift in Sources */,
 				1FF6CC150F237E5DEBE0379C /* NotchLive.swift in Sources */,
 				F032CA1CBF8253D9E3981A90 /* NoteAudio.swift in Sources */,
@@ -2198,6 +2203,7 @@
 				4AB599774C354ACAF1D3E5A2 /* MorningBrief.swift in Sources */,
 				9C653B8291EFFA414565E8A8 /* MusicController.swift in Sources */,
 				160EDB9D06275E2607DA5151 /* N8nPoller.swift in Sources */,
+				4DB14E307641E1B425105C99 /* NeuralTTS.swift in Sources */,
 				DE05D09A32117582AC93A24A /* NotchBuddyApp.swift in Sources */,
 				BD677EB17C16678C3DDED628 /* NotchLive.swift in Sources */,
 				C8F0DA5F0EF2503581EFE5A1 /* NoteAudio.swift in Sources */,

@@ -14,6 +14,7 @@
 - **Ask with a capture** — drop a file on the island, on "Ask Claude about it": it waits on the ✦ card with three quick questions (explain the error, fix it, read the text).
 - **Hermes and Claude, side by side** — "Both" on the ✦ card asks them the same thing; keep the better answer.
 - **The day and the week** — the Today page shows the day's timeline (a dot per turn, coloured by the guard, the prayers above; a click shows the turn) and the week's tokens per project beside the Claude plan. A short line per turn is kept 30 days on this Mac (no answer, no command, keys masked).
+- **A natural voice on the Mac** — Settings → Voice → "Neural voice (on this Mac)": Supertonic 3 through FluidAudio, on the Neural Engine, in 31 languages (French, Arabic, English…), ten voices (five women, five men), no account and nothing sent anywhere. Downloaded once (about 200 MB, from Hugging Face) on a click; a language it doesn't speak uses the Mac voice. Every spoken answer, the morning brief and "Hey Rafiq" use it.
 - **Cards no longer wait behind the verse** — a security card that came while the verse of the day was up, or during Rafiq's greeting, now shows at once.
 
 ## 0.7.0 — 2026-11-12

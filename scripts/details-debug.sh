@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
-# Debug builds only: opens the island on Details for a pill, as a click on the session card would.
+# Debug builds only: opens the island on Details for a pill, as a click on the session card would,
+# or makes Rafiq say something with the voice chosen in Settings.
 #   scripts/details-debug.sh                       the Claude app's pill (agent_claude-desktop)
 #   scripts/details-debug.sh integration_claude    VS Code and terminal sessions
+#   scripts/details-debug.sh "say:Bonjour Ahmed"   Rafiq says it
 set -euo pipefail
 PILL="${1:-agent_claude-desktop}" /usr/bin/osascript -l JavaScript -e '
 ObjC.import("Foundation");

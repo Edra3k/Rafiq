@@ -5,7 +5,8 @@ import AVFoundation
 //
 // Gives Rafiq a voice, sentence by sentence:
 //   • macOS voices (AVSpeechSynthesizer), best installed voice for the language;
-//   • ElevenLabs (Settings → Voice, the user's own API key), female or male.
+//   • ElevenLabs (Settings → Voice, the user's own API key), female or male;
+//   • a neural voice on the Mac (NeuralTTS, Supertonic 3), once downloaded.
 //     Each queued sentence starts downloading right away, so the next one is usually
 //     ready when the previous one ends. Any ElevenLabs failure falls back to the Mac
 //     voice for that sentence: Rafiq never goes silent.
@@ -51,6 +52,8 @@ final class VoiceSpeaker: NSObject, AVSpeechSynthesizerDelegate, AVAudioPlayerDe
         guard force || VoiceSettings.speakEnabled else { return }
         let audio: Task<Data?, Never>? = ElevenLabsTTS.isActive
             ? Task { await ElevenLabsTTS.shared.audio(for: text) }
+            : NeuralTTS.isActive
+            ? Task { await NeuralTTS.shared.audio(for: text, locale: locale) }
             : nil
         queue.append(Item(text: text, locale: locale, audio: audio))
         if !isSpeaking { playNext() }

@@ -422,6 +422,11 @@ final class AskRunner: ObservableObject {
             forName: Notification.Name("com.edra3k.rafiq.debug.details"), object: nil, queue: .main) { note in
             let pill = note.object as? String ?? "agent_claude-desktop"
             MainActor.assumeIsolated {
+                // "say:<text>": Rafiq says it with the voice chosen in Settings.
+                if pill.hasPrefix("say:") {
+                    VoiceSpeaker.shared.say([String(pill.dropFirst(4))], locale: Locale(identifier: "fr-FR"))
+                    return
+                }
                 guard let task = AppState.shared.tasks.first(where: { $0.pill == pill }) else { return }
                 AppState.shared.focusId = task.id
                 NotificationCenter.default.post(name: .hookExpand, object: IslandView.session)

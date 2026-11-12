@@ -1699,6 +1699,7 @@ struct SettingsView: View {
                 Picker(String(localized: "voice.tts-engine"), selection: $ttsEngine) {
                     Text(String(localized: "voice.tts-system")).tag("system")
                     Text(verbatim: "ElevenLabs").tag("elevenlabs")
+                    Text(String(localized: "voice.tts-neural")).tag("neural")
                 }
                 .labelsHidden()   // the box is already titled "Voice"
                 .frame(maxWidth: 260)
@@ -1728,6 +1729,10 @@ struct SettingsView: View {
                 .pickerStyle(.segmented)
                 .frame(maxWidth: 220)
                 .onChange(of: elevenGender) { _, _ in ElevenLabsTTS.shared.reset() }
+
+                if ttsEngine == "neural" {
+                    NeuralVoiceSettings(gender: elevenGender, sample: speakVoiceSample)
+                }
 
                 if ttsEngine == "system" {
                     HStack(spacing: 8) {
