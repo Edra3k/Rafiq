@@ -15,6 +15,15 @@ enum IntentParser {
         let words = norm.split(separator: " ").map(String.init)
         guard !words.isEmpty else { return .unknown }
 
+        // The Pomodoro is the brain's (its pomodoro tool), not a song to look up.
+        if words.contains(where: { $0.hasPrefix("pomodoro") }) { return .unknown }
+        // "Résume-moi ma journée" asks for a summary, not to resume the music.
+        if words.first == "resume", words.count > 1,
+           ["moi", "ma", "mon", "mes", "ce", "cette", "ces", "tout", "ca"].contains(words[1]),
+           !words.contains(where: { ["musique", "lecture", "chanson", "playlist", "music"].contains($0) }) {
+            return .unknown
+        }
+
         // "Ask Hermes to …" / "dis à Claude de …": a task for an agent (AskRunner).
         let (agent, task) = AskRouter.strippedAgent(raw)
         if let agent, agent == .hermes || agent == .claude, task.split(separator: " ").count >= 2 {

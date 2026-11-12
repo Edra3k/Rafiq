@@ -94,6 +94,13 @@ final class LiveVoiceInfo: VoiceInfoProviding {
                     if let d = detail, d.count > 90 { detail = String(d.prefix(90)) + "…" }
                     return .init(name: t.name, state: t.state.rawValue, detail: detail)
                 }
+            // A turn still running (TurnHistory) counts even if its pill shows idle for a moment.
+            for (_, turns) in TurnHistory.shared.turns {
+                guard let turn = turns.last, turn.endedAt == nil else { continue }
+                let name = turn.title.isEmpty ? URL(fileURLWithPath: turn.cwd).lastPathComponent : turn.title
+                guard !s.sessions.contains(where: { $0.name == name && $0.state != "idle" }) else { continue }
+                s.sessions.append(.init(name: name, state: "working", detail: turn.steps.last?.label))
+            }
 
         case .claudePlan:
             s.plan = Self.plan(app.claudePlanUsage, fr: fr)

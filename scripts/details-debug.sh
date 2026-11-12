@@ -4,6 +4,7 @@
 #   scripts/details-debug.sh                       the Claude app's pill (agent_claude-desktop)
 #   scripts/details-debug.sh integration_claude    VS Code and terminal sessions
 #   scripts/details-debug.sh "say:Bonjour Ahmed"   Rafiq says it
+#   scripts/details-debug.sh "ask:Où en est Claude ?"   the same path as Siri, answer said and logged
 set -euo pipefail
 PILL="${1:-agent_claude-desktop}" /usr/bin/osascript -l JavaScript -e '
 ObjC.import("Foundation");

@@ -43,8 +43,9 @@ final class CoucoudoroController: ObservableObject {
         tick()
     }
 
-    func begin() {
-        guard isPillActive else { return }
+    /// `force`: asked by voice or Siri ("start a Pomodoro"), even with the pill off.
+    func begin(force: Bool = false) {
+        guard isPillActive || force else { return }
         let (next, events) = CoucoudoroEngine.start(config: CoucoudoroSettings.config, now: Date())
         snap = next
         publish()

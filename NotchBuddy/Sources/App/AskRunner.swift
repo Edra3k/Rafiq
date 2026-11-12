@@ -423,6 +423,17 @@ final class AskRunner: ObservableObject {
             let pill = note.object as? String ?? "agent_claude-desktop"
             MainActor.assumeIsolated {
                 // "say:<text>": Rafiq says it with the voice chosen in Settings.
+                // "ask:<question>": the same path as Siri (JarvisAsk), answer said and logged.
+                if pill.hasPrefix("ask:") {
+                    let question = String(pill.dropFirst(4))
+                    Task { @MainActor in
+                        let started = Date()
+                        let reply = await JarvisAsk.answer(question)
+                        appendAppLog("nb.log", String(format: "[Jarvis] %.1f s · %@ → %@", Date().timeIntervalSince(started), question, reply))
+                        VoiceSpeaker.shared.say([reply], locale: Locale(identifier: "fr-FR"))
+                    }
+                    return
+                }
                 if pill.hasPrefix("say:") {
                     VoiceSpeaker.shared.say([String(pill.dropFirst(4))], locale: Locale(identifier: "fr-FR"))
                     return

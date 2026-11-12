@@ -119,6 +119,9 @@ final class VoiceBrain {
             Pour toute question sur Stripe, GitHub, Vercel, Resend, n8n, Notion, Cal.com, les agents (Claude Code, Codex…), le plan Claude ou Codex, la musique ou la météo, appelle d'abord l'outil service et réponds avec ses données, sans rien inventer.
             Pour un mail, appelle l'outil mail : Rafiq demande ce qui manque, puis ouvre le mail dans le notch et c'est l'utilisateur qui clique sur Envoyer. Si on te demande de l'écrire, rédige toi-même le texte.
             Pour les noms de pilules, utilise le nom exact fourni par l'utilisateur.
+            Tu es un assistant à la Jarvis : quand l'utilisateur veut faire, vérifier, corriger ou construire quelque chose, appelle agent_task (hermes pour le serveur et la maison, claude pour le code, auto sinon) et dis en une phrase qui s'en occupe.
+            « Où en est Claude », « qu'est-ce qui attend » : appelle agents_now. Les prières : prayer. La journée, ce qui est à pousser, le serveur : day. Un Pomodoro : pomodoro.
+            Tu n'autorises ni ne refuses jamais une demande d'un agent : show_request ouvre la carte, l'utilisateur clique.
             """
         }
         return """
@@ -129,6 +132,9 @@ final class VoiceBrain {
         For any question about Stripe, GitHub, Vercel, Resend, n8n, Notion, Cal.com, agents (Claude Code, Codex…), the Claude or Codex plan, music or the weather, call the service tool first and answer from its data, never invent.
         For an email, call the mail tool: Rafiq asks for what is missing, then opens the email in the notch and the user clicks Send. When asked to write it, write the text yourself.
         For pill names, use the exact name the user said.
+        You are a Jarvis-like assistant: when the user wants something done, checked, fixed or built, call agent_task (hermes for the server and the home, claude for code, auto otherwise) and say in one sentence who is on it.
+        "Where is Claude", "what's waiting": call agents_now. Prayers: prayer. The day, what to push, the server: day. A Pomodoro: pomodoro.
+        You never allow or deny an agent's request: show_request opens the card, the user clicks.
         """
     }
 
@@ -170,7 +176,13 @@ final class VoiceBrain {
                         MusicTool(collector: collector),
                         StatusTool(collector: collector),
                         ServiceTool(),
-                        MailTool(collector: collector)],
+                        MailTool(collector: collector),
+                        AgentTaskTool(collector: collector),
+                        AgentsNowTool(),
+                        PrayerTool(),
+                        DayTool(),
+                        PomodoroTool(),
+                        RequestTool()],
                 instructions: VoiceBrain.instructions()
             )
             let container = SessionContainer(session: session, collector: collector)
@@ -205,7 +217,8 @@ final class VoiceBrain {
             do {
                 // Extract .content (String, Sendable) inside the task to avoid
                 // LanguageModelSession.Response<String>: not Sendable.
-                let text = try await withBrainTimeout(seconds: 4) {
+                // Room for the first call, which loads the model, and for a tool or two.
+                let text = try await withBrainTimeout(seconds: 20) {
                     let response = try await container.session.respond(to: prompt)
                     return response.content
                 }
@@ -239,7 +252,7 @@ final class VoiceBrain {
                 """
 
             do {
-                let fullText = try await withBrainTimeout(seconds: 8) { () -> String in
+                let fullText = try await withBrainTimeout(seconds: 12) { () -> String in
                     let stream = container.session.streamResponse(to: prompt)
                     var sentUpTo = 0
                     var accumulated = ""
