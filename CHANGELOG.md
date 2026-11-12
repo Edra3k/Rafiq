@@ -29,6 +29,7 @@
 - **Clean links** — a copied link loses its tracking parameters (utm_…, fbclid, gclid and the like) before you paste it.
 - **Paste as plain text** — ⌃⌥⇧V pastes the clipboard without its formatting.
 - **Shelf and Notes** — park files in the island and drag them out later; notes in tabs, saved as you type, copied or sent to Claude in one click.
+- **Capture and create** — from the Tools tab: an area for Claude, a window, a QR code read into the clipboard; screen recording with the Mac's sound (and your microphone if you want) to ~/Movies/Rafiq, with its clock on the tile; a camera preview in the island before a call; and media tools on a dropped file: compress a video, make a GIF, convert an image to JPEG, PNG or HEIC, read its text. All on this Mac.
 
 ## 0.7.0 — 2026-11-12
 

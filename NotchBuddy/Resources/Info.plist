@@ -54,6 +54,8 @@
 	<string>Rafiq records what your Mac plays only while you note a call, to write down what the other people say.</string>
 	<key>NSCalendarsFullAccessUsageDescription</key>
 	<string>Rafiq reads your agenda and adds events when you ask it by voice or Siri.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Rafiq shows your camera in the island when you ask it, to check yourself before a call.</string>
 	<key>NSContactsUsageDescription</key>
 	<string>Rafiq looks up an email address when you ask it, by voice, to prepare an email.</string>
 	<key>NSFocusStatusUsageDescription</key>

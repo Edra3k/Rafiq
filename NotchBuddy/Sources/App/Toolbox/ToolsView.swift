@@ -278,15 +278,22 @@ private struct ToolsGrid: View {
     @State private var status: String?
     @State private var confirmTrash = false
     @State private var showingApps = false
+    @State private var panel: String?
+    @ObservedObject private var recorder = ScreenRecorder.shared
 
-    private let columns = Array(repeating: GridItem(.flexible(), spacing: 6), count: 5)
+    private let columns = Array(repeating: GridItem(.flexible(), spacing: 5), count: 6)
 
     var body: some View {
         if showingApps {
             QuitAppsList(back: { showingApps = false })
+        } else if panel == "camera" {
+            CameraPanel(back: { panel = nil })
+        } else if panel == "media" {
+            MediaPanel(back: { panel = nil })
         } else {
             VStack(alignment: .leading, spacing: 6) {
-                LazyVGrid(columns: columns, spacing: 6) {
+                ScrollView {
+                LazyVGrid(columns: columns, spacing: 5) {
                     if hub.isOn(.keepAwake) {
                         ToolTile(symbol: "cup.and.saucer", title: String(localized: "tools.awake", defaultValue: "Awake"),
                                  on: awake.active, badge: awake.manualOn ? "1 h" : (awake.active ? "auto" : nil)) {
@@ -339,6 +346,39 @@ private struct ToolsGrid: View {
                             }
                         }
                     }
+                    if hub.isOn(.screenshots) {
+                        ToolTile(symbol: "rectangle.dashed", title: String(localized: "tools.capture.area", defaultValue: "Area")) {
+                            NotificationCenter.default.post(name: .islandCollapse, object: nil)
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { ScreenCapture.shared.begin() }
+                        }
+                        ToolTile(symbol: "macwindow", title: String(localized: "tools.capture.window", defaultValue: "Window")) {
+                            NotificationCenter.default.post(name: .islandCollapse, object: nil)
+                            CaptureExtras.window()
+                            status = String(localized: "tools.capture.window.hint", defaultValue: "Click a window: it goes to the clipboard.")
+                        }
+                        ToolTile(symbol: "qrcode.viewfinder", title: "QR") {
+                            Task {
+                                if let code = await CaptureExtras.readCode() {
+                                    status = String(format: String(localized: "tools.color.copied %@", defaultValue: "%@ copied."), String(code.prefix(60)))
+                                } else {
+                                    status = String(localized: "tools.qr.none", defaultValue: "No code found there.")
+                                }
+                            }
+                        }
+                    }
+                    if hub.isOn(.recorder) {
+                        ToolTile(symbol: recorder.recording ? "stop.circle.fill" : "record.circle",
+                                 title: recorder.recording ? String(localized: "tools.record.stop", defaultValue: "Stop")
+                                                           : String(localized: "tools.record", defaultValue: "Record"),
+                                 on: recorder.recording,
+                                 badge: recorder.recording ? TokenLedger.clock(recorder.elapsed) : nil) { recorder.toggle() }
+                    }
+                    if hub.isOn(.camera) {
+                        ToolTile(symbol: "web.camera", title: String(localized: "tools.camera", defaultValue: "Camera")) { panel = "camera" }
+                    }
+                    if hub.isOn(.media) {
+                        ToolTile(symbol: "photo.on.rectangle.angled", title: String(localized: "tools.media", defaultValue: "Media")) { panel = "media" }
+                    }
                     if hub.isOn(.speedTest) {
                         ToolTile(symbol: "speedometer", title: speed.running ? String(localized: "tools.speed.running", defaultValue: "Testing…")
                                                                              : String(localized: "tools.speed", defaultValue: "Speed"),
@@ -350,6 +390,7 @@ private struct ToolsGrid: View {
                         }
                     }
                 }
+                }
                 if let down = speed.down, !speed.running {
                     Text(verbatim: "↓ \(SpeedTest.mbps(down))" + (speed.up.map { "   ↑ \(SpeedTest.mbps($0))" } ?? ""))
                         .font(.system(size: 11, weight: .semibold)).foregroundColor(Color(hex: "#E1E3E6"))
@@ -357,12 +398,25 @@ private struct ToolsGrid: View {
                 if let status {
                     Text(status).font(.system(size: 11)).foregroundColor(Color(hex: "#8E939C"))
                 }
-                if hub.isOn(.keepAwake) {
-                    Toggle(isOn: $awake.whileAgents) {
-                        Text(String(localized: "tools.awake.agents", defaultValue: "Keep the Mac awake while an agent works"))
-                            .font(.system(size: 11)).foregroundColor(Color(hex: "#8E939C"))
+                if let failure = recorder.failure {
+                    Text(failure).font(.system(size: 11)).foregroundColor(Color(hex: "#F4505E"))
+                }
+                HStack(spacing: 14) {
+                    if hub.isOn(.keepAwake) {
+                        Toggle(isOn: $awake.whileAgents) {
+                            Text(String(localized: "tools.awake.agents", defaultValue: "Keep the Mac awake while an agent works"))
+                                .font(.system(size: 10.5)).foregroundColor(Color(hex: "#8E939C"))
+                        }
+                        .toggleStyle(.switch).controlSize(.mini)
                     }
-                    .toggleStyle(.switch).controlSize(.mini)
+                    if hub.isOn(.recorder) {
+                        Toggle(isOn: Binding(get: { UserDefaults.standard.bool(forKey: ScreenRecorder.micKey) },
+                                             set: { UserDefaults.standard.set($0, forKey: ScreenRecorder.micKey) })) {
+                            Text(String(localized: "tools.record.mic", defaultValue: "Record my microphone too"))
+                                .font(.system(size: 10.5)).foregroundColor(Color(hex: "#8E939C"))
+                        }
+                        .toggleStyle(.switch).controlSize(.mini)
+                    }
                 }
             }
         }
@@ -385,7 +439,7 @@ private struct ToolTile: View {
                 Text(title).font(.system(size: 9.5, weight: .medium))
                     .foregroundColor(Color(hex: "#B0B5BE")).lineLimit(1).minimumScaleFactor(0.8)
             }
-            .frame(maxWidth: .infinity, minHeight: 50)
+            .frame(maxWidth: .infinity, minHeight: 46)
             .background(on ? RafiqLook.gold.opacity(0.12) : Color.white.opacity(hovered ? 0.08 : 0.045))
             .overlay(RoundedRectangle(cornerRadius: 12).strokeBorder(on ? RafiqLook.gold.opacity(0.45) : Color.white.opacity(0.06)))
             .clipShape(RoundedRectangle(cornerRadius: 12))
@@ -399,6 +453,108 @@ private struct ToolTile: View {
         }
         .buttonStyle(.plain)
         .onHover { hovered = $0 }
+    }
+}
+
+private struct CameraPanel: View {
+    let back: () -> Void
+    @ObservedObject private var camera = CameraPreview.shared
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Button(action: back) {
+                Label(String(localized: "tools.back", defaultValue: "Back"), systemImage: "chevron.left")
+                    .font(.system(size: 11)).foregroundColor(Color(hex: "#8E939C"))
+            }
+            .buttonStyle(.plain)
+            if camera.denied {
+                Text(String(localized: "tools.camera.denied", defaultValue: "Allow Rafiq in Privacy & Security → Camera."))
+                    .font(.system(size: 11)).foregroundColor(Color(hex: "#8E939C"))
+            } else {
+                CameraView(session: camera.session)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .clipShape(RoundedRectangle(cornerRadius: 12))
+            }
+        }
+        .onAppear { camera.start() }
+        .onDisappear { camera.stop() }
+    }
+}
+
+private struct MediaPanel: View {
+    let back: () -> Void
+    @State private var file: URL?
+    @State private var busy = false
+    @State private var result: String?
+    @State private var targeted = false
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Button(action: back) {
+                Label(String(localized: "tools.back", defaultValue: "Back"), systemImage: "chevron.left")
+                    .font(.system(size: 11)).foregroundColor(Color(hex: "#8E939C"))
+            }
+            .buttonStyle(.plain)
+            VStack(spacing: 6) {
+                if let file {
+                    HStack(spacing: 8) {
+                        Image(nsImage: NSWorkspace.shared.icon(forFile: file.path)).resizable().frame(width: 28, height: 28)
+                        Text(verbatim: file.lastPathComponent).font(.system(size: 11.5)).foregroundColor(Color(hex: "#E1E3E6")).lineLimit(1)
+                    }
+                    HStack(spacing: 6) {
+                        switch MediaTools.kind(of: file) {
+                        case .video:
+                            SmallButton(String(localized: "tools.media.compress", defaultValue: "Compress")) { run { await MediaTools.compress(file) } }
+                            SmallButton("GIF") { run { await MediaTools.gif(file) } }
+                        case .image:
+                            SmallButton("JPEG") { run { MediaTools.convert(file, to: .jpeg) } }
+                            SmallButton("PNG") { run { MediaTools.convert(file, to: .png) } }
+                            SmallButton("HEIC") { run { MediaTools.convert(file, to: .heic) } }
+                            SmallButton(String(localized: "tools.media.text", defaultValue: "Read the text")) {
+                                if let text = MediaTools.text(in: file) {
+                                    ClipboardHistory.shared.write(text)
+                                    result = String(format: String(localized: "tools.text.copied %lld", defaultValue: "%lld lines copied."),
+                                                    text.split(separator: "\n").count)
+                                }
+                            }
+                        case .other:
+                            Text(String(localized: "tools.media.unknown", defaultValue: "A video or an image, please."))
+                                .font(.system(size: 11)).foregroundColor(Color(hex: "#8E939C"))
+                        }
+                    }
+                    if busy { ProgressView().controlSize(.small) }
+                } else {
+                    Image(systemName: "square.and.arrow.down").font(.system(size: 20)).foregroundColor(Color(hex: "#6B7079"))
+                    Text(String(localized: "tools.media.drop", defaultValue: "Drop a video or an image"))
+                        .font(.system(size: 11)).foregroundColor(Color(hex: "#8E939C"))
+                }
+                if let result { Text(result).font(.system(size: 10.5)).foregroundColor(Color(hex: "#34D399")) }
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(RoundedRectangle(cornerRadius: 12).strokeBorder(style: StrokeStyle(lineWidth: 1, dash: [4, 3]))
+                .foregroundColor(targeted ? RafiqLook.gold : Color.white.opacity(0.12)))
+            .onDrop(of: [.fileURL], isTargeted: $targeted) { providers in
+                _ = providers.first?.loadObject(ofClass: URL.self) { url, _ in
+                    Task { @MainActor in file = url; result = nil }
+                }
+                return true
+            }
+        }
+    }
+
+    private func run(_ work: @escaping () async -> URL?) {
+        busy = true
+        result = nil
+        Task {
+            let out = await work()
+            busy = false
+            if let out {
+                result = String(format: String(localized: "tools.media.done %@", defaultValue: "Saved: %@"), out.lastPathComponent)
+                NSWorkspace.shared.activateFileViewerSelecting([out])
+            } else {
+                result = String(localized: "tools.media.failed", defaultValue: "That didn't work.")
+            }
+        }
     }
 }
 

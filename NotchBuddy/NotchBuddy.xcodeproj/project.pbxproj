@@ -531,6 +531,7 @@
 		D41727A3E1BA04C407A4ED80 /* WatchSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78F048CBA8EA24B1EF7743A /* WatchSnapshot.swift */; };
 		D45D9C8EAF67FC2F46E9F352 /* CloudProbe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28323DC20034A281F6829884 /* CloudProbe.swift */; };
 		D4E60449D7E33D93016192EC /* FlowSettingsBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8436291D94C826F1D9DA3130 /* FlowSettingsBox.swift */; };
+		D555B4C6CFB5F9C89D74E0A7 /* CaptureTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ADD830B9A1A13FC3DB47AB4 /* CaptureTools.swift */; };
 		D6169A6FDB54ED45A461060A /* WorkStreak.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF710C95C63F321C50CB4DF /* WorkStreak.swift */; };
 		D62CFFA91DA4BC5755E55186 /* FlowHubMochis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E7E2106BCE86A472ED8051 /* FlowHubMochis.swift */; };
 		D6559770BBFB06FD4E90187B /* OpenLeadMochiIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D96E57E8DADE6B82628E3E /* OpenLeadMochiIntent.swift */; };
@@ -543,6 +544,7 @@
 		D9CBEAC95D7AFFFAFE6AC124 /* CLIRelayRun.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1196E6DE4CA77C7D9B5851CD /* CLIRelayRun.swift */; };
 		D9EEB1079ACBCEEF74439C44 /* ClaudeSettingsFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B238F6E7B20EFDED5CD3E8E /* ClaudeSettingsFile.swift */; };
 		D9FF132804EB458F6FA69116 /* GitHubActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 168A9A73B519018FAB0AA465 /* GitHubActivity.swift */; };
+		DA149E1D7F5F663608353A11 /* CaptureTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ADD830B9A1A13FC3DB47AB4 /* CaptureTools.swift */; };
 		DA813AE042EEFD29AD06802A /* PortfolioController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0364C7995680F9FA9F85F905 /* PortfolioController.swift */; };
 		DA8B5CBF1C2DCFD742B92364 /* WatchSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78F048CBA8EA24B1EF7743A /* WatchSnapshot.swift */; };
 		DAA8FBD53C6187FF4739EFF4 /* MacUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3701DD3FA89D1E44B7FBC3 /* MacUpdater.swift */; };
@@ -834,6 +836,7 @@
 		68C3405BCC9BF5F378094BFB /* WakeWindowBackoff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WakeWindowBackoff.swift; sourceTree = "<group>"; };
 		6A9E6EB7C8468A8339CF6A5C /* SpotifyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyController.swift; sourceTree = "<group>"; };
 		6A9F0D1E310731155BCB3D89 /* PortfolioViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioViews.swift; sourceTree = "<group>"; };
+		6ADD830B9A1A13FC3DB47AB4 /* CaptureTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureTools.swift; sourceTree = "<group>"; };
 		6C6993B34A0FFF8E3D454ADC /* QuestionPayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionPayload.swift; sourceTree = "<group>"; };
 		6D17C2A18D62D90786F9D78F /* FeatureHub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureHub.swift; sourceTree = "<group>"; };
 		6E5F9E4BB282FDE68D65FE6B /* TurnArchive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TurnArchive.swift; sourceTree = "<group>"; };
@@ -1293,6 +1296,7 @@
 		839E12125C75E7EFB68802E5 /* Toolbox */ = {
 			isa = PBXGroup;
 			children = (
+				6ADD830B9A1A13FC3DB47AB4 /* CaptureTools.swift */,
 				3CB153E0FDF5BA6D093C424D /* ClaudeUsage.swift */,
 				81B34F604BE1B59FDAF888D3 /* Clipboard.swift */,
 				6D17C2A18D62D90786F9D78F /* FeatureHub.swift */,
@@ -1814,6 +1818,7 @@
 				D9CBEAC95D7AFFFAFE6AC124 /* CLIRelayRun.swift in Sources */,
 				4F1E0B3C838DA3CD6F864BC0 /* CalcomPoller.swift in Sources */,
 				3D9DF8094D4B5FADBC64A071 /* CaptureCardView.swift in Sources */,
+				DA149E1D7F5F663608353A11 /* CaptureTools.swift in Sources */,
 				8FC5907E9506DC79EB1DDC3C /* ChatMarkdown.swift in Sources */,
 				4976F8BF814D6F817370F1D8 /* ChatMarkdownView.swift in Sources */,
 				7BB6BE4E2F247849662B663C /* ChatSubscription.swift in Sources */,
@@ -2163,6 +2168,7 @@
 				8C7D7B6556456DCD3CC41C68 /* CLIRelayRun.swift in Sources */,
 				1969590AFEE6CB21404346F1 /* CalcomPoller.swift in Sources */,
 				00BA6C52545395A5ACF2BDDE /* CaptureCardView.swift in Sources */,
+				D555B4C6CFB5F9C89D74E0A7 /* CaptureTools.swift in Sources */,
 				B2D86BE268D6F4C86BD0C446 /* ChatMarkdown.swift in Sources */,
 				733FCC6A45DE963EF2024B4E /* ChatMarkdownView.swift in Sources */,
 				29EF55E890CB8228785CC30C /* ChatSubscription.swift in Sources */,

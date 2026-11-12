@@ -275,6 +275,12 @@ final class TokenLedger: ObservableObject {
         return "\(n)"
     }
 
+    /// "01:23" for a running recording.
+    static func clock(_ seconds: TimeInterval) -> String {
+        let s = Int(seconds)
+        return String(format: "%02d:%02d", s / 60, s % 60)
+    }
+
     /// "2 h 5 min", "6 d 3 h".
     static func span(_ seconds: TimeInterval) -> String {
         let f = DateComponentsFormatter()

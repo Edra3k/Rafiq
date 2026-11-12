@@ -11,6 +11,7 @@ import SwiftUI
 enum RafiqFeature: String, CaseIterable, Identifiable {
     case claudeUsage, macMonitor, speedTest, ports, keepAwake, quickToggles, colorPicker, screenText, quitApps
     case clipboard, cleanURL, plainPaste, shelf, scratchpad
+    case screenshots, recorder, camera, media
 
     var id: String { rawValue }
 
@@ -47,7 +48,7 @@ enum RafiqFeature: String, CaseIterable, Identifiable {
         case .claudeUsage: return .agents
         case .macMonitor, .speedTest, .ports: return .system
         case .keepAwake, .quickToggles: return .energy
-        case .colorPicker, .screenText: return .capture
+        case .colorPicker, .screenText, .screenshots, .recorder, .camera, .media: return .capture
         case .quitApps: return .apps
         case .clipboard, .cleanURL, .plainPaste, .shelf, .scratchpad: return .write
         }
@@ -69,6 +70,10 @@ enum RafiqFeature: String, CaseIterable, Identifiable {
         case .plainPaste:   return "textformat"
         case .shelf:        return "tray"
         case .scratchpad:   return "note.text"
+        case .screenshots:  return "camera.viewfinder"
+        case .recorder:     return "record.circle"
+        case .camera:       return "web.camera"
+        case .media:        return "photo.on.rectangle.angled"
         }
     }
 
@@ -88,6 +93,10 @@ enum RafiqFeature: String, CaseIterable, Identifiable {
         case .plainPaste:   return String(localized: "feature.plainPaste", defaultValue: "Paste as plain text")
         case .shelf:        return String(localized: "feature.shelf", defaultValue: "Shelf")
         case .scratchpad:   return String(localized: "feature.scratchpad", defaultValue: "Scratchpad")
+        case .screenshots:  return String(localized: "feature.screenshots", defaultValue: "Screenshots")
+        case .recorder:     return String(localized: "feature.recorder", defaultValue: "Screen recording")
+        case .camera:       return String(localized: "feature.camera", defaultValue: "Camera preview")
+        case .media:        return String(localized: "feature.media", defaultValue: "Media tools")
         }
     }
 
@@ -107,6 +116,10 @@ enum RafiqFeature: String, CaseIterable, Identifiable {
         case .plainPaste:   return String(localized: "feature.plainPaste.detail", defaultValue: "Paste without formatting (⌃⌥⇧V)")
         case .shelf:        return String(localized: "feature.shelf.detail", defaultValue: "Park files in the island, drag them out later")
         case .scratchpad:   return String(localized: "feature.scratchpad.detail", defaultValue: "Notes in tabs, saved as you type")
+        case .screenshots:  return String(localized: "feature.screenshots.detail", defaultValue: "An area for Claude, the screen, a window, a QR code")
+        case .recorder:     return String(localized: "feature.recorder.detail", defaultValue: "The screen with its sound and your microphone, to a movie")
+        case .camera:       return String(localized: "feature.camera.detail", defaultValue: "Check yourself in the island before a call")
+        case .media:        return String(localized: "feature.media.detail", defaultValue: "Compress a video, make a GIF, convert an image, read its text")
         }
     }
 

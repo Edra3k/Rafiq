@@ -159,6 +159,7 @@ targets:
         NSSupportsAutomaticGraphicsSwitching: YES
         NSAppleEventsUsageDescription: "Pour sauter au terminal, envoyer des mails et piloter Musique et Spotify."
         NSMicrophoneUsageDescription: "Rafiq uses the microphone when you dictate, and to note your calls when you ask it to."
+        NSCameraUsageDescription: "Rafiq shows your camera in the island when you ask it, to check yourself before a call."
         NSAudioCaptureUsageDescription: "Rafiq records what your Mac plays only while you note a call, to write down what the other people say."
         NSSpeechRecognitionUsageDescription: "Rafiq turns your voice into the text of a chat message."
         NSAccessibilityUsageDescription: "Pour lire le titre de la fenêtre active et l'attacher comme contexte."

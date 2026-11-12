@@ -439,6 +439,19 @@ final class AskRunner: ObservableObject {
                     NotificationCenter.default.post(name: .hookExpand, object: view)
                     return
                 }
+                // "tool:record" starts or stops a recording; "tool:gif:/path/movie.mov" makes a GIF.
+                if pill.hasPrefix("tool:") {
+                    let parts = pill.split(separator: ":", maxSplits: 2).map(String.init)
+                    switch parts.count > 1 ? parts[1] : "" {
+                    case "record": ScreenRecorder.shared.toggle()
+                    case "gif" where parts.count > 2:
+                        Task { let out = await MediaTools.gif(URL(fileURLWithPath: parts[2])); appendAppLog("nb.log", "[Tools] gif → \(out?.path ?? "failed")") }
+                    case "compress" where parts.count > 2:
+                        Task { let out = await MediaTools.compress(URL(fileURLWithPath: parts[2])); appendAppLog("nb.log", "[Tools] compress → \(out?.path ?? "failed")") }
+                    default: break
+                    }
+                    return
+                }
                 if pill.hasPrefix("page:") {
                     UserDefaults.standard.set(String(pill.dropFirst(5)), forKey: "tools.page")
                     return
