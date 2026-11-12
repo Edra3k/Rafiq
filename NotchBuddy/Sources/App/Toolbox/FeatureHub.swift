@@ -12,6 +12,7 @@ enum RafiqFeature: String, CaseIterable, Identifiable {
     case claudeUsage, macMonitor, speedTest, ports, keepAwake, quickToggles, colorPicker, screenText, quitApps
     case clipboard, cleanURL, plainPaste, shelf, scratchpad
     case screenshots, recorder, camera, media
+    case appUpdates, homebrew, uninstaller, cleaner, diskImages
 
     var id: String { rawValue }
 
@@ -49,7 +50,7 @@ enum RafiqFeature: String, CaseIterable, Identifiable {
         case .macMonitor, .speedTest, .ports: return .system
         case .keepAwake, .quickToggles: return .energy
         case .colorPicker, .screenText, .screenshots, .recorder, .camera, .media: return .capture
-        case .quitApps: return .apps
+        case .quitApps, .appUpdates, .homebrew, .uninstaller, .cleaner, .diskImages: return .apps
         case .clipboard, .cleanURL, .plainPaste, .shelf, .scratchpad: return .write
         }
     }
@@ -74,6 +75,11 @@ enum RafiqFeature: String, CaseIterable, Identifiable {
         case .recorder:     return "record.circle"
         case .camera:       return "web.camera"
         case .media:        return "photo.on.rectangle.angled"
+        case .appUpdates:   return "arrow.triangle.2.circlepath"
+        case .homebrew:     return "mug"
+        case .uninstaller:  return "trash.square"
+        case .cleaner:      return "sparkles"
+        case .diskImages:   return "externaldrive"
         }
     }
 
@@ -97,6 +103,11 @@ enum RafiqFeature: String, CaseIterable, Identifiable {
         case .recorder:     return String(localized: "feature.recorder", defaultValue: "Screen recording")
         case .camera:       return String(localized: "feature.camera", defaultValue: "Camera preview")
         case .media:        return String(localized: "feature.media", defaultValue: "Media tools")
+        case .appUpdates:   return String(localized: "feature.appUpdates", defaultValue: "App updates")
+        case .homebrew:     return String(localized: "feature.homebrew", defaultValue: "Homebrew")
+        case .uninstaller:  return String(localized: "feature.uninstaller", defaultValue: "Uninstaller")
+        case .cleaner:      return String(localized: "feature.cleaner", defaultValue: "Cleaner")
+        case .diskImages:   return String(localized: "feature.diskImages", defaultValue: "Disk image installer")
         }
     }
 
@@ -120,6 +131,11 @@ enum RafiqFeature: String, CaseIterable, Identifiable {
         case .recorder:     return String(localized: "feature.recorder.detail", defaultValue: "The screen with its sound and your microphone, to a movie")
         case .camera:       return String(localized: "feature.camera.detail", defaultValue: "Check yourself in the island before a call")
         case .media:        return String(localized: "feature.media.detail", defaultValue: "Compress a video, make a GIF, convert an image, read its text")
+        case .appUpdates:   return String(localized: "feature.appUpdates.detail", defaultValue: "Apps and tools with a new version, updated in one click")
+        case .homebrew:     return String(localized: "feature.homebrew.detail", defaultValue: "Search and install formulae and apps without a terminal")
+        case .uninstaller:  return String(localized: "feature.uninstaller.detail", defaultValue: "An app and everything it left behind, to the Trash")
+        case .cleaner:      return String(localized: "feature.cleaner.detail", defaultValue: "Caches, logs, build data and old downloads, measured")
+        case .diskImages:   return String(localized: "feature.diskImages.detail", defaultValue: "The app of an open disk image, installed and ejected")
         }
     }
 

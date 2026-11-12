@@ -38,6 +38,7 @@
 		07A92ED8E2976D426E31E8EB /* RiskText.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6DFA62727738F35BA7BC22D /* RiskText.swift */; };
 		07B49D6825179DAA18DFF4D3 /* PillCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C64C4C5D705CE486221B74 /* PillCatalog.swift */; };
 		07EC91820A69E8BF11EC778D /* PillColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37564F5F041B38C976DF3DEF /* PillColors.swift */; };
+		083197E154CECEB8FCB8E81C /* AppsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900CDC2CBA9068CCCADC87DE /* AppsManager.swift */; };
 		08A485F2AC63FF5298ED897B /* OpenLeadMochiIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D96E57E8DADE6B82628E3E /* OpenLeadMochiIntent.swift */; };
 		091EC3B2F1060D7EE1317E4E /* IslandWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D710BD7834228045869D0184 /* IslandWindowController.swift */; };
 		093D0CE7216B235875634549 /* RafiqLook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736005266D495A51C9B0E890 /* RafiqLook.swift */; };
@@ -157,6 +158,7 @@
 		410F0237661DBC02AD886663 /* FlowPill.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD88FB0222D3F8893AF1D33D /* FlowPill.swift */; };
 		4117E7C8AA231AAE36E7509D /* UploadCanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B241B043223AFBBFB7418A5E /* UploadCanvasView.swift */; };
 		41966EEF7599793AD70DFCEA /* DiffEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B32FB972D02162720E566674 /* DiffEngine.swift */; };
+		4205138A338BA798B28C4FAF /* AppsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900CDC2CBA9068CCCADC87DE /* AppsManager.swift */; };
 		422C116E73D2D9A96DAE104D /* MochiLive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 265262A422C270C1798F4A80 /* MochiLive.swift */; };
 		43C858397BE8373A5B30623B /* ClaudeDesktopChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A5CB029F97C5F050CCF9A79 /* ClaudeDesktopChat.swift */; };
 		440AAF9FA27CC3DF7CC9EF51 /* MochiStill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045E7300878138F0AC385920 /* MochiStill.swift */; };
@@ -884,6 +886,7 @@
 		8BF22817EC70748F2D1FB2E7 /* ClaudePlanGauge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaudePlanGauge.swift; sourceTree = "<group>"; };
 		8CB8B6E5E9DA6164F979E88F /* GithubPoller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubPoller.swift; sourceTree = "<group>"; };
 		8F2F18663F42A246DACCD639 /* MailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailController.swift; sourceTree = "<group>"; };
+		900CDC2CBA9068CCCADC87DE /* AppsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsManager.swift; sourceTree = "<group>"; };
 		914A792788D403F836BEB570 /* SpotifyViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyViews.swift; sourceTree = "<group>"; };
 		9466FDE02C9B3FB4EF01DFF8 /* IslandScreenGeometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IslandScreenGeometry.swift; sourceTree = "<group>"; };
 		94AA2388D0E7690653E62BBB /* WhatsAppGOWAProcess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsAppGOWAProcess.swift; sourceTree = "<group>"; };
@@ -1296,6 +1299,7 @@
 		839E12125C75E7EFB68802E5 /* Toolbox */ = {
 			isa = PBXGroup;
 			children = (
+				900CDC2CBA9068CCCADC87DE /* AppsManager.swift */,
 				6ADD830B9A1A13FC3DB47AB4 /* CaptureTools.swift */,
 				3CB153E0FDF5BA6D093C424D /* ClaudeUsage.swift */,
 				81B34F604BE1B59FDAF888D3 /* Clipboard.swift */,
@@ -1807,6 +1811,7 @@
 				1F11EC4E6F604C612A1ADAD1 /* AppState.swift in Sources */,
 				0325A44358904B44C2237CCE /* ApprovalQueue.swift in Sources */,
 				23BFB915C12B0BC4E9B50AAA /* ApprovalRelay.swift in Sources */,
+				083197E154CECEB8FCB8E81C /* AppsManager.swift in Sources */,
 				A90EC66F2299C4437848DFF1 /* AskPublisher.swift in Sources */,
 				7C75CCB3DC0116D8D3B12313 /* AskQuestion.swift in Sources */,
 				CAD8B9EF53E3E69FEDEC13C1 /* AskRunner.swift in Sources */,
@@ -2157,6 +2162,7 @@
 				61F73B27A7E3AFF584B2CC22 /* AppState.swift in Sources */,
 				8C5CF7C82640DD6A0685A0D5 /* ApprovalQueue.swift in Sources */,
 				AD94156F1F9CFF62B35202FB /* ApprovalRelay.swift in Sources */,
+				4205138A338BA798B28C4FAF /* AppsManager.swift in Sources */,
 				F994644F96DD823EA1197FE1 /* AskPublisher.swift in Sources */,
 				ED5D9A334DE08C0EB81DE322 /* AskQuestion.swift in Sources */,
 				8D666A0E225D72B611B5092F /* AskRunner.swift in Sources */,

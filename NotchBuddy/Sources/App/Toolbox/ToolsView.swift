@@ -21,6 +21,9 @@ struct ToolsView: View {
         if hub.isOn(.clipboard) { list.append(("clip", String(localized: "tools.page.clip", defaultValue: "Clipboard"))) }
         if hub.isOn(.shelf) { list.append(("shelf", String(localized: "feature.shelf", defaultValue: "Shelf"))) }
         if hub.isOn(.scratchpad) { list.append(("notes", String(localized: "tools.page.notes", defaultValue: "Notes"))) }
+        if [.appUpdates, .homebrew, .uninstaller, .cleaner, .diskImages].contains(where: hub.isOn) {
+            list.append(("apps", String(localized: "feature.family.apps", defaultValue: "Apps")))
+        }
         return list
     }
 
@@ -55,6 +58,7 @@ struct ToolsView: View {
                 case "clip": ClipboardPage()
                 case "shelf": ShelfPage()
                 case "notes": NotesPage()
+                case "apps": AppsPage()
                 default: ToolsGrid()
                 }
             }
