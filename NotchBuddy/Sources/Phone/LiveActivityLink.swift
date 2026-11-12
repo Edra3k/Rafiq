@@ -37,7 +37,7 @@ final class LiveActivityLink {
     var activitiesEnabled: Bool { ActivityAuthorizationInfo().areActivitiesEnabled }
 
     func start() {
-        guard !started else { return }
+        guard !started, PhoneLink.cloudEnabled else { return }
         started = true
         Task {
             for await data in Activity<MochiActivityAttributes>.pushToStartTokenUpdates {

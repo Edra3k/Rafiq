@@ -112,7 +112,18 @@ final class PhoneLink {
     /// A session to open, from a notification, a shortcut or the Control Center.
     var openPillId: String?
 
-    @ObservationIgnored private let container = CKContainer(identifier: PhoneLink.containerID)
+    /// False in a build signed with a free (personal) Apple team: iCloud and push need a paid
+    /// account, and touching CloudKit without its entitlement ends the app. Rafiq then runs on
+    /// its own, without the Mac link.
+    static var cloudEnabled: Bool {
+        #if PERSONAL_TEAM
+        false
+        #else
+        true
+        #endif
+    }
+    /// Made only when used: in a personal-team build it never is.
+    @ObservationIgnored private var container: CKContainer { CKContainer(identifier: PhoneLink.containerID) }
     @ObservationIgnored private var database: CKDatabase { container.privateCloudDatabase }
     @ObservationIgnored private var changeToken: CKServerChangeToken?
     @ObservationIgnored private var firstFetchDone = false
@@ -134,6 +145,11 @@ final class PhoneLink {
 
     /// Checks the account, makes sure the subscription exists, then fetches new records.
     func refresh() async {
+        guard Self.cloudEnabled else {
+            status = .noAccount(String(localized: "This build has no iCloud link with your Mac: it needs a paid Apple developer account."))
+            firstSyncDone = true
+            return
+        }
         do {
             let accountStatus = try await container.accountStatus()
             guard accountStatus == .available else {
@@ -155,6 +171,7 @@ final class PhoneLink {
 
     /// Called on a CloudKit push. Returns true when new records arrived.
     func handlePush() async -> Bool {
+        guard Self.cloudEnabled else { return false }
         let gotNew = await fetchChanges()
         await notifyNewApprovals()
         await postEvents()
@@ -433,6 +450,7 @@ final class PhoneLink {
     /// Answers the question a session waits on. The Mac takes it within ~2 s,
     /// only if it is still the same question and the picks are among its choices.
     func answer(fingerprint: String, pillId: String, selections: [[String]]) async -> Bool {
+        guard Self.cloudEnabled else { return false }
         let record = CKRecord(recordType: "Answer",
                               recordID: CKRecord.ID(recordName: "answer-\(UUID().uuidString)", zoneID: Self.zoneID))
         record["fingerprint"] = fingerprint
@@ -484,6 +502,7 @@ final class PhoneLink {
     }
 
     private func sendServiceRequest(kind: String, target: String, pillId: String) async -> Bool {
+        guard Self.cloudEnabled else { return false }
         let record = CKRecord(recordType: ServiceDetail.requestType,
                               recordID: CKRecord.ID(recordName: "service-request-\(UUID().uuidString)", zoneID: Self.zoneID))
         record["pillId"] = pillId
@@ -504,6 +523,7 @@ final class PhoneLink {
     /// Sends an instruction to continue a session on the Mac. The Mac takes it
     /// within ~15 s and deletes it; it never runs twice.
     func sendInstruction(_ text: String, pillId: String) async -> Bool {
+        guard Self.cloudEnabled else { return false }
         let record = CKRecord(recordType: "Instruction",
                               recordID: CKRecord.ID(recordName: "instruction-\(UUID().uuidString)", zoneID: Self.zoneID))
         record["pillId"] = pillId
@@ -524,6 +544,7 @@ final class PhoneLink {
     /// Hands a task to the Mac's "Ask…": Hermes or Claude runs it there, the approvals
     /// come here as usual, the answer comes back as an `AskResult`.
     func sendAsk(_ text: String, target: AskTarget, device: String? = nil) async -> Bool {
+        guard Self.cloudEnabled else { return false }
         let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmed.isEmpty, trimmed.count <= AskRecord.maxLength else { return false }
         let record = CKRecord(recordType: AskRecord.recordType,
@@ -557,6 +578,7 @@ final class PhoneLink {
     /// Sends allow / deny for one exact request. The Mac applies it only if the
     /// fingerprint still matches the request it is waiting on.
     func decide(_ decision: Decision, fingerprint: String, pillId: String, summary: String) async -> Bool {
+        guard Self.cloudEnabled else { return false }
         let record = CKRecord(recordType: "Decision",
                               recordID: CKRecord.ID(recordName: "decision-\(UUID().uuidString)", zoneID: Self.zoneID))
         record["fingerprint"] = fingerprint
@@ -581,6 +603,7 @@ final class PhoneLink {
     /// Allow from the Live Activity or a notification, without opening the app
     /// (the iPhone was unlocked by its owner: iOS asks for it first).
     func allowFromOutside(fingerprint: String, pillId: String, from place: String) async -> Bool {
+        guard Self.cloudEnabled else { return false }
         noteICloudAlert(fingerprint)
         let command = sessions.first { $0.approvalFingerprint == fingerprint }?.approvalCommand ?? ""
         let summary = command.isEmpty ? "Allowed from \(place)" : String(command.prefix(200))
@@ -598,6 +621,7 @@ final class PhoneLink {
 
     /// Writes a Pong linked to the latest Ping.
     func sendPong() async {
+        guard Self.cloudEnabled else { return }
         guard let ping = pings.first else { return }
         let record = CKRecord(recordType: "Pong",
                               recordID: CKRecord.ID(recordName: UUID().uuidString, zoneID: Self.zoneID))

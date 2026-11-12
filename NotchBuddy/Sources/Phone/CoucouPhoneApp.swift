@@ -29,7 +29,7 @@ final class PhoneAppDelegate: NSObject, UIApplicationDelegate, UNUserNotificatio
         UNUserNotificationCenter.current().delegate = self
         NotificationActions.register()
         LiveActivityLink.shared.start()
-        application.registerForRemoteNotifications()
+        if PhoneLink.cloudEnabled { application.registerForRemoteNotifications() }
         Task { await PhoneLink.shared.start() }
         return true
     }
