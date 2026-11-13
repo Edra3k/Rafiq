@@ -473,6 +473,59 @@ final class HookServer: @unchecked Sendable {
         installHookScript()
         #endif
         Thread.detachNewThread { self.serverThread() }
+        startSocketWatchdog()
+    }
+
+    // MARK: - Socket watchdog
+    //
+    // Another copy of Rafiq (an old build, a mounted DMG) replaces nb.sock when it starts and
+    // leaves a dead file behind when it quits: this one would then listen on a socket nobody
+    // can reach, and no agent would show up any more. Every 15 s one stat() checks the file is
+    // still ours; if it isn't and nobody answers on it, Rafiq binds it again. A live copy that
+    // answers keeps it, so two copies never fight over it.
+
+    private var boundInode: ino_t = 0
+    private var watchdog: DispatchSourceTimer?
+
+    private func startSocketWatchdog() {
+        let timer = DispatchSource.makeTimerSource(queue: .global(qos: .utility))
+        timer.schedule(deadline: .now() + 15, repeating: 15, leeway: .seconds(5))
+        timer.setEventHandler { [weak self] in self?.checkSocket() }
+        timer.resume()
+        watchdog = timer
+    }
+
+    private func checkSocket() {
+        let path = Self.socketPath
+        connectionLock.lock()
+        let inode = boundInode, fd = serverFD
+        connectionLock.unlock()
+        var st = stat()
+        if fd >= 0, stat(path, &st) == 0, st.st_ino == inode { return }
+        if Self.someoneListens(at: path) { return }
+        nbLog("HookServer: nb.sock was replaced or removed, binding it again")
+        connectionLock.lock()
+        serverFD = -1
+        boundInode = 0
+        connectionLock.unlock()
+        if fd >= 0 { shutdown(fd, SHUT_RDWR); close(fd) }
+        Thread.detachNewThread { self.serverThread() }
+    }
+
+    private static func someoneListens(at path: String) -> Bool {
+        let fd = socket(AF_UNIX, SOCK_STREAM, 0)
+        guard fd >= 0 else { return false }
+        defer { close(fd) }
+        var addr = sockaddr_un()
+        addr.sun_family = sa_family_t(AF_UNIX)
+        let cpath = Array(path.utf8CString)
+        withUnsafeMutableBytes(of: &addr.sun_path) { raw in
+            for (i, c) in cpath.enumerated() where i < raw.count { raw[i] = UInt8(bitPattern: c) }
+        }
+        let rc = withUnsafePointer(to: &addr) { ptr in
+            ptr.withMemoryRebound(to: sockaddr.self, capacity: 1) { Darwin.connect(fd, $0, socklen_t(MemoryLayout<sockaddr_un>.size)) }
+        }
+        return rc == 0
     }
 
     // MARK: - Socket server (background thread)
@@ -489,7 +542,6 @@ final class HookServer: @unchecked Sendable {
 
         let fd = socket(AF_UNIX, SOCK_STREAM, 0)
         guard fd >= 0 else { return }
-        serverFD = fd
 
         var addr = sockaddr_un()
         addr.sun_family = sa_family_t(AF_UNIX)
@@ -505,6 +557,12 @@ final class HookServer: @unchecked Sendable {
         // Restrict socket to owner only
         chmod(path, 0o600)
         guard Darwin.listen(fd, 32) == 0 else { close(fd); return }
+        var st = stat()
+        let inode: ino_t = stat(path, &st) == 0 ? st.st_ino : 0
+        connectionLock.lock()
+        serverFD = fd
+        boundInode = inode
+        connectionLock.unlock()
 
         while true {
             let clientFD = Darwin.accept(fd, nil, nil)

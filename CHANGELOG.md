@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- **Agents stay visible**: when another copy of Rafiq (an old build, a DMG) started and quit, it left a dead socket and Rafiq stopped seeing Claude Code and the other agents. Rafiq now checks its socket every 15 s and takes it back.
 - **Dock** (off by default): a click on the app in front hides it; hovering an icon shows its windows, a click brings one forward.
 - **Super key** (off by default): Caps Lock held is ⌃⌥⇧⌘ for your shortcuts, tapped alone it's Escape; Caps Lock comes back when the feature is off or Rafiq quits.
 - **App Store updates** in Tools → Apps → Updates, with `mas` installed.
