@@ -681,9 +681,18 @@ final class AppState: ObservableObject {
     /// The grid without some pills (the open home view hides the Prayer pill while the
     /// prayer strip above it already shows the day's prayers).
     func gridSlots(hiding hidden: Set<String>) -> [SessionBoard.Slot] {
-        SessionBoard.slots(tasks.filter { $0.id != focusId && !hidden.contains($0.id) }.map {
+        SessionBoard.slots(gridCells(hiding: hidden))
+    }
+
+    /// Every page of the grid: the first is `gridSlots`, the next ones the pills it leaves out.
+    func gridPages(hiding hidden: Set<String>) -> [[SessionBoard.Slot]] {
+        SessionBoard.pages(gridCells(hiding: hidden))
+    }
+
+    private func gridCells(hiding hidden: Set<String>) -> [SessionBoard.Cell] {
+        tasks.filter { $0.id != focusId && !hidden.contains($0.id) }.map {
             SessionBoard.Cell(id: $0.id, state: $0.state, poppedOut: $0.id != $0.pill)
-        })
+        }
     }
 
     var effectiveState: BotState {

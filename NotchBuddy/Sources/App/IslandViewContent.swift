@@ -4380,11 +4380,56 @@ struct AgentPillsView: View {
     @ObservedObject var state: AppState
     @ObservedObject private var prayer = PrayerController.shared
     @State private var swapping = false
+    /// The page of the grid shown; more pills than places go on the next pages.
+    @State private var page = 0
+    @State private var hovering = false
+    @State private var scrollMonitor: Any?
+    @State private var scrollSum: CGFloat = 0
 
     /// The prayer strip shows the prayers: their pill leaves the grid meanwhile.
+    private var pages: [[SessionBoard.Slot]] {
+        state.gridPages(hiding: PrayerStripLayout.isOn(state: state, prayer: prayer) ? [PrayerController.pillId] : [])
+    }
+
     private var slots: [SessionBoard.Slot] {
-        PrayerStripLayout.isOn(state: state, prayer: prayer)
-            ? state.gridSlots(hiding: [PrayerController.pillId]) : state.gridSlots
+        let all = pages
+        return all[min(page, all.count - 1)]
+    }
+
+    private func turn(_ delta: Int) {
+        let count = pages.count
+        guard count > 1 else { return }
+        let next = min(max(page + delta, 0), count - 1)
+        guard next != page else { return }
+        withAnimation(.spring(response: 0.35, dampingFraction: 0.85)) { page = next }
+        SoundEngine.shared.play("blip")
+    }
+
+    /// The mouse wheel or a two-finger swipe over the grid turns the pages.
+    private func startScrollMonitor() {
+        guard scrollMonitor == nil else { return }
+        scrollMonitor = NSEvent.addLocalMonitorForEvents(matching: .scrollWheel) { event in
+            MainActor.assumeIsolated {
+                guard hovering, pages.count > 1 else { return }
+                let delta = abs(event.scrollingDeltaX) > abs(event.scrollingDeltaY) ? -event.scrollingDeltaX : -event.scrollingDeltaY
+                if event.phase == .began || (event.phase.isEmpty && event.momentumPhase.isEmpty && !event.hasPreciseScrollingDeltas) {
+                    scrollSum = 0
+                }
+                guard event.momentumPhase.isEmpty else { return }
+                scrollSum += event.hasPreciseScrollingDeltas ? delta : delta * 12
+                if abs(scrollSum) >= 24 {
+                    turn(scrollSum > 0 ? 1 : -1)
+                    scrollSum = 0
+                }
+            }
+            return event
+        }
+    }
+
+    private func stopScrollMonitor() {
+        if let scrollMonitor { NSEvent.removeMonitor(scrollMonitor) }
+        scrollMonitor = nil
+        page = 0
     }
 
     private let columns = [
@@ -4411,9 +4456,26 @@ struct AgentPillsView: View {
                 }
             }
             .padding(.horizontal, 8)
+            if pages.count > 1 {
+                HStack(spacing: 5) {
+                    ForEach(0..<pages.count, id: \.self) { i in
+                        Circle()
+                            .fill(i == min(page, pages.count - 1) ? Color(hex: "#E8C46A") : Color.white.opacity(0.22))
+                            .frame(width: 5, height: 5)
+                            .padding(3)
+                            .contentShape(Rectangle())
+                            .onTapGesture { turn(i - page) }
+                    }
+                }
+                .padding(.top, 3)
+            }
             Spacer(minLength: 0)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .onHover { hovering = $0 }
+        .onAppear { startScrollMonitor() }
+        .onDisappear { stopScrollMonitor() }
+        .onChange(of: pages.count) { _, count in if page >= count { page = max(count - 1, 0) } }
     }
 
     @ViewBuilder

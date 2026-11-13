@@ -236,13 +236,39 @@ struct SessionBoard: Sendable {
     /// first. Working and waiting pills keep theirs. When waiting pills are left over, the last
     /// place becomes "+N" for them and for the newest one that had a place: the ones waiting
     /// longest stay in sight.
+    /// The places as pages: the first is `slots`, the next ones hold, in order, the pills it
+    /// leaves out, `places` per page. Swiping or scrolling the grid turns them.
+    static func pages(_ cells: [Cell], places: Int = 4) -> [[Slot]] {
+        let first = slots(cells, places: places)
+        var shown = Set<String>()
+        for slot in first {
+            switch slot {
+            case .pill(let id): shown.insert(id)
+            case .waiting(let ids): shown.formUnion(ids)
+            }
+        }
+        let rest = cells.filter { !shown.contains($0.id) }.map { Slot.pill($0.id) }
+        var result = [first]
+        var i = 0
+        while i < rest.count {
+            result.append(Array(rest[i..<min(i + places, rest.count)]))
+            i += places
+        }
+        return result
+    }
+
     static func slots(_ cells: [Cell], places: Int = 4) -> [Slot] {
         func waits(_ c: Cell) -> Bool { c.poppedOut || c.state == .approval || c.state == .question }
+        func busy(_ c: Cell) -> Bool { [.working, .thinking, .searching].contains(c.state) }
         let inPlace = cells.filter { !$0.poppedOut }
         var visible = Array(inPlace.prefix(places))
         let queue = cells.filter(\.poppedOut) + inPlace.dropFirst(places).filter(waits)
+        // A working pill beyond the places takes the place of a resting one too (after the
+        // waiting ones), so an agent that starts never stays out of sight on another page.
+        let working = inPlace.dropFirst(places).filter { !waits($0) && busy($0) }
         var placed: [String] = []
         var left: [String] = []
+        func resting(_ c: Cell) -> Bool { !waits(c) && !busy(c) }
         for c in queue {
             if visible.count < places {
                 visible.append(c)
@@ -253,6 +279,12 @@ struct SessionBoard: Sendable {
                 placed.append(c.id)
             } else {
                 left.append(c.id)
+            }
+        }
+        for c in working {
+            if let i = visible.lastIndex(where: { resting($0) && [.idle, .sleeping].contains($0.state) })
+                ?? visible.lastIndex(where: { resting($0) && $0.state != .error && $0.state != .ratelimit }) {
+                visible[i] = c
             }
         }
         guard !left.isEmpty, !visible.isEmpty else { return visible.map { Slot.pill($0.id) } }

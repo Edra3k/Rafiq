@@ -434,6 +434,26 @@ final class AskRunner: ObservableObject {
                     }
                     return
                 }
+                // "demo" turns demo mode on or off (many pills, to check the grid's pages).
+                if pill == "demo" {
+                    if DemoEngine.shared.isActive { DemoEngine.shared.stop() } else { DemoEngine.shared.start() }
+                    return
+                }
+                // "pills:<n>[:<working index>]" adds n test pills (id prefix "debugpill_"),
+                // the one at that index working; "pills:0" removes them.
+                if pill.hasPrefix("pills:") {
+                    let parts = pill.dropFirst(6).split(separator: ":").compactMap { Int($0) }
+                    let state = AppState.shared
+                    state.tasks.removeAll { $0.id.hasPrefix("debugpill_") }
+                    let count = parts.first ?? 0
+                    let busy = parts.count > 1 ? parts[1] : -1
+                    let colors = ["#4D8FE8", "#B49AF0", "#2BB5A0", "#E8B84A", "#C25E9A", "#1DB954", "#E0893A", "#9AA0A6"]
+                    for i in 0..<count {
+                        state.tasks.append(AgentTask(id: "debugpill_\(i)", name: "Test \(i + 1)", color: colors[i % colors.count],
+                                                     state: i == busy ? .working : .idle, steps: [], source: .agent))
+                    }
+                    return
+                }
                 // "view:tools" opens that island view (DEBUG checks of new pages).
                 if pill.hasPrefix("view:"), let view = IslandView(rawValue: String(pill.dropFirst(5))) {
                     NotificationCenter.default.post(name: .hookExpand, object: view)
