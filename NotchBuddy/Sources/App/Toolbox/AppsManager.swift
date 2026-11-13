@@ -25,6 +25,8 @@ struct CleanItem: Identifiable, Equatable {
     let title: String
     let urls: [URL]
     let size: Int64
+    /// Your own files (old downloads): shown in the Finder to sort by hand, never trashed in bulk.
+    var personal = false
     var id: String { title }
 }
 
@@ -195,9 +197,9 @@ final class AppsManager: ObservableObject {
                 .filter { !$0.lastPathComponent.hasPrefix("com.apple.") && !$0.lastPathComponent.contains("edra3k") }
         }
         var items: [CleanItem] = []
-        func add(_ title: String, _ urls: [URL]) {
+        func add(_ title: String, _ urls: [URL], personal: Bool = false) {
             let total = urls.reduce(Int64(0)) { $0 + size(of: $1) }
-            if total > 1_000_000 { items.append(CleanItem(title: title, urls: urls, size: total)) }
+            if total > 1_000_000 { items.append(CleanItem(title: title, urls: urls, size: total, personal: personal)) }
         }
         add(String(localized: "apps.clean.caches", defaultValue: "App caches"), children("Library/Caches").filter { $0.lastPathComponent != "Homebrew" })
         add(String(localized: "apps.clean.logs", defaultValue: "Logs"), children("Library/Logs"))
@@ -208,7 +210,7 @@ final class AppsManager: ObservableObject {
         let downloads = ((try? fm.contentsOfDirectory(at: home.appendingPathComponent("Downloads"),
                                                       includingPropertiesForKeys: [.contentModificationDateKey])) ?? [])
             .filter { (try? $0.resourceValues(forKeys: [.contentModificationDateKey]).contentModificationDate).flatMap { $0 } ?? Date() < cutoff }
-        add(String(localized: "apps.clean.downloads", defaultValue: "Downloads older than 30 days"), downloads)
+        add(String(localized: "apps.clean.downloads", defaultValue: "Downloads older than 30 days"), downloads, personal: true)
         return items.sorted { $0.size > $1.size }
     }
 
@@ -438,9 +440,15 @@ struct AppsPage: View {
                         Text(verbatim: item.title).font(.system(size: 11)).foregroundColor(Color(hex: "#E1E3E6"))
                         Spacer()
                         Text(verbatim: AppsManager.bytes(item.size)).font(.system(size: 11, weight: .semibold)).foregroundColor(RafiqLook.gold)
-                        SmallButton(confirm == item.id ? String(localized: "tools.trash.confirm", defaultValue: "Sure?")
-                                                       : String(localized: "apps.to-trash", defaultValue: "Move to Trash")) {
-                            if confirm == item.id { apps.clean(item); confirm = nil } else { confirm = item.id }
+                        if item.personal {
+                            SmallButton(String(localized: "apps.clean.show", defaultValue: "Show in Finder")) {
+                                NSWorkspace.shared.activateFileViewerSelecting(item.urls)
+                            }
+                        } else {
+                            SmallButton(confirm == item.id ? String(localized: "tools.trash.confirm", defaultValue: "Sure?")
+                                                           : String(localized: "apps.to-trash", defaultValue: "Move to Trash")) {
+                                if confirm == item.id { apps.clean(item); confirm = nil } else { confirm = item.id }
+                            }
                         }
                     }
                 }

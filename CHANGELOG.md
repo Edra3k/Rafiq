@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- **The cleaner leaves your files alone** — downloads older than 30 days are shown in the Finder to sort by hand; only caches, logs and build data go to the Trash in one click.
+- **⌘W held in the browsers** — with Quit protection on, closing a tab in Safari, Chrome, Brave, Arc, Firefox or Edge also needs a hold.
+
 ## 0.8.0 — 2026-11-13
 
 Rafiq takes in what a Mac utility belt does, tool by tool, each one switched on or off in Settings → Features.

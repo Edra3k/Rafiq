@@ -270,6 +270,8 @@ final class QuitGuard: ObservableObject {
     static let holdSeconds: TimeInterval = 0.7
 
     @Published private(set) var holding: (app: String, progress: Double)?
+    @Published private(set) var closing = false
+    private var passNext = false
     private var tap: CFMachPort?
     private var source: CFRunLoopSource?
     private var pressStart: Date?
@@ -307,8 +309,23 @@ final class QuitGuard: ObservableObject {
             if let tap { CGEvent.tapEnable(tap: tap, enable: true) }
             return true
         }
+        if passNext, event.getIntegerValueField(.keyboardEventKeycode) == Int64(kVK_ANSI_W) {
+            if type == .keyUp { passNext = false }
+            return true
+        }
         let code = event.getIntegerValueField(.keyboardEventKeycode)
         let flags = event.flags
+        // ⌘W is held too, in the browsers (a tab full of work closes with one slip).
+        let front = NSWorkspace.shared.frontmostApplication?.bundleIdentifier ?? ""
+        let closeGuarded = code == Int64(kVK_ANSI_W) && Self.closeApps.contains(front)
+        if closeGuarded, flags.contains(.maskCommand), !flags.contains(.maskShift), !flags.contains(.maskAlternate), !flags.contains(.maskControl) {
+            if type == .keyDown {
+                if event.getIntegerValueField(.keyboardEventAutorepeat) == 0 { beginClose() }
+                return false
+            }
+            cancel()
+            return false
+        }
         guard code == Int64(kVK_ANSI_Q), flags.contains(.maskCommand),
               !flags.contains(.maskShift), !flags.contains(.maskAlternate), !flags.contains(.maskControl),
               let app = NSWorkspace.shared.frontmostApplication, app.bundleIdentifier != Bundle.main.bundleIdentifier,
@@ -321,7 +338,35 @@ final class QuitGuard: ObservableObject {
         return false
     }
 
+    static let closeApps: Set<String> = ["com.apple.Safari", "com.google.Chrome", "com.brave.Browser", "company.thebrowser.Browser",
+                                         "org.mozilla.firefox", "com.microsoft.edgemac"]
+
+    /// ⌘W held long enough sends ⌘W itself (the tap lets Rafiq's own key through).
+    private func beginClose() {
+        guard let app = NSWorkspace.shared.frontmostApplication else { return }
+        pressStart = Date()
+        holding = (app.localizedName ?? "", 0)
+        closing = true
+        showHUD()
+        timer?.invalidate()
+        timer = Timer.scheduledTimer(withTimeInterval: 0.03, repeats: true) { _ in
+            MainActor.assumeIsolated { QuitGuard.shared.tickClose() }
+        }
+    }
+
+    private func tickClose() {
+        guard let start = pressStart else { return }
+        let progress = Date().timeIntervalSince(start) / Self.holdSeconds
+        holding = (holding?.app ?? "", min(1, progress))
+        if progress >= 1 {
+            cancel()
+            passNext = true
+            InputTools.postKey(UInt16(kVK_ANSI_W), flags: .maskCommand)
+        }
+    }
+
     private func begin(_ app: NSRunningApplication) {
+        closing = false
         pressStart = Date()
         holding = (app.localizedName ?? "", 0)
         showHUD()
@@ -373,7 +418,8 @@ private struct QuitHUD: View {
     @ObservedObject private var guardian = QuitGuard.shared
     var body: some View {
         VStack(spacing: 8) {
-            Text(String(format: String(localized: "quit.hold %@", defaultValue: "Hold ⌘Q to quit %@"), guardian.holding?.app ?? ""))
+            Text(guardian.closing ? String(localized: "quit.hold-close", defaultValue: "Hold ⌘W to close")
+                                  : String(format: String(localized: "quit.hold %@", defaultValue: "Hold ⌘Q to quit %@"), guardian.holding?.app ?? ""))
                 .font(.system(size: 13, weight: .semibold)).foregroundColor(.white)
             GeometryReader { g in
                 ZStack(alignment: .leading) {
