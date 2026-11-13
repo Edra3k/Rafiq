@@ -507,6 +507,7 @@
 		C7DCF18B4588088307E49FAD /* ParakeetEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8178EB447DDE9C03427B36 /* ParakeetEngine.swift */; };
 		C808B654C84D9F71DBF8493A /* GithubPoller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB8B6E5E9DA6164F979E88F /* GithubPoller.swift */; };
 		C8F0DA5F0EF2503581EFE5A1 /* NoteAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E5A3ADB1304C23C4AEDD48 /* NoteAudio.swift */; };
+		C90DE6A237255743823EDDE9 /* DockTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24697583CBD0CF15440DF7C /* DockTools.swift */; };
 		C93BA975D35B8CD7473CF995 /* DesktopMochiLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = C086E1932F86B9C2B559BE03 /* DesktopMochiLogic.swift */; };
 		C940B651C6CA952D99388E04 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192844E7299DEED5C2372067 /* AppDelegate.swift */; };
 		C9ED8FFDC406DD1A23AABC7C /* TurnSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1C4152EBDBD7C24CABFFD7 /* TurnSnapshot.swift */; };
@@ -577,6 +578,7 @@
 		E1581F8F2725B26E90D91C4A /* IntroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2EED5205DD7161E51BE1E1 /* IntroView.swift */; };
 		E19B34442625F2DB29DF03CC /* AndroidLinkServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196392ADB84D6B58731A3594 /* AndroidLinkServer.swift */; };
 		E2414533EDC7565286141198 /* SpotifyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9E6EB7C8468A8339CF6A5C /* SpotifyController.swift */; };
+		E264E36B1C7CBC0F2DBD266E /* DockTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24697583CBD0CF15440DF7C /* DockTools.swift */; };
 		E345BBD08FA34603D55DDE01 /* AnalyzerDictation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B580132E58253D7BE8C34A22 /* AnalyzerDictation.swift */; };
 		E39BE82F53BB08E8E4755D16 /* PrayerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDF3767C4B8573D0788982D2 /* PrayerController.swift */; };
 		E4B93DC2345688488FEAE078 /* ScreenCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CBF0D968BFB1AB0E36B18F /* ScreenCapture.swift */; };
@@ -984,6 +986,7 @@
 		D0F0D0F67E7C56B9E37E7648 /* ClaudeHost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaudeHost.swift; sourceTree = "<group>"; };
 		D1A7C62058BB0C9D0DF58DCB /* VoiceIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceIntent.swift; sourceTree = "<group>"; };
 		D1D96E57E8DADE6B82628E3E /* OpenLeadMochiIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenLeadMochiIntent.swift; sourceTree = "<group>"; };
+		D24697583CBD0CF15440DF7C /* DockTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DockTools.swift; sourceTree = "<group>"; };
 		D2BE2B6FFE97653600C5AF8F /* ServerLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerLog.swift; sourceTree = "<group>"; };
 		D2D996CC1E5E7391054373A0 /* OSVWatch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSVWatch.swift; sourceTree = "<group>"; };
 		D4543CB771E0B723783F529E /* VoiceSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceSettings.swift; sourceTree = "<group>"; };
@@ -1320,6 +1323,7 @@
 				3CB153E0FDF5BA6D093C424D /* ClaudeUsage.swift */,
 				81B34F604BE1B59FDAF888D3 /* Clipboard.swift */,
 				B16610BD1C489A3AB7E93B6E /* CommandBar.swift */,
+				D24697583CBD0CF15440DF7C /* DockTools.swift */,
 				6D17C2A18D62D90786F9D78F /* FeatureHub.swift */,
 				CF5402843A49C5AFD13A30EE /* InputTools.swift */,
 				F590B1A58A369A17F3001773 /* MacMonitor.swift */,
@@ -1878,6 +1882,7 @@
 				FD4B5673A5427128DE1910F3 /* DictationTranscript.swift in Sources */,
 				077ECE0906D8E820BD5FA764 /* DiffEngine.swift in Sources */,
 				33BD9C1885F514D822C9A126 /* Digest.swift in Sources */,
+				E264E36B1C7CBC0F2DBD266E /* DockTools.swift in Sources */,
 				541AF30CF808CC0FC1B8D97D /* ElevenLabsTTS.swift in Sources */,
 				B4F12F8F978FCA7E5309DE28 /* EnergyVAD.swift in Sources */,
 				9B0A1CABB8FB8209E20D9B06 /* EntityResolver.swift in Sources */,
@@ -2234,6 +2239,7 @@
 				2768A639F60C4B4C6EC98436 /* DictationTranscript.swift in Sources */,
 				4D958F2DDCE9504490FDA357 /* DiffEngine.swift in Sources */,
 				FA34B80205B65DD824FA8F1E /* Digest.swift in Sources */,
+				C90DE6A237255743823EDDE9 /* DockTools.swift in Sources */,
 				D7FD1948C7F97D6A2904CDBE /* ElevenLabsTTS.swift in Sources */,
 				A94F75489794D9C95E584B56 /* EnergyVAD.swift in Sources */,
 				118D3ABA767EE8A7E55B0F8E /* EntityResolver.swift in Sources */,

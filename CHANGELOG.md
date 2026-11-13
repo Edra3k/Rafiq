@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- **Dock** (off by default): a click on the app in front hides it; hovering an icon shows its windows, a click brings one forward.
+- **Super key** (off by default): Caps Lock held is ⌃⌥⇧⌘ for your shortcuts, tapped alone it's Escape; Caps Lock comes back when the feature is off or Rafiq quits.
+- **App Store updates** in Tools → Apps → Updates, with `mas` installed.
 - **The cleaner leaves your files alone** — downloads older than 30 days are shown in the Finder to sort by hand; only caches, logs and build data go to the Trash in one click.
 - **⌘W held in the browsers** — with Quit protection on, closing a tab in Safari, Chrome, Brave, Arc, Firefox or Edge also needs a hold.
 

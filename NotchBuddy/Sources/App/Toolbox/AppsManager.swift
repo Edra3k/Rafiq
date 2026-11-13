@@ -60,8 +60,13 @@ final class AppsManager: ObservableObject {
         loadingUpdates = true
         Task {
             let out = await Task.detached { JarvisMac.run(brew, ["outdated", "--json=v2"], timeout: 120) ?? "" }.value
+            // Mac App Store apps, through mas when it's installed (brew install mas).
+            let store = await Task.detached { () -> String in
+                guard let mas = ["/opt/homebrew/bin/mas", "/usr/local/bin/mas"].first(where: { FileManager.default.isExecutableFile(atPath: $0) }) else { return "" }
+                return JarvisMac.run(mas, ["outdated"], timeout: 60) ?? ""
+            }.value
             loadingUpdates = false
-            outdated = Self.parseOutdated(out)
+            outdated = Self.parseOutdated(out) + Self.parseMas(store)
         }
     }
 
@@ -80,6 +85,19 @@ final class AppsManager: ObservableObject {
         return list.sorted { ($0.cask ? 0 : 1, $0.name) < ($1.cask ? 0 : 1, $1.name) }
     }
 
+    /// "497799835 Xcode (16.0 -> 16.1)" → an App Store package (its name holds the id).
+    nonisolated static func parseMas(_ out: String) -> [BrewPackage] {
+        out.split(separator: "\n").compactMap { line in
+            let parts = line.split(separator: " ", maxSplits: 1)
+            guard parts.count == 2, Int(parts[0]) != nil else { return nil }
+            let rest = String(parts[1])
+            let name = rest.components(separatedBy: " (").first ?? rest
+            let versions = rest.components(separatedBy: " (").last?.trimmingCharacters(in: CharacterSet(charactersIn: ")")) ?? ""
+            let pair = versions.components(separatedBy: " -> ")
+            return BrewPackage(name: "mas:\(parts[0]):\(name)", installed: pair.first ?? "", latest: pair.last ?? "", cask: true)
+        }
+    }
+
     func brew(_ args: [String], key: String, then: @escaping @MainActor () -> Void = {}) {
         guard let brew = Self.brew else { return }
         busy.insert(key)
@@ -92,6 +110,17 @@ final class AppsManager: ObservableObject {
     }
 
     func upgrade(_ p: BrewPackage) {
+        if p.name.hasPrefix("mas:") {
+            let id = p.name.split(separator: ":")[1]
+            guard let mas = ["/opt/homebrew/bin/mas", "/usr/local/bin/mas"].first(where: { FileManager.default.isExecutableFile(atPath: $0) }) else { return }
+            busy.insert(p.id)
+            Task {
+                _ = await Task.detached { JarvisMac.run(mas, ["upgrade", String(id)], timeout: 1800) }.value
+                busy.remove(p.id)
+                outdated.removeAll { $0.id == p.id }
+            }
+            return
+        }
         brew(["upgrade"] + (p.cask ? ["--cask"] : []) + [p.name], key: p.id) { [weak self] in
             self?.outdated.removeAll { $0.id == p.id }
         }
@@ -348,7 +377,8 @@ struct AppsPage: View {
                     ForEach(apps.outdated) { p in
                         HStack(spacing: 6) {
                             Image(systemName: p.cask ? "app" : "terminal").font(.system(size: 10)).foregroundColor(Color(hex: "#8E939C"))
-                            Text(verbatim: p.name).font(.system(size: 11)).foregroundColor(Color(hex: "#E1E3E6"))
+                            Text(verbatim: p.name.hasPrefix("mas:") ? String(p.name.split(separator: ":", maxSplits: 2).last ?? "") + " · App Store" : p.name)
+                                .font(.system(size: 11)).foregroundColor(Color(hex: "#E1E3E6"))
                             Text(verbatim: "\(p.installed) → \(p.latest)").font(.system(size: 9.5)).foregroundColor(Color(hex: "#6B7079")).lineLimit(1)
                             Spacer()
                             busyOr(p.id) { SmallButton(String(localized: "apps.update", defaultValue: "Update")) { apps.upgrade(p) } }

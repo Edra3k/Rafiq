@@ -16,6 +16,7 @@ enum RafiqFeature: String, CaseIterable, Identifiable {
     case outputSwitcher, micTools, musicBlocker, displays, bluetoothSleep, appMixer
     case windowLayout, windowSwitcher, quitProtection, quitOnClose, spacesOrder
     case commandBar, radialMenu, quickPanel
+    case dockClicks, dockPreview, superKey
     case reverseScroll, linearScroll, sideButtons, clickFilter, keyDebounce, typedSnippets, finderShortcuts, focusFollowsMouse, pointerAccel
 
     var id: String { rawValue }
@@ -60,7 +61,8 @@ enum RafiqFeature: String, CaseIterable, Identifiable {
         case .macMonitor, .speedTest, .ports: return .system
         case .keepAwake, .quickToggles, .displays, .bluetoothSleep: return .energy
         case .outputSwitcher, .micTools, .musicBlocker, .appMixer: return .sound
-        case .windowLayout, .windowSwitcher, .quitProtection, .quitOnClose, .spacesOrder: return .windows
+        case .windowLayout, .windowSwitcher, .quitProtection, .quitOnClose, .spacesOrder, .dockClicks, .dockPreview: return .windows
+        case .superKey: return .input
         case .commandBar, .radialMenu, .quickPanel: return .quick
         case .reverseScroll, .linearScroll, .sideButtons, .clickFilter, .keyDebounce, .typedSnippets, .finderShortcuts, .focusFollowsMouse, .pointerAccel: return .input
         case .colorPicker, .screenText, .screenshots, .recorder, .camera, .media: return .capture
@@ -117,6 +119,9 @@ enum RafiqFeature: String, CaseIterable, Identifiable {
         case .finderShortcuts: return "folder"
         case .focusFollowsMouse: return "cursorarrow.motionlines"
         case .pointerAccel: return "speedometer"
+        case .dockClicks:   return "dock.arrow.down.rectangle"
+        case .dockPreview:  return "rectangle.on.rectangle"
+        case .superKey:     return "capslock"
         }
     }
 
@@ -168,6 +173,9 @@ enum RafiqFeature: String, CaseIterable, Identifiable {
         case .finderShortcuts: return String(localized: "feature.finderShortcuts", defaultValue: "Finder shortcuts")
         case .focusFollowsMouse: return String(localized: "feature.focusFollowsMouse", defaultValue: "Focus follows mouse")
         case .pointerAccel: return String(localized: "feature.pointerAccel", defaultValue: "No pointer acceleration")
+        case .dockClicks:   return String(localized: "feature.dockClicks", defaultValue: "Dock clicks")
+        case .dockPreview:  return String(localized: "feature.dockPreview", defaultValue: "Dock preview")
+        case .superKey:     return String(localized: "feature.superKey", defaultValue: "Super key")
         }
     }
 
@@ -219,6 +227,9 @@ enum RafiqFeature: String, CaseIterable, Identifiable {
         case .finderShortcuts: return String(localized: "feature.finderShortcuts.detail", defaultValue: "⌘X then ⌘V moves files, F2 renames")
         case .focusFollowsMouse: return String(localized: "feature.focusFollowsMouse.detail", defaultValue: "The window under the pointer comes forward after a pause")
         case .pointerAccel: return String(localized: "feature.pointerAccel.detail", defaultValue: "The pointer moves as far as the mouse, at any speed")
+        case .dockClicks:   return String(localized: "feature.dockClicks.detail", defaultValue: "A click on the app in front hides it")
+        case .dockPreview:  return String(localized: "feature.dockPreview.detail", defaultValue: "Hover a Dock icon to see its windows, click one to bring it forward")
+        case .superKey:     return String(localized: "feature.superKey.detail", defaultValue: "Caps Lock held is ⌃⌥⇧⌘ for your shortcuts, tapped alone it's Escape")
         }
     }
 
@@ -228,14 +239,16 @@ enum RafiqFeature: String, CaseIterable, Identifiable {
         case .clipboard, .cleanURL: return .clipboard
         case .windowLayout: return .mouse
         case .windowSwitcher, .quitProtection, .keyDebounce, .typedSnippets, .finderShortcuts: return .keyboard
-        case .reverseScroll, .linearScroll, .sideButtons, .clickFilter, .focusFollowsMouse: return .mouse
+        case .reverseScroll, .linearScroll, .sideButtons, .clickFilter, .focusFollowsMouse, .dockClicks, .dockPreview: return .mouse
+        case .superKey: return .keyboard
         default: return .nothing
         }
     }
 
     /// The features that change how the Mac itself behaves start off.
     var onByDefault: Bool {
-        family != .input && ![.musicBlocker, .bluetoothSleep, .windowSwitcher, .quitProtection, .quitOnClose, .spacesOrder].contains(self)
+        family != .input && ![.musicBlocker, .bluetoothSleep, .windowSwitcher, .quitProtection, .quitOnClose, .spacesOrder,
+                              .dockClicks, .dockPreview].contains(self)
     }
 }
 
@@ -308,6 +321,8 @@ final class FeatureHub: ObservableObject {
         if feature == .bluetoothSleep { BluetoothSleep.shared.featureChanged() }
         if [.windowLayout, .windowSwitcher, .commandBar, .radialMenu, .quickPanel].contains(feature) { WindowManager.shared.featureChanged() }
         if feature.family == .input { InputTools.shared.featureChanged() }
+        if [.dockClicks, .dockPreview].contains(feature) { DockTools.shared.featureChanged() }
+        if feature == .superKey { SuperKey.shared.featureChanged() }
         if feature == .pointerAccel { InputTools.setAcceleration(off: on) }
         if feature == .quitProtection { QuitGuard.shared.featureChanged() }
         if feature == .quitOnClose { QuitOnClose.shared.featureChanged() }
@@ -331,6 +346,8 @@ final class FeatureHub: ObservableObject {
         QuitGuard.shared.featureChanged()
         QuitOnClose.shared.featureChanged()
         InputTools.shared.featureChanged()
+        DockTools.shared.featureChanged()
+        SuperKey.shared.featureChanged()
     }
 
     func binding(_ feature: RafiqFeature) -> Binding<Bool> {

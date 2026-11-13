@@ -17,6 +17,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationWillTerminate(_ notification: Notification) {
         #if !APPSTORE
+        // Caps Lock goes back to macOS when Rafiq quits.
+        if FeatureHub.shared.isOn(.superKey) { SuperKey.shared.stop() }
+        #endif
+        #if !APPSTORE
         NoteTaker.shared.shutdown()
         // A dictation still listening never leaves the Mac muted.
         SystemMute.shared.releaseNow()
@@ -58,6 +62,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         QuitGuard.shared.featureChanged()
         QuitOnClose.shared.featureChanged()
         InputTools.shared.featureChanged()
+        DockTools.shared.featureChanged()
+        SuperKey.shared.featureChanged()
         #endif
         #if !APPSTORE
         // Opened by hand (Finder, Dock, Spotlight): the Rafiq window shows. Not at login.
