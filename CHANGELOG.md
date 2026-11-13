@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- **Close as soon as the pointer leaves** (Settings → General → Behavior, off by default): the open island folds the moment the pointer leaves it; an island an alert opened keeps the usual delay.
 - **Agents stay visible**: when another copy of Rafiq (an old build, a DMG) started and quit, it left a dead socket and Rafiq stopped seeing Claude Code and the other agents. Rafiq now checks its socket every 15 s and takes it back.
 - **Dock** (off by default): a click on the app in front hides it; hovering an icon shows its windows, a click brings one forward.
 - **Super key** (off by default): Caps Lock held is ⌃⌥⇧⌘ for your shortcuts, tapped alone it's Escape; Caps Lock comes back when the feature is off or Rafiq quits.

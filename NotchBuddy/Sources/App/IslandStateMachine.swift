@@ -45,6 +45,11 @@ final class IslandStateMachine {
     /// Settings → General → Behavior: hovering the island opens it. Off: hover only peeks (petit).
     /// However it was opened, the island folds `homeToPetitDelay` after the pointer leaves.
     var openOnHover = false
+    /// Settings → General → Behavior: fold as soon as the pointer leaves (a short grace, so a
+    /// pointer brushing the edge doesn't close it). An island an alert opened, which the pointer
+    /// never entered, keeps the normal delay.
+    var closeOnLeave = false
+    private static let leaveGrace: TimeInterval = 0.25
     /// Told when a fold is scheduled (its moment) or called off (nil): the countdown bar.
     var onCloseScheduled: ((Date?) -> Void)?
     /// True while the island is open because of a hover, until the user clicks inside it.
@@ -109,7 +114,7 @@ final class IslandStateMachine {
         case .petit:
             schedulePetitHide()
         case .home:
-            if isHeldOpen?() != true { scheduleHomeCollapse() }
+            if isHeldOpen?() != true { scheduleHomeCollapse(leaving: true) }
         case .coucou:
             if isHeldOpen?() != true {
                 // Interrupt greeting immediately → compact (overrides 10s auto-collapse)
@@ -220,7 +225,7 @@ final class IslandStateMachine {
         DispatchQueue.main.asyncAfter(deadline: .now() + petitToHiddenDelay, execute: item)
     }
 
-    private func scheduleHomeCollapse() {
+    private func scheduleHomeCollapse(leaving: Bool = false) {
         homeCollapseWork?.cancel()
         let item = DispatchWorkItem { [weak self] in
             guard let self else { return }
@@ -232,7 +237,7 @@ final class IslandStateMachine {
         }
         homeCollapseWork = item
         // The same delay whether a hover or a click opened it: the user's "close after".
-        let delay = homeToPetitDelay
+        let delay = leaving && closeOnLeave ? Self.leaveGrace : homeToPetitDelay
         onCloseScheduled?(Date().addingTimeInterval(delay))
         DispatchQueue.main.asyncAfter(deadline: .now() + delay, execute: item)
     }

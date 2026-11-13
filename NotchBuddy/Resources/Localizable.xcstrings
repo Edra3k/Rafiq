@@ -171903,6 +171903,206 @@
           }
         }
       }
+    },
+    "behavior.close-on-leave" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Close as soon as the pointer leaves"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fermer dès que la souris sort"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cerrar en cuanto el puntero salga"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fechar assim que o ponteiro sair"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Закрывать, как только указатель уйдёт"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "指针离开后立即关闭"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "पॉइंटर हटते ही बंद करें"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الإغلاق فور خروج المؤشر"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "পয়েন্টার সরলেই বন্ধ করুন"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tutup begitu penunjuk keluar"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schließen, sobald der Zeiger es verlässt"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "İşaretçi çıkar çıkmaz kapat"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ปิดทันทีที่ตัวชี้ออกไป"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "指標離開後立即關閉"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "포인터가 벗어나면 바로 닫기"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ポインタが離れたらすぐに閉じる"
+          }
+        }
+      }
+    },
+    "behavior.close-on-leave.help" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The open island folds the moment the pointer leaves it. An island an alert opened keeps the delay below."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L'île ouverte se replie dès que la souris la quitte. Une île ouverte par une alerte garde le délai ci-dessous."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La isla abierta se pliega en cuanto el puntero la deja. Una isla abierta por una alerta mantiene el retraso de abajo."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A ilha aberta se recolhe assim que o ponteiro sai. Uma ilha aberta por um alerta mantém o atraso abaixo."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Открытый остров сворачивается, как только указатель уходит. Остров, открытый уведомлением, ждёт задержку ниже."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "指针一离开，展开的岛就会收起。由提醒打开的岛仍按下方的延迟关闭。"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "पॉइंटर हटते ही खुला आइलैंड सिमट जाता है। अलर्ट से खुला आइलैंड नीचे दी गई देरी रखता है।"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تنطوي الجزيرة المفتوحة فور مغادرة المؤشر لها. الجزيرة التي فتحها تنبيه تحتفظ بالمهلة أدناه."
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "পয়েন্টার সরলেই খোলা আইল্যান্ড গুটিয়ে যায়। সতর্কতায় খোলা আইল্যান্ড নিচের বিলম্ব রাখে।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pulau yang terbuka terlipat begitu penunjuk meninggalkannya. Pulau yang dibuka peringatan tetap memakai jeda di bawah."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die offene Insel klappt zu, sobald der Zeiger sie verlässt. Eine von einer Meldung geöffnete Insel behält die Verzögerung unten."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Açık ada, işaretçi ayrıldığı anda kapanır. Bir uyarının açtığı ada aşağıdaki gecikmeyi korur."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เกาะที่เปิดอยู่จะพับทันทีที่ตัวชี้ออกไป เกาะที่เปิดจากการแจ้งเตือนจะใช้เวลาหน่วงด้านล่าง"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "指標一離開，展開的島就會收合。由提醒開啟的島仍依下方的延遲關閉。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "포인터가 벗어나는 즉시 열린 아일랜드가 접혀요. 알림으로 열린 아일랜드는 아래 지연 시간을 따라요."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ポインタが離れるとすぐ開いたアイランドが閉じます。通知で開いたアイランドは下の遅延を保ちます。"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

@@ -20,6 +20,7 @@ final class IslandWindowController: NSWindowController {
     private var autoCloseSubscription: AnyCancellable?
     private var absenceSubscription: AnyCancellable?
     private var openOnHoverSubscription: AnyCancellable?
+    private var closeOnLeaveSubscription: AnyCancellable?
 
     // Confused recovery timer (set by handleDizzy)
     private var confusedRecoveryTimer: DispatchWorkItem?
@@ -298,6 +299,9 @@ final class IslandWindowController: NSWindowController {
         // Apply the persisted preference immediately and keep live edits in sync.
         autoCloseSubscription = state.$autoCloseInterval.sink { [weak self] delay in
             self?.fsm.homeToPetitDelay = delay
+        }
+        closeOnLeaveSubscription = state.$closeOnLeave.sink { [weak self] on in
+            self?.fsm.closeOnLeave = on
         }
         absenceSubscription = state.$absenceInterval.sink { [weak self] delay in
             self?.fsm.petitToHiddenDelay = delay

@@ -333,6 +333,10 @@ final class AppState: ObservableObject {
     @Published var alertsFromAllPills: Bool = false {
         didSet { UserDefaults.standard.set(alertsFromAllPills, forKey: "alertsFromAllPills") }
     }
+    /// The open island folds as soon as the pointer leaves it (instead of after autoCloseInterval).
+    @Published var closeOnLeave: Bool = false {
+        didSet { UserDefaults.standard.set(closeOnLeave, forKey: "closeOnLeave") }
+    }
     // Close delay after the pointer leaves the open island — persisted
     @Published var autoCloseInterval: TimeInterval = 3 {
         didSet { UserDefaults.standard.set(autoCloseInterval, forKey: "autoCloseInterval") }
@@ -624,6 +628,7 @@ final class AppState: ObservableObject {
         // Migrate old 60s default → 15s
         if let v = ud.object(forKey: "openOnHover") as? Bool { openOnHover = v }
         if let v = ud.object(forKey: "alertsFromAllPills") as? Bool { alertsFromAllPills = v }
+        if let v = ud.object(forKey: "closeOnLeave") as? Bool { closeOnLeave = v }
         if let v = ud.object(forKey: "autoCloseInterval") as? Double {
             autoCloseInterval = (v == 60) ? 15 : v
         }

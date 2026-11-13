@@ -354,6 +354,8 @@ struct SettingsView: View {
                     .help("Hovering the island opens it; it folds again shortly after the pointer leaves. Click inside to keep it open.")
                 Toggle(String(localized: "alerts.all-pills"), isOn: $state.alertsFromAllPills)
                     .help(String(localized: "alerts.all-pills.help"))
+                Toggle(String(localized: "behavior.close-on-leave", defaultValue: "Close as soon as the pointer leaves"), isOn: $state.closeOnLeave)
+                    .help(String(localized: "behavior.close-on-leave.help", defaultValue: "The open island folds the moment the pointer leaves it. An island an alert opened keeps the delay below."))
                 HStack(spacing: 8) {
                     Text("Close after")
                     TextField("60", value: $state.autoCloseInterval, format: .number)
@@ -361,6 +363,7 @@ struct SettingsView: View {
                         .frame(width: 64)
                     Text(String(localized: "behavior.close-after-leave", defaultValue: "s after the pointer leaves"))
                 }
+                .opacity(state.closeOnLeave ? 0.5 : 1)
                 HStack(spacing: 8) {
                     Text("Hide after")
                     TextField("3", value: absenceMinutes, format: .number)
