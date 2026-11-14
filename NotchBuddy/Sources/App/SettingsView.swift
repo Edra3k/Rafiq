@@ -609,7 +609,7 @@ struct SettingsView: View {
 
                 Text(String(format: String(localized: "settings.slots-used %lld"), Int64(state.activeIntegrations.count)))
                     .font(.system(size: 11))
-                    .foregroundColor(state.activeIntegrations.count >= 4 ? .orange : .secondary)
+                    .foregroundColor(state.activeIntegrations.count >= AppState.maxActiveIntegrations ? .orange : .secondary)
 
                 Picker(String(localized: "settings.main-pill"), selection: $state.mainPillId) {
                     ForEach(PillCatalog.available.filter { PillCatalog.canBeMain($0) }, id: \.id) { def in
@@ -2487,7 +2487,7 @@ struct SettingsView: View {
     private func pillRow(_ def: PillDefinition) -> some View {
         let isMain = def.id == state.mainPillId
         let isOn   = state.activeIntegrations.contains(def.id)
-        let atMax  = state.activeIntegrations.count >= 4 && !isOn && !isMain
+        let atMax  = state.activeIntegrations.count >= AppState.maxActiveIntegrations && !isOn && !isMain
         let hint: String? = {
             if isMain { return nil }
             if def.comingSoon { return String(localized: "Coming soon") }

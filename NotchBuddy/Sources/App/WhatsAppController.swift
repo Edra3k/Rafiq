@@ -183,7 +183,7 @@ final class WhatsAppController: ObservableObject {
     func setEnabled(_ on: Bool) {
         WhatsAppSettings.enabled = on
         let state = AppState.shared
-        if on, !state.activeIntegrations.contains(Self.pillId), state.activeIntegrations.count < 4 {
+        if on, !state.activeIntegrations.contains(Self.pillId), state.activeIntegrations.count < AppState.maxActiveIntegrations {
             state.toggleIntegration(Self.pillId)
         } else if !on, state.activeIntegrations.contains(Self.pillId) {
             state.toggleIntegration(Self.pillId)

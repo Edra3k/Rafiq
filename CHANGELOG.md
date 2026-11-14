@@ -2,7 +2,7 @@
 
 ## Unreleased
 
-- **More pills, the working ones first**: the grid beside Rafiq keeps its look and its four places, and the pills that do not fit go on next pages (mouse wheel, two-finger swipe or the dots under the grid). A pill that starts working takes the place of a resting one, so it is never out of sight.
+- **More pills, the working ones first**: up to 12 pills can be chosen in Settings → Pills (4 before). The grid beside Rafiq keeps its look and its four places, and the pills that do not fit go on next pages (mouse wheel, two-finger swipe or the dots under the grid). A pill that starts working takes the place of a resting one, so it is never out of sight.
 - **Close as soon as the pointer leaves** (Settings → General → Behavior, off by default): the open island folds the moment the pointer leaves it; an island an alert opened keeps the usual delay.
 - **Agents stay visible**: when another copy of Rafiq (an old build, a DMG) started and quit, it left a dead socket and Rafiq stopped seeing Claude Code and the other agents. Rafiq now checks its socket every 15 s and takes it back.
 - **Dock** (off by default): a click on the app in front hides it; hovering an icon shows its windows, a click brings one forward.

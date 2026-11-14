@@ -83920,97 +83920,97 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%lld/4 فتحات مستخدمة"
+            "value" : "%lld/12 فتحات مستخدمة"
           }
         },
         "bn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%lld/4 স্লট ব্যবহৃত"
+            "value" : "%lld/12 স্লট ব্যবহৃত"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%lld/4 Plätze belegt"
+            "value" : "%lld/12 Plätze belegt"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%lld/4 slots used"
+            "value" : "%lld/12 slots used"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%lld/4 ranuras usadas"
+            "value" : "%lld/12 ranuras usadas"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%lld/4 emplacements utilisés"
+            "value" : "%lld/12 emplacements utilisés"
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%lld/4 स्लॉट उपयोग में"
+            "value" : "%lld/12 स्लॉट उपयोग में"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%lld/4 slot digunakan"
+            "value" : "%lld/12 slot digunakan"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%lld/4 枠使用中"
+            "value" : "%lld/12 枠使用中"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%lld/4칸 사용 중"
+            "value" : "%lld/12칸 사용 중"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%lld/4 slots usados"
+            "value" : "%lld/12 slots usados"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%lld/4 слотов занято"
+            "value" : "%lld/12 слотов занято"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ใช้ช่องไปแล้ว %lld/4"
+            "value" : "ใช้ช่องไปแล้ว %lld/12"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%lld/4 yuva kullanılıyor"
+            "value" : "%lld/12 yuva kullanılıyor"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "已用 %lld/4 个插槽"
+            "value" : "已用 %lld/12 个插槽"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "已使用 %lld/4 個欄位"
+            "value" : "已使用 %lld/12 個欄位"
           }
         }
       }

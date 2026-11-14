@@ -827,6 +827,9 @@ final class AppState: ObservableObject {
         setFocus(id)
     }
 
+    /// How many pills can be declared beside the main one; the grid shows them on pages.
+    static let maxActiveIntegrations = 12
+
     func toggleIntegration(_ id: String) {
         guard id != mainPillId else { return }
         guard PillCatalog.available.contains(where: { $0.id == id }) else { return }
@@ -835,7 +838,7 @@ final class AppState: ObservableObject {
             tasks.removeAll { $0.id == id }
             if focusId == id { focusId = mainPillId }
         } else {
-            guard activeIntegrations.count < 4 else { return }
+            guard activeIntegrations.count < Self.maxActiveIntegrations else { return }
             activeIntegrations.insert(id)
             if let def = PillCatalog.available.first(where: { $0.id == id }),
                !tasks.contains(where: { $0.id == id }) {
